@@ -1,6 +1,5 @@
 #pragma once
 
-#include <rgde/render/effect.h>
 #include <guilib/src/renderer.h>
 
 namespace gui

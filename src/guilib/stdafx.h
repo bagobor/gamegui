@@ -58,17 +58,7 @@
 #include <set>
 #include <string>
 #include <algorithm>
-
-#include <boost/shared_ptr.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <boost/weak_ptr.hpp>
-#include <boost/intrusive_ptr.hpp>
-#include <boost/function.hpp>
-#include <boost/bind.hpp>
-#include <boost/noncopyable.hpp>
-#include <boost/tokenizer.hpp>
-#include <boost/unordered_map.hpp>
-#include <boost/shared_array.hpp>
+#include <memory>
 
 extern "C"
 {
@@ -87,5 +77,3 @@ extern "C"
 #undef min
 
 typedef unsigned int utf32;
-
-#include <rgde/core/xml/xml.h>

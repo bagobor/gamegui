@@ -30,19 +30,7 @@
 #include <string>
 #include <algorithm>
 
-#include <boost/shared_ptr.hpp>
-#include <boost/intrusive_ptr.hpp>
-#include <boost/function.hpp>
-#include <boost/bind.hpp>
-#include <boost/noncopyable.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <boost/unordered_map.hpp>
-#include <boost/shared_array.hpp>
+
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
-
-#include <rgde/render/device.h>
-#include <rgde/render/surface.h>
-#include <rgde/render/buffer.h>
-#include <rgde/render/effect.h>

@@ -3,13 +3,7 @@
 #include <list>
 #include <map>
 #include <vector>
-#include <boost/shared_ptr.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <boost/shared_array.hpp>
-#include <boost/intrusive_ptr.hpp>
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
-#include <boost/unordered_map.hpp>
+#include <memory>
 
 #include "src/window.h"
 #include "src/system.h"

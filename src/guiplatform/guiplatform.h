@@ -1,12 +1,12 @@
 #pragma once
 
-#include <rgde/render/render_forward.h>
-#include <rgde/core/file_system.h>
+#include <memory>
+
 
 namespace gui
 {
 	struct filesystem;
-	typedef boost::shared_ptr<filesystem> filesystem_ptr;
+	typedef std::shared_ptr<filesystem> filesystem_ptr;
 
 	class Renderer;
 

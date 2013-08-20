@@ -1,6 +1,5 @@
 #pragma once
 
-#include <rgde/render/render_forward.h>
 #include <guilib/src/texture.h>
 
 namespace gui
