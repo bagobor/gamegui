@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<ScrollThumb name ="" file="" >
+	<Properties>
+		<Visible>true</Visible>
+		<TabStop>false</TabStop>
+		<Horizontal>false</Horizontal>
+		<Text></Text>		
+		<FrameImagery Imageset="skin">
+			<State Type="Normal">
+				<Background Image="VScrollThumbFillNormal" />
+				<Left Image="VScrollThumbTopNormal" />
+				<Right Image="VScrollThumbBottomNormal" />
+			</State>
+			<State Type="Hovered">
+				<Background Image="VScrollThumbFillHovered" />
+				<Left Image="VScrollThumbTopHovered" />
+				<Right Image="VScrollThumbBottomHovered" />
+			</State>
+			<State Type="Pushed">
+				<Background Image="VScrollThumbFillPushed" />
+				<Left Image="VScrollThumbTopPushed" />
+				<Right Image="VScrollThumbBottomPushed" />
+			</State>
+		</FrameImagery>
+	</Properties>
+	<Children />
+	<Events />
+</ScrollThumb >

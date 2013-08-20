@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<ListBox name ="" file="" >
+	<Properties>		
+		<Font>Default</Font>
+		<Visible>true</Visible>
+		<HasFrame>true</HasFrame>
+		<FrameImagery Imageset="skin">
+			<Background Image="WindowFill" />
+			<Top Image="WindowBorderTop" />
+			<TopLeft Image="WindowBorderTopLeft" />
+			<TopRight Image="WindowBorderTopRight" />
+			<Left Image="WindowBorderLeft" />
+			<Right Image="WindowBorderRight" />
+			<BottomLeft Image="WindowBorderBottomLeft" />
+			<BottomRight Image="WindowBorderBottomRight" />
+			<Bottom Image="WindowBorderBottom" />
+		</FrameImagery>
+		<SelectImagery Imageset="skin" Image="TextSelectionBrush" />	
+	</Properties>
+	<Events />
+</ListBox>

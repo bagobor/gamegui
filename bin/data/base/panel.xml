@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<Panel name ="" file="" >
+	<Properties>
+		<BackColor />
+		<ForeColor />
+		<Visible>true</Visible>
+		<FrameImagery Imageset="skin">
+			<Background Image="WindowFill" />
+			<Top Image="WindowBorderTop" />
+			<TopLeft Image="WindowBorderTopLeft" />
+			<TopRight Image="WindowBorderTopRight" />
+			<Left Image="WindowBorderLeft" />
+			<Right Image="WindowBorderRight" />
+			<BottomLeft Image="WindowBorderBottomLeft" />
+			<BottomRight Image="WindowBorderBottomRight" />
+			<Bottom Image="WindowBorderBottom" />
+		</FrameImagery>		
+	</Properties>
+	<Children />
+	<Events />
+</Panel >

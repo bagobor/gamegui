@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<KeyBinder name ="" file="" >
+	<Properties>
+		<Font>Default</Font>
+		<Visible>true</Visible>
+		<Text>Uninitialized key bind!</Text>
+		<FrameImagery Imageset="skin">
+			<Left Image="EditboxLeft" />
+			<Right Image="EditboxRight" />
+			<Background Image="EditboxMiddle" />
+		</FrameImagery>
+	</Properties>
+	<Children />
+</KeyBinder>

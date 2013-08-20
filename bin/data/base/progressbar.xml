@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<ProgressBar name ="" file="" >
+	<Properties>
+		<Font>Default</Font>
+		<Formatting>Centred</Formatting>
+		<Visible>true</Visible>
+		<Text></Text>
+		<Bar Imageset="skin">
+			<Left Image="WindowTitlebarLeft" />
+			<Right Image="WindowTitlebarRight" />
+			<Background Image="WindowTitlebarMiddle" />
+		</Bar>
+	</Properties>
+	<Children />
+	<Events />
+</ProgressBar >

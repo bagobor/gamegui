@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<Menu name="Menu" file="">
+    <Properties>
+        <Font>Default</Font>
+        <FrameImagery Imageset="skin">
+            <Background Image="WindowFill" />
+            <Top Image="WindowBorderTop" />
+            <TopLeft Image="WindowBorderTopLeft" />
+            <TopRight Image="WindowBorderTopRight" />
+            <Left Image="WindowBorderLeft" />
+            <Right Image="WindowBorderRight" />
+            <BottomLeft Image="WindowBorderBottomLeft" />
+            <BottomRight Image="WindowBorderBottomRight" />
+            <Bottom Image="WindowBorderBottom" />
+        </FrameImagery>
+        <SelectImagery Imageset="skin" Image="TextSelectionBrush" />
+    </Properties>
+    <Events>
+		<On_MenuClicked>
+			ContextMenu.On_MenuClicked()
+		</On_MenuClicked>
+	</Events>
+</Menu>

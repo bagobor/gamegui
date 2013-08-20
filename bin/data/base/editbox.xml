@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<Editbox name ="" file="" >
+	<Properties>
+		<Font>Default</Font>
+		<MaxLength>1024</MaxLength>
+		<Visible>true</Visible>
+		<TabStop>true</TabStop>
+		<Text />
+		<FrameImagery Imageset="skin">
+			<Left Image="EditFrameLeft" />
+			<Right Image="EditFrameRight" />
+			<Background Image="EditFrameMiddle" />
+			<Caret Image="EditBoxCarat" />
+			<Selection Image="TextSelectionBrush" />
+		</FrameImagery>
+	</Properties>
+	<Children />
+</Editbox>

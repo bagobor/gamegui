@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+    <FrameWindow name="TestWindow" file="base\framewindow.xml" >
+      <Properties>
+        <Area>0 0 256 128</Area>
+        <Title>Caption</Title>
+      </Properties>
+      <Children>
+        <Panel name="TestSubWindow" file="base\panel.xml" >
+          <Properties>
+            <Area>10 20 236 104</Area>
+          </Properties>
+          <Children>
+            <Editbox name="TestSubEditWindow" file="base\editbox.xml" >
+              <Properties>
+                <Area>4 4 232 20</Area>
+                <MaxLength>1024</MaxLength>
+                <Text>This is a text</Text>
+              </Properties>
+            </Editbox>
+            <Editbox name="TestSubEdit2Window" file="base\editbox.xml" >
+              <Properties>
+                <Area>4 80 232 20</Area>
+                <MaxLength>1024</MaxLength>
+                <Text>Text2</Text>
+              </Properties>
+            </Editbox>
+            <Label name="TestSubStaticWindow" file="base\label.xml" >
+              <Properties>
+                <Area>4 28 232 20</Area>
+                <Text>Before click</Text>
+              </Properties>
+            </Label>
+            <Button name="TestSubButtonWindow" file="base\Button.xml" >
+              <Properties>
+                <Area>4 55 232 20</Area>
+                <Text>Click me</Text>
+              </Properties>
+              <Events>
+                <On_Clicked>Hide()</On_Clicked>
+              </Events>
+            </Button>
+          </Children>
+          <Events>
+            <On_MouseButton>Test()</On_MouseButton>
+          </Events>
+        </Panel>
+      </Children>
+      <Events>
+        <On_Load>
+          log:msg("On load test")
+        </On_Load>
+      </Events>
+    </FrameWindow>

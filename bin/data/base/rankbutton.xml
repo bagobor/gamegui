@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<Button name ="" file="" >
+    <Properties>
+        <Font>SmallDefault</Font>
+        <Formatting>Centred</Formatting>
+        <Visible>true</Visible>
+        <Text></Text>
+        <TabStop>true</TabStop>
+        <Tooltip>true</Tooltip>
+		<Dragable>true</Dragable>
+        <Size>20 15</Size>
+        <FrameImagery Imageset="skin">
+            <State Type="Normal">
+                <Background Image="ButtonMiddleNormal" />
+            </State>
+            <State Type="Hovered">
+                <Background Image="ButtonMiddleHovered" />
+            </State>
+            <State Type="Pushed">
+                <Background Image="ButtonMiddlePushed" />
+            </State>
+        </FrameImagery>
+    </Properties>
+    <Children />
+    <Events />
+</Button >

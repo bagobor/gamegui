@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<StaticImage name="DragIcon" file="Base\StaticImage.xml">
+    <!-- icon to charge cursor when dragging something -->
+    <Properties>
+        <Imageset>Items</Imageset>
+        <Image></Image>
+        <Size>32 32</Size>
+        <Visible>false</Visible>
+        <IgnoreInputEvents>true</IgnoreInputEvents>
+    </Properties>
+    <Events>
+        <On_Load>
+            Drag.On_Load()
+        </On_Load>
+    </Events>
+    <Children>
+        <StaticText name="BottomText" file="Base\StaticText.xml">
+            <Properties>
+                <Text>123</Text>
+                <Centred>false</Centred>
+                <Formatting>RightAligned</Formatting>
+                <Backcolor>1 1 1 1</Backcolor>
+                <Font>SmallDefault</Font>
+                <Visible>false</Visible>
+                <IgnoreInputEvents>true</IgnoreInputEvents>
+                <Area>0 20 32 15</Area>
+                <Align>right|bottom</Align>
+            </Properties>
+        </StaticText>
+    </Children>
+</StaticImage>

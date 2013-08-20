@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<ImageBar name ="" file="" >
+	<Properties>
+		<Font>Default</Font>
+		<Formatting>Centred</Formatting>
+		<Visible>true</Visible>
+		<Text></Text>
+		<Bar Imageset="skin">
+			<Foreground Image="HealthImageBar" />
+			<Background Image="GrayImageBar" />
+		</Bar>
+	</Properties>
+	<Children />
+	<Events />
+</ImageBar >

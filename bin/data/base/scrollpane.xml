@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<ScrollPane name ="" file="" >
+	<Properties>
+		<Visible>true</Visible>
+		<TabStop>false</TabStop>
+		<Size>19 48</Size>
+	</Properties>
+	<Children>
+		<ScrollBar name ="scrollbar" file="base\scrollbar.xml" >
+			<Properties>
+				<Pos>0 0</Pos>
+				<Size>19 48</Size>
+				<Align>right | vcenter</Align>
+				<Stick>right | vcenter</Stick>
+			</Properties>
+			<Children />
+			<Events />
+		</ScrollBar>
+	</Children>
+</ScrollPane>

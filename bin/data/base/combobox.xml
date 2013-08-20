@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<Combobox name ="" file="" >
+	<Properties>
+		<Font>Default</Font>
+		<Size>78 18</Size>
+		<MaxLength>1024</MaxLength>
+		<Visible>true</Visible>
+		<TabStop>true</TabStop>
+		<ReadOnly>true</ReadOnly>
+		<Text />
+		<FrameImagery Imageset="skin">
+			<Left Image="EditboxLeft" />
+			<Right Image="EditboxRight" />
+			<Background Image="EditboxMiddle" />
+			<Caret Image="EditboxCaret" />
+			<Selection Image="TextSelectionBrush" />
+		</FrameImagery>
+	</Properties>
+	<Children>
+		<ImageButton name="_Btn" file="base\imagebutton.xml" >
+			<Properties>
+				<Area>0 0 16 16</Area>
+				<Visible>true</Visible>
+				<TabStop>true</TabStop>
+				<Align>right|bottom</Align>
+				<Stick>right|bottom</Stick>
+				<StateImagery Imageset="skin">
+					<State Type="Normal" Image="VScrollDownNormal" />
+					<State Type="Hovered" Image="VScrollDownHovered" />
+					<State Type="Pushed" Image="VScrollDownPushed" />
+				</StateImagery>
+			</Properties>
+			<Children />
+			<Events>
+				<On_Load>
+					local area = this.area
+					this.area = area
+				</On_Load>
+			</Events>
+		</ImageButton>
+		<ListBox name ="_List" file="base\listbox.xml" >
+			<Properties>
+				<TabStop>true</TabStop>
+				<Size>120 1</Size>
+				<Borders>4 3 4 1</Borders>
+			</Properties>
+		</ListBox>
+	</Children>
+	<Events>
+		<On_Load>
+			local area = this.area
+			this.area = area
+		</On_Load>
+	</Events>
+</Combobox>

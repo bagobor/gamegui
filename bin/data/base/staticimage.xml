@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<StaticImage name ="" file="" >
+	<Properties>
+		<Imageset />
+		<Image />
+		<Visible>true</Visible>
+		<VertFormatting>Stretch</VertFormatting>
+		<HorzFormatting>Stretch</HorzFormatting>
+	</Properties>
+	<Children />
+	<Events />
+</StaticImage >

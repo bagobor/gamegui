@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<Checkbox name ="" file="" >
+	<Properties>
+		<Font>Default</Font>
+		<Formatting>LeftAligned</Formatting>
+		<Visible>true</Visible>
+		<Text></Text>
+		<TabStop>true</TabStop>
+        <Size>100 15</Size>
+		<StateImagery Imageset="skin">
+			<Checked Image="CheckboxChecked" />
+			<Unchecked Image="CheckboxUnchecked" />
+		</StateImagery>
+	</Properties>
+	<Children />
+	<Events />
+</Checkbox >

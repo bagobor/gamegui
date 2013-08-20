@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<Slider name ="" file="" >
+	<Properties>
+		<Visible>true</Visible>
+		<TabStop>true</TabStop>
+	</Properties>
+	<Children>
+		<Thumb name ="thumb" file="base\thumb.xml" >
+			<Properties>
+				<Horizontal>true</Horizontal>
+				<Area>0 0 16 16</Area>
+			</Properties>
+			<Children />
+			<Events />
+		</Thumb>
+	</Children>
+	<Events>
+		<On_MouseWheel>
+			local mouseArgs = to_mouseargs(eventArgs)
+			mouseArgs.handled = true
+			local slider = to_slider(this)
+			
+			if mouseArgs.wheelDelta > 0 then
+				slider.scroll = slider.scroll - 0.01
+			else
+				slider.scroll = slider.scroll + 0.01
+			end
+		</On_MouseWheel>
+	</Events>
+</Slider>

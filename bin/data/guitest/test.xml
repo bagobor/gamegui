@@ -1,0 +1,60 @@
+<?xml version="1.0" ?>
+<root>	
+	<Children>
+		<FrameWindow name="TestWindow" file="guitest\testfr.xml" >
+			<Children>
+				<Panel name="TestSubWindow">
+					<Children>
+						<Editbox name="TestSubEditWindow" >
+							<Properties>
+								<Password>true</Password>
+							</Properties>
+						</Editbox>
+					</Children>
+				</Panel>
+			</Children>
+		</FrameWindow>
+		<FrameWindow name="TestWindow1" file="guitest\testfr.xml" >
+			<Properties>
+					<Pos>0 0</Pos><Size>256 128</Size>
+					<Movable>false</Movable>
+					<ClampToScreen>false</ClampToScreen>
+			</Properties>
+		</FrameWindow>
+<FrameWindow name="TestWindow2" file="guitest\testfr.xml" >
+			<Properties>
+					<Pos>256 0</Pos><Size>256 128</Size>
+					<Movable>false</Movable>
+					<ClampToScreen>false</ClampToScreen>
+			</Properties>
+		</FrameWindow>
+<FrameWindow name="TestWindow3" file="guitest\testfr.xml" >
+			<Properties>
+					<Pos>512 0</Pos><Size>256 128</Size>
+					<Movable>false</Movable>
+					<ClampToScreen>false</ClampToScreen>
+			</Properties>
+		</FrameWindow>
+<FrameWindow name="TestWindow4" file="guitest\testfr.xml" >
+			<Properties>
+					<Pos>0 128</Pos><Size>256 128</Size>
+					<Movable>false</Movable>
+					<ClampToScreen>false</ClampToScreen>
+			</Properties>
+		</FrameWindow>
+<FrameWindow name="TestWindow5" file="guitest\testfr.xml" >
+			<Properties>
+					<Pos>256 128</Pos><Size>256 128</Size>
+					<Movable>false</Movable>
+					<ClampToScreen>false</ClampToScreen>
+			</Properties>
+		</FrameWindow>
+<FrameWindow name="TestWindow6" file="guitest\testfr.xml" >
+			<Properties>
+					<Pos>512 128</Pos><Size>256 128</Size>
+					<Movable>false</Movable>
+					<ClampToScreen>false</ClampToScreen>
+			</Properties>
+		</FrameWindow>
+	</Children>
+</root>

@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<ScrollBar name ="" file="" >
+	<Properties>
+		<Visible>true</Visible>
+		<TabStop>false</TabStop>
+		<Horizontal>false</Horizontal>
+		<Size>19 48</Size>
+		<Step>0.1</Step>
+		<Frame Imageset="skin">
+			<Left Image="VScrollLeft" />
+			<Right Image="VScrollRight" />
+			<Background Image="VScrollFill" />
+		</Frame>
+	</Properties>
+	<Children>
+		<ScrollThumb name ="thumb" file="base\scrollthumb.xml" >
+			<Properties>
+				<Horizontal>false</Horizontal>
+				<Area>0 16 19 16</Area>
+				<Align>hcenter</Align>
+				<Stick>hcenter</Stick>
+			</Properties>
+			<Children />
+			<Events />
+		</ScrollThumb>
+		<ImageButton name="inc" file="base\imagebutton.xml" >
+			<Properties>
+				<Area>0 32 19 17</Area>
+				<TabStop>false</TabStop>
+				<Align>bottom | hcenter</Align>
+				<Stick>bottom | hcenter</Stick>
+				<StateImagery Imageset="skin">
+					<State Type="Normal" Image="VScrollDownNormal" />
+					<State Type="Hovered" Image="VScrollDownHovered" />
+					<State Type="Pushed" Image="VScrollDownPushed" />
+				</StateImagery>
+			</Properties>
+			<Children />
+			<Events />
+		</ImageButton>
+		<ImageButton name="dec" file="base\imagebutton.xml" >
+			<Properties>
+				<Area>0 0 19 17</Area>
+				<TabStop>false</TabStop>
+				<Align>top | hcenter</Align>
+				<Stick>top | hcenter</Stick>
+				<StateImagery Imageset="skin">
+					<State Type="Normal" Image="VScrollUpNormal" />
+					<State Type="Hovered" Image="VScrollUpHovered" />
+					<State Type="Pushed" Image="VScrollUpPushed" />
+				</StateImagery>
+			</Properties>
+			<Children />
+			<Events />
+		</ImageButton>
+	</Children>
+</ScrollBar>

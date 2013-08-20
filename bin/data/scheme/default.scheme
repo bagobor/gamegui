@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<Scheme Name="Well">
+	<DefaultImageset file="main_default.imageset" />
+	<DefaultFont file="Default.font" />	
+</Scheme>
