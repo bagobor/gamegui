@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{05E7E63D-01BF-4586-9215-D56FA02B2223}</ProjectGuid>
+    <RootNamespace>guilib</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.60610.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)..\..\..\temp\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)..\..\..\temp\$(Configuration)\$(ProjectName)\</IntDir>
+    <EnableManagedIncrementalBuild>false</EnableManagedIncrementalBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)..\..\..\temp\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)..\..\..\temp\$(Configuration)\$(ProjectName)\</IntDir>
+    <EnableManagedIncrementalBuild>false</EnableManagedIncrementalBuild>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../external/boost;$(SolutionDir)../../../external/luabind;$(SolutionDir)../../../external/lua/src;$(SolutionDir)../../../external;$(SolutionDir)..\..\..\external\win32\rgde;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;D_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
+      <OutputFile>$(SolutionDir)\..\..\..\lib\win32\$(Configuration)\$(ProjectName).lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../external/boost;$(SolutionDir)../../../external/luabind;$(SolutionDir)../../../external/lua/src;$(SolutionDir)../../../external;$(SolutionDir)..\..\..\external\win32\rgde;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;GUI_KERNING_ENABLED;_CRT_SECURE_NO_WARNINGS;D_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
+      <OutputFile>$(SolutionDir)\..\..\..\lib\win32\$(Configuration)\$(ProjectName).lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\ActiveText.cpp" />
+    <ClCompile Include="src\colorRect.cpp" />
+    <ClCompile Include="src\cursor.cpp" />
+    <ClCompile Include="src\font.cpp" />
+    <ClCompile Include="src\renderer.cpp" />
+    <ClCompile Include="src\system.cpp" />
+    <ClCompile Include="src\texmanager.cpp" />
+    <ClCompile Include="src\utils.cpp" />
+    <ClCompile Include="src\dragcontainer.cpp" />
+    <ClCompile Include="src\menu.cpp" />
+    <ClCompile Include="src\panel.cpp" />
+    <ClCompile Include="src\tooltip.cpp" />
+    <ClCompile Include="src\window.cpp" />
+    <ClCompile Include="src\button.cpp" />
+    <ClCompile Include="src\chatwindow.cpp" />
+    <ClCompile Include="src\checkbox.cpp" />
+    <ClCompile Include="src\combobox.cpp" />
+    <ClCompile Include="src\editbox.cpp" />
+    <ClCompile Include="src\framewindow.cpp" />
+    <ClCompile Include="src\imagebox.cpp" />
+    <ClCompile Include="src\label.cpp" />
+    <ClCompile Include="src\list.cpp" />
+    <ClCompile Include="src\markuptext.cpp" />
+    <ClCompile Include="src\progress.cpp" />
+    <ClCompile Include="src\scrollpane.cpp" />
+    <ClCompile Include="src\slider.cpp" />
+    <ClCompile Include="src\factory.cpp" />
+    <ClCompile Include="src\imagesetmanager.cpp" />
+    <ClCompile Include="src\windowmanager.cpp" />
+    <ClCompile Include="src\scripthost.cpp" />
+    <ClCompile Include="src\systemscript.cpp" />
+    <ClCompile Include="src\base.cpp" />
+    <ClCompile Include="src\events.cpp" />
+    <ClCompile Include="src\color.cpp" />
+    <ClCompile Include="src\rect.cpp" />
+    <ClCompile Include="guilib.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ActiveText.h" />
+    <ClInclude Include="src\colorRect.h" />
+    <ClInclude Include="src\cursor.h" />
+    <ClInclude Include="src\font.h" />
+    <ClInclude Include="src\imageops.h" />
+    <ClInclude Include="src\input.h" />
+    <ClInclude Include="src\renderer.h" />
+    <ClInclude Include="src\renderimageinfo.h" />
+    <ClInclude Include="src\system.h" />
+    <ClInclude Include="src\texmanager.h" />
+    <ClInclude Include="src\texture.h" />
+    <ClInclude Include="src\utils.h" />
+    <ClInclude Include="src\dragcontainer.h" />
+    <ClInclude Include="src\menu.h" />
+    <ClInclude Include="src\panel.h" />
+    <ClInclude Include="src\tooltip.h" />
+    <ClInclude Include="src\window.h" />
+    <ClInclude Include="src\button.h" />
+    <ClInclude Include="src\chatwindow.h" />
+    <ClInclude Include="src\checkbox.h" />
+    <ClInclude Include="src\combobox.h" />
+    <ClInclude Include="src\editbox.h" />
+    <ClInclude Include="src\framewindow.h" />
+    <ClInclude Include="src\imagebox.h" />
+    <ClInclude Include="src\label.h" />
+    <ClInclude Include="src\list.h" />
+    <ClInclude Include="src\markuptext.h" />
+    <ClInclude Include="src\progress.h" />
+    <ClInclude Include="src\scrollpane.h" />
+    <ClInclude Include="src\slider.h" />
+    <ClInclude Include="src\factory.h" />
+    <ClInclude Include="src\imagesetmanager.h" />
+    <ClInclude Include="src\windowmanager.h" />
+    <ClInclude Include="src\renderhelper.h" />
+    <ClInclude Include="src\scripthost.h" />
+    <ClInclude Include="src\scriptobject.h" />
+    <ClInclude Include="src\base.h" />
+    <ClInclude Include="src\events.h" />
+    <ClInclude Include="src\eventtypes.h" />
+    <ClInclude Include="src\align.h" />
+    <ClInclude Include="src\color.h" />
+    <ClInclude Include="src\rect.h" />
+    <ClInclude Include="src\size.h" />
+    <ClInclude Include="src\textformatting.h" />
+    <ClInclude Include="src\vector.h" />
+    <ClInclude Include="guilib.h" />
+    <ClInclude Include="stdafx.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

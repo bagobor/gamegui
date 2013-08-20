@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{f37fd161-75a0-4c4f-9587-3fd271e86999}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\controls">
+      <UniqueIdentifier>{220f88ce-9ff1-4e22-b548-4703fef128e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\controls\common">
+      <UniqueIdentifier>{ecb4e0f7-6721-4488-9d84-99cac3f28647}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\factory">
+      <UniqueIdentifier>{049d5158-df8a-46b1-8c90-12bd338d329c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\script">
+      <UniqueIdentifier>{5c41ed9d-0d65-4cab-9c11-f3cef4f3ddc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common">
+      <UniqueIdentifier>{0b337f4c-13d6-402a-9ea5-6b79fdee92bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\event">
+      <UniqueIdentifier>{872f5fb9-fc55-4621-9be0-99348ad15189}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\types">
+      <UniqueIdentifier>{4d112146-2f03-43bd-879a-9670ff2103ba}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\ActiveText.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\colorRect.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cursor.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\font.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\system.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texmanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dragcontainer.cpp">
+      <Filter>src\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="src\menu.cpp">
+      <Filter>src\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="src\panel.cpp">
+      <Filter>src\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tooltip.cpp">
+      <Filter>src\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="src\window.cpp">
+      <Filter>src\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="src\button.cpp">
+      <Filter>src\controls\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\chatwindow.cpp">
+      <Filter>src\controls\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\checkbox.cpp">
+      <Filter>src\controls\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\combobox.cpp">
+      <Filter>src\controls\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editbox.cpp">
+      <Filter>src\controls\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\framewindow.cpp">
+      <Filter>src\controls\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imagebox.cpp">
+      <Filter>src\controls\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\label.cpp">
+      <Filter>src\controls\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\list.cpp">
+      <Filter>src\controls\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\markuptext.cpp">
+      <Filter>src\controls\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\progress.cpp">
+      <Filter>src\controls\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scrollpane.cpp">
+      <Filter>src\controls\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\slider.cpp">
+      <Filter>src\controls\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\factory.cpp">
+      <Filter>src\factory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imagesetmanager.cpp">
+      <Filter>src\factory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\windowmanager.cpp">
+      <Filter>src\factory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scripthost.cpp">
+      <Filter>src\script</Filter>
+    </ClCompile>
+    <ClCompile Include="src\systemscript.cpp">
+      <Filter>src\script</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base.cpp">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\events.cpp">
+      <Filter>src\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\color.cpp">
+      <Filter>src\types</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rect.cpp">
+      <Filter>src\types</Filter>
+    </ClCompile>
+    <ClCompile Include="guilib.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ActiveText.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\colorRect.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cursor.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\font.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\imageops.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\input.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderimageinfo.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\texmanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\texture.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dragcontainer.h">
+      <Filter>src\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="src\menu.h">
+      <Filter>src\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="src\panel.h">
+      <Filter>src\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tooltip.h">
+      <Filter>src\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="src\window.h">
+      <Filter>src\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="src\button.h">
+      <Filter>src\controls\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\chatwindow.h">
+      <Filter>src\controls\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\checkbox.h">
+      <Filter>src\controls\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\combobox.h">
+      <Filter>src\controls\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\editbox.h">
+      <Filter>src\controls\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\framewindow.h">
+      <Filter>src\controls\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\imagebox.h">
+      <Filter>src\controls\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\label.h">
+      <Filter>src\controls\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\list.h">
+      <Filter>src\controls\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\markuptext.h">
+      <Filter>src\controls\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\progress.h">
+      <Filter>src\controls\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scrollpane.h">
+      <Filter>src\controls\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\slider.h">
+      <Filter>src\controls\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\factory.h">
+      <Filter>src\factory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\imagesetmanager.h">
+      <Filter>src\factory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\windowmanager.h">
+      <Filter>src\factory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderhelper.h">
+      <Filter>src\script</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripthost.h">
+      <Filter>src\script</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scriptobject.h">
+      <Filter>src\script</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events.h">
+      <Filter>src\event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eventtypes.h">
+      <Filter>src\event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\align.h">
+      <Filter>src\types</Filter>
+    </ClInclude>
+    <ClInclude Include="src\color.h">
+      <Filter>src\types</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rect.h">
+      <Filter>src\types</Filter>
+    </ClInclude>
+    <ClInclude Include="src\size.h">
+      <Filter>src\types</Filter>
+    </ClInclude>
+    <ClInclude Include="src\textformatting.h">
+      <Filter>src\types</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vector.h">
+      <Filter>src\types</Filter>
+    </ClInclude>
+    <ClInclude Include="guilib.h" />
+    <ClInclude Include="stdafx.h" />
+  </ItemGroup>
+</Project>

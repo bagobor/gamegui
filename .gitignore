@@ -11,3 +11,7 @@
 *.lai
 *.la
 *.a
+
+/build/win32/vc9/*.opensdf
+/build/win32/vc9/*.sdf
+/build/win32/vc9/*.suo

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{aad65b94-11e1-4478-8fbf-22b054cbe933}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="console">
+      <UniqueIdentifier>{ac69e769-96e4-4b6d-ace1-067e84d80f64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{2c0efdf7-1ce1-4311-8969-f95d10f20340}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="DXUT\Optional\directx.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="guitest.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="guicon.h">
+      <Filter>console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\gui_filesystem.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="UITest.h" />
+    <ClInclude Include="Xml2Test.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="guicon.cpp">
+      <Filter>console</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="UITest.cpp" />
+    <ClCompile Include="Xml2Test.cpp" />
+  </ItemGroup>
+</Project>
