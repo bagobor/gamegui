@@ -25,6 +25,9 @@
     <Filter Include="src\types">
       <UniqueIdentifier>{4d112146-2f03-43bd-879a-9670ff2103ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="xml">
+      <UniqueIdentifier>{7f4863b9-5980-435d-909b-2abe2920f811}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ActiveText.cpp">
@@ -134,6 +137,9 @@
     </ClCompile>
     <ClCompile Include="guilib.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="xml\xml.cpp">
+      <Filter>xml</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ActiveText.h">
@@ -273,5 +279,22 @@
     </ClInclude>
     <ClInclude Include="guilib.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="xml\xml.h">
+      <Filter>xml</Filter>
+    </ClInclude>
+    <ClInclude Include="xml\xml_forward.h">
+      <Filter>xml</Filter>
+    </ClInclude>
+    <ClInclude Include="xml\xml_options.h">
+      <Filter>xml</Filter>
+    </ClInclude>
+    <ClInclude Include="xml\xmlconfig.h">
+      <Filter>xml</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="xml\xml.inl">
+      <Filter>xml</Filter>
+    </None>
   </ItemGroup>
 </Project>

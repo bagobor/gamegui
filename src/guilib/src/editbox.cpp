@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 
 #include "editbox.h"
 
@@ -7,6 +7,8 @@
 #include "renderer.h"
 #include "font.h"
 #include "utils.h"
+
+#include "../xml/xml.h"
 
 namespace gui
 {

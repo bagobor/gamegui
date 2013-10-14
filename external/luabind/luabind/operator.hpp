@@ -26,6 +26,7 @@
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/apply_wrap.hpp>
+#include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/repetition/enum_trailing.hpp>
 #include <boost/preprocessor/repetition/enum_trailing_params.hpp>
 #include <boost/type_traits/is_same.hpp>
@@ -62,6 +63,8 @@ namespace luabind { namespace detail {
 #endif
     
 }} // namespace luabind
+
+#include <boost/preprocessor/iteration/iterate.hpp>
 
 namespace luabind { namespace operators {
 
@@ -174,7 +177,7 @@ namespace detail {
     };
 
     template<class Policies>
-    inline void operator_result(lua_State* L, operator_void_return, Policies*)
+    inline void operator_result(lua_State*, operator_void_return, Policies*)
     {
     }
 
@@ -285,12 +288,13 @@ namespace luabind {
     LUABIND_BINARY_OPERATOR(sub, -)
     LUABIND_BINARY_OPERATOR(mul, *)
     LUABIND_BINARY_OPERATOR(div, /)
+    LUABIND_BINARY_OPERATOR(mod, %)
     LUABIND_BINARY_OPERATOR(pow, ^)
     LUABIND_BINARY_OPERATOR(lt, <)
     LUABIND_BINARY_OPERATOR(le, <=)
     LUABIND_BINARY_OPERATOR(eq, ==)
 
-#undef LUABIND_UNARY_OPERATOR
+#undef LUABIND_BINARY_OPERATOR
 
 #define LUABIND_UNARY_OPERATOR(name_, op, fn) \
     namespace operators { \
@@ -335,12 +339,12 @@ namespace luabind {
         s << x;
 #endif
         return s.str();
-    };
+    }
     
     LUABIND_UNARY_OPERATOR(tostring, tostring_operator, tostring)
     LUABIND_UNARY_OPERATOR(unm, -, operator-)
 
-#undef LUABIND_BINARY_OPERATOR
+#undef LUABIND_UNARY_OPERATOR
 
     namespace {
 

@@ -25,7 +25,7 @@
 
 #include <luabind/prefix.hpp>
 #include <luabind/config.hpp>
-#include <luabind/lua_include.hpp>
+#include <luabind/lua_state_fwd.hpp>
 #include <memory>
 
 namespace luabind { 
@@ -59,6 +59,8 @@ namespace luabind {
         explicit scope(std::auto_ptr<detail::registration> reg);
         scope(scope const& other_);
         ~scope();
+
+        scope& operator=(scope const& other_);
 
         scope& operator,(scope s);
 

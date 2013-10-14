@@ -2,6 +2,7 @@
 
 #include "vector.h"
 
+
 namespace gui
 {
 	class Imageset;

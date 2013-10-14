@@ -11,11 +11,10 @@
 // fine tune :)
 #define PixelAligned(x)	( ( (float)(int)(( x ) + (( x ) > 0.0f ? 0.5f : -0.5f)) ) - 0.5f )
 
-using namespace rgde::render;
 
 namespace gui
 {
-	namespace rgde_platform
+	namespace ogl_platform
 	{
 		Renderer* CreateRenderer(rgde::render::device& dev, filesystem_ptr fs, unsigned buff)
 		{
@@ -463,7 +462,7 @@ namespace gui
 
 				m_buffer->unlock();
 
-				gui::rgde_platform::texture* t = static_cast<gui::rgde_platform::texture*>(batch.texture);
+				gui::ogl_platform::texture* t = static_cast<gui::ogl_platform::texture*>(batch.texture);
 				m_device.set_texture(t->get_platform_resource(), 0);
 
 				m_device.draw

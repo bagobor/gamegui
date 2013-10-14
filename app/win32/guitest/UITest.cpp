@@ -119,7 +119,7 @@ void ui_test_application::createGUISystem()
 {
 	filesystem_ptr fs(new gui_filesystem(m_filesystem, "/"));
 
-	m_render = gui::rgde_platform::CreateRenderer(m_render_device, fs, 1024);
+	m_render = gui::ogl_platform::CreateRenderer(m_render_device, fs, 1024);
 
 	if(m_system)
 		delete m_system;

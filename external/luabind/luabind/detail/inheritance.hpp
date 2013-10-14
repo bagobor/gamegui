@@ -22,8 +22,6 @@ class_id const unknown_class = (std::numeric_limits<class_id>::max)();
 
 class class_rep;
 
-#undef cast
-
 class LUABIND_API cast_graph
 {
 public:
@@ -34,9 +32,10 @@ public:
     // for a polymorphic type, the pointer must be cast with
     // dynamic_cast<void*> before being passed in here, and `src` has to
     // match typeid(*p).
-    std::pair<void*, int> cast(void* p, class_id src, class_id target, class_id dynamic_id, void const* dynamic_ptr) const;
-
-    void insert(class_id src, class_id target, cast_function cast_func);
+    std::pair<void*, int> cast(
+        void* p, class_id src, class_id target
+      , class_id dynamic_id, void const* dynamic_ptr) const;
+    void insert(class_id src, class_id target, cast_function cast);
 
 private:
     class impl;

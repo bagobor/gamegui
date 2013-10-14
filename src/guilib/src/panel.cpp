@@ -1,9 +1,11 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "panel.h"
 
 #include "system.h"
 #include "windowmanager.h"
 #include "renderer.h"
+
+#include "../xml/xml.h"
 
 
 namespace gui

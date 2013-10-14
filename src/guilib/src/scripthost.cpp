@@ -1,7 +1,17 @@
 #include "stdafx.h"
+
 #include "scripthost.h"
 #include "scriptobject.h"
 #include "system.h"
+
+extern "C"
+{
+	#include <lstate.h>
+	#include <lauxlib.h>
+	#include <lua.h>	
+	#include <lualib.h>
+}
+
 
 namespace gui
 {
@@ -48,7 +58,7 @@ ScriptSystem::ScriptSystem(filesystem_ptr fs, lua_State* externalState)
 {
 	if(!m_state)
 	{
-		m_state = lua_open();
+		m_state = luaL_newstate();
 		m_ext = false;
 		if (m_state)
 		{

@@ -7,6 +7,8 @@
 
 #include "utf8.h"
 
+#include <boost/tokenizer.hpp>
+
 namespace gui
 {
 	// translate from UTF-8 to UTF-16

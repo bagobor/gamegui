@@ -6,6 +6,8 @@
 #include "texmanager.h"
 #include "imageops.h"
 
+#include <boost/function.hpp>
+
 namespace gui
 {
 class base_window;

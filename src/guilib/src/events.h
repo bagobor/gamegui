@@ -1,5 +1,7 @@
 #pragma once
 
+#include <boost/function.hpp>
+
 namespace gui
 {
 namespace events

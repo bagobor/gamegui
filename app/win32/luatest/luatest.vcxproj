@@ -56,7 +56,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src;$(SolutionDir)..\..\..\src\guilib;$(SolutionDir)..\..\..\src\guiplatform;$(SolutionDir)..\..\..\external\lua/src;$(SolutionDir)..\..\..\external\luabind;$(SolutionDir)..\..\..\external\boost\;$(SolutionDir)..\..\..\external\win32\rgde;$(SolutionDir)..\..\..\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src;$(SolutionDir)..\..\..\src\guilib;$(SolutionDir)..\..\..\src\guiplatform;$(SolutionDir)..\..\..\external\lua;$(SolutionDir)..\..\..\external\luabind;$(SolutionDir)..\..\..\external\boost_1_54_0\;$(SolutionDir)..\..\..\external\win32\rgde;$(SolutionDir)..\..\..\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;STRSAFE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -64,6 +64,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>dxerr.lib;dxguid.lib;d3dx9d.lib;d3d9.lib;winmm.lib;comctl32.lib;core.lib;log.lib;render.lib;render_win32_dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -116,10 +117,6 @@
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\build\win32\vc9\freetype.vcxproj">
-      <Project>{78b079bd-9fc7-4b9e-b4a6-96da0f00248b}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\build\win32\vc9\lua.vcxproj">
       <Project>{3c6a37b2-6046-4ca9-859a-5c28b4609acc}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

@@ -4,9 +4,8 @@
 
 namespace gui
 {
-namespace rgde_platform
+namespace ogl_platform
 {
-
 
 /*************************************************************************
 	Constructor

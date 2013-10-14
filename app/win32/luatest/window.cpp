@@ -131,7 +131,7 @@ void TestWindow::createGUISystem()
 
 	filesystem_ptr fs(new gui_filesystem(m_filesystem, "/"));
 
-	m_render = gui::rgde_platform::CreateRenderer(m_render_device, fs, 1024);
+	m_render = gui::ogl_platform::CreateRenderer(m_render_device, fs, 1024);
 	assert(m_render && "Can't create GUI renderer!");
 	m_system = new gui::System(*m_render, "default", m_state);
 	assert(m_system && "Can't create GUI System!");

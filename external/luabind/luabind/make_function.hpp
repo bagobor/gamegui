@@ -6,9 +6,8 @@
 # define LUABIND_MAKE_FUNCTION_081014_HPP
 
 # include <luabind/config.hpp>
-# include <luabind/object.hpp>
+# include <luabind/detail/object.hpp>
 # include <luabind/detail/call.hpp>
-# include <luabind/detail/compute_score.hpp>
 # include <luabind/detail/deduce_signature.hpp>
 # include <luabind/detail/format_signature.hpp>
 
@@ -56,6 +55,8 @@ namespace detail
           int results = 0;
 
 # ifndef LUABIND_NO_EXCEPTIONS
+          bool exception_caught = false;
+
           try
           {
               results = invoke(
@@ -63,9 +64,12 @@ namespace detail
           }
           catch (...)
           {
+              exception_caught = true;
               handle_exception_aux(L);
-              lua_error(L);
           }
+
+          if (exception_caught)
+              lua_error(L);
 # else
           results = invoke(L, *impl, ctx, impl->f, Signature(), impl->policies);
 # endif

@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../../external/boost;$(SolutionDir)../../../external/luabind;$(SolutionDir)../../../external/lua/src;$(SolutionDir)../../../external;$(SolutionDir)..\..\..\external\win32\rgde;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../external/boost_1_54_0/;$(SolutionDir)../../../external/luabind;$(SolutionDir)../../../external/lua/;$(SolutionDir)../../../external;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;D_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -61,6 +61,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Lib>
       <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
@@ -131,6 +132,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="xml\xml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ActiveText.h" />
@@ -180,6 +182,13 @@
     <ClInclude Include="src\vector.h" />
     <ClInclude Include="guilib.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="xml\xml.h" />
+    <ClInclude Include="xml\xmlconfig.h" />
+    <ClInclude Include="xml\xml_forward.h" />
+    <ClInclude Include="xml\xml_options.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="xml\xml.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

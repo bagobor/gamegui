@@ -1,10 +1,12 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "window.h"
 
 #include "utils.h"
 #include "system.h"
 
 #include "eventtypes.h"
+
+#include "../xml/xml.h"
 
 namespace gui
 {
@@ -795,7 +797,7 @@ void base_window::subscribeNamedEvent(std::string name, base_window* sender, std
 	
 	if(!name.empty())
 	{
-		NamedEventEntry entry = std::make_pair<std::string, base_window*>(name, sender);
+		NamedEventEntry entry = std::make_pair(name, sender);
 		
 		m_scriptevents.insert(std::make_pair(entry,script));
 
@@ -809,7 +811,7 @@ void base_window::unsubscribeNamedEvent(std::string name, base_window* sender)
 {
 	if(!name.empty())
 	{
-		NamedEventEntry entry = std::make_pair<std::string, base_window*>(name, sender);
+		NamedEventEntry entry = std::make_pair(name, sender);
 		NamedEventsMap::iterator it = m_scriptevents.find(entry);
 		if(it != m_scriptevents.end())
 		{			
@@ -831,7 +833,7 @@ void base_window::sendNamedEvent(std::string name)
 
 void base_window::onNamedEvent(events::NamedEvent& e)
 {
-	NamedEventEntry entry = std::make_pair<std::string, base_window*>(e.m_name, e.m_sender);
+	NamedEventEntry entry = std::make_pair(e.m_name, e.m_sender);
 	NamedEventsMap::iterator it = m_scriptevents.find(entry);
 	if(it != m_scriptevents.end())
 	{
