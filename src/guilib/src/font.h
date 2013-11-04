@@ -69,7 +69,6 @@ namespace gui
 		typedef std::map<utf32, float> KerningMap;
 		KerningMap	m_kerning;
 #endif
-
 		// size in pixels
 		float m_width, m_height;
 	};
@@ -77,14 +76,13 @@ namespace gui
 	class  Font
 	{
 	public:
-		virtual ~Font ();
-
-	public:
 		/// Color value used whenever a color is not specified.
 		static const argb_t DefaultColour;
 		static const std::wstring	DefaultWhitespace;		//!< The default set of whitespace
 		static const std::wstring	DefaultAlphanumerical;	//!< default set of alphanumerical.
 		static const std::wstring	DefaultWrapDelimiters;	//!< The default set of word-wrap delimiters
+
+		virtual ~Font ();
 
 		bool isCodepointAvailable (utf32 cp) const
 		{ 
@@ -92,9 +90,14 @@ namespace gui
 			return (it != m_cp_map_index.end()) ? it->second != m_cp_map.end() : false;
 		}
 
-		size_t drawText (const std::string& text, const Rect& draw_area, float z, const Rect& clip_rect, TextFormatting fmt, const ColorRect& colours, float x_scale = 1.0f, float y_scale = 1.0f);
-		size_t drawText (const std::wstring& text, const Rect& draw_area, float z, const Rect& clip_rect, TextFormatting fmt, const ColorRect& colours, float x_scale = 1.0f, float y_scale = 1.0f);
-		size_t drawText (const std::string& text, const Rect& draw_area, float z, const Rect& clip_rect, TextFormatting fmt, float x_scale = 1.0f, float y_scale = 1.0f)
+		size_t drawText (const std::string& text, const Rect& draw_area, float z, const Rect& clip_rect, 
+						TextFormatting fmt, const ColorRect& colours, float x_scale = 1.0f, float y_scale = 1.0f);
+
+		size_t drawText (const std::wstring& text, const Rect& draw_area, float z, const Rect& clip_rect, 
+						 TextFormatting fmt, const ColorRect& colours, float x_scale = 1.0f, float y_scale = 1.0f);
+
+		size_t drawText (const std::string& text, const Rect& draw_area, float z, const Rect& clip_rect, 
+							TextFormatting fmt, float x_scale = 1.0f, float y_scale = 1.0f)
 		{ 
 			return drawText (text, draw_area, z, clip_rect, fmt, ColorRect(DefaultColour), x_scale, y_scale); 
 		}
@@ -153,7 +156,7 @@ namespace gui
 
 	protected:
 		Font (const std::string& name, const std::string& fontname, unsigned int size, Renderer& render);
-		Font& operator=(const Font&) {return *this;}
+		Font& operator=(const Font&);
 
 		virtual void updateFont () = 0;
 

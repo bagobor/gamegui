@@ -28,6 +28,9 @@
     <Filter Include="xml">
       <UniqueIdentifier>{7f4863b9-5980-435d-909b-2abe2920f811}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\render">
+      <UniqueIdentifier>{af2cf413-3eec-4b14-9370-c16139f7b509}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ActiveText.cpp">
@@ -42,13 +45,7 @@
     <ClCompile Include="src\font.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\system.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\texmanager.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\utils.cpp">
@@ -140,6 +137,12 @@
     <ClCompile Include="xml\xml.cpp">
       <Filter>xml</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderer.cpp">
+      <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texmanager.cpp">
+      <Filter>src\render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ActiveText.h">
@@ -160,16 +163,7 @@
     <ClInclude Include="src\input.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\renderimageinfo.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\system.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\texmanager.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\texture.h">
@@ -290,6 +284,15 @@
     </ClInclude>
     <ClInclude Include="xml\xmlconfig.h">
       <Filter>xml</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderer.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderimageinfo.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\texmanager.h">
+      <Filter>src\render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,8 @@
 #include <guilib/src/system.h>
 #include <guilib/src/font.h>
 
+#include <vector>
+
 namespace gui
 {
 	// Forward declarations for font properties

@@ -1,5 +1,5 @@
-//EventBase.cpp
 #include "stdafx.h"
+
 #include "events.h"
 
 namespace gui
@@ -8,82 +8,67 @@ namespace events
 {
 	namespace
 	{
-		class CListManagers
+		class list_managers
 		{
 		public:
-			CListManagers() {}
-			~CListManagers() {}
+			list_managers() {}
+			~list_managers() {}
 
-			//отписать данного получателя ото всех менеджеров
-			void unsubscribeAll (listener_base *l);
-			//менеджер добавляет себя в общий список менеджеров
-			void addManager     (manager_base *m);
-			//менеджер удаляет себя из общего списка менеджеров
-			void delManager     (manager_base *m);
+			void unsubscribe_all (details::base_listener *listener);
+			void add_manager     (details::base_events_manager *manager);
+			void remove_manager  (details::base_events_manager *manager);
 
 		private:
-			std::list<manager_base*> m_managers;
+			std::list<details::base_events_manager*> m_managers;
 		} list_manager;
 	}
 
-
-	manager_base::manager_base()
+	namespace details
 	{
-		list_manager.addManager(this);
+		base_events_manager::base_events_manager()
+		{
+			list_manager.add_manager(this);
+		}
+
+		base_events_manager::~base_events_manager()
+		{
+			list_manager.remove_manager(this);
+		}
+
+		base_listener::base_listener() {}
+
+		base_listener::~base_listener()
+		{		
+			list_manager.unsubscribe_all(this);
+		}
+
+		base_sender::base_sender() {}
+
+		base_sender::~base_sender() {}
 	}
 
-	manager_base::~manager_base()
+	void list_managers::unsubscribe_all(details::base_listener *listener)
 	{
-		list_manager.delManager(this);
+		std::list<details::base_events_manager*>::iterator i = m_managers.begin();
+		for (; i != m_managers.end(); ++i) {
+			(*i)->unsubscribe(listener);
+		}
 	}
 
-	listener_base::listener_base() 
+	void list_managers::add_manager (details::base_events_manager *manager)
 	{
+		m_managers.push_back(manager);
 	}
 
-	//отписать получателя от всех менеджеров
-	listener_base::~listener_base()
-	{		
-		list_manager.unsubscribeAll(this);
-	}
-
-	sender_base::sender_base() 
+	void list_managers::remove_manager (details::base_events_manager *manager)
 	{
+		std::list<details::base_events_manager*>::iterator i = m_managers.begin();
+		while (i != m_managers.end()) {
+			if ((*i) == manager)
+				i = m_managers.erase(i);
+			else
+				++i;
+		}
 	}
-
-	sender_base::~sender_base()
-	{
-	}
-
-    //отписать данного получателя ото всех менеджеров
-    void CListManagers::unsubscribeAll(listener_base *l)
-    {
-        std::list<manager_base*>::iterator i = m_managers.begin();
-        while (i != m_managers.end())
-        {
-            (*i)->unsubscribe(l);
-            ++i;
-        }
-    }
-
-    //менеджер добавляет себя в общий список менеджеров
-    void CListManagers::addManager (manager_base *m)
-    {
-        m_managers.push_back(m);
-    }
-
-    //менеджер удаляет себя из общего списка менеджеров
-    void CListManagers::delManager (manager_base *m)
-    {
-        std::list<manager_base*>::iterator i = m_managers.begin();
-        while (i != m_managers.end())
-        {
-            if ((*i) == m)
-                i = m_managers.erase(i);
-            else
-                ++i;
-        }
-    }
-
-}//events
-}//gui
+}
+}

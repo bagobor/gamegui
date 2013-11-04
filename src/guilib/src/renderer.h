@@ -34,6 +34,7 @@ class Image;
 
 class  Renderer
 {
+	Renderer& operator=(const Renderer&);
 public:
 	struct RenderCallbackInfo
 	{
@@ -76,7 +77,7 @@ public:
 		RenderCallbackInfo callbackInfo;
 	};
 
-	Renderer(filesystem_ptr fs);
+	explicit Renderer(filesystem_ptr fs);
 	virtual ~Renderer();
 
 	virtual void	addCallback( AfterRenderCallbackFunc callback,
@@ -148,9 +149,7 @@ protected:
 	
 	friend TextureManager;
 	virtual	TexturePtr	createTextureInstance(const std::string& filename) = 0;
-
-protected:
-	Renderer& operator=(const Renderer&) { return *this; }
+		
 	void computeVirtualDivRealFactor(Size& coefOut) const;
 
 protected:

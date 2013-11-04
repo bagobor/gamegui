@@ -1,18 +1,13 @@
-#include <rgde/log/util.h>
-#include <rgde/core/math.h>
-#include <rgde/core/windows.h>
-#include <rgde/render/device.h>
-#include <rgde/core/file_system.h>
+#pragma once
 
 using namespace gui;
-using namespace rgde;
-
 
 class gui_filesystem : public gui::filesystem
 {
 public:
-	gui_filesystem(core::vfs::system& fs, const std::string& basedir) 
-		: m_fs(fs), m_basedir(basedir) {		
+	gui_filesystem(const std::string& basedir) 
+		: m_basedir(basedir) 
+	{
 	}
 
 	~gui_filesystem() {
@@ -62,6 +57,5 @@ public:
 	}
 
 protected:
-	core::vfs::system& m_fs;
 	std::string m_basedir;
 };

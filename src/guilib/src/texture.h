@@ -11,12 +11,13 @@ namespace gui
 	public:
 		enum PixelFormat
 		{        
-			PF_RGB, //! Each pixel is 3 bytes. RGB in that order.
+			PF_RGB = 0, //! Each pixel is 3 bytes. RGB in that order.
 			PF_RGBA,//! Each pixel is 4 bytes. RGBA in that order.
-			PF_COMPRESSED
+			PF_COMPRESSED, // platform dependent
+			PF_MASK = 0xFF
 		};
 
-		Texture(Renderer& owner) : m_owner(owner) {}
+		explicit Texture(Renderer& owner) : m_owner(owner) {}
 		virtual ~Texture() {}
 
 		const Size& getSize() const { return m_size; }
