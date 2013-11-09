@@ -4,7 +4,10 @@
 #include "colorRect.h"
 #include "texture.h"
 #include "texmanager.h"
+#include "log.h"
+#include "renderCallback.h"
 #include "imageops.h"
+#include "imagesetmanager.h"
 
 #include <boost/function.hpp>
 
@@ -59,8 +62,8 @@ public:
 		unsigned long		topRightCol;
 		unsigned long		bottomLeftCol;
 		unsigned long		bottomRightCol;
-
-		inline bool operator<(const QuadInfo& other) const
+		BLEND_OPS			blend;
+		__inline bool operator<(const QuadInfo& other) const
 		{
 			// this is intentionally reversed.
 			return z > other.z;
@@ -135,6 +138,8 @@ public:
 	Rect virtualToRealCoord( const Rect& virtualRect ) const;
 	Rect realToVirtualCoord( const Rect& realRect ) const;
 
+	void setLogCallback(LoggerCallback log_cb) {m_log_cb = log_cb;}
+
 	void cleanup(bool complete);
 
 	filesystem_ptr get_filesystem() {return m_filesystem;}
@@ -177,7 +182,7 @@ protected:
 	const float	GuiZLayerStep;
 	float	m_current_z;
 
-	//log& m_log;
+	LoggerCallback m_log_cb;
 
 	typedef std::vector <QuadInfo> CachedQuadList;
 	struct QuadCacheRecord

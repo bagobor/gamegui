@@ -81,7 +81,8 @@ namespace gui
 		const FontGlyph* glyph;
 		float cur_extent = 0, adv_extent = 0, width;
 
-		for (size_t c = 0; c < text.length(); ++c)
+		const size_t size = text.length();
+		for (size_t c = 0; c < size; ++c)
 		{
 			glyph = getGlyphData(text[c]);
 
@@ -94,7 +95,7 @@ namespace gui
 
 				adv_extent += glyph->getAdvance(x_scale);
 	#ifdef GUI_KERNING_ENABLED
-				if (c < text.length() - 1)
+				if( c < (size-1) )
 					adv_extent += glyph->getKerning(text[c+1]) * x_scale;
 	#endif
 			}

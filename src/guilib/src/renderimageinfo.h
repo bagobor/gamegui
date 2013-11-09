@@ -1,6 +1,7 @@
 #pragma once
 
 #include "rect.h"
+#include "imagesetmanager.h"
 
 namespace gui
 {
@@ -13,5 +14,6 @@ namespace gui
 		Rect pixel_rect;
 		point offset;
 		point crop;
+		BLEND_OPS blend;
 	};
 }

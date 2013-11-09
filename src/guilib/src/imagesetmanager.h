@@ -2,6 +2,8 @@
 
 #include "rect.h"
 #include "Size.h"
+#include <boost/unordered_map.hpp>
+
 namespace xml
 {
 	class node;
@@ -25,6 +27,12 @@ namespace gui
 
 	struct RenderImageInfo;
 
+	enum BLEND_OPS
+	{
+		BLEND_ADD,
+		BLEND_MODULATE
+	};
+
 	class Image
 	{
 	public:
@@ -34,7 +42,7 @@ namespace gui
 		/// @param parent - Ordinals in the sub-images will point to textures in this imageset
 		/// @param sz - full image size
 		/// @param data - sub-images
-		Image(Imageset* parent, const std::string& name, const Size& sz, SubImages& data);
+		Image(Imageset* parent, const std::string& name, const Size& sz, SubImages& data, BLEND_OPS blend = BLEND_MODULATE);
 		/// @brief - An empty image
 		Image();
 
@@ -49,11 +57,14 @@ namespace gui
 		
 		const std::string& GetName() const;
 
+		BLEND_OPS getBlend() const { return m_blend; }
+		void setBlend( BLEND_OPS value ) const { m_blend = value; }
 	private:
 		Size m_size;
 		SubImages m_data;
 		Imageset* m_parent;
 		std::string m_name;
+		mutable BLEND_OPS m_blend;
 	};
 
 	inline Size Image::GetSize() const

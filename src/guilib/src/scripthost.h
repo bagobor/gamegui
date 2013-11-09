@@ -24,7 +24,7 @@ namespace gui
 	public:
 		/// @brief - ctor
 		/// @param externalState - to provide external luaState, 0 - to use own one.
-		ScriptSystem(filesystem_ptr fs, lua_State* externalState);
+		ScriptSystem(filesystem_ptr fs, lua_State* externalState = NULL);
 		~ScriptSystem();
 
 		lua_State* LuaState();

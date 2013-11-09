@@ -81,6 +81,7 @@ void System::makeLuaBinding(void)
 			.def("offset", &Rect::offset)
 			.def("isPointInRect", &Rect::isPointInRect)
 			.def("scale", &Rect::scale)
+            .def("scale_u", &Rect::scale_u)
 			,
 			class_ <point>("point")
 			.def(constructor<>())
@@ -123,8 +124,16 @@ void System::makeLuaBinding(void)
 				value("Stretch", Stretch),
 				value("Tile", Tile)
 			]
+			.enum_("BLEND_OPS")
+				[
+					value("BLEND_ADD", BLEND_ADD),
+					value("BLEND_MODULATE", BLEND_MODULATE)
+				]
 			.def("GetName", &Image::GetName)
 			.def("GetSize", &Image::GetSize)
+			.def("setBlend"  
+			
+			, &Image::setBlend)
 			,
 			class_ <Imageset>("Imageset")
 			.def("getImage", &Imageset::GetImagePtr)

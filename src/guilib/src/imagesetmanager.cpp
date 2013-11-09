@@ -7,10 +7,11 @@
 
 namespace gui
 {
-	Image::Image(Imageset* parent, const std::string& name, const Size& sz, SubImages& data)
+	Image::Image(Imageset* parent, const std::string& name, const Size& sz, SubImages& data, BLEND_OPS blend)
 		: m_parent(parent)
 		, m_size(sz)
 		, m_name(name)
+		, m_blend(blend)
 	{
 		m_data.swap(data);
 	}
@@ -28,6 +29,7 @@ namespace gui
 			info.pixel_rect = sb.m_src;
 			info.offset = sb.m_offset;
 			info.crop = sb.m_crop.getPosition();
+			info.blend = m_blend;
 		}
 	}
 
@@ -98,7 +100,7 @@ namespace gui
 					TextureOrdinals::iterator it = textureOrdinals.find(texname);
 					if(it == textureOrdinals.end())
 					{
-						TexturePtr tex = sys.getRenderer().createTexture("imageset\\" + filename);
+						TexturePtr tex = sys.getRenderer().createTexture("imageset/" + filename);
 						if(tex)
 						{
 							m_textures.push_back(tex);

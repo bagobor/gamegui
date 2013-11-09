@@ -305,12 +305,12 @@ void Renderer::sortQuads(void)
 
 void Renderer::OnLostDevice(void)
 {
-	m_texmanager.onDeviceLost();
+	//m_texmanager.onDeviceLost();
 }
 
 void Renderer::OnResetDevice(void)
 {
-	m_texmanager.onDeviceReset();
+	//m_texmanager.onDeviceReset();
 }
 
 const Size Renderer::getSize(void)
@@ -341,7 +341,7 @@ void Renderer::computeVirtualDivRealFactor(Size& coefOut) const
 		return;
 	}
 	const Size& original = getOriginalSize(); 
-	Size& current = getViewportSize();
+	const Size& current = getViewportSize();
 	coefOut = current/original;	
 }
 Rect Renderer::virtualToRealCoord( const Rect& virtualRect ) const
@@ -383,5 +383,6 @@ void Renderer::fillQuad(QuadInfo& quad, const Rect& rc, const Rect& uv, float z,
 	quad.topRightCol	= colors.m_top_right.getARGB();
 	quad.bottomLeftCol	= colors.m_bottom_left.getARGB();
 	quad.bottomRightCol	= colors.m_bottom_right.getARGB();
+	quad.blend = img.blend;
 }
 }

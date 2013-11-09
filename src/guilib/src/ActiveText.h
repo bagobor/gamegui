@@ -85,7 +85,7 @@ namespace gui
 		class Parser
 		{
 		public:
-			Parser(System& sys);
+			explicit Parser(System& sys);
 			~Parser();
 
 			void parseText(const std::string& text, Color c, FontPtr font);

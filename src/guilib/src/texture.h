@@ -13,6 +13,7 @@ namespace gui
 		{        
 			PF_RGB = 0, //! Each pixel is 3 bytes. RGB in that order.
 			PF_RGBA,//! Each pixel is 4 bytes. RGBA in that order.
+			PF_ALPHA,
 			PF_COMPRESSED, // platform dependent
 			PF_MASK = 0xFF
 		};

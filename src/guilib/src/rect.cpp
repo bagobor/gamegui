@@ -166,5 +166,11 @@ namespace gui
 
 		return *this;
 	}
+    
+    Rect& Rect::scale_u(float scalar)
+	{
+        this->operator *= (scalar);
+		return *this;
+	}
 
 }

@@ -3,6 +3,9 @@
 #include "vector.h"
 #include "size.h"
 
+
+#define FLT_EPSILON  1e-5
+
 namespace gui
 {
 	/*!
@@ -35,6 +38,8 @@ namespace gui
 		Rect&	constrainSize(const Size& max_sz, const Size& min_sz);
 
 		Rect&	scale(const Size& size);
+		Rect&	scale_u(float scalar);
+
 		bool	empty(void) const;
 
 		bool	operator==(const Rect& rhs) const;
