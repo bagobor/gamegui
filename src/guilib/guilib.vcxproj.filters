@@ -157,9 +157,6 @@
     <ClInclude Include="src\font.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\imageops.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\input.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -293,6 +290,9 @@
     </ClInclude>
     <ClInclude Include="src\texmanager.h">
       <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\imageops.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

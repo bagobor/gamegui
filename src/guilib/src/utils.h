@@ -11,7 +11,7 @@ namespace gui
 	Size StringToSize(const std::string& str);
 	std::string SizeToString(const Size& val);
 
-	class  vec2;
+	struct  vec2;
 	typedef	vec2 point;
 	point StringToPoint(const std::string& str);
 	std::string PointToString(const point& val);

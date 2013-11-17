@@ -4,7 +4,7 @@
 #include "size.h"
 
 
-#define FLT_EPSILON  1e-5
+
 
 namespace gui
 {
@@ -17,7 +17,7 @@ namespace gui
 	public:
 		Rect() : m_left(0), m_top(0), m_right(0), m_bottom(0) {}
 		Rect(float left, float top, float right, float bottom);
-		Rect(point pos, Size sz);
+		Rect(const point& pos, const Size& sz);
 
 		point	getPosition() const;
 		float	getWidth() const;
@@ -80,14 +80,18 @@ namespace gui
 		setWidth(size.width);
 		setHeight(size.height);
 	}
+
 	inline bool Rect::empty(void) const
 	{
+		//const float FLT_EPSILON  = 1e-5;
 		return !(getWidth() > FLT_EPSILON && getHeight() > FLT_EPSILON);
 	}
+
 	inline bool	Rect::operator==(const Rect& rhs) const
 	{
 		return ((m_left == rhs.m_left) && (m_right == rhs.m_right) && (m_top == rhs.m_top) && (m_bottom == rhs.m_bottom));
 	}
+
 	inline bool	Rect::operator!=(const Rect& rhs) const
 	{
 		return !operator==(rhs);

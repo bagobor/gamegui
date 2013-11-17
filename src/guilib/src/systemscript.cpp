@@ -124,16 +124,11 @@ void System::makeLuaBinding(void)
 				value("Stretch", Stretch),
 				value("Tile", Tile)
 			]
-			.enum_("BLEND_OPS")
-				[
-					value("BLEND_ADD", BLEND_ADD),
-					value("BLEND_MODULATE", BLEND_MODULATE)
-				]
 			.def("GetName", &Image::GetName)
 			.def("GetSize", &Image::GetSize)
-			.def("setBlend"  
-			
-			, &Image::setBlend)
+			.property("AdditiveBlend", &Image::getAdditiveBlend, &Image::setAdditiveBlend)
+			.def("setAdditiveBlend", &Image::setAdditiveBlend)
+			.def("getAdditiveBlend", &Image::getAdditiveBlend)
 			,
 			class_ <Imageset>("Imageset")
 			.def("getImage", &Imageset::GetImagePtr)

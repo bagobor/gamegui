@@ -14,7 +14,7 @@ namespace gui
 	{
 	}
 
-	Rect::Rect(point pos, Size sz)
+	Rect::Rect(const point& pos, const Size& sz)
 		: m_top(pos.y)
 		, m_bottom(pos.y + sz.height)
 		, m_left(pos.x)

@@ -25,8 +25,3 @@
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <boost/unordered_map.hpp>
-
-#include <rgde/core/windows.h>
-#include <rgde/render/device.h>
-#include <rgde/core/file_system.h>
-#include <rgde/core/math.h>

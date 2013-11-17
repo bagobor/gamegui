@@ -7,16 +7,16 @@
 
 namespace gui
 {
-	Image::Image(Imageset* parent, const std::string& name, const Size& sz, SubImages& data, BLEND_OPS blend)
+	Image::Image(Imageset* parent, const std::string& name, const Size& sz, SubImages& data, bool isAdditiveBlend)
 		: m_parent(parent)
 		, m_size(sz)
 		, m_name(name)
-		, m_blend(blend)
+		, m_isAdditiveBlend(isAdditiveBlend)
 	{
 		m_data.swap(data);
 	}
 
-	Image::Image()
+	Image::Image() : m_parent(0)
 	{
 	}
 
@@ -29,7 +29,7 @@ namespace gui
 			info.pixel_rect = sb.m_src;
 			info.offset = sb.m_offset;
 			info.crop = sb.m_crop.getPosition();
-			info.blend = m_blend;
+			info.isAdditiveBlend = m_isAdditiveBlend;
 		}
 	}
 

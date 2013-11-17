@@ -8,9 +8,6 @@
 #include "uitest.h"
 #include "guiplatform.h"
 
-#include <rgde/log/util.h>
-#include <rgde/core/math.h>
-
 #include <boost/filesystem.hpp>
 #include <boost/bind.hpp>
 
@@ -209,85 +206,85 @@ bool ui_test_application::isFinished()
 
 	return false;
 }
-
-core::windows::result ui_test_application::wnd_proc(ushort message, uint wparam, long lparam )
-{
-	switch (message)
-	{
-	case WM_CHAR:
-		handleChar((UINT_PTR)wparam);
-		return 0;
-
-	case WM_LBUTTONDOWN:
-		handleMouseButton(EventArgs::Left, EventArgs::Down);
-		return 0;
-
-	case WM_LBUTTONUP:
-		handleMouseButton(EventArgs::Left, EventArgs::Up);
-		return 0;
-
-	case WM_RBUTTONDOWN:
-		handleMouseButton(EventArgs::Right, EventArgs::Down);
-		return 0;
-
-	case WM_RBUTTONUP:
-		handleMouseButton(EventArgs::Right, EventArgs::Up);
-		return 0;
-
-	case WM_MBUTTONDOWN:
-		handleMouseButton(EventArgs::Middle, EventArgs::Down);				
-		return 0;
-
-	case WM_MBUTTONUP:
-		handleMouseButton(EventArgs::Middle, EventArgs::Up);
-		return 0;
-
-	case WM_ACTIVATE:	// Watch For Window Activate Message
-		m_active = !HIWORD(wparam);// Check Minimization State
-		return 0;
-
-	case WM_KEYDOWN:
-		{
-			if ('Q' == wparam || 'q' == wparam || VK_ESCAPE == wparam)
-				exit(0);
-
-			handleKeyboard((UINT_PTR)wparam, EventArgs::Down);
-
-			return 0;
-		}
-
-	case WM_KEYUP:
-		handleKeyboard((UINT_PTR)wparam, EventArgs::Up);
-		return 0;
-
-	case WM_SIZE:
-		//resize_scene(LOWORD(lparam), HIWORD(lparam));
-		return 0;
-
-	case WM_MOUSEWHEEL:
-		{
-			int delta = GET_WHEEL_DELTA_WPARAM(wparam);
-			if(m_system) {
-				gui::event e = {0};
-				e.type = gui::event_mouse | gui::mouse_wheel;
-				e.mouse.delta = delta;
-				m_system->handle_event(e);
-			}
-		}
-		return 0;
-
-	case WM_MOUSEMOVE:
-		if(m_system){
-			gui::event e = {0};
-			e.type = gui::event_mouse | gui::mouse_move;
-			e.mouse.x = LOWORD(lparam);
-			e.mouse.y = HIWORD(lparam);
-			return m_system->handle_event(e);
-		}
-		return 0;
-	}
-	return window::wnd_proc(message, wparam, lparam);
-}
+//
+//core::windows::result ui_test_application::wnd_proc(ushort message, uint wparam, long lparam )
+//{
+//	switch (message)
+//	{
+//	case WM_CHAR:
+//		handleChar((UINT_PTR)wparam);
+//		return 0;
+//
+//	case WM_LBUTTONDOWN:
+//		handleMouseButton(EventArgs::Left, EventArgs::Down);
+//		return 0;
+//
+//	case WM_LBUTTONUP:
+//		handleMouseButton(EventArgs::Left, EventArgs::Up);
+//		return 0;
+//
+//	case WM_RBUTTONDOWN:
+//		handleMouseButton(EventArgs::Right, EventArgs::Down);
+//		return 0;
+//
+//	case WM_RBUTTONUP:
+//		handleMouseButton(EventArgs::Right, EventArgs::Up);
+//		return 0;
+//
+//	case WM_MBUTTONDOWN:
+//		handleMouseButton(EventArgs::Middle, EventArgs::Down);				
+//		return 0;
+//
+//	case WM_MBUTTONUP:
+//		handleMouseButton(EventArgs::Middle, EventArgs::Up);
+//		return 0;
+//
+//	case WM_ACTIVATE:	// Watch For Window Activate Message
+//		m_active = !HIWORD(wparam);// Check Minimization State
+//		return 0;
+//
+//	case WM_KEYDOWN:
+//		{
+//			if ('Q' == wparam || 'q' == wparam || VK_ESCAPE == wparam)
+//				exit(0);
+//
+//			handleKeyboard((UINT_PTR)wparam, EventArgs::Down);
+//
+//			return 0;
+//		}
+//
+//	case WM_KEYUP:
+//		handleKeyboard((UINT_PTR)wparam, EventArgs::Up);
+//		return 0;
+//
+//	case WM_SIZE:
+//		//resize_scene(LOWORD(lparam), HIWORD(lparam));
+//		return 0;
+//
+//	case WM_MOUSEWHEEL:
+//		{
+//			int delta = GET_WHEEL_DELTA_WPARAM(wparam);
+//			if(m_system) {
+//				gui::event e = {0};
+//				e.type = gui::event_mouse | gui::mouse_wheel;
+//				e.mouse.delta = delta;
+//				m_system->handle_event(e);
+//			}
+//		}
+//		return 0;
+//
+//	case WM_MOUSEMOVE:
+//		if(m_system){
+//			gui::event e = {0};
+//			e.type = gui::event_mouse | gui::mouse_move;
+//			e.mouse.x = LOWORD(lparam);
+//			e.mouse.y = HIWORD(lparam);
+//			return m_system->handle_event(e);
+//		}
+//		return 0;
+//	}
+//	return window::wnd_proc(message, wparam, lparam);
+//}
 
 void ui_test_application::handleViewportChange()
 {
@@ -374,16 +371,18 @@ void ui_test_application::OnLostDevice(void)
 	}		
 }
 
-HRESULT ui_test_application::OnResetDevice(void)
+bool ui_test_application::OnResetDevice(void)
 {
-	try
-	{
-		m_render->OnResetDevice();
-		handleViewportChange();
-	}
-	catch(...)
-	{
-		return S_FALSE;
-	}
-	return S_OK;
+	handleViewportChange();
+	return true;
+	//try
+	//{
+	//	m_render->OnResetDevice();
+	//	
+	//}
+	//catch(...)
+	//{
+	//	return S_FALSE;
+	//}
+	//return S_OK;
 }

@@ -9,11 +9,11 @@ namespace gui
 
 	struct RenderImageInfo
 	{
-		RenderImageInfo() : texture(0) {}
+		RenderImageInfo() : texture(0), isAdditiveBlend(false) {}
 		Texture* texture;
 		Rect pixel_rect;
 		point offset;
 		point crop;
-		BLEND_OPS blend;
+		bool  isAdditiveBlend;
 	};
 }

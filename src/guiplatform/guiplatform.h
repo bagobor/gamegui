@@ -12,6 +12,6 @@ namespace gui
 
 	namespace ogl_platform
 	{
-		Renderer* CreateRenderer(rgde::render::device& dev, filesystem_ptr fs, unsigned buff = 1024);
+		//Renderer* CreateRenderer(rgde::render::device& dev, filesystem_ptr fs, unsigned buff = 1024);
 	}	
 }

@@ -242,26 +242,26 @@ namespace gui
 			switch(fmt)
 			{
 			case LeftAligned:
-				drawTextLine(currLine, tmpDrawArea, Vector3(tmpDrawArea.m_left, y_base, z), clip_rect, colours, x_scale, y_scale);
+				drawTextLine(currLine, tmpDrawArea, vec3(tmpDrawArea.m_left, y_base, z), clip_rect, colours, x_scale, y_scale);
 				thisCount = 1;
 				y_base += getLineSpacing(y_scale);
 				break;
 
 			case RightAligned:
-				drawTextLine(currLine, tmpDrawArea, Vector3(tmpDrawArea.m_right - getTextExtent(currLine, x_scale), y_base, z), clip_rect, colours, x_scale, y_scale);
+				drawTextLine(currLine, tmpDrawArea, vec3(tmpDrawArea.m_right - getTextExtent(currLine, x_scale), y_base, z), clip_rect, colours, x_scale, y_scale);
 				thisCount = 1;
 				y_base += getLineSpacing(y_scale);
 				break;
 
 			case Centred:
-				drawTextLine(currLine, tmpDrawArea, Vector3((tmpDrawArea.m_left + ((tmpDrawArea.getWidth() - getTextExtent(currLine, x_scale)) / 2.0f)), y_base, z), clip_rect, colours, x_scale, y_scale);
+				drawTextLine(currLine, tmpDrawArea, vec3((tmpDrawArea.m_left + ((tmpDrawArea.getWidth() - getTextExtent(currLine, x_scale)) / 2.0f)), y_base, z), clip_rect, colours, x_scale, y_scale);
 				thisCount = 1;
 				y_base += getLineSpacing(y_scale);
 				break;
 
 			case Justified:
 				// new function in order to keep drawTextLine's signature unchanged
-				drawTextLineJustified(currLine, draw_area, Vector3(tmpDrawArea.m_left, y_base, z), clip_rect, colours, x_scale, y_scale);
+				drawTextLineJustified(currLine, draw_area, vec3(tmpDrawArea.m_left, y_base, z), clip_rect, colours, x_scale, y_scale);
 				thisCount = 1;
 				y_base += getLineSpacing(y_scale);
 				break;
@@ -379,13 +379,13 @@ namespace gui
 
 	//#define PixelAligned(x)	( ( (float)(int)(( x ) + (( x ) > 0.0f ? 0.5f : -0.5f)) ) )
 
-	void Font::drawTextLine(const std::wstring& text,  const Rect& draw_area, const Vector3& position, const Rect& clip_rect, const ColorRect& colours, float x_scale, float y_scale)
+	void Font::drawTextLine(const std::wstring& text,  const Rect& draw_area, const vec3& position, const Rect& clip_rect, const ColorRect& colours, float x_scale, float y_scale)
 	{
 		if(Rect(draw_area).getIntersection(clip_rect).empty())
 			return;
 
 		//{ // draw text shadow
-		//	Vector3	cur_pos(position);
+		//	vec3	cur_pos(position);
 
 		//	float base_y = position.y;
 
@@ -418,7 +418,7 @@ namespace gui
 		//	}
 		//}
 
-		Vector3	cur_pos(position);
+		vec3	cur_pos(position);
 
 		for (size_t c = 0; c < text.length(); ++c)
 		{ 
@@ -442,13 +442,13 @@ namespace gui
 		}
 	}
 
-	void Font::drawTextLineJustified (const std::wstring& text, const Rect& draw_area, const Vector3& position, const Rect& clip_rect, const ColorRect& colours, float x_scale, float y_scale)
+	void Font::drawTextLineJustified (const std::wstring& text, const Rect& draw_area, const vec3& position, const Rect& clip_rect, const ColorRect& colours, float x_scale, float y_scale)
 	{
 		if(Rect(draw_area).getIntersection(clip_rect).empty())
 			return;
 
 	/*	{
-			Vector3	cur_pos(position);
+			vec3	cur_pos(position);
 
 			const FontGlyph* glyph;
 			float base_y = position.y;
@@ -497,7 +497,7 @@ namespace gui
 		}*/
 
 		{
-			Vector3	cur_pos(position);
+			vec3	cur_pos(position);
 
 			const FontGlyph* glyph;
 			float base_y = position.y;

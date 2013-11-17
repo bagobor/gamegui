@@ -122,12 +122,12 @@ namespace gui
 			drawText (text, draw_area, z, draw_area, LeftAligned, ColorRect(DefaultColour), x_scale, y_scale); 
 		}
 
-		void drawText (const std::string& text, const Vector3& position, const Rect& clip_rect, const ColorRect& colours, float x_scale = 1.0f, float y_scale = 1.0f)
+		void drawText (const std::string& text, const vec3& position, const Rect& clip_rect, const ColorRect& colours, float x_scale = 1.0f, float y_scale = 1.0f)
 		{ 
 			drawText (text, Rect (position.x, position.y, position.x, position.y), position.z, clip_rect, LeftAligned, colours, x_scale, y_scale);
 		}
 
-		void drawText (const std::string& text, const Vector3& position, const Rect& clip_rect, float x_scale = 1.0f, float y_scale = 1.0f)
+		void drawText (const std::string& text, const vec3& position, const Rect& clip_rect, float x_scale = 1.0f, float y_scale = 1.0f)
 		{ 
 			drawText (text, Rect (position.x, position.y, position.x, position.y), position.z, clip_rect, LeftAligned, ColorRect(DefaultColour), x_scale, y_scale); 
 		}
@@ -146,7 +146,7 @@ namespace gui
 
 		size_t getCharAtPixel (const std::wstring& text, size_t start_char, float pixel, float x_scale = 1.0f);
 
-		size_t getFormattedLineCount(const std::string& text, const Rect& format_area, Font::TextFormatting fmt, float x_scale = 1.0f);
+		size_t getFormattedLineCount(const std::string& text, const Rect& format_area, TextFormatting fmt, float x_scale = 1.0f);
 		size_t getFormattedLineCount (const std::wstring& text, const Rect& format_area, TextFormatting fmt, float x_scale = 1.0f);
 
 		float getFormattedTextExtent (const std::string& text, const Rect& format_area, TextFormatting fmt, float x_scale = 1.0f);
@@ -165,10 +165,10 @@ namespace gui
 
 		size_t getNextWord (const std::wstring& in_string, size_t start_idx, size_t max_length, std::wstring& out_string) const;
 
-		void drawTextLine (const std::wstring& text, const Rect& draw_area, const Vector3& position, const Rect& clip_rect, 
+		void drawTextLine (const std::wstring& text, const Rect& draw_area, const vec3& position, const Rect& clip_rect, 
 							const ColorRect& colours, float x_scale = 1.0f, float y_scale = 1.0f);
 
-		void drawTextLineJustified (const std::wstring& text, const Rect& draw_area, const Vector3& position, 
+		void drawTextLineJustified (const std::wstring& text, const Rect& draw_area, const vec3& position, 
 							const Rect& clip_rect, const ColorRect& colours, float x_scale = 1.0f, float y_scale = 1.0f);
 
 		float getWrappedTextExtent (const std::wstring& text, float wrapWidth, float x_scale = 1.0f);

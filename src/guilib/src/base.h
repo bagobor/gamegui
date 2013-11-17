@@ -1,5 +1,6 @@
 #pragma once
 
+
 //-----------------------------------------------------------------
 template<class Ch>
 std::list<std::basic_string<Ch> > tokenize(const std::basic_string<Ch>& delim, const std::basic_string<Ch> &src)

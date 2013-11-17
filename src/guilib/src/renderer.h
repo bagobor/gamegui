@@ -4,8 +4,7 @@
 #include "colorRect.h"
 #include "texture.h"
 #include "texmanager.h"
-#include "log.h"
-#include "renderCallback.h"
+
 #include "imageops.h"
 #include "imagesetmanager.h"
 
@@ -50,7 +49,7 @@ public:
 	struct QuadInfo 
 	{
 		struct vec2 {float x, y;};
-		Texture*			texture;
+		Texture*	texture;
 
 		// order: 0 ---> 1
 		//		  2 ---> 3
@@ -62,7 +61,7 @@ public:
 		unsigned long		topRightCol;
 		unsigned long		bottomLeftCol;
 		unsigned long		bottomRightCol;
-		BLEND_OPS			blend;
+		bool				isAdditiveBlend;
 		__inline bool operator<(const QuadInfo& other) const
 		{
 			// this is intentionally reversed.
@@ -100,13 +99,15 @@ public:
 	void			clearCache(base_window* window = 0);
 	bool			isExistInCache(base_window* window) const;
 	
-	virtual void	setQueueingEnabled(bool setting)  { m_isQueueing = setting; }
-	bool	isQueueingEnabled(void) const { return m_isQueueing; }
+	virtual void	setQueueingEnabled(bool queueing)  { m_isQueueing = queueing; }
+	bool			isQueueingEnabled(void) const { return m_isQueueing; }
 
-	virtual	TexturePtr	createTexture(const std::string& filename) = 0;
+	virtual	TexturePtr	createTexture(const std::string& filename) {return m_texmanager.createTexture(filename);}
 	virtual	TexturePtr	createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) = 0;
-	virtual	TexturePtr	createTexture(unsigned int width, unsigned int height, Texture::PixelFormat format) = 0;
-	virtual TexturePtr	reloadTexture(TexturePtr p, const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) = 0;
+			TexturePtr	createTexture(unsigned int width, unsigned int height, Texture::PixelFormat format) {
+					return createTexture(NULL, width, height, format );
+			}
+	virtual TexturePtr	updateTexture(TexturePtr p, const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) = 0;
 
 	// font managment TODO: remove it!
 	virtual FontPtr		createFont(const std::string& name, const std::string& fontname, unsigned int size) = 0;
@@ -138,14 +139,22 @@ public:
 	Rect virtualToRealCoord( const Rect& virtualRect ) const;
 	Rect realToVirtualCoord( const Rect& realRect ) const;
 
-	void setLogCallback(LoggerCallback log_cb) {m_log_cb = log_cb;}
+	//void setLogCallback(LoggerCallback log_cb) {m_log_cb = log_cb;}
 
 	void cleanup(bool complete);
 
 	filesystem_ptr get_filesystem() {return m_filesystem;}
 
 protected:
-	virtual	void addQuad(const Rect& dest_rect, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colours) = 0;
+	inline void addQuad(const Rect& r, const Rect& tr, float z, const RenderImageInfo& img, const ColorRect& colours) {
+		vec2 p[4];
+		p[0].x	= p[2].x = r.m_left;
+		p[0].y	= p[1].y = r.m_top;
+		p[1].x	= p[3].x = r.m_right;
+		p[2].y	= p[3].y = r.m_bottom;
+
+		addQuad(p[0], p[1], p[2], p[3], tr, z, img, colours);
+	}
 	virtual void addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec2& p3, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colours) = 0;
 	virtual void renderQuadDirect(const QuadInfo& q) = 0;
 
@@ -182,7 +191,7 @@ protected:
 	const float	GuiZLayerStep;
 	float	m_current_z;
 
-	LoggerCallback m_log_cb;
+	//LoggerCallback m_log_cb;
 
 	typedef std::vector <QuadInfo> CachedQuadList;
 	struct QuadCacheRecord

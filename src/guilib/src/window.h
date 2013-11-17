@@ -38,7 +38,7 @@ namespace gui
 		public TreeNode<base_window>,
 		public RefCounted,
 		public ScriptObject,
-		public events::Sender
+		public events::sender
 	{
 	public:
 		typedef base_window Self;

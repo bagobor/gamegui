@@ -6,6 +6,11 @@ namespace gui
 {
 	class Renderer;
 
+	union platform_handle {
+		void* p;
+		size_t id;
+	};
+
 	class  Texture
 	{
 	public:
@@ -40,6 +45,7 @@ namespace gui
 	protected:
 		Renderer& m_owner;
 		PixelFormat m_format;
+		platform_handle m_handle;
 		Size m_size;
 	};
 

@@ -3,6 +3,7 @@
 #include "rect.h"
 #include "Size.h"
 #include <boost/unordered_map.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace xml
 {
@@ -27,12 +28,6 @@ namespace gui
 
 	struct RenderImageInfo;
 
-	enum BLEND_OPS
-	{
-		BLEND_ADD,
-		BLEND_MODULATE
-	};
-
 	class Image
 	{
 	public:
@@ -42,11 +37,11 @@ namespace gui
 		/// @param parent - Ordinals in the sub-images will point to textures in this imageset
 		/// @param sz - full image size
 		/// @param data - sub-images
-		Image(Imageset* parent, const std::string& name, const Size& sz, SubImages& data, BLEND_OPS blend = BLEND_MODULATE);
+		Image(Imageset* parent, const std::string& name, const Size& sz, SubImages& data, bool isAdditiveBlend = false);
 		/// @brief - An empty image
 		Image();
 
-		Size GetSize() const;
+		const Size& GetSize() const;
 		Imageset* GetParent() const;
 		/// @brief - returns count of subimages
 		size_t GetCount() const;
@@ -57,17 +52,18 @@ namespace gui
 		
 		const std::string& GetName() const;
 
-		BLEND_OPS getBlend() const { return m_blend; }
-		void setBlend( BLEND_OPS value ) const { m_blend = value; }
+		void setAdditiveBlend(bool is_addivie) { m_isAdditiveBlend = is_addivie; }
+		bool getAdditiveBlend()  const { return m_isAdditiveBlend; }
+
 	private:
 		Size m_size;
 		SubImages m_data;
 		Imageset* m_parent;
 		std::string m_name;
-		mutable BLEND_OPS m_blend;
+		bool m_isAdditiveBlend;
 	};
 
-	inline Size Image::GetSize() const
+	inline const Size& Image::GetSize() const
 	{
 		return m_size;
 	}

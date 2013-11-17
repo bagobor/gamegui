@@ -240,7 +240,7 @@ void FreeTypeFont::rasterize (utf32 start_codepoint, utf32 end_codepoint)
         }
 
         // Copy our memory buffer into the texture and free it
-		m_render.reloadTexture(is->GetTexture(ordinal), mem_buffer, texsize, texsize, Texture::PF_RGBA);
+		m_render.updateTexture(is->GetTexture(ordinal), mem_buffer, texsize, texsize, Texture::PF_RGBA);
         delete [] mem_buffer;
 
         if (finished)

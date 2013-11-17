@@ -1,6 +1,5 @@
 #include "stdafx.h"
 
-#include <rgde/render/device.h>
 #include <guilib/guilib.h>
 #include <guilib/src/renderimageinfo.h>
 
@@ -16,10 +15,10 @@ namespace gui
 {
 	namespace ogl_platform
 	{
-		Renderer* CreateRenderer(rgde::render::device& dev, filesystem_ptr fs, unsigned buff)
-		{
-			return new renderer(dev, fs, 1024);
-		}
+		//Renderer* CreateRenderer(rgde::render::device& dev, filesystem_ptr fs, unsigned buff)
+		//{
+		//	return new renderer(dev, fs, 1024);
+		//}
 				
 		struct QuadVertex
 		{
@@ -326,68 +325,68 @@ namespace gui
 			++batches[m_num_batches - 1].numQuads;
 		}
 
-		void renderer::addQuad(const Rect& dest_rect, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colors)		
-		{
-			if (m_num_quads >= m_quads.size())
-			{
-				m_quads.resize(m_num_quads*2);
-			}
+		//void renderer::addQuad(const Rect& dest_rect, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colors)		
+		//{
+		//	if (m_num_quads >= m_quads.size())
+		//	{
+		//		m_quads.resize(m_num_quads*2);
+		//	}
 
-			QuadInfo* quads = &m_quads.front();
-			QuadInfo& quad = quads[m_num_quads];
+		//	QuadInfo* quads = &m_quads.front();
+		//	QuadInfo& quad = quads[m_num_quads];
 
-			fillQuad(quad, dest_rect, tex_rect, z, img, colors);
-		
-			// if not queering, render directly (as in, right now!)
-			if (!m_isQueueing)
-			{
-				renderQuadDirect(quad);
-				return;
-			}
+		//	fillQuad(quad, dest_rect, tex_rect, z, img, colors);
+		//
+		//	// if not queering, render directly (as in, right now!)
+		//	if (!m_isQueueing)
+		//	{
+		//		renderQuadDirect(quad);
+		//		return;
+		//	}
 
-			if (m_currentCapturing)
-			{
-				if (m_currentCapturing->num >= m_currentCapturing->m_vec.size())
-					m_currentCapturing->m_vec.resize(m_currentCapturing->num * 2);
-				
-				QuadInfo& q = (&m_currentCapturing->m_vec.front())[m_currentCapturing->num];
-				q = quad;
+		//	if (m_currentCapturing)
+		//	{
+		//		if (m_currentCapturing->num >= m_currentCapturing->m_vec.size())
+		//			m_currentCapturing->m_vec.resize(m_currentCapturing->num * 2);
+		//		
+		//		QuadInfo& q = (&m_currentCapturing->m_vec.front())[m_currentCapturing->num];
+		//		q = quad;
 
-				++(m_currentCapturing->num);
-			}
+		//		++(m_currentCapturing->num);
+		//	}
 
-			BatchInfo* batches = &m_batches[0];
+		//	BatchInfo* batches = &m_batches[0];
 
-			if (!m_num_quads  || quads[m_num_quads - 1].texture != quad.texture ||
-				m_needToAddCallback || 
-				(m_num_batches && (m_num_quads - batches[m_num_batches - 1].startQuad + 1)*VERTEX_PER_QUAD >= VERTEXBUFFER_CAPACITY))
-			{
-				// finalize prev batch if one
-				if (m_num_batches)
-				{
-					batches[m_num_batches - 1].numQuads = m_num_quads - batches[m_num_batches - 1].startQuad;
-					
-					if (!m_needToAddCallback)
-					{
-						m_callbackInfo.window = NULL;
-						m_callbackInfo.afterRenderCallback = NULL;
-					}
-					m_needToAddCallback = false;
-					batches[m_num_batches - 1].callbackInfo = m_callbackInfo;
-				}
+		//	if (!m_num_quads  || quads[m_num_quads - 1].texture != quad.texture ||
+		//		m_needToAddCallback || 
+		//		(m_num_batches && (m_num_quads - batches[m_num_batches - 1].startQuad + 1)*VERTEX_PER_QUAD >= VERTEXBUFFER_CAPACITY))
+		//	{
+		//		// finalize prev batch if one
+		//		if (m_num_batches)
+		//		{
+		//			batches[m_num_batches - 1].numQuads = m_num_quads - batches[m_num_batches - 1].startQuad;
+		//			
+		//			if (!m_needToAddCallback)
+		//			{
+		//				m_callbackInfo.window = NULL;
+		//				m_callbackInfo.afterRenderCallback = NULL;
+		//			}
+		//			m_needToAddCallback = false;
+		//			batches[m_num_batches - 1].callbackInfo = m_callbackInfo;
+		//		}
 
-				// start new batch
-				batches[m_num_batches].texture = quad.texture;
-				batches[m_num_batches].startQuad = m_num_quads;
-				batches[m_num_batches].numQuads = 0;
+		//		// start new batch
+		//		batches[m_num_batches].texture = quad.texture;
+		//		batches[m_num_batches].startQuad = m_num_quads;
+		//		batches[m_num_batches].numQuads = 0;
 
-				++m_num_batches;
-			}
+		//		++m_num_batches;
+		//	}
 
-			++m_num_quads;
-			assert(m_num_batches);
-			++batches[m_num_batches - 1].numQuads;
-		}
+		//	++m_num_quads;
+		//	assert(m_num_batches);
+		//	++batches[m_num_batches - 1].numQuads;
+		//}
 
 		void renderer::setRenderStates()
 		{
@@ -547,11 +546,6 @@ namespace gui
 			return Size((float)vp.width, (float)vp.height);
 		}
 
-		TexturePtr	renderer::createTexture(const std::string& filename)
-		{
-			return m_texmanager.createTexture(filename);
-		}
-
 		TexturePtr	renderer::createTextureInstance(const std::string& filename) 
 		{
 			TexturePtr tex;
@@ -571,51 +565,7 @@ namespace gui
 			return tex;
 		}
 
-		TexturePtr renderer::createTexture(unsigned int buffWidth, unsigned int buffHeight, Texture::PixelFormat pixFormat)
-		{
-			TexturePtr tex;
-
-			// calculate square size big enough for whole memory buffer
-			unsigned int tex_size = buffWidth > buffHeight ? buffWidth : buffHeight;
-
-			// create a texture
-			// TODO: Check resulting pixel format and react appropriately.
-			resource::format pixfmt;
-			switch (pixFormat)
-			{
-			case Texture::PF_RGB:
-				pixfmt = resource::r8g8b8;
-				break;
-			case Texture::PF_RGBA:
-				pixfmt = resource::a8r8g8b8;
-				break;
-			default:
-				throw std::exception("Failed to load texture from memory: Invalid pixelformat.");
-				break;
-			}
-
-			rgde::render::texture_ptr platform_texture = rgde::render::texture::create(
-				m_device, 
-				tex_size, 
-				tex_size, 
-				1, 
-				pixfmt
-				);
-			
-			if (!platform_texture)
-			{
-				throw std::exception("Failed to load texture from memory: D3D Texture creation failed.");
-			}
-			else
-			{		
-				tex.reset(new texture(*this, platform_texture));
-				m_texmanager.pushTexture(tex);
-			}
-
-			return tex;
-		}
-
-		TexturePtr	renderer::reloadTexture(TexturePtr p, const void* buffPtr, unsigned int buffWidth, unsigned int buffHeight, Texture::PixelFormat pixFormat)
+		TexturePtr	renderer::updateTexture(TexturePtr p, const void* buffPtr, unsigned int buffWidth, unsigned int buffHeight, Texture::PixelFormat pixFormat)
 		{
 			texture_ptr platform_tex = static_cast<texture&>(*p).get_platform_resource();
 
@@ -712,7 +662,9 @@ namespace gui
 
 			tex.reset(new texture(*this, platform_tex));
 
-			reloadTexture(tex, buffPtr, buffWidth, buffHeight, pixFormat);
+			if (buffPtr) {
+				updateTexture(tex, buffPtr, buffWidth, buffHeight, pixFormat);
+			}
 			
 			m_texmanager.pushTexture(tex);
 
