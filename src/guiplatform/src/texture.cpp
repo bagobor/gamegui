@@ -4,15 +4,7 @@
 
 using namespace gui;
 using namespace ogl_platform;
-//ogl_platform;
-//namespace gui
-//{
-//namespace ogl_platform
-//{
 
-/*************************************************************************
-	Constructor
-*************************************************************************/
 texture::texture(renderer& owner, size_t tex) :
 	Texture(owner)
 	,m_texture(tex)
@@ -20,9 +12,6 @@ texture::texture(renderer& owner, size_t tex) :
 	calculateMetrics();
 }
 
-/*************************************************************************
-	Destructor
-*************************************************************************/
 texture::~texture()
 {
 	free_platform_resource();
@@ -76,6 +65,3 @@ void texture::free_platform_resource()
 	//glTexture
 	//m_texture.reset();
 }
-//
-//}
-//}

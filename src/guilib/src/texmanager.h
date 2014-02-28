@@ -12,18 +12,19 @@ namespace gui
 	{
 		typedef boost::unordered_map<std::string, TextureWeakPtr> Textures;
 		typedef Textures::iterator TexturesIter;
+		friend Renderer;
 
 	public:
 		explicit TextureManager(Renderer& render);
 		~TextureManager();	
-
-		void	onDeviceReset();
-		void	onDeviceLost();
-
+		
 		TexturePtr	createTexture(const std::string& filename);
 		void		pushTexture(TexturePtr tex);
 
 		void	cleanup();
+
+	protected:
+		Textures& getTextures() { return m_textures; }
 
 	protected:
 		Textures m_textures;

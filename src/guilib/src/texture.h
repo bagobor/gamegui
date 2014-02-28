@@ -32,10 +32,7 @@ namespace gui
 
 		Renderer&	getRenderer(void) const { return m_owner; }
 		PixelFormat getPixelFormat() const { return m_format; }
-
-		virtual	void onDeviceLost(void) = 0;
-		virtual	void onDeviceReset(void) = 0;
-
+		
 	protected:
 		Texture& operator=(const Texture&) { return *this; }
 		virtual void calculateMetrics() = 0;

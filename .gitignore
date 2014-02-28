@@ -29,3 +29,5 @@
 /build/win32/vs11/Debug
 /external/freetype/objs
 /external/glfw-3.0.3/*.suo
+
+*.user

@@ -14,13 +14,8 @@ namespace ogl_platform
 		texture(renderer& owner, size_t tex);
 		virtual ~texture();		
 
-		virtual	void onDeviceLost(void) {}
-		virtual	void onDeviceReset(void) {}
-
-
 		void free_platform_resource(void);
 		virtual void calculateMetrics();
-
 
 		size_t m_texture;
 		std::string m_filename;

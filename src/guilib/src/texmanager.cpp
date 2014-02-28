@@ -47,30 +47,4 @@ void TextureManager::cleanup()
 	m_textures.clear();
 }
 
-void TextureManager::onDeviceLost()
-{
-	for(TexturesIter it = m_textures.begin(); it != m_textures.end(); ++it)
-	{
-		TextureWeakPtr weak_tex = it->second;
-		if (!weak_tex.expired())
-		{
-			TexturePtr t = weak_tex.lock();
-			t->onDeviceLost();
-		}
-	}
-}
-
-void TextureManager::onDeviceReset()
-{
-	for(TexturesIter it = m_textures.begin(); it != m_textures.end(); ++it)
-	{
-		TextureWeakPtr weak_tex = it->second;
-		if (!weak_tex.expired())
-		{
-			TexturePtr t = weak_tex.lock();
-			t->onDeviceReset();
-		}
-	}
-}
-
 }

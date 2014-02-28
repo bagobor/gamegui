@@ -324,70 +324,7 @@ namespace gui
 			assert(m_num_batches);
 			++batches[m_num_batches - 1].numQuads;
 		}
-
-		//void renderer::addQuad(const Rect& dest_rect, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colors)		
-		//{
-		//	if (m_num_quads >= m_quads.size())
-		//	{
-		//		m_quads.resize(m_num_quads*2);
-		//	}
-
-		//	QuadInfo* quads = &m_quads.front();
-		//	QuadInfo& quad = quads[m_num_quads];
-
-		//	fillQuad(quad, dest_rect, tex_rect, z, img, colors);
-		//
-		//	// if not queering, render directly (as in, right now!)
-		//	if (!m_isQueueing)
-		//	{
-		//		renderQuadDirect(quad);
-		//		return;
-		//	}
-
-		//	if (m_currentCapturing)
-		//	{
-		//		if (m_currentCapturing->num >= m_currentCapturing->m_vec.size())
-		//			m_currentCapturing->m_vec.resize(m_currentCapturing->num * 2);
-		//		
-		//		QuadInfo& q = (&m_currentCapturing->m_vec.front())[m_currentCapturing->num];
-		//		q = quad;
-
-		//		++(m_currentCapturing->num);
-		//	}
-
-		//	BatchInfo* batches = &m_batches[0];
-
-		//	if (!m_num_quads  || quads[m_num_quads - 1].texture != quad.texture ||
-		//		m_needToAddCallback || 
-		//		(m_num_batches && (m_num_quads - batches[m_num_batches - 1].startQuad + 1)*VERTEX_PER_QUAD >= VERTEXBUFFER_CAPACITY))
-		//	{
-		//		// finalize prev batch if one
-		//		if (m_num_batches)
-		//		{
-		//			batches[m_num_batches - 1].numQuads = m_num_quads - batches[m_num_batches - 1].startQuad;
-		//			
-		//			if (!m_needToAddCallback)
-		//			{
-		//				m_callbackInfo.window = NULL;
-		//				m_callbackInfo.afterRenderCallback = NULL;
-		//			}
-		//			m_needToAddCallback = false;
-		//			batches[m_num_batches - 1].callbackInfo = m_callbackInfo;
-		//		}
-
-		//		// start new batch
-		//		batches[m_num_batches].texture = quad.texture;
-		//		batches[m_num_batches].startQuad = m_num_quads;
-		//		batches[m_num_batches].numQuads = 0;
-
-		//		++m_num_batches;
-		//	}
-
-		//	++m_num_quads;
-		//	assert(m_num_batches);
-		//	++batches[m_num_batches - 1].numQuads;
-		//}
-
+		
 		void renderer::setRenderStates()
 		{
 			// setup vertex stream
@@ -481,8 +418,7 @@ namespace gui
 					m_shader->end_pass();
 					m_shader->end();
 
-					batch.callbackInfo.afterRenderCallback(batch.callbackInfo.window,
-									batch.callbackInfo.dest, batch.callbackInfo.clip);
+					batch.callbackInfo.afterRenderCallback(batch.callbackInfo.window, batch.callbackInfo.dest, batch.callbackInfo.clip);
 
 					// if it was not last batch
 					if (b < m_num_batches -1)
@@ -504,39 +440,6 @@ namespace gui
 			m_device.set_index_buffer(m_ibuffer);
 		}
 
-		void renderer::OnLostDevice()
-		{
-			if (m_shader)
-				m_shader->on_device_lost();
-
-			m_buffer.reset();
-
-			m_texmanager.onDeviceLost();
-		}
-
-		void renderer::OnResetDevice(void)
-		{
-			if(!m_buffer)
-			{
-				// Recreate a vertex buffer
-				m_buffer = vertex_buffer::create(
-					m_device,
-					m_vertexDeclaration,
-					(VERTEXBUFFER_CAPACITY * sizeof(QuadVertex)), 
-					resource::default,
-					buffer::dynamic|buffer::write_only
-					);
-
-				if (!m_buffer)
-				{
-					throw std::exception("renderer::onDeviceReset - Failed to create the VertexBuffer for use by the renderer object.");
-				}
-			}
-			if (m_shader)
-				m_shader->on_device_reset();
-
-			m_texmanager.onDeviceReset();
-		}
 
 		Size renderer::getViewportSize(void) const
 		{
@@ -621,14 +524,12 @@ namespace gui
 
 				surface->unlock();
 			}
+			
 			return p;
 		}
 
 		TexturePtr renderer::createTexture(const void* buffPtr, unsigned int buffWidth, unsigned int buffHeight, Texture::PixelFormat pixFormat)
 		{
-			//using namespace std;
-			TexturePtr tex;
-
 			// calculate square size big enough for whole memory buffer
 			unsigned int tex_size = buffWidth > buffHeight ? buffWidth : buffHeight;
 
@@ -657,10 +558,11 @@ namespace gui
 
 			if (!platform_tex)
 			{
-				throw std::exception("Failed to load texture from memory: D3D Texture creation failed.");
+				return  TexturePtr();
+				//throw std::exception("Failed to load texture from memory: D3D Texture creation failed.");
 			}
 
-			tex.reset(new texture(*this, platform_tex));
+			TexturePtr tex(new texture(*this, platform_tex));
 
 			if (buffPtr) {
 				updateTexture(tex, buffPtr, buffWidth, buffHeight, pixFormat);

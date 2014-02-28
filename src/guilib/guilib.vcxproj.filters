@@ -294,6 +294,7 @@
     <ClInclude Include="src\imageops.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\ResourceManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="xml\xml.inl">
