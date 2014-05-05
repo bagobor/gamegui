@@ -222,10 +222,10 @@ namespace gui
 		AfterRenderCallbackFunc m_afterRenderCallback;
 
 		typedef std::pair<std::string, base_window*> NamedEventEntry;
-		typedef boost::unordered_map<NamedEventEntry, std::string> NamedEventsMap;
+		typedef std::unordered_map<NamedEventEntry, std::string> NamedEventsMap;
 		NamedEventsMap m_scriptevents;
 		
-		typedef boost::unordered_map<std::string, std::string> HandlerMap;
+		typedef std::unordered_map<std::string, std::string> HandlerMap;
 		HandlerMap		m_handlers;
 
 		struct topmost_{
@@ -242,7 +242,7 @@ namespace gui
 		};
 	};
 
-	typedef boost::intrusive_ptr<base_window> window_ptr;
+	typedef std::shared_ptr<base_window> window_ptr;
 
 	template <typename T> struct window_caster
 	{

@@ -136,7 +136,7 @@ namespace luabind {
 			std::queue<queue_entry> q;
 			q.push(queue_entry(p, src, 0));
 
-			// Original source used boost::dynamic_bitset but didn't make use
+			// Original source used std::dynamic_bitset but didn't make use
 			// of its advanced capability of set operations, that's why I think
 			// it's safe to use a std::vector<bool> here.
 

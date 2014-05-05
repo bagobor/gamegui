@@ -5,7 +5,7 @@ namespace gui
 	class Renderer;
 	class System;
 	class Font;
-	typedef boost::shared_ptr<Font> FontPtr;
+	typedef std::shared_ptr<Font> FontPtr;
 }
 
 struct lua_State;
@@ -57,7 +57,7 @@ protected:
 
 	bool m_active;
 	double m_elapsed;
-	boost::timer m_timer;
+	std::timer m_timer;
 
 	lua_State* m_state;
 

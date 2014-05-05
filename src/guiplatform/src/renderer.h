@@ -6,11 +6,11 @@ namespace gui
 {
 	namespace ogl_platform
 	{
-		class renderer : public Renderer
+		class RendererGL : public Renderer
 		{
 		public:
-			renderer(filesystem_ptr fs, unsigned int max_quads);
-			~renderer();
+			RendererGL(filesystem_ptr fs, unsigned int max_quads);
+			~RendererGL();
 
 			virtual void addCallback( AfterRenderCallbackFunc callback, base_window* window, const Rect& dest, const Rect& clip);
 			virtual	void doRender();
@@ -52,7 +52,7 @@ namespace gui
 			//typedef rgde::render::effects::effect shader_effect;
 			//typedef rgde::render::effects::param_ptr shader_handle;
 
-			//typedef boost::shared_ptr<shader_effect> shader_ptr;
+			//typedef std::shared_ptr<shader_effect> shader_ptr;
 			//shader_ptr				m_shader;
 
 		protected:

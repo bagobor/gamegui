@@ -46,5 +46,5 @@ namespace gui
 		Size m_size;
 	};
 
-	typedef boost::shared_ptr<Texture> TexturePtr;
+	typedef std::shared_ptr<Texture> TexturePtr;
 }

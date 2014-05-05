@@ -46,7 +46,7 @@ namespace gui
 		virtual void init(xml::node& node);
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
-		typedef boost::function <void ()> EndCallback;
+		typedef std::function <void ()> EndCallback;
 		void SetEndCallback( EndCallback callback)
 		{
 			m_endCallback = callback;

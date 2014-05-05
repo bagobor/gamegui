@@ -8,17 +8,17 @@ namespace xml
 	class document;
 };
 
-typedef boost::shared_ptr<xml::document> XmlDocumentPtr;
+typedef std::shared_ptr<xml::document> XmlDocumentPtr;
 
 namespace gui
 {
 
 	class Font;
-	typedef boost::shared_ptr<Font> FontPtr;
+	typedef std::shared_ptr<Font> FontPtr;
 
 	class System;
 	class base_window;
-	typedef boost::intrusive_ptr<base_window> window_ptr;
+	typedef std::shared_ptr<base_window> window_ptr;
 
 	class WindowFactory;
 
@@ -62,7 +62,7 @@ namespace gui
 		
 	protected:
 		WindowManager& operator=(const WindowManager&) { return *this; }
-		boost::scoped_ptr<WindowFactory> m_factory;
+		std::scoped_ptr<WindowFactory> m_factory;
 		std::string m_scheme;
 		System&		m_system;
 		

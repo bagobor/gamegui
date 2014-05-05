@@ -41,7 +41,7 @@ namespace gui
 
 	class Label;
 	class Font;
-	typedef boost::shared_ptr<Font> FontPtr;
+	typedef std::shared_ptr<Font> FontPtr;
 
 	class  ListBox : public BaseList
 	{
@@ -122,7 +122,7 @@ namespace gui
 		private:
 			Category& operator=(const Category& rhs) {rhs;}
 		};
-		typedef boost::shared_ptr<Category> CategoryPtr;
+		typedef std::shared_ptr<Category> CategoryPtr;
 
 		typedef CategorizedList Self;
 		CategorizedList(System& sys, const std::string& name = std::string());

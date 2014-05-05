@@ -58,7 +58,7 @@ namespace rgde
 
 		bool m_active;
 		double m_elapsed;
-		boost::timer m_timer;
+		std::timer m_timer;
 		//gui::FontPtr m_font;
 	};
 

@@ -5,19 +5,19 @@
 using namespace gui;
 using namespace ogl_platform;
 
-texture::texture(renderer& owner, size_t tex) :
+TextureGL::TextureGL(renderer& owner, size_t tex) :
 	Texture(owner)
 	,m_texture(tex)
 {
 	calculateMetrics();
 }
 
-texture::~texture()
+TextureGL::~TextureGL()
 {
 	free_platform_resource();
 }
 
-void texture::calculateMetrics()
+void TextureGL::calculateMetrics()
 {
 	m_size.width = 0;
 	m_size.height = 0;
@@ -60,7 +60,7 @@ void texture::calculateMetrics()
 	//}
 }
 
-void texture::free_platform_resource()
+void TextureGL::free_platform_resource()
 {
 	//glTexture
 	//m_texture.reset();

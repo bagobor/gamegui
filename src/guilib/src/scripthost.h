@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 struct lua_State;
 
@@ -8,7 +8,7 @@ namespace gui
 {
 	class  ScriptObject;
 	struct filesystem;
-	typedef boost::shared_ptr<filesystem> filesystem_ptr;
+	typedef std::shared_ptr<filesystem> filesystem_ptr;
 
 	class ScriptStack
 	{

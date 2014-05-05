@@ -27,8 +27,8 @@
 #include <luabind/iterator_policy.hpp>
 #include <luabind/out_value_policy.hpp>
 
-#include <boost/smart_ptr.hpp>
-#include <boost/unordered_map.hpp>
+#include <memory>
+//#include <boost/unordered_map.hpp>
 
 #include "./xml/xml.h"
 

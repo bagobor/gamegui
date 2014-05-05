@@ -6,9 +6,9 @@
 namespace gui
 {
 	class Font;
-	typedef boost::shared_ptr<Font> FontPtr;
+	typedef std::shared_ptr<Font> FontPtr;
 	class Imageset;
-	typedef boost::shared_ptr<Imageset> ImagesetPtr;
+	typedef std::shared_ptr<Imageset> ImagesetPtr;
 
 	class  FrameWindow : public Panel
 	{

@@ -26,13 +26,13 @@ namespace gui
 			unsigned int diffuse;		//!< colour of the vertex
 		};
 
-		using rgde::render::vertex_element;
-		vertex_element vertex_desc[] = 
-		{
-			{0, 0,  vertex_element::float4,   vertex_element::default_method, vertex_element::position, 0}, 
-			{0, 16, vertex_element::color4ub, vertex_element::default_method, vertex_element::color,	0},
-			vertex_element::end_element
-		};
+		//using rgde::render::vertex_element;
+		//vertex_element vertex_desc[] = 
+		//{
+		//	{0, 0,  vertex_element::float4,   vertex_element::default_method, vertex_element::position, 0}, 
+		//	{0, 16, vertex_element::color4ub, vertex_element::default_method, vertex_element::color,	0},
+		//	vertex_element::end_element
+		//};
 
 		enum
 		{
@@ -46,8 +46,8 @@ namespace gui
 		/*************************************************************************
 		Constructor
 		*************************************************************************/
-		renderer::renderer(device& device, filesystem_ptr fs, unsigned int max_quads)
-			: Renderer(fs), m_device(device)
+		RendererGL::RendererGL(filesystem_ptr fs, unsigned int max_quads)
+			: Renderer(fs)
 		{
 			m_needToAddCallback = false;
 			Size size(getViewportSize());
@@ -59,7 +59,7 @@ namespace gui
 		/*************************************************************************
 		method to do work of constructor
 		*************************************************************************/
-		void renderer::constructor_impl(const Size& display_size)
+		void RendererGL::constructor_impl(const Size& display_size)
 		{
 			m_bufferPos     = 0;
 			m_originalsize = display_size;
@@ -119,11 +119,11 @@ namespace gui
 		/*************************************************************************
 		Destructor
 		*************************************************************************/
-		renderer::~renderer(void)
+		RendererGL::~RendererGL(void)
 		{
 		}
 
-		void renderer::addCallback( AfterRenderCallbackFunc callback,
+		void RendererGL::addCallback(AfterRenderCallbackFunc callback,
 											base_window* window, const Rect& dest, const Rect& clip)
 		{
 			// если сразу должны были рисовать, то сразу запускаем коллбак
@@ -183,7 +183,7 @@ namespace gui
 		/*************************************************************************
 		render a quad directly to the display
 		*************************************************************************/
-		void renderer::renderQuadDirect(const QuadInfo& q)
+		void RendererGL::renderQuadDirect(const QuadInfo& q)
 		{
 			if (!m_buffer)
 				return;
@@ -243,7 +243,7 @@ namespace gui
 			m_shader->end();
 		}
 
-		void renderer::addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec2& p3, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colors)
+		void RendererGL::addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec2& p3, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colors)
 		{
 			if (m_num_quads >= m_quads.size())
 			{
@@ -325,7 +325,7 @@ namespace gui
 			++batches[m_num_batches - 1].numQuads;
 		}
 		
-		void renderer::setRenderStates()
+		void RendererGL::setRenderStates()
 		{
 			// setup vertex stream
 			m_device.set_stream_source(0, m_buffer, sizeof(QuadVertex));
@@ -348,7 +348,7 @@ namespace gui
 		/*************************************************************************
 		perform final rendering for all queued renderable quads.
 		*************************************************************************/
-		void renderer::doRender(void)
+		void RendererGL::doRender(void)
 		{
 			if (!m_buffer)
 				return;
@@ -433,7 +433,7 @@ namespace gui
 		/*************************************************************************
 		setup states etc
 		*************************************************************************/
-		void renderer::initPerFrameStates(void)
+		void RendererGL::initPerFrameStates(void)
 		{
 			// setup vertex stream
 			m_device.set_stream_source(0, m_buffer, sizeof(QuadVertex));
@@ -449,7 +449,7 @@ namespace gui
 			return Size((float)vp.width, (float)vp.height);
 		}
 
-		TexturePtr	renderer::createTextureInstance(const std::string& filename) 
+		TexturePtr	RendererGL::createTextureInstance(const std::string& filename)
 		{
 			TexturePtr tex;
 			if(filename.empty()) return TexturePtr();
@@ -468,7 +468,7 @@ namespace gui
 			return tex;
 		}
 
-		TexturePtr	renderer::updateTexture(TexturePtr p, const void* buffPtr, unsigned int buffWidth, unsigned int buffHeight, Texture::PixelFormat pixFormat)
+		TexturePtr	RendererGL::updateTexture(TexturePtr p, const void* buffPtr, unsigned int buffWidth, unsigned int buffHeight, Texture::PixelFormat pixFormat)
 		{
 			texture_ptr platform_tex = static_cast<texture&>(*p).get_platform_resource();
 
@@ -528,7 +528,7 @@ namespace gui
 			return p;
 		}
 
-		TexturePtr renderer::createTexture(const void* buffPtr, unsigned int buffWidth, unsigned int buffHeight, Texture::PixelFormat pixFormat)
+		TexturePtr RendererGL::createTexture(const void* buffPtr, unsigned int buffWidth, unsigned int buffHeight, Texture::PixelFormat pixFormat)
 		{
 			// calculate square size big enough for whole memory buffer
 			unsigned int tex_size = buffWidth > buffHeight ? buffWidth : buffHeight;
@@ -573,12 +573,12 @@ namespace gui
 			return tex;
 		}
 
-		FontPtr	renderer::createFont(const std::string& name, const std::string& filename, unsigned int size)
+		FontPtr	RendererGL::createFont(const std::string& name, const std::string& filename, unsigned int size)
 		{
 			return FontPtr(new FreeTypeFont(name, filename, size, *this));
 		}
 
-		void renderer::drawFromCache( base_window* window )
+		void RendererGL::drawFromCache(base_window* window)
 		{
 			assert(window);
 			QuadCacheMap::iterator i = m_mapQuadList.find(window);
@@ -627,13 +627,13 @@ namespace gui
 			}
 		}
 
-		void renderer::beginBatching()
+		void RendererGL::beginBatching()
 		{
 			m_needToAddCallback = false;
 			Renderer::beginBatching();
 		}
 
-		void renderer::endBatching()
+		void RendererGL::endBatching()
 		{
 			if (!m_num_batches) return;
 			Renderer::endBatching();

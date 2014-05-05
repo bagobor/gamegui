@@ -98,7 +98,7 @@ namespace gui
 
 	bool Combobox::onFocusLost(base_window* newFocus)
 	{
-		if ((!newFocus) || ((newFocus != m_btn) && (newFocus != m_list)))
+		if ((!newFocus) || ((newFocus != m_btn.get()) && (newFocus != m_list.get())))
 			hideList();
 
 		return Editbox::onFocusLost(newFocus);

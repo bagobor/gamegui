@@ -7,12 +7,12 @@ namespace gui
 	class System;
 	class Image;
 	class Font;
-	typedef boost::shared_ptr<Font> FontPtr;
+	typedef std::shared_ptr<Font> FontPtr;
 
 	namespace ActiveText
 	{
 		struct TextNode;
-		typedef boost::shared_ptr<TextNode> PTextNode;
+		typedef std::shared_ptr<TextNode> PTextNode;
 		typedef std::vector<PTextNode> TextNodeVector;
 
 		enum TagType
@@ -79,7 +79,7 @@ namespace gui
 				urlnode(0)
 			{}
 		};
-		typedef boost::shared_ptr<TextView> PTextView;
+		typedef std::shared_ptr<TextView> PTextView;
 		typedef std::vector<PTextView> TextViewVector;
 
 		class Parser

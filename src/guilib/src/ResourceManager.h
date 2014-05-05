@@ -27,7 +27,7 @@ namespace utility
 		class resource_cache<T, buff_size, true, KeyType, Comparator>
 		{
 		public: 
-			typedef boost::shared_ptr<T> resource_ptr;
+			typedef std::shared_ptr<T> resource_ptr;
 
 			resource_ptr get(const KeyType& name) {return resource_ptr();}
 			bool add(const KeyType& name, resource_ptr ptr) {return false;}
@@ -40,10 +40,10 @@ namespace utility
 		template<class T, unsigned int buff_size, class KeyType, class Comparator>
 		class resource_cache<T, buff_size, false, KeyType, Comparator>
 		{
-			typedef boost::mutex::scoped_lock scoped_lock;
-			boost::mutex m_mutex;
+			typedef std::mutex::scoped_lock scoped_lock;
+			std::mutex m_mutex;
 		public:	
-			typedef boost::shared_ptr<T> resource_ptr;
+			typedef std::shared_ptr<T> resource_ptr;
 			typedef std::map<KeyType, resource_ptr, Comparator> resource_storage;
 			typedef typename resource_storage::iterator resource_storage_it;
 
@@ -146,12 +146,12 @@ namespace utility
 	public:
 		typedef KeyType key_type;
 		typedef T resource_type;
-		typedef typename boost::shared_ptr<T> ResourcePtr;
+		typedef typename std::shared_ptr<T> ResourcePtr;
 		// Тип callback-функции для обработки ситуаций ненайденного ресурса
-		typedef boost::function<NotFoundResponse (const KeyType& name)> NotFoundCallback;
+		typedef std::function<NotFoundResponse (const KeyType& name)> NotFoundCallback;
 
-		typedef boost::function<bool(T&)> predicate;
-		typedef boost::function<void(T&)> func;
+		typedef std::function<bool(T&)> predicate;
+		typedef std::function<void(T&)> func;
 
 		virtual void for_each(func f, predicate p = predicate()) = 0;
 
@@ -193,8 +193,8 @@ namespace utility
 			 int buff_size = 0, 
 			 class KeyType = std::wstring,
 			 class Comparator = std::less<KeyType>,
-			 typename mutex = boost::mutex,
-			 typename lock = boost::mutex::scoped_lock
+			 typename mutex = std::mutex,
+			 typename lock = std::mutex::scoped_lock
 			>
 	class ResourceManager : public IResourceManager<T, KeyType>
 	{
@@ -202,8 +202,8 @@ namespace utility
 		typedef typename lock scoped_lock;
 		mutex m_mutex;
 	public:
-		typedef typename boost::shared_ptr<T> ResourcePtr;
-		typedef typename boost::weak_ptr<T>   ResourceWeakPtr;
+		typedef typename std::shared_ptr<T> ResourcePtr;
+		typedef typename std::weak_ptr<T>   ResourceWeakPtr;
 
 		typedef IResourceManager<T, KeyType> Base;
 
@@ -213,7 +213,7 @@ namespace utility
 		typedef typename SharedResourceStorage::iterator ShaderResIt;
 		typedef typename ResourceStorage::iterator		ResIt;
 
-		typedef boost::function<ResourcePtr (const KeyType& name)> CreatorFunc;
+		typedef std::function<ResourcePtr (const KeyType& name)> CreatorFunc;
 
 		ResourceManager(const CreatorFunc& func, const KeyType& default_res_name) 
 			: m_creator_func(func),
@@ -411,7 +411,7 @@ namespace utility
 				ResourceStorage::_Pairib ib = m_storage.insert(value(name, ResourceWeakPtr()));
 				assert(ib.second);
 
-				ResourcePtr packed_res(res.get(), boost::bind(&ResourceManager::on_resource_release, this, _1, ib.first, res));
+				ResourcePtr packed_res(res.get(), std::bind(&ResourceManager::on_resource_release, this, _1, ib.first, res));
 				res = packed_res;
 
 				if (res != m_default_resource)

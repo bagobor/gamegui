@@ -84,7 +84,7 @@ namespace gui
 				return false;
 			}
 
-			typedef boost::unordered_map<std::string, size_t> TextureOrdinals;
+			typedef std::unordered_map<std::string, size_t> TextureOrdinals;
 			TextureOrdinals textureOrdinals;
 
 			xml::node texnode = texsnode.first_child();

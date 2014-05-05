@@ -7,7 +7,7 @@
 namespace gui
 {
 	class base_window;
-	typedef boost::intrusive_ptr<base_window> window_ptr;
+	typedef std::shared_ptr<base_window> window_ptr;
 	class RenderHelper;
 	class DragContainer;
 	class Tooltip;
@@ -51,7 +51,7 @@ namespace gui
 		~data() {delete [] ptr; ptr = 0;}
 	};
 
-	typedef boost::shared_ptr<data> data_ptr;
+	typedef std::shared_ptr<data> data_ptr;
 
 	struct filesystem{
 		virtual ~filesystem() {}
@@ -59,7 +59,7 @@ namespace gui
 		virtual std::string load_text(const std::string& filename) = 0;
 		virtual data_ptr load_binary(const std::string& filename) = 0;
 	};
-	typedef boost::shared_ptr<filesystem> filesystem_ptr;
+	typedef std::shared_ptr<filesystem> filesystem_ptr;
 
 	/// event type flags
 	enum event_type {
@@ -207,8 +207,8 @@ namespace gui
 
 	protected:
 		Renderer&		m_render;
-		boost::scoped_ptr<WindowManager>	m_windowMgr;
-		boost::scoped_ptr<RenderHelper>		m_renderHelper;
+		std::unique_ptr<WindowManager>	m_windowMgr;
+		std::unique_ptr<RenderHelper>	m_renderHelper;
 
 		filesystem_ptr m_filesystem;
 

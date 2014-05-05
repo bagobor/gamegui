@@ -165,8 +165,8 @@ namespace gui
 		unsigned int a = 0;
 		if(!str.empty())
 		{
-			boost::char_separator<char> sep(", |");
-			typedef boost::tokenizer<boost::char_separator<char> > aligntokenizer;
+			std::char_separator<char> sep(", |");
+			typedef std::tokenizer<std::char_separator<char> > aligntokenizer;
 			aligntokenizer tok(str, sep);
 			aligntokenizer::iterator i = tok.begin();
 			aligntokenizer::iterator end = tok.end();

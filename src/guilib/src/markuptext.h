@@ -32,7 +32,7 @@ namespace gui
 			}
 		};
 
-		typedef boost::shared_ptr<Text> PText;
+		typedef std::shared_ptr<Text> PText;
 
 		struct Img
 		{
@@ -41,7 +41,7 @@ namespace gui
 			Img() : area(0.f, 0.f, 0.f, 0.f) {}
 			bool isHit(point& pt) { return area.isPointInRect(pt); }
 		};
-		typedef boost::shared_ptr<Img> PImg;
+		typedef std::shared_ptr<Img> PImg;
 		
 
 		struct TextLine
@@ -81,14 +81,14 @@ namespace gui
 			{
 				aligner(float f) : height(f) {}
 				float height;
-				void operator ()(boost::shared_ptr<T>& p)
+				void operator ()(std::shared_ptr<T>& p)
 				{
 					float h = p->area.getHeight();
 					p->area.offset(point(0.f, (height - h)/2));
 				}
 			};
 		};
-		typedef boost::shared_ptr<TextLine> PTextLine;
+		typedef std::shared_ptr<TextLine> PTextLine;
 
 		struct TooltipArea
 		{
@@ -100,7 +100,7 @@ namespace gui
 
 			bool isEmpty() { return masked.empty() && maskedimg.empty(); }
 		};
-		typedef boost::shared_ptr<TooltipArea> PTooltipArea;
+		typedef std::shared_ptr<TooltipArea> PTooltipArea;
 
 		struct LinkArea
 		{
@@ -113,7 +113,7 @@ namespace gui
 
 			bool isEmpty() { return masked.empty() && maskedimg.empty(); }
 		};
-		typedef boost::shared_ptr<LinkArea> PLinkArea;
+		typedef std::shared_ptr<LinkArea> PLinkArea;
 		
 
 		typedef MarkupBase Self;
@@ -189,7 +189,7 @@ namespace gui
 		{
 			hittester(point& p) : pt(p) {}
 			point pt;
-			bool operator ()(boost::shared_ptr<T>& p)
+			bool operator ()(std::shared_ptr<T>& p)
 			{
 				return p->isHit(pt);
 			}
@@ -201,7 +201,7 @@ namespace gui
 			hovertester(point& p, MarkupText& m) : pt(p), parent(m) {}
 			point pt;
 			MarkupText& parent;
-			bool operator ()(boost::shared_ptr<T>& p)
+			bool operator ()(std::shared_ptr<T>& p)
 			{
 				return parent.isHitChunk<T>(p.get(), pt);
 			}
@@ -211,7 +211,7 @@ namespace gui
 		{
 			hoversetter(bool s) : status(s) {}
 			bool status;
-			void operator ()(boost::shared_ptr<Text>& p)
+			void operator ()(std::shared_ptr<Text>& p)
 			{
 				p->selected = status;
 			}

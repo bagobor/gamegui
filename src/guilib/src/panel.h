@@ -5,7 +5,7 @@ namespace gui
 {
 	class Image;
 	class Imageset;
-	typedef boost::shared_ptr<Imageset> ImagesetPtr;
+	typedef std::shared_ptr<Imageset> ImagesetPtr;
 
 	class Panel : public base_window
 	{

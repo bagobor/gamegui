@@ -1,6 +1,5 @@
 #pragma once
 
-
 //-----------------------------------------------------------------
 template<class Ch>
 std::list<std::basic_string<Ch> > tokenize(const std::basic_string<Ch>& delim, const std::basic_string<Ch> &src)
@@ -59,11 +58,11 @@ private:
 };
 //-----------------------------------------------------------------
 template <class T>
-class TreeNode 
+class TreeNode : public std::enable_shared_from_this<TreeNode<T>>
 {
 public:
 	typedef T Node;
-	typedef boost::intrusive_ptr<Node> node_ptr;
+	typedef std::shared_ptr<Node> node_ptr;
 	typedef std::list<node_ptr> children_list;
 	typedef typename children_list::iterator child_iter;
 	typedef typename children_list::reverse_iterator child_riter;
@@ -71,12 +70,12 @@ public:
 
 	virtual bool isCanHaveChildren() const = 0;
 
-	void add(const node_ptr& node)
+	void add(node_ptr node)
 	{
 		add(node, m_children.end());
 	}
 
-	void add(const node_ptr& node, child_iter iwhere)
+	void add(node_ptr node, child_iter iwhere)
 	{
 		if(!isCanHaveChildren()) return;
 
@@ -84,27 +83,25 @@ public:
 		{
 			node->resetParent();
 
-			node_ptr n = node;			
-			m_children.insert(iwhere, n);
-			onChildAdd(n);
-			n->setParent((T*)this);
+			m_children.insert(iwhere, node);
+			onChildAdd(node);
+			node->setParent((T*)this);
 		}
 	}
 
-	void remove(const node_ptr& node)
+	void remove(node_ptr node)
 	{
 		if(!isCanHaveChildren()) return;
 
 		if (node && node != this && node->getParent() == this)
 		{
-			node_ptr n = node;
-			m_children.remove(n);
-			onChildRemove(n);
+			m_children.remove(node);
+			onChildRemove(node);
 			node->setParent(0);
 		}
 	}
 
-	child_iter getOrder(const node_ptr& node) 
+	child_iter getOrder(node_ptr node) 
 	{
 		child_iter f = std::find(m_children.begin(), m_children.end(), node);
 		if(f == m_children.begin())

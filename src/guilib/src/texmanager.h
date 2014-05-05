@@ -1,16 +1,17 @@
 #pragma once
 
+#include <unordered_map>
 
 namespace gui
 {
 	class Renderer;
 	class Texture;
-	typedef boost::weak_ptr<Texture> TextureWeakPtr;
-	typedef boost::shared_ptr<Texture> TexturePtr;
+	typedef std::weak_ptr<Texture> TextureWeakPtr;
+	typedef std::shared_ptr<Texture> TexturePtr;
 
 	class  TextureManager
 	{
-		typedef boost::unordered_map<std::string, TextureWeakPtr> Textures;
+		typedef std::unordered_map<std::string, TextureWeakPtr> Textures;
 		typedef Textures::iterator TexturesIter;
 		friend Renderer;
 

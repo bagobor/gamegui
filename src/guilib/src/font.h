@@ -183,7 +183,7 @@ namespace gui
 		typedef std::map<utf32, FontGlyph> CodepointMap;
 		/// Contains mappings from code points to Image objects
 		CodepointMap m_cp_map;
-		typedef boost::unordered_map<utf32, CodepointMap::const_iterator> CodepointMapIndex;
+		typedef std::unordered_map<utf32, CodepointMap::const_iterator> CodepointMapIndex;
 		CodepointMapIndex m_cp_map_index;
 
 		std::string m_name;
@@ -207,7 +207,7 @@ namespace gui
 		unsigned int m_size;
 	};
 
-	typedef boost::shared_ptr<Font> FontPtr;
+	typedef std::shared_ptr<Font> FontPtr;
 
 	TextFormatting StringToFormatType(const std::string& type);
 }

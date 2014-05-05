@@ -4,7 +4,7 @@
 namespace gui
 {
 	class Font;
-	typedef boost::shared_ptr<Font> FontPtr;
+	typedef std::shared_ptr<Font> FontPtr;
 
 	struct  MenuItem
 	{

@@ -2,8 +2,9 @@
 
 #include "rect.h"
 #include "Size.h"
-#include <boost/unordered_map.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
+#include <unordered_map>
+//#include <boost/shared_ptr.hpp>
 
 namespace xml
 {
@@ -15,7 +16,7 @@ namespace gui
 	class System;
 	class Imageset;
 	class Texture;
-	typedef boost::shared_ptr<Texture> TexturePtr;
+	typedef std::shared_ptr<Texture> TexturePtr;
 
 	struct SubImage
 	{
@@ -147,7 +148,7 @@ namespace gui
 	private:
 		typedef std::vector<TexturePtr> Textures;
 		Textures m_textures;
-		typedef boost::unordered_map<std::string, Image> Images;
+		typedef std::unordered_map<std::string, Image> Images;
 		Images m_images;
 		std::string m_name;
 	};
@@ -172,8 +173,8 @@ namespace gui
 		return m_name;
 	}
 
-	typedef boost::shared_ptr<Imageset> ImagesetPtr;
-	typedef boost::weak_ptr<Imageset> ImagesetWeakPtr;
+	typedef std::shared_ptr<Imageset> ImagesetPtr;
+	typedef std::weak_ptr<Imageset> ImagesetWeakPtr;
 
 	/// @brief - producing and loading imagesets
 	class ImagesetManager
@@ -190,7 +191,7 @@ namespace gui
 		ImagesetPtr Produce(System& sys, const std::string& name, xml::node* imgset);
 
 	private:
-		typedef boost::unordered_map<std::string, ImagesetWeakPtr> ImagesetRegistry;
+		typedef std::unordered_map<std::string, ImagesetWeakPtr> ImagesetRegistry;
 		ImagesetRegistry m_registry;
 	};
 }

@@ -8,22 +8,22 @@
 #include "imageops.h"
 #include "imagesetmanager.h"
 
-#include <boost/function.hpp>
+#include <functional>
 
 namespace gui
 {
 class base_window;
-typedef boost::function <void (base_window* wnd, const Rect& dest, const Rect& clip)> AfterRenderCallbackFunc;
+typedef std::function <void (base_window* wnd, const Rect& dest, const Rect& clip)> AfterRenderCallbackFunc;
 
 struct filesystem;
-typedef boost::shared_ptr<filesystem> filesystem_ptr;
+typedef std::shared_ptr<filesystem> filesystem_ptr;
 
 struct log;
 
 struct RenderImageInfo;
 
 class Font;
-typedef boost::shared_ptr<Font> FontPtr;
+typedef std::shared_ptr<Font> FontPtr;
 
 enum OrientationFlags
 {
@@ -93,6 +93,9 @@ public:
 
 	virtual	void	doRender() = 0;
 	virtual	void	clearRenderList();	
+
+//TODO:
+	//BufferPtr createGpuBuffer(size_t size, TYPE_ENUM);
 
 	virtual void	beginBatching();
 	virtual void	endBatching();

@@ -8,8 +8,8 @@
 #include "uitest.h"
 #include "guiplatform.h"
 
-#include <boost/filesystem.hpp>
-#include <boost/bind.hpp>
+//#include <boost/filesystem.hpp>
+#include <functional>
 
 using namespace gui;
 using namespace rgde;
@@ -75,11 +75,11 @@ ui_test_application::ui_test_application(int x, int y, int w, int h, const std::
 	wchar_t buf[512];
 	GetModuleFileNameW(NULL, &buf[0], 512);
 
-	boost::filesystem::wpath p(buf);
-	p = p.branch_path().string() + L"/../data/";
-	p.normalize();
+	//std::filesystem::wpath p(buf);
+	//p = p.branch_path().string() + L"/../data/";
+	//p.normalize();
 	//p += L"/../data/";
-	std::wstring path = p.branch_path().string();
+	//std::wstring path = L"/../data/"; //p.branch_path().string();
 	SetCurrentDirectoryW(L"../");
 
 	show();

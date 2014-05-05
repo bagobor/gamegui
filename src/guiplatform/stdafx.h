@@ -28,5 +28,5 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#include <boost/smart_ptr.hpp>
-#include <boost/unordered_map.hpp>
+#include <memory>
+//#include <boost/unordered_map.hpp>

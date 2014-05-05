@@ -5,7 +5,7 @@
 namespace gui
 {
 	class Font;
-	typedef boost::shared_ptr<Font> FontPtr;
+	typedef std::shared_ptr<Font> FontPtr;
 
 	class  Label :	public base_window
 	{

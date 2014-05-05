@@ -9,7 +9,7 @@ namespace gui
 
 class System;
 class base_window;
-typedef boost::intrusive_ptr<base_window> window_ptr;
+typedef std::shared_ptr<base_window> window_ptr;
 
 struct base_creator
 {
@@ -40,7 +40,7 @@ struct RootCreator : public base_creator
 	virtual window_ptr Create(const std::string& name);	
 };
 
-typedef boost::shared_ptr<base_creator> CreatorPtr;
+typedef std::shared_ptr<base_creator> CreatorPtr;
 class WindowFactory
 {
 public:

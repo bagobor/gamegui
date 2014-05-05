@@ -229,7 +229,7 @@ window_ptr WindowManager::loadXml(const std::string& filename)
 	
 	if(!newWindows.empty())
 	{
-		std::for_each(newWindows.rbegin(), newWindows.rend(), boost::bind(&base_window::onLoad, _1));
+		std::for_each(newWindows.rbegin(), newWindows.rend(), std::bind(&base_window::onLoad, _1));
 	}
 	return w;
 }
