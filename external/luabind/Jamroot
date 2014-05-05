@@ -47,12 +47,12 @@ if [ os.name ] = NT
 
     if [ GLOB $(LUA_PATH) : lib ]
     {
-        lib lua : : <link>static <name>lua5.1 <search>$(LUA_PATH)/lib/static : : <include>$(includes) ;
-        lib lua : : <link>shared <name>lua5.1 <search>$(LUA_PATH)/lib : : <include>$(includes) ;
+        lib lua : : <link>static <name>lua52 <search>$(LUA_PATH)/lib/static : : <include>$(includes) ;
+        lib lua : : <link>shared <name>lua52 <search>$(LUA_PATH)/lib : : <include>$(includes) ;
     }
-    else if [ GLOB $(LUA_PATH) : lua5.1.dll ]
+    else if [ GLOB $(LUA_PATH) : lua52.dll ]
     {
-        lib lua : : <name>lua5.1 <search>$(LUA_PATH) : : <include>$(includes) ;
+        lib lua : : <name>lua52 <search>$(LUA_PATH) : : <include>$(includes) ;
     }
 }
 else if [ os.name ] in LINUX MACOSX FREEBSD
@@ -64,7 +64,7 @@ else if [ os.name ] in LINUX MACOSX FREEBSD
         $(LUA_PATH) $(HOME)/Library/Frameworks /Library/Frameworks /usr /usr/local /opt/local /opt ;
 
     local possible-suffixes =
-        include/lua5.1 include/lua51 include/lua include ;
+        include/lua5.2 include/lua52 include/lua include ;
 
     local includes = [ GLOB $(possible-prefixes)/$(possible-suffixes) : lua.h ] ;
 
@@ -83,10 +83,10 @@ else if [ os.name ] in LINUX MACOSX FREEBSD
 
     local lib = $(prefix)/lib ;
 
-    local names = liblua5.1 liblua51 liblua ;
+    local names = liblua5.2 liblua52 liblua ;
     local extensions = .a .so ;
 
-    library = [ GLOB $(lib)/lua51 $(lib)/lua5.1 $(lib)/lua $(lib) :
+    library = [ GLOB $(lib)/lua52 $(lib)/lua5.2 $(lib)/lua $(lib) :
         $(names)$(extensions) ] ;
     lib-name = [ MATCH "lib(.*)" : $(library[1]:B) ] ;
 

@@ -31,3 +31,4 @@
 /external/glfw-3.0.3/*.suo
 
 *.user
+*.ipch
