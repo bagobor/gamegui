@@ -32,3 +32,6 @@
 
 *.user
 *.ipch
+*.opensdf
+*.sdf
+*.suo
