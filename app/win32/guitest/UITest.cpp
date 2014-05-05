@@ -168,36 +168,36 @@ bool ui_test_application::do_events()
 
 void ui_test_application::render()
 {
-	m_render_device.frame_begin();
-	m_render_device.clear(rgde::math::color::Black);
+	//m_render_device.frame_begin();
+	//m_render_device.clear(rgde::math::color::Black);
 
-	if (m_system)
-	{		
-		//m_font->drawText("THE", gui::Rect(20,20,200,200), 1.f);
+	//if (m_system)
+	//{		
+	//	//m_font->drawText("THE", gui::Rect(20,20,200,200), 1.f);
 
-		//gui::Renderer& r = m_system->getRenderer();
-		//struct vec2 {float x, y;};
-		//vec2 points[] = 
-		//{
-		//	{0,50}, 
-		//	{70,50}, 
-		//	{80,90},
-		//	{110,0},
-		//	{130,60},
-		//	{150,50},
-		//	{260,50},
-		//};
+	//	//gui::Renderer& r = m_system->getRenderer();
+	//	//struct vec2 {float x, y;};
+	//	//vec2 points[] = 
+	//	//{
+	//	//	{0,50}, 
+	//	//	{70,50}, 
+	//	//	{80,90},
+	//	//	{110,0},
+	//	//	{130,60},
+	//	//	{150,50},
+	//	//	{260,50},
+	//	//};
 
-		//gui::Imageset* imageset = m_system->getWindowManager().getImageset("skin");
-		//const gui::Image* img = imageset->GetImage("Background");
+	//	//gui::Imageset* imageset = m_system->getWindowManager().getImageset("skin");
+	//	//const gui::Image* img = imageset->GetImage("Background");
 
-		//r.drawLine(*img, (gui::vec2*)points, 7, 1, gui::Rect(0,0,400,400), 0xFFFF0F0F, 7);
+	//	//r.drawLine(*img, (gui::vec2*)points, 7, 1, gui::Rect(0,0,400,400), 0xFFFF0F0F, 7);
 
-		m_system->render();
-	}
+	//	m_system->render();
+	//}
 
-	m_render_device.frame_end();
-	m_render_device.present();
+	//m_render_device.frame_end();
+	//m_render_device.present();
 }
 
 bool ui_test_application::isFinished() 

@@ -305,8 +305,8 @@ namespace gui
 
 					if (!m_needToAddCallback)
 					{
-						m_callbackInfo.window = NULL;
-						m_callbackInfo.afterRenderCallback = NULL;
+						m_callbackInfo.window = nullptr;
+						m_callbackInfo.afterRenderCallback = nullptr;
 					}
 					m_needToAddCallback = false;
 					batches[m_num_batches - 1].callbackInfo = m_callbackInfo;
@@ -612,8 +612,8 @@ namespace gui
 						batches[m_num_batches - 1].numQuads = m_num_quads - batches[m_num_batches - 1].startQuad;
 						if (!m_needToAddCallback)
 						{
-							m_callbackInfo.window = NULL;
-							m_callbackInfo.afterRenderCallback = NULL;
+							m_callbackInfo.window = nullptr;
+							m_callbackInfo.afterRenderCallback = nullptr;
 						}
 						m_needToAddCallback = false;
 						batches[m_num_batches - 1].callbackInfo = m_callbackInfo;
@@ -642,8 +642,8 @@ namespace gui
 			Renderer::endBatching();
 			if (!m_needToAddCallback)
 			{
-				m_callbackInfo.window = NULL;
-				m_callbackInfo.afterRenderCallback = NULL;
+				m_callbackInfo.window = nullptr;
+				m_callbackInfo.afterRenderCallback = nullptr;
 			}
 			m_needToAddCallback = false;
 			m_batches[m_num_batches - 1].callbackInfo = m_callbackInfo;

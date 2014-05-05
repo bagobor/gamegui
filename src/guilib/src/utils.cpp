@@ -162,20 +162,21 @@ namespace gui
 
 	unsigned int StringToAlignment(const std::string& str)
 	{
+		//TODO:
 		unsigned int a = 0;
-		if(!str.empty())
-		{
-			std::char_separator<char> sep(", |");
-			typedef std::tokenizer<std::char_separator<char> > aligntokenizer;
-			aligntokenizer tok(str, sep);
-			aligntokenizer::iterator i = tok.begin();
-			aligntokenizer::iterator end = tok.end();
-			while(i != end)
-			{
-				a |= StringToAlign(*i);
-				++i;
-			}
-		}
+		//if(!str.empty())
+		//{
+		//	std::char_separator<char> sep(", |");
+		//	typedef std::tokenizer<std::char_separator<char> > aligntokenizer;
+		//	aligntokenizer tok(str, sep);
+		//	aligntokenizer::iterator i = tok.begin();
+		//	aligntokenizer::iterator end = tok.end();
+		//	while(i != end)
+		//	{
+		//		a |= StringToAlign(*i);
+		//		++i;
+		//	}
+		//}
 		return a;
 	}
 

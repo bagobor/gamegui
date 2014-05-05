@@ -5,7 +5,7 @@
 using namespace gui;
 using namespace ogl_platform;
 
-TextureGL::TextureGL(renderer& owner, size_t tex) :
+TextureGL::TextureGL(RendererGL& owner, size_t tex) :
 	Texture(owner)
 	,m_texture(tex)
 {

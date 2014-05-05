@@ -79,7 +79,7 @@ public:
 	{
 		if(!isCanHaveChildren()) return;
 
-		if (node && node != this && node->getParent() != this)
+		if (node && node.get() != this && node->getParent() != this)
 		{
 			node->resetParent();
 
@@ -93,7 +93,7 @@ public:
 	{
 		if(!isCanHaveChildren()) return;
 
-		if (node && node != this && node->getParent() == this)
+		if (node && node.get() != this && node->getParent() == this)
 		{
 			m_children.remove(node);
 			onChildRemove(node);
@@ -178,8 +178,10 @@ protected:
 
 	void resetParent()
 	{
-		if(m_parent)
-			m_parent->remove(static_cast<T*>(this));
+		if (m_parent) {
+			node_ptr n(static_cast<T*>(this));
+			m_parent->remove(n);
+		}
 	}
 
 	virtual void onParentChange(T* old_parent)	{old_parent;}

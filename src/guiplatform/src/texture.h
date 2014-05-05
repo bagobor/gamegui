@@ -7,11 +7,11 @@ namespace gui
 {
 namespace ogl_platform
 {
-	class renderer;
+	class RendererGL;
 
 	struct TextureGL : public Texture
 	{	
-		TextureGL(renderer& owner, size_t tex);
+		TextureGL(RendererGL& owner, size_t tex);
 		virtual ~TextureGL();
 
 		void free_platform_resource(void);

@@ -32,7 +32,7 @@ base_window::base_window(System& sys, const std::string& name) :
 	m_alignment(0),
 	m_stick(0),
 	m_stickRect(0.f, 0.f, 0.f, 0.f),
-	m_afterRenderCallback(NULL),
+	m_afterRenderCallback(nullptr),
 	m_suspended(false)
 {
 	m_backColor = Color(1.f, 1.f, 1.f);

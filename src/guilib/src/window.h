@@ -222,7 +222,8 @@ namespace gui
 		AfterRenderCallbackFunc m_afterRenderCallback;
 
 		typedef std::pair<std::string, base_window*> NamedEventEntry;
-		typedef std::unordered_map<NamedEventEntry, std::string> NamedEventsMap;
+		//typedef std::unordered_map<NamedEventEntry, std::string> NamedEventsMap;
+		typedef std::map<NamedEventEntry, std::string> NamedEventsMap;
 		NamedEventsMap m_scriptevents;
 		
 		typedef std::unordered_map<std::string, std::string> HandlerMap;
