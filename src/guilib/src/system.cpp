@@ -80,27 +80,27 @@ void System::reset(bool complete)
 	m_dragfired = false;
 	m_dragfreeze = false;
 
-	m_rootWindow = new (std::nothrow) base_window(*this, "systemroot");	
+	m_rootWindow = std::make_shared<base_window>(*this, "systemroot");
 	if(!m_rootWindow)
 		throw std::exception("Couldn't create root window!");
 
-	DragContainer* drag = new (std::nothrow) DragContainer(*this, "systemdrag");
+	auto drag = std::make_shared<DragContainer>(*this, "systemdrag");
 	m_dragContainer = drag;
-	if(!drag)
+	if (!m_dragContainer)
 		throw std::exception("Couldn't create drag window!");
 
 	drag->reset();
 
-	Tooltip* tooltip = new (std::nothrow) Tooltip(*this, "systemtooltip");
+	auto tooltip = std::make_shared<Tooltip>(*this, "systemtooltip");
 	m_tooltipWindow = tooltip;
 	if(!tooltip)
 		throw std::exception("Couldn't create tooltip window!");
 	
 	tooltip->reset();
 
-	Menu* menu = new (std::nothrow) Menu(*this, "systemmenu");
+	auto menu = std::make_shared<Menu>(*this, "systemmenu");
 	m_menuWindow = menu;
-	if(!menu)
+	if (!m_menuWindow)
 		throw std::exception("Couldn't create menu window!");
 	m_windowMgr->loadLeafWindow(m_menuWindow, "base/menu.xml");
 	
@@ -856,7 +856,7 @@ void System::updateSize(Size& sz)
 
 bool System::isMouseInGui() const
 {
-	if(m_rootWindow && m_containsMouse && m_containsMouse != m_rootWindow)
+	if(m_rootWindow && m_containsMouse && m_containsMouse != m_rootWindow.get())
 		return true;
 	return false;
 }
@@ -870,7 +870,7 @@ bool System::isMouseInGui(float x, float y) const
 	if(m_rootWindow)
 	{
 		base_window* mouseWnd = getTargetWindow(pt);
-		if(mouseWnd != m_rootWindow)
+		if(mouseWnd != m_rootWindow.get())
 		{
 			return true;
 		}

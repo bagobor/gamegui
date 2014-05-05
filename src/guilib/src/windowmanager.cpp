@@ -226,6 +226,8 @@ window_ptr WindowManager::loadXml(const std::string& filename)
 {
 	WindowVector newWindows;
 	window_ptr w = createFromFile(filename, newWindows);
+
+	using namespace std::placeholders;
 	
 	if(!newWindows.empty())
 	{

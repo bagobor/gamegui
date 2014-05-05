@@ -410,7 +410,7 @@ namespace gui
 
 	unsigned int CategorizedList::Category::Add(base_window* wnd)
 	{
-		children.push_back(wnd);
+		children.push_back(window_ptr(wnd));
 		if(collapsed)
 			wnd->setVisible(false);
 		

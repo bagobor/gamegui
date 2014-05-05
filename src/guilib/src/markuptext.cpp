@@ -12,6 +12,27 @@
 
 namespace gui
 {
+	template<typename T>
+	struct TextLinealigner
+	{
+		TextLinealigner(float f) : height(f) {}
+		float height;
+		void operator ()(std::shared_ptr<T>& p)
+		{
+			float h = p->area.getHeight();
+			p->area.offset(point(0.f, (height - h) / 2));
+		}
+	};
+
+	void MarkupBase::TextLine::alignContent()
+	{
+		float lineheight = area.getHeight();
+
+		std::for_each(children.begin(), children.end(), TextLinealigner<Text>(lineheight));
+		std::for_each(images.begin(), images.end(), TextLinealigner<Img>(lineheight));
+	}
+
+
 
 	void MarkupBase::TextLine::addChunk(PText chunk, float spacing)
 	{

@@ -192,7 +192,7 @@ base_window* base_window::findChildWindow(const std::string& name)
 
 void base_window::addChildWindow(base_window* wnd)
 {
-	if(wnd) add(wnd);
+	if(wnd) add(window_ptr(wnd));
 }
 
 void base_window::callHandler(EventArgs* arg)

@@ -9,6 +9,7 @@
 #include "guiplatform.h"
 
 //#include <boost/filesystem.hpp>
+#include <iostream>
 #include <functional>
 
 using namespace gui;

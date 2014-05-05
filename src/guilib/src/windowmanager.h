@@ -62,7 +62,7 @@ namespace gui
 		
 	protected:
 		WindowManager& operator=(const WindowManager&) { return *this; }
-		std::scoped_ptr<WindowFactory> m_factory;
+		std::unique_ptr<WindowFactory> m_factory;
 		std::string m_scheme;
 		System&		m_system;
 		

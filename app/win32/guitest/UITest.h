@@ -2,7 +2,7 @@
 
 #include <guilib.h>
 
-#include <boost/timer.hpp>
+//#include <boost/timer.hpp>
 
 namespace rgde
 {

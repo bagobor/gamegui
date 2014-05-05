@@ -16,17 +16,17 @@ public:
 	virtual std::string load_text(const std::string& filename) 	{
 		std::string out;
 
-		core::vfs::istream_ptr f = m_fs.open_read(m_basedir + filename);
+		//core::vfs::istream_ptr f = m_fs.open_read(m_basedir + filename);
 
-		if (!f) return out;
+		//if (!f) return out;
 
-		size_t size = f->get_size();
+		//size_t size = f->get_size();
 
-		if (size == 0) return out;
+		//if (size == 0) return out;
 
-		out.resize(size);
+		//out.resize(size);
 
-		f->read((rgde::byte*)&out[0], size);
+		//f->read((rgde::byte*)&out[0], size);
 
 		return out;
 	}
@@ -35,23 +35,23 @@ public:
 		static data zero_data = {0};
 
 		data_ptr out(new data);
-		*out = zero_data;
+		//*out = zero_data;
 
-		char dir[256];
-		GetCurrentDirectoryA(256, dir);
+		//char dir[256];
+		//GetCurrentDirectoryA(256, dir);
 
-		core::vfs::istream_ptr f = m_fs.open_read(m_basedir + filename);
+		//core::vfs::istream_ptr f = m_fs.open_read(m_basedir + filename);
 
-		if (!f) return out;
+		//if (!f) return out;
 
-		size_t size = f->get_size();
+		//size_t size = f->get_size();
 
-		if (size == 0) return out;
+		//if (size == 0) return out;
 
-		out->ptr = new char[size];
-		out->size = size;
+		//out->ptr = new char[size];
+		//out->size = size;
 
-		f->read((rgde::byte*)out->ptr, out->size);
+		//f->read((rgde::byte*)out->ptr, out->size);
 
 		return out;
 	}

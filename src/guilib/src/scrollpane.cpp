@@ -24,7 +24,7 @@ void ScrollPane::setTarget(base_window* target)
 	m_target = target;
 	if(target && m_scroll)
 	{
-		add(target);
+		add(window_ptr(target));
 		bringToBack(target);
 		layoutTarget();
 		subscribe<events::SizedEvent, ScrollPane> (&ScrollPane::onTargetSized, m_target);				

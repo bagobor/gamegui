@@ -68,26 +68,9 @@ namespace gui
 				}
 			}
 
-			void alignContent()
-			{
-				float lineheight = area.getHeight();
-
-				std::for_each(children.begin(), children.end(), aligner<Text>(lineheight));
-				std::for_each(images.begin(), images.end(), aligner<Img>(lineheight));
-			}
-
-			template<typename T>
-			struct aligner
-			{
-				aligner(float f) : height(f) {}
-				float height;
-				void operator ()(std::shared_ptr<T>& p)
-				{
-					float h = p->area.getHeight();
-					p->area.offset(point(0.f, (height - h)/2));
-				}
-			};
+			void alignContent();
 		};
+
 		typedef std::shared_ptr<TextLine> PTextLine;
 
 		struct TooltipArea
