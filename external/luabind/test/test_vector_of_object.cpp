@@ -1,4 +1,4 @@
-// Copyright (c) 2005 Daniel Wallin and Arvid Norberg
+// Copyright (c) 2005 Daniel Wallin
 
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -20,33 +20,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
 
-#if !BOOST_PP_IS_ITERATING
-# error Do not include object_call.hpp directly!
-#endif
+#include "test.hpp"
+#include <luabind/object.hpp>
+#include <luabind/detail/conversion_policies/conversion_policies.hpp>
 
-#include <boost/preprocessor/repetition/enum_params.hpp>
-#include <boost/preprocessor/repetition/enum_binary_params.hpp>
-#include <boost/preprocessor/facilities/intercept.hpp>
+using namespace luabind;
 
-#define N BOOST_PP_ITERATION()
-
-template<BOOST_PP_ENUM_PARAMS(N, class A)>
-call_proxy<
-    Derived
-  , boost::tuples::tuple<
-        BOOST_PP_ENUM_BINARY_PARAMS(N, A, const* BOOST_PP_INTERCEPT)
-    >
-> operator()(BOOST_PP_ENUM_BINARY_PARAMS(N, A, const& a))
+void test_main(lua_State* L)
 {
-    typedef boost::tuples::tuple<
-        BOOST_PP_ENUM_BINARY_PARAMS(N, A, const* BOOST_PP_INTERCEPT)
-    > arguments;
+    std::vector<object> v;
+    v.push_back(object(L, 0));
 
-    return call_proxy<Derived, arguments>(
-        derived()
-      , arguments(BOOST_PP_ENUM_PARAMS(N, &a))
-    );
+    for (std::vector<object>::iterator i(v.begin()), e(v.end()); i != e; ++i)
+    {}
 }
-
-#undef N
 

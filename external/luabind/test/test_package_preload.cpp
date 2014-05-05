@@ -1,4 +1,5 @@
-// Copyright (c) 2005 Daniel Wallin
+// Copyright (c) 2004 Daniel Wallin and Arvid Norberg
+// Copyright (c) 2012 Iowa State University
 
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -20,20 +21,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
 
-#ifndef LUABIND_GET_POINTER_051023_HPP
-# define LUABIND_GET_POINTER_051023_HPP
+#include "test.hpp"
+#include <luabind/luabind.hpp>
+#include <luabind/set_package_preload.hpp>
 
-//
-// We need these overloads in the luabind namespace.
-//
+int f(int x)
+{
+    return x + 1;
+}
 
-# include <boost/get_pointer.hpp>
+int loader(lua_State* L)
+{
+    using namespace luabind;
+    module(L)
+    [
+        def("f", &f)
+    ];
 
-namespace luabind {
+    return 0;
+}
 
-using boost::get_pointer;
-
-} // namespace luabind
-
-#endif // LUABIND_GET_POINTER_051023_HPP
+void test_main(lua_State* L)
+{
+    using namespace luabind;
+    
+    set_package_preload(L, "testmod", &loader);
+    DOSTRING(L,
+        "require('testmod')");
+    
+    DOSTRING(L, "assert(f(7) == 8)");
+}
 

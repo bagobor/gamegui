@@ -40,9 +40,6 @@ namespace luabind
 
 #ifdef LUABIND_NO_EXCEPTIONS
 
-	typedef void(*error_callback_fun)(lua_State*);
-	typedef void(*cast_failed_callback_fun)(lua_State*, type_id const&);
-
 	void set_error_callback(error_callback_fun e)
 	{
 		error_callback = e;
@@ -76,3 +73,4 @@ namespace luabind
 	}
 
 }
+

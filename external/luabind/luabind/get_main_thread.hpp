@@ -6,6 +6,7 @@
 # define LUABIND_GET_MAIN_THREAD_090321_HPP
 
 # include <luabind/config.hpp>
+# include <luabind/lua_state_fwd.hpp>
 
 namespace luabind {
 
@@ -14,3 +15,4 @@ LUABIND_API lua_State* get_main_thread(lua_State* L);
 } // namespace luabind
 
 #endif // LUABIND_GET_MAIN_THREAD_090321_HPP
+
