@@ -6,19 +6,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\renderer.cpp">
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="src\renderer_ogl.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\renderer.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\texture.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="guiplatform.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="renderer_ogl.h" />
   </ItemGroup>
 </Project>

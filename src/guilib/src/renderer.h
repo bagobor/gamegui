@@ -34,17 +34,54 @@ enum OrientationFlags
 
 class Image;
 
-struct VertexBuffer {
-	virtual ~VertexBuffer() = 0;
+
+struct QuadInfo
+{
+	struct vec2 { float x, y; };
+
+	// order: 0 ---> 1
+	//		  2 ---> 3
+	vec2				positions[4];
+
+	float				z;
+	Rect				texPosition;
+	unsigned long		topLeftCol;
+	unsigned long		topRightCol;
+	unsigned long		bottomLeftCol;
+	unsigned long		bottomRightCol;
+	bool				isAdditiveBlend;
+
+	//todo: remove from quad structure
+	Texture*	texture;
+
+	__inline bool operator<(const QuadInfo& other) const
+	{
+		// this is intentionally reversed.
+		return z > other.z;
+	}
 };
 
-struct IndexBuffer {
-	virtual ~IndexBuffer() = 0;
+struct RenderCallbackInfo
+{
+	AfterRenderCallbackFunc afterRenderCallback;
+	base_window* window;
+	Rect dest;
+	Rect clip;
 };
 
+struct BatchInfo
+{
+	Texture* texture;
+	std::size_t startQuad;
+	std::size_t numQuads;
+	//QuadInfo* quads;
+
+	RenderCallbackInfo callbackInfo;
+};
+
+typedef std::vector<QuadInfo> Quads;
+typedef std::vector<BatchInfo> Batches;
 typedef std::shared_ptr<Texture> TexturePtr;
-typedef std::shared_ptr<IndexBuffer> IndexBufferPtr;
-typedef std::shared_ptr<VertexBuffer> VertexBufferPtr;
 
 struct RenderDevice {
 	struct ViewPort {
@@ -56,8 +93,8 @@ struct RenderDevice {
 	virtual TexturePtr createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) = 0;
 	virtual TexturePtr createTexture(const std::string& filename) = 0;
 
-	virtual IndexBufferPtr createIndexBuffer(size_t size_bytes) = 0;
-	virtual VertexBufferPtr createVertexBuffer(size_t size_bytes) = 0;
+	virtual void renderImmediate(const QuadInfo& q) = 0;
+	virtual void render(const Batches& batches, const Quads& quads, Size scale = Size(1.0f,1.0f)) = 0;
 
 	const ViewPort& getViewport() const { return viewport; }
 	virtual void setViewport(const ViewPort& vp) {
@@ -72,56 +109,13 @@ protected:
 	ViewPort viewport;
 };
 
+typedef std::shared_ptr<RenderDevice> RenderDevicePtr;
 
 //TODO: rename to Canvas
 class  Renderer
 {
 	Renderer& operator=(const Renderer&);
 public:
-	struct RenderCallbackInfo
-	{
-		AfterRenderCallbackFunc afterRenderCallback;
-		base_window* window;
-		Rect dest;
-		Rect clip;
-	};
-
-	struct QuadInfo 
-	{
-		struct vec2 {float x, y;};		
-
-		// order: 0 ---> 1
-		//		  2 ---> 3
-		vec2				positions[4];
-
-		float				z;
-		Rect				texPosition;
-		unsigned long		topLeftCol;
-		unsigned long		topRightCol;
-		unsigned long		bottomLeftCol;
-		unsigned long		bottomRightCol;
-		bool				isAdditiveBlend;
-
-		//todo: remove from quad structure
-		Texture*	texture;
-
-		__inline bool operator<(const QuadInfo& other) const
-		{
-			// this is intentionally reversed.
-			return z > other.z;
-		}
-	};
-
-	struct BatchInfo
-	{
-		Texture* texture;
-		std::size_t startQuad;
-		std::size_t numQuads;
-		//QuadInfo* quads;
-
-		RenderCallbackInfo callbackInfo;
-	};
-
 	Renderer(RenderDevice& render_device, filesystem_ptr fs);
 	virtual ~Renderer();
 
@@ -131,20 +125,17 @@ public:
 	
 	void	draw(const Image& img, const Rect& dest_rect, float z, const Rect& clip_rect, const ColorRect& colors);
 	void	draw(const Image& img, const Rect& dest_rect, float z, const Rect& clip_rect, const ColorRect& colors, ImageOps horz, ImageOps vert);
+
 	void	immediateDraw(const Image& img, const Rect& dest_rect, float z, const Rect& clip_rect, const ColorRect& colors);
+	void	doRender();
 
 	virtual void startCaptureForCache(base_window* window);
 	virtual void endCaptureForCache(base_window* window);
 	void drawFromCache(base_window* window);
 	void clearCache(base_window* window = 0);
 	
-
-	virtual	void	doRender() = 0;
 	virtual	void	clearRenderList();	
-
-//TODO:
-	//BufferPtr createGpuBuffer(size_t size, TYPE_ENUM);
-
+	
 	virtual void	beginBatching();
 	virtual void	endBatching();	
 	bool			isExistInCache(base_window* window) const;
@@ -167,8 +158,7 @@ public:
 		return p;
 	}
 
-	FontPtr	createFont(const std::string& name, const std::string& fontname, unsigned int size);
-	
+	FontPtr	createFont(const std::string& name, const std::string& fontname, unsigned int size);	
 
 	const Size&	getOriginalSize(void) const	{ return m_originalsize; }
 	const Size	getSize(void);
@@ -188,7 +178,7 @@ public:
 
 	Size getViewportSize() const {		
 		const RenderDevice::ViewPort& vp = m_render_device.getViewport();
-		return Size(vp.w, vp.h);
+		return Size((float)vp.w, (float)vp.h);
 	}
 
 	Rect virtualToRealCoord( const Rect& virtualRect ) const;
@@ -211,7 +201,9 @@ protected:
 		addQuad(p[0], p[1], p[2], p[3], tr, z, img, colours);
 	}
 	void addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec2& p3, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colours);
-	virtual void renderQuadDirect(const QuadInfo& q) = 0;
+	void renderQuadDirect(const QuadInfo& q) {
+		m_render_device.renderImmediate(q);
+	}
 
 	void fillQuad(QuadInfo& quad, const Rect& rc, const Rect& uv, float z, const RenderImageInfo& img, const ColorRect& colors);
 	void sortQuads();	
@@ -227,10 +219,7 @@ protected:
 	void computeVirtualDivRealFactor(Size& coefOut) const;
 
 protected:
-	TextureCache m_texmanager;
-	
-	typedef std::vector<QuadInfo> Quads;
-	typedef std::vector<BatchInfo> Batches;
+	TextureCache m_texmanager; 
 
 	Quads m_quads;
 	Batches m_batches;

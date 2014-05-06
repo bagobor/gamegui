@@ -2,7 +2,6 @@
 #include "renderer.h"
 
 #include "imagesetmanager.h"
-#include "renderimageinfo.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -82,6 +81,18 @@ FontPtr	Renderer::createFont(const std::string& name, const std::string& fontnam
 	return FontPtr(new FreeTypeFont(name, fontname, size, *this));
 }
 
+void Renderer::doRender() {
+	Size scale (1.f, 1.f);
+	if (m_autoScale)
+	{
+		Size& viewport = getViewportSize();
+		scale.width = viewport.width / m_originalsize.width;
+		scale.height = viewport.height / m_originalsize.height;
+	}
+
+	m_render_device.render(m_batches, m_quads, scale);
+}
+
 void Renderer::immediateDraw(const Image& img, const Rect& dest_rect, float z, const Rect& clip_rect,const ColorRect& colors)
 {
 	// get the rect area that we will actually draw to (i.e. perform clipping)
@@ -119,7 +130,7 @@ void Renderer::immediateDraw(const Image& img, const Rect& dest_rect, float z, c
 			rc.m_left += info.offset.x;
 			rc.m_top += info.offset.y;
 			fillQuad(quad, rc, tex_rect, z, info, colors);
-			renderQuadDirect(quad);
+			m_render_device.renderImmediate(quad);
 		}
 	}
 }
@@ -508,7 +519,7 @@ void Renderer::addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec
 	// if not queering, render directly (as in, right now!)
 	if (!m_isQueueing)
 	{
-		renderQuadDirect(quad);
+		m_render_device.renderImmediate(quad);
 		return;
 	}
 

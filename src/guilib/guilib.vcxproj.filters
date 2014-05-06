@@ -286,16 +286,12 @@
     <ClInclude Include="src\renderer.h">
       <Filter>src\render</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderimageinfo.h">
-      <Filter>src\render</Filter>
-    </ClInclude>
     <ClInclude Include="src\texmanager.h">
       <Filter>src\render</Filter>
     </ClInclude>
     <ClInclude Include="src\imageops.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\ftfont.h" />
   </ItemGroup>
   <ItemGroup>

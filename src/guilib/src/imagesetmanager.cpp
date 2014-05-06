@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "imagesetmanager.h"
-#include "renderimageinfo.h"
 
 #include "system.h"
 #include "renderer.h"

@@ -6,7 +6,7 @@
 #include	<shlobj.h>
 
 #include "uitest.h"
-#include "guiplatform.h"
+#include <guiplatform/renderer_ogl.h>
 
 //#include <boost/filesystem.hpp>
 #include <iostream>
@@ -97,29 +97,31 @@ void ui_test_application::run()
 {	
 	createGUISystem();
 
-	m_timer.restart();
+	//m_timer.restart();
 
-	while( is_created() )
-	{
-		if( !do_events() && m_active)
-		{
-			m_elapsed = m_timer.elapsed();
+	//while( is_created() )
+	//{
+	//	if( !do_events() && m_active)
+	//	{
+	//		m_elapsed = m_timer.elapsed();
 			update((float)m_elapsed);
 			render();
-		}
-	}
+	//	}
+	//}
 }
 
 void ui_test_application::createGUISystem()
 {
 	filesystem_ptr fs(new gui_filesystem("/"));
 
-	m_render = gui::ogl_platform::CreateRenderer(fs, 1024);
+	m_render_device = std::make_shared<gui::ogl_platform::RenderDeviceGL>(fs, 1024);
+
+	m_render = std::make_shared<gui::Renderer>(*m_render_device, fs);
 
 	if(m_system)
 		m_system.reset();
 
-	m_system = std::make_shared<System>(*m_render, "default", 0, g_log);
+	m_system = std::make_shared<System>(*m_render, "default", nullptr, g_log);
 
 	if(m_system)
 	{
@@ -151,17 +153,17 @@ void ui_test_application::update(float delta)
 	
 }
 
-bool ui_test_application::do_events()
-{
-	MSG msg = {0};
-	if( PeekMessage( &msg, NULL, 0U, 0U, PM_REMOVE ) )
-	{
-		TranslateMessage( &msg );
-		DispatchMessage( &msg );
-		return true;
-	}
-	return false;
-}
+//bool ui_test_application::do_events()
+//{
+//	MSG msg = {0};
+//	if( PeekMessage( &msg, NULL, 0U, 0U, PM_REMOVE ) )
+//	{
+//		TranslateMessage( &msg );
+//		DispatchMessage( &msg );
+//		return true;
+//	}
+//	return false;
+//}
 
 void ui_test_application::render()
 {
@@ -318,37 +320,37 @@ bool ui_test_application::handleMouseButton(EventArgs::MouseButtons btn, EventAr
 	else
 		return false;
 }
-
-bool ui_test_application::handleKeyboard(UINT_PTR key, EventArgs::ButtonState state)
-{
-	if(!m_system) return false;
-
-	if (!m_filename.empty())
-		if((EventArgs::Keys)key == EventArgs::K_F5 && state == EventArgs::Down)
-		{
-			resetGUISystem();
-			return true;
-		}
-
-	gui::event e = {0};
-	e.type = gui::event_keyboard;
-	e.type |= (state == EventArgs::Down) ? gui::event_key_down : gui::event_key_up;
-	e.keyboard.key = (gui::EventArgs::Keys)key;
-	return m_system->handle_event(e);
-}
-
-bool ui_test_application::handleChar(UINT_PTR ch)
-{
-	if(m_system){
-		gui::event e = {0};
-		e.type = gui::event_char;
-		e.text.code = ch;
-		return m_system->handle_event(e);
-		//return m_system->handleChar((unsigned int)ch);
-	}
-	else
-		return false;
-}
+//
+//bool ui_test_application::handleKeyboard(UINT_PTR key, EventArgs::ButtonState state)
+//{
+//	if(!m_system) return false;
+//
+//	if (!m_filename.empty())
+//		if((EventArgs::Keys)key == EventArgs::K_F5 && state == EventArgs::Down)
+//		{
+//			resetGUISystem();
+//			return true;
+//		}
+//
+//	gui::event e = {0};
+//	e.type = gui::event_keyboard;
+//	e.type |= (state == EventArgs::Down) ? gui::event_key_down : gui::event_key_up;
+//	e.keyboard.key = (gui::EventArgs::Keys)key;
+//	return m_system->handle_event(e);
+//}
+//
+//bool ui_test_application::handleChar(UINT_PTR ch)
+//{
+//	if(m_system){
+//		gui::event e = {0};
+//		e.type = gui::event_char;
+//		e.text.code = ch;
+//		return m_system->handle_event(e);
+//		//return m_system->handleChar((unsigned int)ch);
+//	}
+//	else
+//		return false;
+//}
 
 
 
@@ -356,31 +358,4 @@ void ui_test_application::load(const std::string& xml)
 {
 	if(!m_system) return;
 	gui::base_window* wnd = m_system->loadXml(xml);
-}
-
-void ui_test_application::OnLostDevice(void)
-{
-	try
-	{
-		m_render->OnLostDevice();
-	}
-	catch(...)
-	{	
-	}		
-}
-
-bool ui_test_application::OnResetDevice(void)
-{
-	handleViewportChange();
-	return true;
-	//try
-	//{
-	//	m_render->OnResetDevice();
-	//	
-	//}
-	//catch(...)
-	//{
-	//	return S_FALSE;
-	//}
-	//return S_OK;
 }

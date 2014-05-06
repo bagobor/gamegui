@@ -27,7 +27,16 @@ namespace gui
 		point m_offset; // offset in result image
 	};
 
-	struct RenderImageInfo;
+	//struct RenderImageInfo;
+	struct RenderImageInfo
+	{
+		RenderImageInfo() : texture(0), isAdditiveBlend(false) {}
+		Texture* texture;
+		Rect pixel_rect;
+		point offset;
+		point crop;
+		bool  isAdditiveBlend;
+	};
 
 	class Image
 	{

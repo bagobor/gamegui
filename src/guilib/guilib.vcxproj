@@ -144,8 +144,6 @@
     <ClInclude Include="src\imageops.h" />
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\renderer.h" />
-    <ClInclude Include="src\renderimageinfo.h" />
-    <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\system.h" />
     <ClInclude Include="src\texmanager.h" />
     <ClInclude Include="src\texture.h" />

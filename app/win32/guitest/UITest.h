@@ -1,6 +1,6 @@
 #pragma once
 
-#include <guilib.h>
+#include <guilib/guilib.h>
 
 //#include <boost/timer.hpp>
 
@@ -24,21 +24,19 @@ namespace rgde
 		bool handleMouseMove(int x, int y);
 		bool handleMouseWheel(int diff);
 		bool handleMouseButton(gui::EventArgs::MouseButtons btn, gui::EventArgs::ButtonState state);
-		virtual bool handleKeyboard(UINT_PTR key, gui::EventArgs::ButtonState state);
-		bool handleChar(UINT_PTR ch);
+		//virtual bool handleKeyboard(UINT_PTR key, gui::EventArgs::ButtonState state);
+		//bool handleChar(UINT_PTR ch);
 
 		void handleViewportChange();
 
 		void load(const std::string& xml);
 
-		virtual bool OnResetDevice();
-		virtual void	OnLostDevice();
 
 	protected:
 		void reinit();
 
 		void resize_scene(unsigned int width, unsigned int height);
-		bool do_events();
+		//bool do_events();
 
 		void update(float delta);
 		void render();
@@ -51,14 +49,16 @@ namespace rgde
 		render::device m_render_device;
 		core::vfs::system m_filesystem;*/
 
+		gui::RenderDevicePtr m_render_device;
 		std::shared_ptr<gui::Renderer> m_render;
 		std::shared_ptr<gui::System> m_system;
+		
 
 		unsigned int m_framecount;
 
 		bool m_active;
 		double m_elapsed;
-		std::timer m_timer;
+		//std::timer m_timer;
 		//gui::FontPtr m_font;
 	};
 

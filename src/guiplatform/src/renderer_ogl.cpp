@@ -1,11 +1,8 @@
 #include "stdafx.h"
 
 #include <guilib/guilib.h>
-#include <guilib/src/renderimageinfo.h>
 
-#include "renderer.h"
-#include "texture.h"
-#include "ftfont.h"
+#include "../renderer_ogl.h"
 
 // fine tune :)
 #define PixelAligned(x)	( ( (float)(int)(( x ) + (( x ) > 0.0f ? 0.5f : -0.5f)) ) - 0.5f )
@@ -15,11 +12,11 @@ namespace gui
 {
 	namespace ogl_platform
 	{
-		//Renderer* CreateRenderer(rgde::render::device& dev, filesystem_ptr fs, unsigned buff)
-		//{
-		//	return new renderer(dev, fs, 1024);
-		//}
-				
+
+		void TextureOGL::update(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
+			int i = 5;
+		}
+
 		struct QuadVertex
 		{
 			float x, y, tu1, tv1;		//!< The transformed position for the vertex.
@@ -46,23 +43,32 @@ namespace gui
 		/*************************************************************************
 		Constructor
 		*************************************************************************/
-		RendererGL::RendererGL(filesystem_ptr fs, unsigned int max_quads)
-			: Renderer(fs)
+		RenderDeviceGL::RenderDeviceGL(filesystem_ptr fs, unsigned int max_quads)
+			//: Renderer(fs)
 		{
-			m_needToAddCallback = false;
-			Size size(getViewportSize());
+			//m_needToAddCallback = false;
+			//Size size(getViewportSize());
 
-			constructor_impl(size);
+			//constructor_impl(size);
+		}
+
+
+		TexturePtr RenderDeviceGL::createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
+			return TexturePtr();
+		}
+
+		TexturePtr RenderDeviceGL::createTexture(const std::string& filename) {
+			return TexturePtr();
 		}
 
 
 		/*************************************************************************
 		method to do work of constructor
 		*************************************************************************/
-		void RendererGL::constructor_impl(const Size& display_size)
-		{
+		//void RendererGL::constructor_impl(const Size& display_size)
+		//{
 			//m_bufferPos     = 0;
-			m_originalsize = display_size;
+			//m_originalsize = display_size;
 			//m_vertexDeclaration = vertex_declaration::create(m_device, vertex_desc, 3);
 
 			// Create a vertex buffer
@@ -109,17 +115,17 @@ namespace gui
 
 			// get the maximum available texture size.
 			// set max texture size the the smaller of max width and max height.
-			m_maxTextureSize = 2048;//devCaps.MaxTextureWidth < devCaps.MaxTextureHeight ? devCaps.MaxTextureWidth : devCaps.MaxTextureHeight;
+			//m_maxTextureSize = 2048;//devCaps.MaxTextureWidth < devCaps.MaxTextureHeight ? devCaps.MaxTextureWidth : devCaps.MaxTextureHeight;
 
 			//m_handleGuiTexture = m_shader->get_param("guitexture");
 			//m_handleViewPortSize = m_shader->get_param("viewportsize");
-		}
+		//}
 
 
 		/*************************************************************************
 		Destructor
 		*************************************************************************/
-		RendererGL::~RendererGL(void)
+		RenderDeviceGL::~RenderDeviceGL(void)
 		{
 		}
 
@@ -130,7 +136,7 @@ namespace gui
 		namespace 
 		{
 			// return value = buff offset in QuadInfo
-			/*__inline */__forceinline unsigned int fill_vertex(const Renderer::QuadInfo& q, QuadVertex*& v, float scaleX, float scaleY)
+			/*__inline */__forceinline unsigned int fill_vertex(const QuadInfo& q, QuadVertex*& v, float scaleX, float scaleY)
 			{									
 				QuadVertex& v0 = *v; ++v;
 				QuadVertex& v1 = *v; ++v;
@@ -165,8 +171,9 @@ namespace gui
 		/*************************************************************************
 		render a quad directly to the display
 		*************************************************************************/
-		void RendererGL::renderQuadDirect(const QuadInfo& q)
+		void RenderDeviceGL::renderImmediate(const QuadInfo& q)
 		{
+			int i = 5;
 			//if (!m_buffer)
 			//	return;
 	
@@ -225,8 +232,8 @@ namespace gui
 			//m_shader->end();
 		}
 		
-		void RendererGL::setRenderStates()
-		{
+		//void RendererGL::setRenderStates()
+		//{
 			// setup vertex stream
 			//m_device.set_stream_source(0, m_buffer, sizeof(QuadVertex));
 			//m_device.set_index_buffer(m_ibuffer);
@@ -244,12 +251,13 @@ namespace gui
 
 			//m_shader->begin(0);
 			//m_shader->begin_pass(0);
-		}
+		//}
 		/*************************************************************************
 		perform final rendering for all queued renderable quads.
 		*************************************************************************/
-		void RendererGL::doRender(void)
+		void RenderDeviceGL::render(const Batches& batches, const Quads& quads, Size scale)
 		{
+			int i = 5;
 			//if (!m_buffer)
 			//	return;
 
@@ -333,16 +341,16 @@ namespace gui
 		/*************************************************************************
 		setup states etc
 		*************************************************************************/
-		void RendererGL::initPerFrameStates(void)
-		{
-			// setup vertex stream
-			//m_device.set_stream_source(0, m_buffer, sizeof(QuadVertex));
-			//m_device.set_index_buffer(m_ibuffer);
-		}
+		//void RendererGL::initPerFrameStates(void)
+		//{
+		//	// setup vertex stream
+		//	m_device.set_stream_source(0, m_buffer, sizeof(QuadVertex));
+		//	m_device.set_index_buffer(m_ibuffer);
+		//}
 
-		TexturePtr	RendererGL::updateTexture(TexturePtr p, const void* buffPtr, unsigned int buffWidth, unsigned int buffHeight, Texture::PixelFormat pixFormat)
-		{
-			return TexturePtr();
+		//TexturePtr	RendererGL::updateTexture(TexturePtr p, const void* buffPtr, unsigned int buffWidth, unsigned int buffHeight, Texture::PixelFormat pixFormat)
+		//{
+			//return TexturePtr();
 			//TexturePtr platform_tex = static_cast<texture&>(*p).get_platform_resource();
 
 			//surface_ptr surface = platform_tex->get_surface(0);
@@ -399,7 +407,7 @@ namespace gui
 			//}
 			//
 			//return p;
-		}
+		//}
 
 	}
 }
