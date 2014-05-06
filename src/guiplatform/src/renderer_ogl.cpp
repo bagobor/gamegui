@@ -1,9 +1,14 @@
 #include "stdafx.h"
 
+
 #include <guilib/guilib.h>
+
+#include <GL/GL.h>
 
 #include "../renderer_ogl.h"
 #include "opengl.h"
+
+#include "png.h"
 
 // fine tune :)
 #define PixelAligned(x)	( ( (float)(int)(( x ) + (( x ) > 0.0f ? 0.5f : -0.5f)) ) - 0.5f )
@@ -53,9 +58,299 @@ namespace gui
 {
 	namespace ogl_platform
 	{
+		unsigned int bitsPerPixelForFormat(Texture::PixelFormat format)
+		{
+			switch (format) {
+			case Texture::PF_RGB888:
+			case Texture::PF_RGBA8888:
+				return 32;
+				
+			case Texture::PF_RGB565:
+			case Texture::PF_RGBA4444:
+				return 16;
+
+			case Texture::PF_PVRTC4:
+				return 4;
+
+			case Texture::PF_PVRTC2:
+				return 2;
+			}
+
+			return (unsigned)-1;
+		}
+
+		TextureOGL::TextureOGL(RenderDeviceGL& r)
+			: Texture(r),
+			renderer(r),
+			m_gl_handler(0)
+		{
+			glGenTextures(1, &m_gl_handler);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			glBindTexture(0, m_gl_handler);
+		}
+
+		TextureOGL::~TextureOGL() {
+			glDeleteTextures(1, &m_gl_handler);
+		}
+
+		bool TextureOGL::init(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
+
+			m_size.width = width;
+			m_size.height = height;
+			m_format = format;
+			m_image_format = Texture::DF_RAW;
+
+			unsigned int bitsPerPixel = 24;
+
+			if (format != PF_RGB888) {
+				bitsPerPixel = bitsPerPixelForFormat(format);
+			}
+
+			const unsigned int bytesPerRow = width * bitsPerPixel / 8;
+
+			if (bytesPerRow % 8 == 0)
+			{
+				glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
+			}
+			else if (bytesPerRow % 4 == 0)
+			{
+				glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+			}
+			else if (bytesPerRow % 2 == 0)
+			{
+				glPixelStorei(GL_UNPACK_ALIGNMENT, 2);
+			}
+			else
+			{
+				glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+			}
+
+			switch (format) {
+			//case Texture::PF_Default:
+			case Texture::PF_RGBA8888:
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+				return true;
+
+			case Texture::PF_RGB888:
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)width, (GLsizei)height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+				return true;
+
+			case Texture::PF_RGBA4444:
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
+				return true;
+
+			case Texture::PF_RGB565:
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)width, (GLsizei)height, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
+				return true;
+
+			}
+
+			return false;
+		}
+
+		struct ImageSource
+		{
+			unsigned char* data;
+			int size;
+			int offset;
+		};
+
+		static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t length)
+		{
+			ImageSource* isource = (ImageSource*)png_get_io_ptr(png_ptr);
+
+			if ((int)(isource->offset + length) <= isource->size)
+			{
+				memcpy(data, isource->data + isource->offset, length);
+				isource->offset += length;
+			}
+			else
+			{
+				png_error(png_ptr, "pngReaderCallback failed");
+			}
+		}
+
+#define CC_BREAK_IF(cond)            if(cond) break
+		bool TextureOGL::loadPNG(data_ptr data) {
+			void * pData = data->ptr;
+			int nDatalen = data->size;
+#define PNGSIGSIZE  8
+			bool bRet = false;
+			png_byte        header[PNGSIGSIZE] = { 0 };
+			png_structp     png_ptr = 0;
+			png_infop       info_ptr = 0;
+
+			png_byte* m_pData = nullptr;
+
+			do
+			{
+				// png header len is 8 bytes
+				CC_BREAK_IF(nDatalen < PNGSIGSIZE);
+
+				// check the data is png or not
+				memcpy(header, pData, PNGSIGSIZE);
+				CC_BREAK_IF(png_sig_cmp(header, 0, PNGSIGSIZE));
+
+				// init png_struct
+				png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0);
+				CC_BREAK_IF(!png_ptr);
+
+				// init png_info
+				info_ptr = png_create_info_struct(png_ptr);
+				CC_BREAK_IF(!info_ptr);
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
+				CC_BREAK_IF(setjmp(png_jmpbuf(png_ptr)));
+#endif
+
+				// set the read call back function
+				ImageSource imageSource;
+				imageSource.data = (unsigned char*)pData;
+				imageSource.size = nDatalen;
+				imageSource.offset = 0;
+				png_set_read_fn(png_ptr, &imageSource, pngReadCallback);
+
+				// read png header info
+
+				// read png file info
+				png_read_info(png_ptr, info_ptr);
+
+				m_size.width = png_get_image_width(png_ptr, info_ptr);
+				m_size.height = png_get_image_height(png_ptr, info_ptr);
+				int m_nBitsPerComponent = png_get_bit_depth(png_ptr, info_ptr);
+				png_uint_32 color_type = png_get_color_type(png_ptr, info_ptr);
+
+				//CCLOG("color type %u", color_type);
+
+				// force palette images to be expanded to 24-bit RGB
+				// it may include alpha channel
+				if (color_type == PNG_COLOR_TYPE_PALETTE)
+				{
+					png_set_palette_to_rgb(png_ptr);
+				}
+				// low-bit-depth grayscale images are to be expanded to 8 bits
+				if (color_type == PNG_COLOR_TYPE_GRAY && m_nBitsPerComponent < 8)
+				{
+					png_set_expand_gray_1_2_4_to_8(png_ptr);
+				}
+				// expand any tRNS chunk data into a full alpha channel
+				if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
+				{
+					png_set_tRNS_to_alpha(png_ptr);
+				}
+				// reduce images with 16-bit samples to 8 bits
+				if (m_nBitsPerComponent == 16)
+				{
+					png_set_strip_16(png_ptr);
+				}
+				// expand grayscale images to RGB
+				if (color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
+				{
+					png_set_gray_to_rgb(png_ptr);
+				}
+
+				// read png data
+				// m_nBitsPerComponent will always be 8
+				m_nBitsPerComponent = 8;
+
+				//png_bytep* row_pointers = (png_bytep*)malloc( sizeof(png_bytep) * m_nHeight );
+				png_bytep* row_pointers = (png_bytep*)alloca(sizeof(png_bytep)* m_size.height);
+
+				png_read_update_info(png_ptr, info_ptr);
+				png_uint_32 rowbytes = png_get_rowbytes(png_ptr, info_ptr);
+
+				m_pData = new png_byte[rowbytes * m_size.height];
+				CC_BREAK_IF(!m_pData);
+
+				for (unsigned short i = 0; i < m_size.height; ++i)
+				{
+					row_pointers[i] = m_pData + i*rowbytes;
+				}
+				png_read_image(png_ptr, row_pointers);
+
+				png_read_end(png_ptr, NULL);
+
+				png_uint_32 channel = rowbytes / m_size.width;
+
+				bool m_bHasAlpha = false; 
+
+				if (channel == 4)
+				{
+					m_bHasAlpha = true;
+					//unsigned int *tmp = (unsigned int *)m_pData;
+					//for (unsigned short i = 0; i < m_nHeight; i++)
+					//{
+					//	for (unsigned int j = 0; j < rowbytes; j += 4)
+					//	{
+					//		*tmp++ = CC_RGB_PREMULTIPLY_ALPHA(row_pointers[i][j], row_pointers[i][j + 1],
+					//			row_pointers[i][j + 2], row_pointers[i][j + 3]);
+					//	}
+					//}
+
+					//m_bPreMulti = true;
+				}
+
+
+				bRet = true;
+			} while (0);
+
+			if (png_ptr)
+			{
+				png_destroy_read_struct(&png_ptr, (info_ptr) ? &info_ptr : 0, 0);
+			}
+
+			bRet = init(m_pData, m_size.width, m_size.height, Texture::PF_RGBA8888);
+
+			delete[] m_pData;
+			
+			return bRet;
+		}
+
+		bool TextureOGL::init(const std::string& filename) {
+			std::string lowerCase(filename);
+			for (unsigned int i = 0; i < lowerCase.length(); ++i)
+			{
+				lowerCase[i] = tolower(lowerCase[i]);
+			}
+
+			if (std::string::npos != lowerCase.find(".png")) {
+				m_image_format = Texture::DF_PNG;
+			}
+
+			if (m_image_format == Texture::DF_UNKNOWN)
+				return false;
+
+			data_ptr data = renderer.filesystem->load_binary(filename);
+			if (!data) return false;
+
+			m_filename = filename;
+
+			switch (m_image_format)
+			{
+			//case gui::Texture::DF_FLAG_HARDWARE:
+			//	break;
+			//case gui::Texture::DF_JPG:
+			//	break;
+			//case gui::Texture::DF_PVR_APPLE:
+			//	break;
+			//case gui::Texture::DF_PVR_IMAGINATION:
+			//	break;
+			case gui::Texture::DF_PNG:
+				return loadPNG(data);
+				break;
+			//case gui::Texture::DF_WEBP:
+			//	break;
+			//default:
+			//	break;
+			}
+			return false;
+		}
 
 		void TextureOGL::update(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
-			int i = 5;
+			init(data, width, height, format);
 		}
 
 		struct QuadVertex
@@ -93,22 +388,26 @@ namespace gui
 			init_gl();
 			//m_needToAddCallback = false;
 			//Size size(getViewportSize());
-
 			//constructor_impl(size);
-
-
 		}
 
 
 		TexturePtr RenderDeviceGL::createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
-			return TexturePtr();
+			auto texture = std::make_shared<TextureOGL>(*this);
+			if (!texture->init(data, width, height, format)) {
+				return TexturePtr();
+			}
+
+			return texture;
 		}
 
 		TexturePtr RenderDeviceGL::createTexture(const std::string& filename) {
-			data_ptr data = filesystem->load_binary(filename);
+			auto texture = std::make_shared<TextureOGL>(*this);
+			if (!texture->init(filename)) {
+				return TexturePtr();
+			}			
 
-			int i = 5;
-			return TexturePtr();
+			return texture;
 		}
 
 

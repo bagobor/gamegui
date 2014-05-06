@@ -12,18 +12,17 @@ union platform_handle {
 typedef std::shared_ptr<struct vertex_buffer> vb_ptr;
 typedef std::shared_ptr<struct index_buffer> ib_ptr;
 typedef std::shared_ptr<struct mesh> mesh_ptr;
-typedef std::shared_ptr<struct texture> texture_ptr;
 typedef std::shared_ptr<struct gpu_program> gpu_program_ptr;
 
-struct texture {
-	static texture_ptr create(const char* filename);
-	virtual ~texture();
-
-	void bind(size_t slot);
-
-	size_t width, height;
-	platform_handle h;
-};
+//struct texture {
+//	static texture_ptr create(const char* filename);
+//	virtual ~texture();
+//
+//	void bind(size_t slot);
+//
+//	size_t width, height;
+//	platform_handle h;
+//};
 
 struct gpu_buffer {
 	gpu_buffer(size_t size_in_bytes);
@@ -96,8 +95,8 @@ struct gpu_program {
 		void set(const glm::mat4& m) {p->set(*this, m);}
 		void set(const glm::vec4& v) {p->set(*this, v);}
 		void set(float v) {p->set(*this, v);}
-		void set(texture_ptr t) {p->set(*this, t);}
-		void set(texture_ptr t, size_t slot) {p->set(*this, t, slot);}
+		//void set(texture_ptr t) {p->set(*this, t);}
+		//void set(texture_ptr t, size_t slot) {p->set(*this, t, slot);}
 	};
 
 	struct shader_desc {
@@ -131,10 +130,10 @@ struct gpu_program {
 	void set(handle p, const glm::vec4& v);
 	void set(handle p, float value);
 
-	void set(handle p, texture_ptr t);
-	void set(handle p, texture_ptr t, size_t slot);
+	//void set(handle p, texture_ptr t);
+	//void set(handle p, texture_ptr t, size_t slot);
 
-	void set(const char* name, texture_ptr t);
+	//void set(const char* name, texture_ptr t);
 	
 	void begin();
 	void end();

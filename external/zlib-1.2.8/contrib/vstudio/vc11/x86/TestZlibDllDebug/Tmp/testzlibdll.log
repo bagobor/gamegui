@@ -1,2 +1,0 @@
-﻿  testzlib.c
-LINK : fatal error LNK1104: cannot open file 'x86\ZlibDllDebug\zlibwapi.lib'

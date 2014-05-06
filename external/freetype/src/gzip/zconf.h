@@ -168,47 +168,47 @@
 #    define FAR _far
 #  endif
 #endif
-
-/* Compile with -DZLIB_DLL for Windows DLL support */
-#if defined(ZLIB_DLL)
-#  if defined(_WINDOWS) || defined(WINDOWS)
-#    ifdef FAR
-#      undef FAR
-#    endif
-#    include <windows.h>
-#    define ZEXPORT(x)  x WINAPI
-#    ifdef WIN32
-#      define ZEXPORTVA(x)  x WINAPIV
-#    else
-#      define ZEXPORTVA(x)  x FAR _cdecl _export
-#    endif
-#  endif
-#  if defined (__BORLANDC__)
-#    if (__BORLANDC__ >= 0x0500) && defined (WIN32)
-#      include <windows.h>
-#      define ZEXPORT(x) x __declspec(dllexport) WINAPI
-#      define ZEXPORTRVA(x)  x __declspec(dllexport) WINAPIV
-#    else
-#      if defined (_Windows) && defined (__DLL__)
-#        define ZEXPORT(x) x _export
-#        define ZEXPORTVA(x) x _export
-#      endif
-#    endif
-#  endif
-#endif
+//
+///* Compile with -DZLIB_DLL for Windows DLL support */
+//#if defined(ZLIB_DLL)
+//#  if defined(_WINDOWS) || defined(WINDOWS)
+//#    ifdef FAR
+//#      undef FAR
+//#    endif
+//#    include <windows.h>
+//#    define ZEXPORT(x)  x WINAPI
+//#    ifdef WIN32
+//#      define ZEXPORTVA(x)  x WINAPIV
+//#    else
+//#      define ZEXPORTVA(x)  x FAR _cdecl _export
+//#    endif
+//#  endif
+//#  if defined (__BORLANDC__)
+//#    if (__BORLANDC__ >= 0x0500) && defined (WIN32)
+//#      include <windows.h>
+//#      define ZEXPORT(x) x __declspec(dllexport) WINAPI
+//#      define ZEXPORTRVA(x)  x __declspec(dllexport) WINAPIV
+//#    else
+//#      if defined (_Windows) && defined (__DLL__)
+//#        define ZEXPORT(x) x _export
+//#        define ZEXPORTVA(x) x _export
+//#      endif
+//#    endif
+//#  endif
+//#endif
 
 
 #ifndef ZEXPORT
-#  define ZEXPORT(x)   static x
+#  define ZEXPORT(x)    x
 #endif
 #ifndef ZEXPORTVA
-#  define ZEXPORTVA(x)   static x
+#  define ZEXPORTVA(x)    x
 #endif
 #ifndef ZEXTERN
-#  define ZEXTERN(x) static x
+#  define ZEXTERN(x)  x
 #endif
 #ifndef ZEXTERNDEF
-#  define ZEXTERNDEF(x)  static x
+#  define ZEXTERNDEF(x)   x
 #endif
 
 #ifndef FAR

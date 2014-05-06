@@ -13,6 +13,8 @@
 
 #include "pngpriv.h"
 
+#undef PNG_WRITE_SUPPORTED
+
 #ifdef PNG_WRITE_SUPPORTED
 
 #ifdef PNG_WRITE_INT_FUNCTIONS_SUPPORTED

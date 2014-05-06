@@ -4,13 +4,18 @@
 
 namespace gui
 {
-	class Renderer;
+	class RenderDevice;
 
 
 	class Texture
 	{
 	protected:
-		explicit Texture(Renderer& owner) : m_owner(owner) {}
+		explicit Texture(RenderDevice& owner) : m_owner(owner),
+			m_format(PF_INVALID),
+			m_image_format(DF_RAW),
+			m_size(-1,-1)
+		{
+		}
 
 	public:
 		// texture format flags
@@ -22,7 +27,7 @@ namespace gui
 			PF_RGB888 = 0x10, //! Each pixel is 3 bytes. RGB in that order.
 			PF_RGBA8888 = PF_RGB888 | PF_FLAG_ALPHA,//! Each pixel is 4 bytes. RGBA in that order.
 			PF_RGB565 = 0x20, // platform dependent
-			PF_RGB444 = 0x30 | PF_FLAG_ALPHA, // platform dependent
+			PF_RGBA4444 = 0x30 | PF_FLAG_ALPHA, // platform dependent
 			PF_RGB5A1 = 0x40 | PF_FLAG_ALPHA,
 			PF_PVRTC4 = 0x50 | PF_FLAG_ALPHA | PF_FLAG_COMPRESSED,
 			PF_PVRTC2 = 0x60 | PF_FLAG_ALPHA | PF_FLAG_COMPRESSED,
@@ -51,7 +56,7 @@ namespace gui
 		virtual float getWidth(void) const { return m_size.width; }
 		virtual float getHeight(void) const { return m_size.height; }
 
-		Renderer&	getRenderer(void) const { return m_owner; }
+		RenderDevice&	getRenderer(void) const { return m_owner; }
 		PixelFormat getPixelFormat() const { return m_format; }
 
 		virtual void update(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) = 0;
@@ -62,8 +67,9 @@ namespace gui
 		void setPixelFormat(PixelFormat fmt) { m_format = fmt; }	
 
 	protected:
-		Renderer& m_owner;
+		RenderDevice& m_owner;
 		PixelFormat m_format;
+		ImageFormat m_image_format;
 		Size m_size;
 		std::string m_filename;
 		std::string m_resourceGroup;

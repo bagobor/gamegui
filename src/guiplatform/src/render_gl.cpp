@@ -1,7 +1,10 @@
 #include "stdafx.h"
 
+#include <GL/gl.h>
+
 #include "render_gl.h"
 #include "opengl.h"
+
 
 #include <gli/gli.hpp>
 #include <gli/core/texture2d.hpp>// Requires OpenGL >= 1.1 to be included before this include
@@ -163,23 +166,23 @@ void gpu_program::end() {
 	cur_texture_slot = 0;
 }
 
-void gpu_program::set(handle p, texture_ptr t) {
-	if (p.id < 0) return;
-	glUniform1i(p.id, cur_texture_slot);
-	t->bind(cur_texture_slot);
-	cur_texture_slot++;
-}
-
-void gpu_program::set(handle p, texture_ptr t, size_t slot) {
-	if (p.id < 0) return;
-	glUniform1i(p.id, slot);
-	t->bind(slot);
-}
-
-void gpu_program::set(const char* name, texture_ptr t){
-	handle h = get_handle(name);
-	set(h, t);
-}
+//void gpu_program::set(handle p, texture_ptr t) {
+//	if (p.id < 0) return;
+//	glUniform1i(p.id, cur_texture_slot);
+//	t->bind(cur_texture_slot);
+//	cur_texture_slot++;
+//}
+//
+//void gpu_program::set(handle p, texture_ptr t, size_t slot) {
+//	if (p.id < 0) return;
+//	glUniform1i(p.id, slot);
+//	t->bind(slot);
+//}
+//
+//void gpu_program::set(const char* name, texture_ptr t){
+//	handle h = get_handle(name);
+//	set(h, t);
+//}
 
 
 index_buffer::index_buffer(size_t size, void* ib_data) : gpu_buffer(size) {
@@ -231,23 +234,15 @@ gpu_buffer::~gpu_buffer() {
 	glDeleteBuffers(1, &h.id);        
 }
 
-texture_ptr texture::create(const char* filename) {
-	GLuint id = gli::load_dds(filename);
-	//TODO:
-	texture_ptr t(new texture);
-	t->h.id = id;
-	return t;
-}
-
-texture::~texture() {
-	glDeleteTextures(1, &h.id);
-	h.id = -1;
-}
-
-void texture::bind(size_t slot){
-	glActiveTexture(GL_TEXTURE0 + slot);
-	glBindTexture(GL_TEXTURE_2D, h.id);
-}
+//texture::~texture() {
+//	glDeleteTextures(1, &h.id);
+//	h.id = -1;
+//}
+//
+//void texture::bind(size_t slot){
+//	glActiveTexture(GL_TEXTURE0 + slot);
+//	glBindTexture(GL_TEXTURE_2D, h.id);
+//}
 
 vb_ptr vertex_buffer::create(size_t size, void* data) {
 	return vb_ptr(new vertex_buffer(size, data));
@@ -259,61 +254,4 @@ ib_ptr index_buffer::create(size_t size, void* data) {
 gpu_program_ptr gpu_program::create(const char* vs, const char* fs) {
 	gpu_program_ptr sp(new gpu_program(vs, fs));
 	return sp->is_valid() ? sp : gpu_program_ptr();
-}
-
-mesh::mesh(const vertex_atrib* va, vb_ptr _vb, ib_ptr _ib) : vb(_vb), ib(_ib) {
-	if (!ib) update_ib(0,0);
-	if (!vb) update_vb(0,0);
-
-	glGenVertexArrays(1, &vdecl.id);
-	bind();
-
-	vb->bind();
-
-	while(va->index >= 0) {
-		glVertexAttribPointer((GLuint)va->index, va->size, va->type, va->norm ? GL_TRUE : GL_FALSE, va->stride, BUFFER_OFFSET(va->offset));
-		glEnableVertexAttribArray(va->index);
-		++va;
-	}
-
-	vb->unbind();
-
-	unbind();
-}
-
-void mesh::update_ib(size_t size, void* ib_data) {
-	if (!ib) 
-		ib = index_buffer::create(size, ib_data);
-	else 
-		ib->update(size, ib_data);	
-}
-
-void mesh::update_vb(size_t size, void* vb_data) {
-	if (!vb) 
-		vb = vertex_buffer::create(size, vb_data);
-	else 
-		vb->update(size, vb_data);
-}
-
-void mesh::bind() {
-	glBindVertexArray(vdecl.id);
-	ib->bind();
-}
-
-void mesh::unbind() {
-	ib->unbind();
-	glBindVertexArray(0);
-}
-
-void mesh::draw(draw_mode_t mode) {
-	static const GLenum gl_modes[] = {GL_POINTS, GL_POINTS, GL_LINES, GL_TRIANGLES};
-	size_t num_primitives = (ib->size / sizeof(unsigned short))*mode;
-	GLenum gl_mode = gl_modes[mode];
-	bind();
-	glDrawElements(gl_mode, num_primitives, GL_UNSIGNED_SHORT, 0);
-	unbind();
-}
-
-mesh_ptr mesh::create(const vertex_atrib* va, vb_ptr vb, ib_ptr ib) {
-	return mesh_ptr(new mesh(va, vb, ib));
 }

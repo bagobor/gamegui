@@ -2,7 +2,7 @@
 #include "window.h"
 
 #include <guilib.h>
-#include <guiplatform.h>
+#include <renderer_ogl.h>
 extern "C"
 {
 #include <lstate.h>

@@ -1,0 +1,18 @@
+﻿  pngerror.c
+  png.c
+  pngget.c
+  pngmem.c
+  pngpread.c
+  pngread.c
+  pngrio.c
+  pngrtran.c
+  pngrutil.c
+  pngset.c
+  pngtrans.c
+  pngwio.c
+  pngwtran.c
+  pngwutil.c
+  Generating Code...
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(1354,5): warning MSB8012: TargetPath(F:\bitbucket\gamegui\external\lpng1610\projects\visualc71\.\Win32_LIB_Debug\libpng.lib) does not match the Library's OutputFile property value (F:\bitbucket\gamegui\external\lpng1610\projects\visualc71\Win32_LIB_Debug\libpngd.lib). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(1356,5): warning MSB8012: TargetName(libpng) does not match the Library's OutputFile property value (libpngd). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+  libpng.vcxproj -> F:\bitbucket\gamegui\external\lpng1610\projects\visualc71\.\Win32_LIB_Debug\libpng.lib
