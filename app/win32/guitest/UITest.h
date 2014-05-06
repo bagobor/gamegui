@@ -51,8 +51,8 @@ namespace rgde
 		render::device m_render_device;
 		core::vfs::system m_filesystem;*/
 
-		gui::Renderer* m_render;
-		gui::System* m_system;
+		std::shared_ptr<gui::Renderer> m_render;
+		std::shared_ptr<gui::System> m_system;
 
 		unsigned int m_framecount;
 

@@ -9,9 +9,10 @@ namespace gui
 	typedef std::shared_ptr<filesystem> filesystem_ptr;
 
 	class Renderer;
+	typedef std::shared_ptr<Renderer> RendererPtr;
 
 	namespace ogl_platform
 	{
-		//Renderer* CreateRenderer(rgde::render::device& dev, filesystem_ptr fs, unsigned buff = 1024);
+		RendererPtr CreateRenderer(filesystem_ptr fs, unsigned buff = 1024);
 	}	
 }

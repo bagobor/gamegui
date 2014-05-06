@@ -25,8 +25,5 @@
 #include <string>
 #include <algorithm>
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
 #include <memory>
-//#include <boost/unordered_map.hpp>
+#include <unordered_map>

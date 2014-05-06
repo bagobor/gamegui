@@ -38,8 +38,8 @@ System::System(Renderer& render, const std::string& scheme,
 	m_tttime(0.f),
 	m_isContextMenu(false),
 	m_renderHelper(new RenderHelper(render)),
-	m_scriptSys(render.get_filesystem(), externalLua),
-	m_filesystem(render.get_filesystem())
+	m_scriptSys(render.filesystem(), externalLua),
+	m_filesystem(render.filesystem())
 {
 	logEvent(log::system, "GUI system initialization started");
 	m_windowMgr.reset(new WindowManager(*this, scheme));

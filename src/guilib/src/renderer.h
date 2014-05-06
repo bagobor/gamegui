@@ -34,6 +34,46 @@ enum OrientationFlags
 
 class Image;
 
+struct VertexBuffer {
+	virtual ~VertexBuffer() = 0;
+};
+
+struct IndexBuffer {
+	virtual ~IndexBuffer() = 0;
+};
+
+typedef std::shared_ptr<Texture> TexturePtr;
+typedef std::shared_ptr<IndexBuffer> IndexBufferPtr;
+typedef std::shared_ptr<VertexBuffer> VertexBufferPtr;
+
+struct RenderDevice {
+	struct ViewPort {
+		unsigned x, y, w, h;
+	};
+
+	virtual ~RenderDevice() = 0;
+
+	virtual TexturePtr createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) = 0;
+	virtual TexturePtr createTexture(const std::string& filename) = 0;
+
+	virtual IndexBufferPtr createIndexBuffer(size_t size_bytes) = 0;
+	virtual VertexBufferPtr createVertexBuffer(size_t size_bytes) = 0;
+
+	const ViewPort& getViewport() const { return viewport; }
+	virtual void setViewport(const ViewPort& vp) {
+		viewport = vp;
+	}
+
+	struct RenderCommand {
+		TexturePtr texture;
+	};
+
+protected:
+	ViewPort viewport;
+};
+
+
+//TODO: rename to Canvas
 class  Renderer
 {
 	Renderer& operator=(const Renderer&);
@@ -48,8 +88,7 @@ public:
 
 	struct QuadInfo 
 	{
-		struct vec2 {float x, y;};
-		Texture*	texture;
+		struct vec2 {float x, y;};		
 
 		// order: 0 ---> 1
 		//		  2 ---> 3
@@ -62,6 +101,10 @@ public:
 		unsigned long		bottomLeftCol;
 		unsigned long		bottomRightCol;
 		bool				isAdditiveBlend;
+
+		//todo: remove from quad structure
+		Texture*	texture;
+
 		__inline bool operator<(const QuadInfo& other) const
 		{
 			// this is intentionally reversed.
@@ -79,17 +122,22 @@ public:
 		RenderCallbackInfo callbackInfo;
 	};
 
-	explicit Renderer(filesystem_ptr fs);
+	Renderer(RenderDevice& render_device, filesystem_ptr fs);
 	virtual ~Renderer();
 
-	virtual void	addCallback( AfterRenderCallbackFunc callback,
-								 base_window* window, const Rect& dest, const Rect& clip) = 0;
+	void addCallback( AfterRenderCallbackFunc callback,base_window* window, const Rect& dest, const Rect& clip);
 
 	void	drawLine(const Image& img, const vec2* p, size_t size, float z, const Rect& clip_rect, const Color& color, float width);
 	
 	void	draw(const Image& img, const Rect& dest_rect, float z, const Rect& clip_rect, const ColorRect& colors);
 	void	draw(const Image& img, const Rect& dest_rect, float z, const Rect& clip_rect, const ColorRect& colors, ImageOps horz, ImageOps vert);
 	void	immediateDraw(const Image& img, const Rect& dest_rect, float z, const Rect& clip_rect, const ColorRect& colors);
+
+	virtual void startCaptureForCache(base_window* window);
+	virtual void endCaptureForCache(base_window* window);
+	void drawFromCache(base_window* window);
+	void clearCache(base_window* window = 0);
+	
 
 	virtual	void	doRender() = 0;
 	virtual	void	clearRenderList();	
@@ -98,26 +146,29 @@ public:
 	//BufferPtr createGpuBuffer(size_t size, TYPE_ENUM);
 
 	virtual void	beginBatching();
-	virtual void	endBatching();
-	void			clearCache(base_window* window = 0);
+	virtual void	endBatching();	
 	bool			isExistInCache(base_window* window) const;
 	
 	virtual void	setQueueingEnabled(bool queueing)  { m_isQueueing = queueing; }
 	bool			isQueueingEnabled(void) const { return m_isQueueing; }
 
-	virtual	TexturePtr	createTexture(const std::string& filename) {return m_texmanager.createTexture(filename);}
-	virtual	TexturePtr	createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) = 0;
-			TexturePtr	createTexture(unsigned int width, unsigned int height, Texture::PixelFormat format) {
-					return createTexture(NULL, width, height, format );
-			}
-	virtual TexturePtr	updateTexture(TexturePtr p, const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) = 0;
+	TexturePtr	createTexture(const std::string& filename) {return m_texmanager.createTexture(filename);}
 
-	// font managment TODO: remove it!
-	virtual FontPtr		createFont(const std::string& name, const std::string& fontname, unsigned int size) = 0;
+	TexturePtr	createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
+		return m_render_device.createTexture(data, width, height, format);
+	}
 
-	virtual void startCaptureForCache(base_window* window) ;
-	virtual void endCaptureForCache(base_window* window) ;
-	virtual void drawFromCache(base_window* window) {window;}
+	TexturePtr	createTexture(unsigned int width, unsigned int height, Texture::PixelFormat format) {
+		return createTexture(NULL, width, height, format );
+	}
+
+	TexturePtr	updateTexture(TexturePtr p, const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
+		p->update(data, width, height, format);
+		return p;
+	}
+
+	FontPtr	createFont(const std::string& name, const std::string& fontname, unsigned int size);
+	
 
 	const Size&	getOriginalSize(void) const	{ return m_originalsize; }
 	const Size	getSize(void);
@@ -132,12 +183,13 @@ public:
 	float	getCurrentZ() const			{return m_current_z;}
 	float	getZLayer(unsigned int layer) const {return m_current_z - ((float)layer * GuiZLayerStep);}
 
-	virtual void	OnResetDevice();
-	virtual void	OnLostDevice();
-
 	void setAutoScale(bool status) { m_autoScale = status; }
 	bool isAutoScale() const { return m_autoScale; }
-	virtual Size getViewportSize() const = 0;
+
+	Size getViewportSize() const {		
+		const RenderDevice::ViewPort& vp = m_render_device.getViewport();
+		return Size(vp.w, vp.h);
+	}
 
 	Rect virtualToRealCoord( const Rect& virtualRect ) const;
 	Rect realToVirtualCoord( const Rect& realRect ) const;
@@ -146,7 +198,7 @@ public:
 
 	void cleanup(bool complete);
 
-	filesystem_ptr get_filesystem() {return m_filesystem;}
+	filesystem_ptr filesystem() {return m_filesystem;}
 
 protected:
 	inline void addQuad(const Rect& r, const Rect& tr, float z, const RenderImageInfo& img, const ColorRect& colours) {
@@ -158,19 +210,24 @@ protected:
 
 		addQuad(p[0], p[1], p[2], p[3], tr, z, img, colours);
 	}
-	virtual void addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec2& p3, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colours) = 0;
+	void addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec2& p3, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colours);
 	virtual void renderQuadDirect(const QuadInfo& q) = 0;
 
 	void fillQuad(QuadInfo& quad, const Rect& rc, const Rect& uv, float z, const RenderImageInfo& img, const ColorRect& colors);
 	void sortQuads();	
 	
-	friend TextureManager;
-	virtual	TexturePtr	createTextureInstance(const std::string& filename) = 0;
+	friend TextureCache;
+	TexturePtr	createTextureInstance(const std::string& filename) {
+		return m_render_device.createTexture(filename);
+	}
+	
+	RenderDevice& renderDeivce() { return m_render_device; }
+	const RenderDevice& renderDeivce() const { return m_render_device; }
 		
 	void computeVirtualDivRealFactor(Size& coefOut) const;
 
 protected:
-	TextureManager m_texmanager;
+	TextureCache m_texmanager;
 	
 	typedef std::vector<QuadInfo> Quads;
 	typedef std::vector<BatchInfo> Batches;
@@ -207,6 +264,10 @@ protected:
 	QuadCacheRecord* m_currentCapturing;
 
 	filesystem_ptr m_filesystem;
+	RenderDevice& m_render_device;
+
+	bool m_needToAddCallback;
+	RenderCallbackInfo m_callbackInfo;
 };
 
 }

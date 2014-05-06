@@ -11,28 +11,11 @@ namespace gui
 		public:
 			RendererGL(filesystem_ptr fs, unsigned int max_quads);
 			~RendererGL();
-
-			virtual void addCallback( AfterRenderCallbackFunc callback, base_window* window, const Rect& dest, const Rect& clip);
+						
 			virtual	void doRender();
 			//virtual void addQuad(const Rect& dest_rect, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colours);
 			virtual void addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec2& p3, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colours);
-		
-			virtual void drawFromCache(base_window* window);
-
-			virtual	TexturePtr createTexture(const void* buffPtr, unsigned int buffWidth, unsigned int buffHeight, Texture::PixelFormat pixFormat);
-			virtual TexturePtr updateTexture(TexturePtr p, const void* buffPtr, unsigned int buffWidth, unsigned int buffHeight, Texture::PixelFormat pixFormat);
-
-			// move to gui lib
-			virtual FontPtr	createFont(const std::string& name, const std::string& fontname, unsigned int size);
-
-			virtual void	beginBatching();
-			virtual void	endBatching();
-
-			virtual void	OnResetDevice();
-			virtual void	OnLostDevice();
-
-			virtual Size	getViewportSize() const;
-
+			
 		protected:
 			virtual void renderQuadDirect(const QuadInfo& q);
 			virtual	TexturePtr	createTextureInstance(const std::string& filename);
@@ -57,10 +40,7 @@ namespace gui
 
 		protected:
 			//shader_handle m_handleViewPortSize;
-			//shader_handle m_handleGuiTexture;
-
-			bool m_needToAddCallback;
-			RenderCallbackInfo m_callbackInfo;				 
+			//shader_handle m_handleGuiTexture;	 
 		};
 	}
 }

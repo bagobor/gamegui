@@ -37,7 +37,7 @@ namespace gui
 
 		const std::string& GetLastError() { return m_error; }
 
-		filesystem_ptr get_filesystem() {return m_filesystem;}
+		filesystem_ptr filesystem() { return m_filesystem; }
 
 	protected:
 		std::string LoadFile(const std::string& filename);

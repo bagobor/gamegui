@@ -1,10 +1,14 @@
 #include "stdafx.h"
+
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 #include "ftfont.h"
 
-#include <guilib/src/renderer.h>
-#include <guilib/src/imagesetmanager.h>
+#include "renderer.h"
+#include "imagesetmanager.h"
 
-#include <guilib/src/system.h>
+#include "system.h"
 
 // Pixels to put between glyphs
 #define INTER_GLYPH_PAD_SPACE 2
@@ -315,7 +319,7 @@ void FreeTypeFont::updateFont()
 
 	if(!m_fileName.empty())
 	{
-		m_font_data = m_render.get_filesystem()->load_binary(m_fileName);
+		m_font_data = m_render.filesystem()->load_binary(m_fileName);
 	}
 
 	if (!m_font_data) return;
@@ -392,7 +396,7 @@ void FreeTypeFont::updateFont()
                          FT_LOAD_DEFAULT | FT_LOAD_FORCE_AUTOHINT))
             continue; // glyph error
 
-        float adv = max(int(m_fontFace->glyph->metrics.horiAdvance * float(FT_POS_COEF)), 2.0f);
+        float adv = std::max<float>(int(m_fontFace->glyph->metrics.horiAdvance * float(FT_POS_COEF)), 2.0f);
 
         // create a new empty FontGlyph with given character code
         //m_cp_map[codepoint] = FontGlyph (adv);

@@ -143,6 +143,7 @@
     <ClCompile Include="src\texmanager.cpp">
       <Filter>src\render</Filter>
     </ClCompile>
+    <ClCompile Include="src\ftfont.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ActiveText.h">
@@ -295,6 +296,7 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\ResourceManager.h" />
+    <ClInclude Include="src\ftfont.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="xml\xml.inl">

@@ -6,16 +6,16 @@
 namespace gui
 {
 
-TextureManager::TextureManager(Renderer& render) :
+TextureCache::TextureCache(Renderer& render) :
 	m_render(render)
 {
 }
 
-TextureManager::~TextureManager()
+TextureCache::~TextureCache()
 {
 }
 
-TexturePtr TextureManager::createTexture(const std::string& filename)
+TexturePtr TextureCache::createTexture(const std::string& filename)
 {	
 	TexturesIter i = m_textures.find(filename);
 	if(i == m_textures.end())
@@ -37,12 +37,12 @@ TexturePtr TextureManager::createTexture(const std::string& filename)
 	return weak_tex.lock();
 }
 
-void TextureManager::pushTexture(TexturePtr tex)
+void TextureCache::pushTexture(TexturePtr tex)
 {
 	//TODO: add mem statistics
 }
 
-void TextureManager::cleanup()
+void TextureCache::cleanup()
 {
 	m_textures.clear();
 }

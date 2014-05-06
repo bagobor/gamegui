@@ -9,15 +9,15 @@ namespace gui
 	typedef std::weak_ptr<Texture> TextureWeakPtr;
 	typedef std::shared_ptr<Texture> TexturePtr;
 
-	class  TextureManager
+	class  TextureCache
 	{
 		typedef std::unordered_map<std::string, TextureWeakPtr> Textures;
 		typedef Textures::iterator TexturesIter;
 		friend Renderer;
 
 	public:
-		explicit TextureManager(Renderer& render);
-		~TextureManager();	
+		explicit TextureCache(Renderer& render);
+		~TextureCache();	
 		
 		TexturePtr	createTexture(const std::string& filename);
 		void		pushTexture(TexturePtr tex);

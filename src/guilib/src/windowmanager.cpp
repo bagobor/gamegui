@@ -396,7 +396,7 @@ XmlDocumentPtr WindowManager::loadCachedXml(const std::string& file)
 	{	
 		retval.reset(new xml::document());
 
-		std::string data = m_system.get_filesystem()->load_text(file);
+		std::string data = m_system.filesystem()->load_text(file);
 
 		if(!retval->load(data.c_str()))
 			retval.reset();

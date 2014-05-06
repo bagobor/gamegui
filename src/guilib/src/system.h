@@ -186,7 +186,7 @@ namespace gui
 		bool			isMouseInGui() const;
 		bool			isMouseInGui(float x, float y) const;
 
-		filesystem_ptr get_filesystem() {return m_filesystem;}
+		filesystem_ptr filesystem() { return m_filesystem; }
 
 	protected:
 		bool		proceedSystemKey(EventArgs::Keys key, EventArgs::ButtonState state);

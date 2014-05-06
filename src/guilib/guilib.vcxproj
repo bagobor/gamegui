@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../../external/boost_1_54_0/;$(SolutionDir)../../../external/luabind;$(SolutionDir)../../../external/lua/;$(SolutionDir)../../../external;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\external\freetype\include;$(SolutionDir)../../../external/luabind;$(SolutionDir)../../../external/lua/;$(SolutionDir)../../../external;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;D_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -96,6 +96,7 @@
     <ClCompile Include="src\colorRect.cpp" />
     <ClCompile Include="src\cursor.cpp" />
     <ClCompile Include="src\font.cpp" />
+    <ClCompile Include="src\ftfont.cpp" />
     <ClCompile Include="src\renderer.cpp" />
     <ClCompile Include="src\system.cpp" />
     <ClCompile Include="src\texmanager.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="src\colorRect.h" />
     <ClInclude Include="src\cursor.h" />
     <ClInclude Include="src\font.h" />
+    <ClInclude Include="src\ftfont.h" />
     <ClInclude Include="src\imageops.h" />
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\renderer.h" />

@@ -6,21 +6,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\ftfont.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\renderer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\texture.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ftfont.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\renderer.h">
       <Filter>src</Filter>
     </ClInclude>

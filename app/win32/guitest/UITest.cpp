@@ -68,32 +68,29 @@ gui_log g_log;
 ui_test_application::ui_test_application(int x, int y, int w, int h, const std::wstring& title)
 	: m_render(NULL)
 	, m_system(NULL)
-	, window(math::vec2i(x, y), math::vec2i(w, h), title, 0, WS_BORDER | WS_CAPTION | WS_SYSMENU)
-	, m_render_device(get_handle(), m_filesystem)
+	//, window(math::vec2i(x, y), math::vec2i(w, h), title, 0, WS_BORDER | WS_CAPTION | WS_SYSMENU)
+	//, m_render_device(m_filesystem)
 	, m_elapsed(0)
 	, m_active(true)
 {
-	wchar_t buf[512];
-	GetModuleFileNameW(NULL, &buf[0], 512);
+	//wchar_t buf[512];
+	//GetModuleFileNameW(NULL, &buf[0], 512);
 
 	//std::filesystem::wpath p(buf);
 	//p = p.branch_path().string() + L"/../data/";
 	//p.normalize();
 	//p += L"/../data/";
 	//std::wstring path = L"/../data/"; //p.branch_path().string();
-	SetCurrentDirectoryW(L"../");
+	//SetCurrentDirectoryW(L"../");
 
-	show();
+	//show();
 	update(0.0f);	
 }
 
 ui_test_application::~ui_test_application()
 {
-	if(m_system)
-		delete m_system;
-
-	if(m_render)
-		delete m_render;
+	m_system.reset();
+	m_render.reset();
 }
 
 void ui_test_application::run()
@@ -115,14 +112,14 @@ void ui_test_application::run()
 
 void ui_test_application::createGUISystem()
 {
-	filesystem_ptr fs(new gui_filesystem(m_filesystem, "/"));
+	filesystem_ptr fs(new gui_filesystem("/"));
 
-	m_render = gui::ogl_platform::CreateRenderer(m_render_device, fs, 1024);
+	m_render = gui::ogl_platform::CreateRenderer(fs, 1024);
 
 	if(m_system)
-		delete m_system;
+		m_system.reset();
 
-	m_system = new System(*m_render, "default", 0, g_log);
+	m_system = std::make_shared<System>(*m_render, "default", 0, g_log);
 
 	if(m_system)
 	{

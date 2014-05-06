@@ -4,6 +4,20 @@
 #include "imagesetmanager.h"
 #include "renderimageinfo.h"
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
+#include "ftfont.h"
+
+enum
+{
+	VERTEX_PER_QUAD = 4,
+	VERTEX_PER_TRIANGLE = 3,
+	QUADS_BUFFER = 8000,
+	VERTEXBUFFER_CAPACITY = QUADS_BUFFER * VERTEX_PER_QUAD,
+	INDEXBUFFER_CAPACITY = QUADS_BUFFER * 6,
+};
+
 namespace gui
 {
 
@@ -12,7 +26,7 @@ namespace gui
 #pragma warning(disable: 4355)
 #endif
 
-Renderer::Renderer(filesystem_ptr fs) :
+Renderer::Renderer(RenderDevice& render_device, filesystem_ptr fs) :
 	GuiZInitialValue(1.0f),
 	GuiZElementStep(0.001f),
 	GuiZLayerStep(0.0001f),
@@ -26,7 +40,8 @@ Renderer::Renderer(filesystem_ptr fs) :
 	m_num_quads(0),
 	m_num_batches(0),
 	m_currentCapturing(0),
-	m_filesystem(fs)
+	m_filesystem(fs),
+	m_render_device(render_device)
 {
 	assert (fs && "Filesystem must be provided!");
 
@@ -41,6 +56,30 @@ Renderer::Renderer(filesystem_ptr fs) :
 
 Renderer::~Renderer(void)
 {
+
+}
+
+void Renderer::addCallback(AfterRenderCallbackFunc callback, base_window* window, const Rect& dest, const Rect& clip)
+{
+	// если сразу должны были рисовать, то сразу запускаем коллбак
+	if (!m_isQueueing)
+	{
+		if (window && callback)
+			callback(window, dest, clip);
+		return;
+	}
+
+	m_needToAddCallback = true;
+	m_callbackInfo.afterRenderCallback = callback;
+	m_callbackInfo.window = window;
+	m_callbackInfo.dest = dest;
+	m_callbackInfo.clip = clip;
+}
+
+
+
+FontPtr	Renderer::createFont(const std::string& name, const std::string& fontname, unsigned int size) {
+	return FontPtr(new FreeTypeFont(name, fontname, size, *this));
 }
 
 void Renderer::immediateDraw(const Image& img, const Rect& dest_rect, float z, const Rect& clip_rect,const ColorRect& colors)
@@ -237,6 +276,55 @@ void Renderer::draw(const Image& img, const Rect& dest_rect, float z, const Rect
 	}
 }
 
+void Renderer::drawFromCache(base_window* window)
+{
+	assert(window);
+	QuadCacheMap::iterator i = m_mapQuadList.find(window);
+	assert(i != m_mapQuadList.end());
+	QuadCacheRecord& v = i->second;
+
+	assert(v.num <= v.m_vec.size());
+
+	QuadInfo* cached_quads = &v.m_vec.front();
+
+	if (m_num_quads + v.num >= m_quads.size())
+		m_quads.resize((m_num_quads + v.num) * 2);
+
+	BatchInfo* batches = &m_batches.front();
+	QuadInfo* quads = &m_quads.front();
+
+	for (std::size_t a = 0; a < v.num; ++a)
+	{
+		quads[m_num_quads] = cached_quads[a];
+
+		if (!m_num_quads || quads[m_num_quads - 1].texture != quads[m_num_quads].texture ||
+			m_needToAddCallback ||
+			(m_num_batches && (m_num_quads - batches[m_num_batches - 1].startQuad + 1)*VERTEX_PER_QUAD >= VERTEXBUFFER_CAPACITY))
+		{
+			// terminate current batch if one:
+			if (m_num_batches)
+			{
+				batches[m_num_batches - 1].numQuads = m_num_quads - batches[m_num_batches - 1].startQuad;
+				if (!m_needToAddCallback)
+				{
+					m_callbackInfo.window = nullptr;
+					m_callbackInfo.afterRenderCallback = nullptr;
+				}
+				m_needToAddCallback = false;
+				batches[m_num_batches - 1].callbackInfo = m_callbackInfo;
+			}
+
+			// start next batch:
+			batches[m_num_batches].texture = quads[m_num_quads].texture;
+			batches[m_num_batches].startQuad = m_num_quads;
+
+			++m_num_batches;
+		}
+
+		++m_num_quads;
+	}
+}
+
 void Renderer::clearCache(base_window* window)
 {
 	if (window)
@@ -288,29 +376,29 @@ void Renderer::clearRenderList(void)
 
 void Renderer::beginBatching()
 {
+	m_needToAddCallback = false;
 	clearRenderList();
 }
 
 void Renderer::endBatching()
 { 
+	if (!m_num_batches) return;
 	// закончим последний батч
 	if (!m_num_batches) return;
 	m_batches[m_num_batches - 1].numQuads = m_num_quads - m_batches[m_num_batches - 1].startQuad;
+
+	if (!m_needToAddCallback)
+	{
+		m_callbackInfo.window = nullptr;
+		m_callbackInfo.afterRenderCallback = nullptr;
+	}
+	m_needToAddCallback = false;
+	m_batches[m_num_batches - 1].callbackInfo = m_callbackInfo;
 }
 
 
 void Renderer::sortQuads(void)
 {
-}
-
-void Renderer::OnLostDevice(void)
-{
-	//m_texmanager.onDeviceLost();
-}
-
-void Renderer::OnResetDevice(void)
-{
-	//m_texmanager.onDeviceReset();
 }
 
 const Size Renderer::getSize(void)
@@ -386,4 +474,86 @@ void Renderer::fillQuad(QuadInfo& quad, const Rect& rc, const Rect& uv, float z,
 	quad.bottomRightCol	= colors.m_bottom_right.getARGB();
 	quad.isAdditiveBlend = img.isAdditiveBlend;
 }
+
+void Renderer::addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec2& p3, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colors) {
+	if (m_num_quads >= m_quads.size())
+	{
+		m_quads.resize(m_num_quads * 2);
+	}
+
+	QuadInfo* quads = &m_quads.front();
+
+	QuadInfo& quad = quads[m_num_quads];
+
+	quad.positions[0].x = p0.x;
+	quad.positions[0].y = p0.y;
+
+	quad.positions[1].x = p1.x;
+	quad.positions[1].y = p1.y;
+
+	quad.positions[2].x = p2.x;
+	quad.positions[2].y = p2.y;
+
+	quad.positions[3].x = p3.x;
+	quad.positions[3].y = p3.y;
+
+	quad.z = z;
+	quad.texture = img.texture;
+	quad.texPosition = tex_rect;
+	quad.topLeftCol = colors.m_top_left.getARGB();
+	quad.topRightCol = colors.m_top_right.getARGB();
+	quad.bottomLeftCol = colors.m_bottom_left.getARGB();
+	quad.bottomRightCol = colors.m_bottom_right.getARGB();
+
+	// if not queering, render directly (as in, right now!)
+	if (!m_isQueueing)
+	{
+		renderQuadDirect(quad);
+		return;
+	}
+
+	if (m_currentCapturing)
+	{
+		if (m_currentCapturing->num >= m_currentCapturing->m_vec.size())
+			m_currentCapturing->m_vec.resize(m_currentCapturing->num * 2);
+
+		QuadInfo& q = (&m_currentCapturing->m_vec.front())[m_currentCapturing->num];
+		q = quad;
+		++(m_currentCapturing->num);
+	}
+
+	BatchInfo* batches = &m_batches[0];
+
+
+	if (!m_num_quads || quads[m_num_quads - 1].texture != quad.texture ||
+		m_needToAddCallback ||
+		(m_num_batches && (m_num_quads - batches[m_num_batches - 1].startQuad + 1)*VERTEX_PER_QUAD >= VERTEXBUFFER_CAPACITY))
+	{
+		// finalize prev batch if one
+		if (m_num_batches)
+		{
+			batches[m_num_batches - 1].numQuads = m_num_quads - batches[m_num_batches - 1].startQuad;
+
+			if (!m_needToAddCallback)
+			{
+				m_callbackInfo.window = nullptr;
+				m_callbackInfo.afterRenderCallback = nullptr;
+			}
+			m_needToAddCallback = false;
+			batches[m_num_batches - 1].callbackInfo = m_callbackInfo;
+		}
+
+		// start new batch
+		batches[m_num_batches].texture = quad.texture;
+		batches[m_num_batches].startQuad = m_num_quads;
+		batches[m_num_batches].numQuads = 0;
+
+		++m_num_batches;
+	}
+
+	++m_num_quads;
+	assert(m_num_batches);
+	++batches[m_num_batches - 1].numQuads;
+}
+
 }
