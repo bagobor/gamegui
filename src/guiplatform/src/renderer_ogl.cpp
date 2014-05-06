@@ -8,6 +8,46 @@
 // fine tune :)
 #define PixelAligned(x)	( ( (float)(int)(( x ) + (( x ) > 0.0f ? 0.5f : -0.5f)) ) - 0.5f )
 
+const char* vertex_shader_src = R"glsl(
+attribute vec4 a_position;
+attribute vec2 a_texCoord;
+attribute vec4 a_color;
+
+#ifdef GL_ES
+varying lowp vec4 v_fragmentColor;
+varying mediump vec2 v_texCoord;
+#else
+varying vec4 v_fragmentColor;
+varying vec2 v_texCoord;
+#endif
+
+void main()
+{
+    gl_Position = CC_MVPMatrix * a_position;
+	v_fragmentColor = a_color;
+	v_texCoord = a_texCoord;
+}
+
+)glsl";
+
+const char* pixel_shader_src = R"glsl(
+#ifdef GL_ES
+precision lowp float;
+#endif
+
+varying vec4 v_fragmentColor;
+varying vec2 v_texCoord;
+uniform sampler2D CC_Texture0;
+
+void main()
+{
+	gl_FragColor = vec4( v_fragmentColor.rgb,										// RGB from uniform
+						v_fragmentColor.a * texture2D(CC_Texture0, v_texCoord).a	// A from texture & uniform
+						);
+}
+)glsl";
+
+
 
 namespace gui
 {
@@ -55,6 +95,8 @@ namespace gui
 			//Size size(getViewportSize());
 
 			//constructor_impl(size);
+
+
 		}
 
 

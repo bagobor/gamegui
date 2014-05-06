@@ -1,0 +1,31 @@
+﻿  adler32.c
+c1 : fatal error C1083: Cannot open source file: '..\..\..\zlib\adler32.c': No such file or directory
+  compress.c
+c1 : fatal error C1083: Cannot open source file: '..\..\..\zlib\compress.c': No such file or directory
+  crc32.c
+c1 : fatal error C1083: Cannot open source file: '..\..\..\zlib\crc32.c': No such file or directory
+  deflate.c
+c1 : fatal error C1083: Cannot open source file: '..\..\..\zlib\deflate.c': No such file or directory
+  gzlib.c
+c1 : fatal error C1083: Cannot open source file: '..\..\..\zlib\gzlib.c': No such file or directory
+  gzclose.c
+c1 : fatal error C1083: Cannot open source file: '..\..\..\zlib\gzclose.c': No such file or directory
+  gzread.c
+c1 : fatal error C1083: Cannot open source file: '..\..\..\zlib\gzread.c': No such file or directory
+  gzwrite.c
+c1 : fatal error C1083: Cannot open source file: '..\..\..\zlib\gzwrite.c': No such file or directory
+  infback.c
+c1 : fatal error C1083: Cannot open source file: '..\..\..\zlib\infback.c': No such file or directory
+  inffast.c
+c1 : fatal error C1083: Cannot open source file: '..\..\..\zlib\inffast.c': No such file or directory
+  inflate.c
+c1 : fatal error C1083: Cannot open source file: '..\..\..\zlib\inflate.c': No such file or directory
+  inftrees.c
+c1 : fatal error C1083: Cannot open source file: '..\..\..\zlib\inftrees.c': No such file or directory
+  trees.c
+c1 : fatal error C1083: Cannot open source file: '..\..\..\zlib\trees.c': No such file or directory
+  uncompr.c
+c1 : fatal error C1083: Cannot open source file: '..\..\..\zlib\uncompr.c': No such file or directory
+  zutil.c
+c1 : fatal error C1083: Cannot open source file: '..\..\..\zlib\zutil.c': No such file or directory
+  Generating Code...

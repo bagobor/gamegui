@@ -162,7 +162,7 @@ namespace gui
 
 	unsigned int StringToAlignment(const std::string& str)
 	{
-		//TODO:
+		//TODO: OGL implement this!
 		unsigned int a = 0;
 		//if(!str.empty())
 		//{

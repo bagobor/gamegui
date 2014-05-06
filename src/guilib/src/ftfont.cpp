@@ -116,7 +116,7 @@ void FreeTypeFont::rasterize (utf32 start_codepoint, utf32 end_codepoint)
         if (!texsize)
             break;
 
-		TexturePtr p = m_render.createTexture(texsize, texsize, Texture::PF_RGBA);
+		TexturePtr p = m_render.createTexture(texsize, texsize, Texture::PF_RGBA8888);
 		Imageset *is = new Imageset("glyphimgset");
 		size_t ordinal = is->AppendTexture(p);
         m_glyphImages.push_back(is);
@@ -244,7 +244,7 @@ void FreeTypeFont::rasterize (utf32 start_codepoint, utf32 end_codepoint)
         }
 
         // Copy our memory buffer into the texture and free it
-		m_render.updateTexture(is->GetTexture(ordinal), mem_buffer, texsize, texsize, Texture::PF_RGBA);
+		m_render.updateTexture(is->GetTexture(ordinal), mem_buffer, texsize, texsize, Texture::PF_RGBA8888);
         delete [] mem_buffer;
 
         if (finished)

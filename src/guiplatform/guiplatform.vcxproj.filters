@@ -11,10 +11,12 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\opengl.cpp" />
+    <ClCompile Include="src\render_gl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="renderer_ogl.h" />
     <ClInclude Include="src\opengl.h" />
+    <ClInclude Include="src\render_gl.h" />
   </ItemGroup>
 </Project>
