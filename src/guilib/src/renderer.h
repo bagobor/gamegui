@@ -88,7 +88,7 @@ struct RenderDevice {
 		unsigned x, y, w, h;
 	};
 
-	virtual ~RenderDevice() = 0;
+	virtual ~RenderDevice() = 0 {};
 
 	virtual TexturePtr createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) = 0;
 	virtual TexturePtr createTexture(const std::string& filename) = 0;

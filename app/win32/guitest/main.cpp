@@ -1,5 +1,3 @@
-#include "resource.h"
-
 #include <windows.h>
 #include "guicon.h"
 #include "xml2test.h"

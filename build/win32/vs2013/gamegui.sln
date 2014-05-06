@@ -1,11 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30219.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Externals", "Externals", "{6628E1A0-1074-4B12-B8F2-A4686D0F1281}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{6960F093-EF6A-467D-98CB-C9D46DF97F86}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "guitest", "..\..\..\app\win32\guitest\guitest.vcxproj", "{D3D09108-96D0-4629-88B8-122C0256058C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C2D1B6CF-72A9-4CD1-AE20-489CEBA7C1C7} = {C2D1B6CF-72A9-4CD1-AE20-489CEBA7C1C7}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua", "lua.vcxproj", "{3C6A37B2-6046-4CA9-859A-5C28B4609ACC}"
 EndProject

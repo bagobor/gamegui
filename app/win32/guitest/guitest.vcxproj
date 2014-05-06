@@ -75,14 +75,13 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>dxerr.lib;dxguid.lib;d3dx9d.lib;d3d9.lib;winmm.lib;comctl32.lib;core.lib;log.lib;render.lib;render_win32_dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)_d.exe</OutputFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\external\win32\dxsdk\Lib\x86;$(SolutionDir)..\..\..\external\boost\lib\;$(SolutionDir)..\..\..\external\win32\rgde\Lib\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention />
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -95,7 +94,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\guilib;$(SolutionDir)..\..\..\src\guiplatform;$(SolutionDir)..\..\..\external\lua/src;$(SolutionDir)..\..\..\external\luabind;$(SolutionDir)..\..\..\external\boost\;$(SolutionDir)..\..\..\external\win32\rgde;$(SolutionDir)..\..\..\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\src\;$(SolutionDir)..\..\..\external\lua/src;$(SolutionDir)..\..\..\external\luabind;$(SolutionDir)..\..\..\external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;STRSAFE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -110,9 +109,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>dxerr.lib;dxguid.lib;d3dx9.lib;d3d9.lib;winmm.lib;comctl32.lib;core.lib;log.lib;render.lib;render_win32_dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\external\win32\dxsdk\Lib\x86;$(SolutionDir)..\..\..\external\boost\lib\;$(SolutionDir)..\..\..\external\win32\rgde\lib\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -123,13 +120,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Image Include="DXUT\Optional\directx.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="guitest.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="guicon.h" />
     <ClInclude Include="..\common\gui_filesystem.h" />
     <ClInclude Include="UITest.h" />
@@ -146,9 +136,29 @@
       <Project>{3c6a37b2-6046-4ca9-859a-5c28b4609acc}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\build\win32\vc9\luabind.vcxproj">
+    <ProjectReference Include="..\..\..\build\win32\vs2013\luabind.vcxproj">
       <Project>{ebc13284-800e-434e-903a-b532a0b23fce}</Project>
+      <Private>false</Private>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\external\freetype\builds\win32\vc2012\freetype.vcxproj">
+      <Project>{78b079bd-9fc7-4b9e-b4a6-96da0f00248b}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\external\glfw-3.0.3\src\glfw.vcxproj">
+      <Project>{c2d1b6cf-72a9-4cd1-ae20-489ceba7c1c7}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\guilib\guilib.vcxproj">
       <Project>{05e7e63d-01bf-4586-9215-d56fa02b2223}</Project>
