@@ -21,7 +21,7 @@
 #include "list.h"
 #include "combobox.h"
 #include "markuptext.h"
-#include "chatwindow.h"
+
 
 namespace gui
 {
@@ -60,7 +60,6 @@ WindowManager::WindowManager(System& sys, const std::string& scheme) :
 	m_factory->RegisterCreator<Combobox>();
 	m_factory->RegisterCreator<MarkupBase>();
 	m_factory->RegisterCreator<MarkupText>();
-	m_factory->RegisterCreator<ChatWindow>();
 	m_registredTypes = m_factory->GetTypesList();	
 }
 

@@ -10,9 +10,11 @@
     <ClCompile Include="src\renderer_ogl.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\opengl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="renderer_ogl.h" />
+    <ClInclude Include="src\opengl.h" />
   </ItemGroup>
 </Project>

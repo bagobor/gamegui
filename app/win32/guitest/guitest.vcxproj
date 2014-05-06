@@ -61,7 +61,7 @@
     </CustomBuildStep>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../../external/luabind;$(SolutionDir)../../../external/lua/;$(SolutionDir)../../../external;..$(SolutionDir)../../../external/glfw-3.0.3/include;$(SolutionDir)..\..\..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../external/luabind;$(SolutionDir)../../../external/lua/;$(SolutionDir)../../../external;$(SolutionDir)../../../external/glfw-3.0.3/include;$(SolutionDir)..\..\..\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;DEBUG;PROFILE;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;STRSAFE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -75,7 +75,6 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
-      <OutputFile>$(OutDir)$(ProjectName)_d.exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -120,12 +119,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="base_application.h" />
     <ClInclude Include="guicon.h" />
     <ClInclude Include="..\common\gui_filesystem.h" />
     <ClInclude Include="UITest.h" />
     <ClInclude Include="Xml2Test.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="base_application.cpp" />
     <ClCompile Include="guicon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UITest.cpp" />

@@ -154,7 +154,8 @@ public:
 	}
 
 	TexturePtr	updateTexture(TexturePtr p, const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
-		p->update(data, width, height, format);
+		if (p)
+			p->update(data, width, height, format);
 		return p;
 	}
 

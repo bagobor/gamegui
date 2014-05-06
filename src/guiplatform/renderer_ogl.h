@@ -44,6 +44,7 @@ namespace gui
 		protected:
 			//shader_handle m_handleViewPortSize;
 			//shader_handle m_handleGuiTexture;	 
+			filesystem_ptr filesystem;
 		};
 	}
 }

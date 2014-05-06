@@ -13,21 +13,31 @@
 #include <functional>
 
 using namespace gui;
-using namespace rgde;
 
 class gui_log : public log
 {
 public: 
 	gui_log() : 
-	  m_hFile(INVALID_HANDLE_VALUE){
+	  m_hFile(INVALID_HANDLE_VALUE)
+	{
 		  wchar_t	wpath[MAX_PATH];
 		  // init app data path
 		  SHGetFolderPathW(NULL, CSIDL_APPDATA | CSIDL_FLAG_CREATE, NULL, SHGFP_TYPE_CURRENT, wpath);
 
-		  std::wstring log = L"./guitest.log";
+		  char buff[256];
+		  int size = GetModuleFileNameA(NULL, buff, 256);
+
+		  std::string path(buff, size);
+
+		  int pos = path.find_last_of('\\');
+
+		  path = path.substr(0, pos);
+
+
+		  std::string log = path + "/guitest.log";
 		  //std::wstring log(wpath);
 		  //log += L"\\RGDEngine\\guitest.log";
-		  m_hFile = CreateFileW(log.c_str(), GENERIC_WRITE, FILE_SHARE_READ, 0, CREATE_ALWAYS, 0, 0);
+		  m_hFile = CreateFileA(log.c_str(), GENERIC_WRITE, FILE_SHARE_READ, 0, CREATE_ALWAYS, 0, 0);
 	}
 
 	~gui_log() {
@@ -65,8 +75,9 @@ gui_log g_log;
 
 #include "../common/gui_filesystem.h"
 
-ui_test_application::ui_test_application(int x, int y, int w, int h, const std::wstring& title)
-	: m_render(NULL)
+ui_test_application::ui_test_application(int w, int h, const char* title)
+	: BaseApplication(w, h, title)
+	, m_render(NULL)
 	, m_system(NULL)
 	//, window(math::vec2i(x, y), math::vec2i(w, h), title, 0, WS_BORDER | WS_CAPTION | WS_SYSMENU)
 	//, m_render_device(m_filesystem)
@@ -83,8 +94,12 @@ ui_test_application::ui_test_application(int x, int y, int w, int h, const std::
 	//std::wstring path = L"/../data/"; //p.branch_path().string();
 	//SetCurrentDirectoryW(L"../");
 
+	using namespace std::placeholders;
+	env.render_cb = std::bind(&ui_test_application::render, this);
+	env.update_cb = std::bind(&ui_test_application::update, this);
+
 	//show();
-	update(0.0f);	
+	update();	
 }
 
 ui_test_application::~ui_test_application()
@@ -104,15 +119,15 @@ void ui_test_application::run()
 	//	if( !do_events() && m_active)
 	//	{
 	//		m_elapsed = m_timer.elapsed();
-			update((float)m_elapsed);
-			render();
+			//update((float)m_elapsed);
+			//render();
 	//	}
 	//}
 }
 
 void ui_test_application::createGUISystem()
 {
-	filesystem_ptr fs(new gui_filesystem("/"));
+	filesystem_ptr fs(new gui_filesystem("/data/"));
 
 	m_render_device = std::make_shared<gui::ogl_platform::RenderDeviceGL>(fs, 1024);
 
@@ -142,12 +157,12 @@ void ui_test_application::resetGUISystem()
 		m_system->reset();	
 }
 
-void ui_test_application::update(float delta)
+void ui_test_application::update()
 {
 	m_framecount++;
 	if(m_system)
 	{
-		m_system->tick(delta);
+		m_system->tick(env.dt);
 		m_system->draw();
 	}
 	

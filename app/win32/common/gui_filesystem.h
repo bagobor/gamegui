@@ -6,8 +6,17 @@ class gui_filesystem : public gui::filesystem
 {
 public:
 	gui_filesystem(const std::string& basedir) 
-		: m_basedir(basedir) 
 	{
+		char buff[256];
+		int size = GetModuleFileNameA(NULL, buff, 256);
+
+		std::string path(buff, size);
+
+		int pos = path.find_last_of('\\');
+
+		m_basedir = path.substr(0, pos) + "/.." + basedir;
+
+		//m_basedir = m_basedir + "data/";
 	}
 
 	~gui_filesystem() {
@@ -16,42 +25,39 @@ public:
 	virtual std::string load_text(const std::string& filename) 	{
 		std::string out;
 
-		//core::vfs::istream_ptr f = m_fs.open_read(m_basedir + filename);
+		std::string full_filename = m_basedir + filename;
 
-		//if (!f) return out;
-
-		//size_t size = f->get_size();
-
-		//if (size == 0) return out;
-
-		//out.resize(size);
-
-		//f->read((rgde::byte*)&out[0], size);
-
+		if (FILE *fp = fopen(full_filename.c_str(), "rb"))
+		{
+			fseek(fp, 0, SEEK_END);
+			out.resize(ftell(fp));
+			rewind(fp);
+			fread(&out[0], 1, out.size(), fp);
+			fclose(fp);			
+		}
 		return out;
 	}
 
 	virtual data_ptr load_binary(const std::string& filename) {
-		static data zero_data = {0};
+		data_ptr out;
 
-		data_ptr out(new data);
-		//*out = zero_data;
+		std::string full_filename = m_basedir + filename;
+		if (FILE *fp = fopen(full_filename.c_str(), "rb"))
+		{
+			fseek(fp, 0, SEEK_END);
+			size_t size = ftell(fp);
+			rewind(fp);
 
-		//char dir[256];
-		//GetCurrentDirectoryA(256, dir);
+			if (size == 0)
+				return out;
 
-		//core::vfs::istream_ptr f = m_fs.open_read(m_basedir + filename);
+			out = data_ptr(new data);
+			out->ptr = new char[size];
+			out->size = size;
 
-		//if (!f) return out;
-
-		//size_t size = f->get_size();
-
-		//if (size == 0) return out;
-
-		//out->ptr = new char[size];
-		//out->size = size;
-
-		//f->read((rgde::byte*)out->ptr, out->size);
+			fread(out->ptr, 1, size, fp);
+			fclose(fp);
+		}
 
 		return out;
 	}

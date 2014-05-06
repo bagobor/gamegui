@@ -69,9 +69,6 @@
     <ClCompile Include="src\button.cpp">
       <Filter>src\controls\common</Filter>
     </ClCompile>
-    <ClCompile Include="src\chatwindow.cpp">
-      <Filter>src\controls\common</Filter>
-    </ClCompile>
     <ClCompile Include="src\checkbox.cpp">
       <Filter>src\controls\common</Filter>
     </ClCompile>
@@ -186,9 +183,6 @@
       <Filter>src\controls</Filter>
     </ClInclude>
     <ClInclude Include="src\button.h">
-      <Filter>src\controls\common</Filter>
-    </ClInclude>
-    <ClInclude Include="src\chatwindow.h">
       <Filter>src\controls\common</Filter>
     </ClInclude>
     <ClInclude Include="src\checkbox.h">

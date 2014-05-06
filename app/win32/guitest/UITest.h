@@ -1,66 +1,52 @@
 #pragma once
 
 #include <guilib/guilib.h>
-
+#include "base_application.h"
 //#include <boost/timer.hpp>
 
-namespace rgde
+
+class ui_test_application : public BaseApplication
 {
-	class ui_test_application
-	{
-	public:
-		ui_test_application(int x, int y, int w, int h, const std::wstring& title);
-		~ui_test_application();
+public:
+	ui_test_application(int w, int h, const char* title);
+	~ui_test_application();
 
-		void run();
+	void run();
 
-		virtual void createGUISystem();
-		virtual void resetGUISystem();
+	virtual void createGUISystem();
+	virtual void resetGUISystem();
 
-		virtual bool isFinished();
+	virtual bool isFinished();
 
-		bool isInitialized() { return m_system != 0; }
+	bool isInitialized() { return m_system != 0; }
 
-		bool handleMouseMove(int x, int y);
-		bool handleMouseWheel(int diff);
-		bool handleMouseButton(gui::EventArgs::MouseButtons btn, gui::EventArgs::ButtonState state);
-		//virtual bool handleKeyboard(UINT_PTR key, gui::EventArgs::ButtonState state);
-		//bool handleChar(UINT_PTR ch);
+	bool handleMouseMove(int x, int y);
+	bool handleMouseWheel(int diff);
+	bool handleMouseButton(gui::EventArgs::MouseButtons btn, gui::EventArgs::ButtonState state);
+	//virtual bool handleKeyboard(UINT_PTR key, gui::EventArgs::ButtonState state);
+	//bool handleChar(UINT_PTR ch);
 
-		void handleViewportChange();
+	void handleViewportChange();
 
-		void load(const std::string& xml);
+	void load(const std::string& xml);
 
 
-	protected:
-		void reinit();
+protected:
+	void reinit();
+	void resize_scene(unsigned int width, unsigned int height);	
+	void update();
+	void render();
 
-		void resize_scene(unsigned int width, unsigned int height);
-		//bool do_events();
+protected:
+	std::string m_filename;
 
-		void update(float delta);
-		void render();
+	gui::RenderDevicePtr m_render_device;
+	std::shared_ptr<gui::Renderer> m_render;
+	std::shared_ptr<gui::System> m_system;		
 
-		//virtual core::windows::result wnd_proc(ushort message, uint wparam, long lparam );
+	unsigned int m_framecount;
 
-	protected:
-		std::string m_filename;
-		/*
-		render::device m_render_device;
-		core::vfs::system m_filesystem;*/
-
-		gui::RenderDevicePtr m_render_device;
-		std::shared_ptr<gui::Renderer> m_render;
-		std::shared_ptr<gui::System> m_system;
-		
-
-		unsigned int m_framecount;
-
-		bool m_active;
-		double m_elapsed;
-		//std::timer m_timer;
-		//gui::FontPtr m_font;
-	};
-
-}
-
+	bool m_active;
+	double m_elapsed;
+	//gui::FontPtr m_font;
+};

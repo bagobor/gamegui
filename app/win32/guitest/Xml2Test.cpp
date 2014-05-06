@@ -2,8 +2,8 @@
 
 using namespace gui;
 
-Xml2Test::Xml2Test(int x, int y, int w, int h, const std::wstring& title)
-: rgde::ui_test_application(x,y,w,h,title)
+Xml2Test::Xml2Test(int w, int h, const char* title)
+: ui_test_application(w,h,title)
 {
 	//m_filename = "guitest\\hud.xml";
 	//m_filename = "guitest\\sampleframetest_orig.xml";

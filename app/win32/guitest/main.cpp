@@ -2,6 +2,8 @@
 #include "guicon.h"
 #include "xml2test.h"
 
+#include "base_application.h"
+
 using namespace gui;
 
 //--------------------------------------------------------------------------------------
@@ -18,20 +20,32 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR params, int )
 	int height = 768;
 	std::wstring res(params);
 
-	if(!res.empty())
+	if (!res.empty())
 	{
 		size_t delim = res.find_first_of(L" ");
-		if(delim != std::wstring::npos)
+		if (delim != std::wstring::npos)
 		{
 			width = _wtoi(res.substr(0, delim).c_str());
 			height = _wtoi(res.substr(delim).c_str());
 		}
 	}
 
-	RedirectIOToConsole();
+	//RedirectIOToConsole();
 
-	Xml2Test g_test(100, 100, width, height, L"GUI Test");
-	g_test.run();
+	{
+		Xml2Test g_test(width, height, "GUI Test");
+		g_test.run();
+	}
+
+	//const int window_width = 800,
+	//	window_height = 600;
+
+	//int result_code = 0;
+
+	//{
+	//	BaseApplication app(window_width, window_height, "gui test");
+	//	result_code = app.run();
+	//}
     
     return 0;
 }

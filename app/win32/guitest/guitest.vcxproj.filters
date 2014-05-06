@@ -17,6 +17,7 @@
     </ClInclude>
     <ClInclude Include="UITest.h" />
     <ClInclude Include="Xml2Test.h" />
+    <ClInclude Include="base_application.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="guicon.cpp">
@@ -25,5 +26,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UITest.cpp" />
     <ClCompile Include="Xml2Test.cpp" />
+    <ClCompile Include="base_application.cpp" />
   </ItemGroup>
 </Project>

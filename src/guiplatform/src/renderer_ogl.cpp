@@ -3,6 +3,7 @@
 #include <guilib/guilib.h>
 
 #include "../renderer_ogl.h"
+#include "opengl.h"
 
 // fine tune :)
 #define PixelAligned(x)	( ( (float)(int)(( x ) + (( x ) > 0.0f ? 0.5f : -0.5f)) ) - 0.5f )
@@ -44,8 +45,12 @@ namespace gui
 		Constructor
 		*************************************************************************/
 		RenderDeviceGL::RenderDeviceGL(filesystem_ptr fs, unsigned int max_quads)
+			: filesystem(fs)
 			//: Renderer(fs)
 		{
+			viewport.x = viewport.y = viewport.w = viewport.h = 0;
+
+			init_gl();
 			//m_needToAddCallback = false;
 			//Size size(getViewportSize());
 
@@ -58,6 +63,9 @@ namespace gui
 		}
 
 		TexturePtr RenderDeviceGL::createTexture(const std::string& filename) {
+			data_ptr data = filesystem->load_binary(filename);
+
+			int i = 5;
 			return TexturePtr();
 		}
 
