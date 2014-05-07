@@ -3,6 +3,8 @@
 #include <guilib/src/renderer.h>
 #include "src/render_gl.h"
 
+typedef std::shared_ptr<struct gpu_program> gpu_program_ptr;
+
 namespace gui
 {
 	namespace ogl_platform
@@ -66,6 +68,7 @@ namespace gui
 			//shader_handle m_handleViewPortSize;
 			//shader_handle m_handleGuiTexture;	 
 			filesystem_ptr filesystem;
+			gpu_program_ptr m_shader;
 		};
 	}
 }

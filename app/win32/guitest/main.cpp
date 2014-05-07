@@ -9,7 +9,8 @@ using namespace gui;
 //--------------------------------------------------------------------------------------
 // Initialize everything and go into a render loop
 //--------------------------------------------------------------------------------------
-INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR params, int )
+//INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR params, int )
+int main()
 {
     // Enable run-time memory check for debug builds.
 #if defined(DEBUG) | defined(_DEBUG)
@@ -18,7 +19,7 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR params, int )
 
 	int width = 1024;
 	int height = 768;
-	std::wstring res(params);
+	std::wstring res;// (params);
 
 	if (!res.empty())
 	{

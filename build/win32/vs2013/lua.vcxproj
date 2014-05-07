@@ -67,7 +67,6 @@
     <ClCompile Include="..\..\..\external\lua\ltable.c" />
     <ClCompile Include="..\..\..\external\lua\ltablib.c" />
     <ClCompile Include="..\..\..\external\lua\ltm.c" />
-    <ClCompile Include="..\..\..\external\lua\lua.c" />
     <ClCompile Include="..\..\..\external\lua\lundump.c" />
     <ClCompile Include="..\..\..\external\lua\lvm.c" />
     <ClCompile Include="..\..\..\external\lua\lzio.c" />
@@ -129,7 +128,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Lib>
-      <OutputFile>$(IntDir)lua.lib</OutputFile>
+      <OutputFile>$(SolutionDir)\..\..\..\lib\win32\$(Configuration)\$(ProjectName).lib</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

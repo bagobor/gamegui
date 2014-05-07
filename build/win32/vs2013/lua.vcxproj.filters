@@ -165,9 +165,6 @@
     <ClCompile Include="..\..\..\external\lua\ltm.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\external\lua\lua.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\external\lua\lundump.c">
       <Filter>Source Files</Filter>
     </ClCompile>

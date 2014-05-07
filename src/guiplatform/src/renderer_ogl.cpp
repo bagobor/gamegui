@@ -13,44 +13,52 @@
 // fine tune :)
 #define PixelAligned(x)	( ( (float)(int)(( x ) + (( x ) > 0.0f ? 0.5f : -0.5f)) ) - 0.5f )
 
-const char* vertex_shader_src = R"glsl(
-attribute vec4 a_position;
-attribute vec2 a_texCoord;
-attribute vec4 a_color;
+const char* vertex_shader_src =
+"#version 120 \n"
+" \n"
+"attribute vec4 a_position;\n"
+"attribute vec2 a_texCoord;\n"
+"attribute vec4 a_color;\n"
 
-#ifdef GL_ES
-varying lowp vec4 v_fragmentColor;
-varying mediump vec2 v_texCoord;
-#else
-varying vec4 v_fragmentColor;
-varying vec2 v_texCoord;
-#endif
+"#ifdef GL_ES\n"
+"uniform lowp vec2 v_viewportSize;\n"
+"varying lowp vec4 v_fragmentColor;\n"
+"varying mediump vec2 v_texCoord;\n"
+"#else\n"
+"uniform vec2 v_viewportSize; \n"
+"varying vec4 v_fragmentColor; \n"
+"varying vec2 v_texCoord; \n"
+"#endif\n"
 
-void main()
-{
-    gl_Position = CC_MVPMatrix * a_position;
-	v_fragmentColor = a_color;
-	v_texCoord = a_texCoord;
-}
+"void main()\n"
+"{\n"
+"    gl_Position = vec4(\n"
+"		(2.0f * a_position.x / v_viewportSize.x) - 1.0f,\n"
+"		1.0f - (2.0f * a_position.y / v_viewportSize.y),\n"
+"		a_position.z,\n"
+"		1.0f\n"
+"	);\n"
+"\n"
+"	v_fragmentColor = a_color;\n"
+"	v_texCoord = a_texCoord;\n"
+"}\n";
 
-)glsl";
 
-const char* pixel_shader_src = R"glsl(
-#ifdef GL_ES
-precision lowp float;
-#endif
-
-varying vec4 v_fragmentColor;
-varying vec2 v_texCoord;
-uniform sampler2D CC_Texture0;
-
-void main()
-{
-	gl_FragColor = vec4( v_fragmentColor.rgb,										// RGB from uniform
-						v_fragmentColor.a * texture2D(CC_Texture0, v_texCoord).a	// A from texture & uniform
-						);
-}
-)glsl";
+const char* fragment_shader_src = 
+"#version 120\n"
+"\n"
+"#ifdef GL_ES\n"
+"precision lowp float;\n"
+"#endif\n"
+"\n"
+"varying vec4 v_fragmentColor;\n"
+"varying vec2 v_texCoord;\n"
+"uniform sampler2D Texture0;\n"
+"\n"
+"void main()\n"
+"{\n"
+"	gl_FragColor = v_fragmentColor * texture2D(Texture0, v_texCoord);\n"
+"}\n";
 
 
 
@@ -389,6 +397,10 @@ namespace gui
 			//m_needToAddCallback = false;
 			//Size size(getViewportSize());
 			//constructor_impl(size);
+
+			m_shader = gpu_program::create(vertex_shader_src, fragment_shader_src);
+
+			int ii = 5;
 		}
 
 
