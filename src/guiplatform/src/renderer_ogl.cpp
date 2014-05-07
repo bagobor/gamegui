@@ -153,7 +153,6 @@ namespace gui
 			case Texture::PF_RGB565:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)width, (GLsizei)height, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
 				return true;
-
 			}
 
 			return false;

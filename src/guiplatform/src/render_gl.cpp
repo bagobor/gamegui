@@ -142,6 +142,13 @@ void gpu_program::set(const char* name, const glm::vec4& v) {
 	glUniform4fv(p.id, 1, &v[0]);
 }
 
+void gpu_program::set(const char* name, const glm::vec2& v) {
+	handle p = get_handle(name);
+	if (p.id < 0) return;
+	glUniform2fv(p.id, 2, &v[0]);
+}
+
+
 void gpu_program::set(handle p, const glm::mat4& m) {
 	if (p.id < 0) return;
 	glUniformMatrix4fv(p.id, 1, GL_FALSE,  &m[0][0]);
@@ -150,6 +157,11 @@ void gpu_program::set(handle p, const glm::mat4& m) {
 void gpu_program::set(handle p, const glm::vec4& v) {
 	if (p.id < 0) return;
 	glUniform4fv(p.id, 1, &v[0]);
+}
+
+void gpu_program::set(handle p, const glm::vec2& v) {
+	if (p.id < 0) return;
+	glUniform2fv(p.id, 2, &v[0]);
 }
 
 void gpu_program::set(handle p, const float* v, size_t size) {
@@ -254,4 +266,63 @@ ib_ptr index_buffer::create(size_t size, void* data) {
 gpu_program_ptr gpu_program::create(const char* vs, const char* fs) {
 	gpu_program_ptr sp(new gpu_program(vs, fs));
 	return sp->is_valid() ? sp : gpu_program_ptr();
+}
+
+
+
+mesh::mesh(const vertex_atrib* va, vb_ptr _vb, ib_ptr _ib) : vb(_vb), ib(_ib) {
+	if (!ib) update_ib(0, 0);
+	if (!vb) update_vb(0, 0);
+
+	glGenVertexArrays(1, &vdecl.id);
+	bind();
+
+	vb->bind();
+
+	while (va->index >= 0) {
+		glVertexAttribPointer((GLuint)va->index, va->size, va->type, va->norm ? GL_TRUE : GL_FALSE, va->stride, BUFFER_OFFSET(va->offset));
+		glEnableVertexAttribArray(va->index);
+		++va;
+	}
+
+	vb->unbind();
+
+	unbind();
+}
+
+void mesh::update_ib(size_t size, void* ib_data) {
+	if (!ib)
+		ib = index_buffer::create(size, ib_data);
+	else
+		ib->update(size, ib_data);
+}
+
+void mesh::update_vb(size_t size, void* vb_data) {
+	if (!vb)
+		vb = vertex_buffer::create(size, vb_data);
+	else
+		vb->update(size, vb_data);
+}
+
+void mesh::bind() {
+	glBindVertexArray(vdecl.id);
+	ib->bind();
+}
+
+void mesh::unbind() {
+	ib->unbind();
+	glBindVertexArray(0);
+}
+
+void mesh::draw(draw_mode_t mode) {
+	static const GLenum gl_modes[] = { GL_POINTS, GL_POINTS, GL_LINES, GL_TRIANGLES };
+	size_t num_primitives = (ib->size / sizeof(unsigned short))*mode;
+	GLenum gl_mode = gl_modes[mode];
+	bind();
+	glDrawElements(gl_mode, num_primitives, GL_UNSIGNED_SHORT, 0);
+	unbind();
+}
+
+mesh_ptr mesh::create(const vertex_atrib* va, vb_ptr vb, ib_ptr ib) {
+	return mesh_ptr(new mesh(va, vb, ib));
 }

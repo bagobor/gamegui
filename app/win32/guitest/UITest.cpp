@@ -111,6 +111,7 @@ ui_test_application::~ui_test_application()
 void ui_test_application::run()
 {	
 	createGUISystem();
+	BaseApplication::run();
 
 	//m_timer.restart();
 
@@ -182,11 +183,12 @@ void ui_test_application::update()
 
 void ui_test_application::render()
 {
-	//m_render_device.frame_begin();
+	int i = 5;
+	//m_render_device->frame_begin();
 	//m_render_device.clear(rgde::math::color::Black);
 
-	//if (m_system)
-	//{		
+	if (m_system)
+	{		
 	//	//m_font->drawText("THE", gui::Rect(20,20,200,200), 1.f);
 
 	//	//gui::Renderer& r = m_system->getRenderer();
@@ -207,10 +209,10 @@ void ui_test_application::render()
 
 	//	//r.drawLine(*img, (gui::vec2*)points, 7, 1, gui::Rect(0,0,400,400), 0xFFFF0F0F, 7);
 
-	//	m_system->render();
-	//}
+		m_system->render();
+	}
 
-	//m_render_device.frame_end();
+	//m_render_device->frame_end();
 	//m_render_device.present();
 }
 
