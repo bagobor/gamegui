@@ -1,9 +1,11 @@
 #pragma once
 
+#include <guilib/guilib.h>
 #include <guilib/src/renderer.h>
-#include "src/render_gl.h"
+
 
 typedef std::shared_ptr<struct gpu_program> gpu_program_ptr;
+typedef std::shared_ptr<struct mesh> mesh_ptr;
 
 namespace gui
 {
@@ -27,6 +29,8 @@ namespace gui
 
 			bool init(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format);
 			bool init(const std::string& filename);
+
+			void bind(size_t slot);
 
 			bool loadPNG(data_ptr data);
 
@@ -69,6 +73,7 @@ namespace gui
 			//shader_handle m_handleGuiTexture;	 
 			filesystem_ptr filesystem;
 			gpu_program_ptr m_shader;
+			mesh_ptr m_mesh;
 		};
 	}
 }

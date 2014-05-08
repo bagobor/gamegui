@@ -10,6 +10,8 @@
 
 #include "png.h"
 
+#include "render_gl.h"
+
 // fine tune :)
 #define PixelAligned(x)	( ( (float)(int)(( x ) + (( x ) > 0.0f ? 0.5f : -0.5f)) ) - 0.5f )
 
@@ -66,6 +68,8 @@ namespace gui
 {
 	namespace ogl_platform
 	{
+
+
 		unsigned int bitsPerPixelForFormat(Texture::PixelFormat format)
 		{
 			switch (format) {
@@ -102,6 +106,11 @@ namespace gui
 
 		TextureOGL::~TextureOGL() {
 			glDeleteTextures(1, &m_gl_handler);
+		}
+
+		void TextureOGL::bind(size_t slot){
+			glActiveTexture(GL_TEXTURE0 + slot);
+			glBindTexture(GL_TEXTURE_2D, m_gl_handler);
 		}
 
 		bool TextureOGL::init(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
@@ -277,29 +286,10 @@ namespace gui
 					row_pointers[i] = m_pData + i*rowbytes;
 				}
 				png_read_image(png_ptr, row_pointers);
-
 				png_read_end(png_ptr, NULL);
-
 				png_uint_32 channel = rowbytes / m_size.width;
 
-				bool m_bHasAlpha = false; 
-
-				if (channel == 4)
-				{
-					m_bHasAlpha = true;
-					//unsigned int *tmp = (unsigned int *)m_pData;
-					//for (unsigned short i = 0; i < m_nHeight; i++)
-					//{
-					//	for (unsigned int j = 0; j < rowbytes; j += 4)
-					//	{
-					//		*tmp++ = CC_RGB_PREMULTIPLY_ALPHA(row_pointers[i][j], row_pointers[i][j + 1],
-					//			row_pointers[i][j + 2], row_pointers[i][j + 3]);
-					//	}
-					//}
-
-					//m_bPreMulti = true;
-				}
-
+				bool m_bHasAlpha = (channel == 4);
 
 				bRet = true;
 			} while (0);
@@ -309,6 +299,7 @@ namespace gui
 				png_destroy_read_struct(&png_ptr, (info_ptr) ? &info_ptr : 0, 0);
 			}
 
+			//TODO: looks like code is wrong!
 			bRet = init(m_pData, m_size.width, m_size.height, Texture::PF_RGBA8888);
 
 			delete[] m_pData;
@@ -366,26 +357,50 @@ namespace gui
 			unsigned int diffuse;		//!< colour of the vertex
 		};
 
-		//using rgde::render::vertex_element;
-		//vertex_element vertex_desc[] = 
-		//{
-		//	{0, 0,  vertex_element::float4,   vertex_element::default_method, vertex_element::position, 0}, 
-		//	{0, 16, vertex_element::color4ub, vertex_element::default_method, vertex_element::color,	0},
-		//	vertex_element::end_element
-		//};
-
 		enum
 		{
 			VERTEX_PER_QUAD = 4,
 			VERTEX_PER_TRIANGLE = 3,
 			QUADS_BUFFER = 8000,
 			VERTEXBUFFER_CAPACITY = QUADS_BUFFER * VERTEX_PER_QUAD,
-			INDEXBUFFER_CAPACITY  = QUADS_BUFFER*6,
+			INDEXBUFFER_CAPACITY = QUADS_BUFFER * 6,
 		};
 
-		/*************************************************************************
-		Constructor
-		*************************************************************************/
+		namespace
+		{
+			// return value = buff offset in QuadInfo
+			/*__inline */__forceinline unsigned int fill_vertex(const QuadInfo& q, QuadVertex*& v, float scaleX, float scaleY)
+			{
+				QuadVertex& v0 = *v; ++v;
+				QuadVertex& v1 = *v; ++v;
+				QuadVertex& v2 = *v; ++v;
+				QuadVertex& v3 = *v; ++v;
+
+				// setup Vertex 1...
+				v0.x = PixelAligned(q.positions[0].x * scaleX);
+				v1.x = PixelAligned(q.positions[1].x * scaleX);
+				v2.x = PixelAligned(q.positions[2].x * scaleX);
+				v3.x = PixelAligned(q.positions[3].x * scaleX);
+
+				v0.y = PixelAligned(q.positions[0].y * scaleY);
+				v1.y = PixelAligned(q.positions[1].y * scaleY);
+				v2.y = PixelAligned(q.positions[2].y * scaleY);
+				v3.y = PixelAligned(q.positions[3].y * scaleY);
+
+				v0.tu1 = v2.tu1 = q.texPosition.m_left;
+				v0.tv1 = v1.tv1 = q.texPosition.m_top;
+				v1.tu1 = v3.tu1 = q.texPosition.m_right;
+				v2.tv1 = v3.tv1 = q.texPosition.m_bottom;
+
+				v0.diffuse = q.topLeftCol;
+				v1.diffuse = q.topRightCol;
+				v2.diffuse = q.bottomLeftCol;
+				v3.diffuse = q.bottomRightCol;
+
+				return VERTEX_PER_QUAD;
+			}
+		}
+
 		RenderDeviceGL::RenderDeviceGL(filesystem_ptr fs, unsigned int max_quads)
 			: filesystem(fs)
 			//: Renderer(fs)
@@ -393,13 +408,76 @@ namespace gui
 			viewport.x = viewport.y = viewport.w = viewport.h = 0;
 
 			init_gl();
+			
 			//m_needToAddCallback = false;
 			//Size size(getViewportSize());
-			//constructor_impl(size);
+			
 
 			m_shader = gpu_program::create(vertex_shader_src, fragment_shader_src);
+			//m_handleGuiTexture = m_shader->get_param("guitexture");
+			//m_handleViewPortSize = m_shader->get_param("viewportsize");
 
-			int ii = 5;
+			//struct QuadVertex
+			//{
+			//	float x, y, tu1, tv1;		//!< The transformed position for the vertex.
+			//	unsigned int diffuse;		//!< colour of the vertex
+			//};
+
+	
+			vertex_atrib va[] = {
+				{ "a_position", 2, GL_FLOAT, false, sizeof(QuadVertex), 0 },
+				{ "a_texCoord", 2, GL_FLOAT, false, sizeof(QuadVertex), sizeof(float)* 2 },
+				{ "a_color", 4, GL_UNSIGNED_BYTE, true, sizeof(QuadVertex), sizeof(float)* 4 },
+				{ "" }
+			};
+
+			unsigned short* data = new unsigned short[INDEXBUFFER_CAPACITY];
+
+				for (int i = 0; i < VERTEXBUFFER_CAPACITY; i += VERTEX_PER_QUAD)
+				{
+					const size_t quad_index = (i / VERTEX_PER_QUAD)*6;
+
+					data[quad_index+0] = i + 0;
+					data[quad_index+1] = i + 2;
+					data[quad_index+2] = i + 1;
+
+					data[quad_index+3] = i + 1;
+					data[quad_index+4] = i + 2;
+					data[quad_index+5] = i + 3;
+				}
+
+			auto ibuffer = index_buffer::create(INDEXBUFFER_CAPACITY*sizeof(unsigned short), data);
+			auto vbuffer = vertex_buffer::create(VERTEXBUFFER_CAPACITY * sizeof(QuadVertex), nullptr, true);
+
+			delete[] data;
+
+			m_mesh = mesh::create(va, vbuffer, ibuffer);
+			m_mesh->setShader(m_shader);
+
+
+			//m_bufferPos     = 0;
+			//m_originalsize = display_size;
+
+			// Create a vertex buffer
+			//m_buffer = vertex_buffer::create(
+			//	m_device, 
+			//	m_vertexDeclaration, 
+			//	VERTEXBUFFER_CAPACITY * sizeof(QuadVertex),
+			//	resource::default, 
+			//	buffer::write_only | buffer::dynamic);
+
+
+			//if (!m_buffer)
+			//{
+			// Ideally, this would have been a RendererException, but we can't use that until the System object is created
+			// and that requires a Renderer passed to the constructor, so we throw this instead.
+			//	throw std::exception("Creation of VertexBuffer for Renderer object failed");
+			//}
+
+
+			// get the maximum available texture size.
+			// set max texture size the the smaller of max width and max height.
+			//m_maxTextureSize = 2048;//devCaps.MaxTextureWidth < devCaps.MaxTextureHeight ? devCaps.MaxTextureWidth : devCaps.MaxTextureHeight;
 		}
 
 
@@ -421,175 +499,72 @@ namespace gui
 			return texture;
 		}
 
-
-		/*************************************************************************
-		method to do work of constructor
-		*************************************************************************/
-		//void RendererGL::constructor_impl(const Size& display_size)
-		//{
-			//m_bufferPos     = 0;
-			//m_originalsize = display_size;
-			//m_vertexDeclaration = vertex_declaration::create(m_device, vertex_desc, 3);
-
-			// Create a vertex buffer
-			//m_buffer = vertex_buffer::create(
-			//	m_device, 
-			//	m_vertexDeclaration, 
-			//	VERTEXBUFFER_CAPACITY * sizeof(QuadVertex),
-			//	resource::default, 
-			//	buffer::write_only | buffer::dynamic);
-
-			
-			//if (!m_buffer)
-			//{
-				// Ideally, this would have been a RendererException, but we can't use that until the System object is created
-				// and that requires a Renderer passed to the constructor, so we throw this instead.
-			//	throw std::exception("Creation of VertexBuffer for Renderer object failed");
-			//}
-
-			//{
-			//	m_ibuffer = index_buffer::create(m_device, INDEXBUFFER_CAPACITY*sizeof(unsigned short), false, resource::default);
-
-			//	unsigned short* data = (unsigned short*)m_ibuffer->lock(0, INDEXBUFFER_CAPACITY*sizeof(unsigned short), 0);
-
-			//	for (int i = 0; i < VERTEXBUFFER_CAPACITY; i += VERTEX_PER_QUAD)
-			//	{
-			//		const size_t quad_index = (i / VERTEX_PER_QUAD)*6;
-
-			//		data[quad_index+0] = i + 0;
-			//		data[quad_index+1] = i + 2;
-			//		data[quad_index+2] = i + 1;
-
-			//		data[quad_index+3] = i + 1;
-			//		data[quad_index+4] = i + 2;
-			//		data[quad_index+5] = i + 3;
-			//	}
-
-			//	m_ibuffer->unlock();
-			//}
-
-			//if (data_ptr data = m_filesystem->load_binary("shaders\\gui.fx"))
-			//{
-			//	m_shader = shader_effect::create(m_device, data->ptr, data->size);
-			//}			
-
-			// get the maximum available texture size.
-			// set max texture size the the smaller of max width and max height.
-			//m_maxTextureSize = 2048;//devCaps.MaxTextureWidth < devCaps.MaxTextureHeight ? devCaps.MaxTextureWidth : devCaps.MaxTextureHeight;
-
-			//m_handleGuiTexture = m_shader->get_param("guitexture");
-			//m_handleViewPortSize = m_shader->get_param("viewportsize");
-		//}
-
-
-		/*************************************************************************
-		Destructor
-		*************************************************************************/
 		RenderDeviceGL::~RenderDeviceGL(void)
 		{
 		}
 
-		/*************************************************************************
-		render a quad directly to the display		
-		*************************************************************************/
-
-		namespace 
-		{
-			// return value = buff offset in QuadInfo
-			/*__inline */__forceinline unsigned int fill_vertex(const QuadInfo& q, QuadVertex*& v, float scaleX, float scaleY)
-			{									
-				QuadVertex& v0 = *v; ++v;
-				QuadVertex& v1 = *v; ++v;
-				QuadVertex& v2 = *v; ++v;
-				QuadVertex& v3 = *v; ++v;
-
-				// setup Vertex 1...
-				v0.x = PixelAligned(q.positions[0].x * scaleX);
-				v1.x = PixelAligned(q.positions[1].x * scaleX);
-				v2.x = PixelAligned(q.positions[2].x * scaleX);
-				v3.x = PixelAligned(q.positions[3].x * scaleX);
-
-				v0.y = PixelAligned(q.positions[0].y * scaleY);
-				v1.y = PixelAligned(q.positions[1].y * scaleY);
-				v2.y = PixelAligned(q.positions[2].y * scaleY);
-				v3.y = PixelAligned(q.positions[3].y * scaleY);
-				
-				v0.tu1 = v2.tu1 = q.texPosition.m_left;
-				v0.tv1 = v1.tv1 = q.texPosition.m_top;
-				v1.tu1 = v3.tu1 = q.texPosition.m_right;
-				v2.tv1 = v3.tv1 = q.texPosition.m_bottom;
-
-				v0.diffuse = q.topLeftCol;
-				v1.diffuse = q.topRightCol;
-				v2.diffuse = q.bottomLeftCol;
-				v3.diffuse = q.bottomRightCol;
-
-				return VERTEX_PER_QUAD;
-			}			
-		}
-
-		/*************************************************************************
-		render a quad directly to the display
-		*************************************************************************/
 		void RenderDeviceGL::renderImmediate(const QuadInfo& q)
 		{
-			int i = 5;
 			//if (!m_buffer)
 			//	return;
+			glDisable(GL_CULL_FACE);
+			glDepthMask(GL_FALSE);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glEnable(GL_DEPTH_TEST);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	
 			//view_port viewPortDesc;
 			//m_device.get_viewport(viewPortDesc);
 
-			//m_device.set_decl(m_vertexDeclaration);
+			m_shader->begin();
+			{
+				//shader->set("mvp", mLVP);
+				//shader->set("mat_color", glm::vec4(1, 1, 1, 1));
+				glm::vec2 viewport_size(1024, 768);
+				m_shader->set("v_viewportSize", viewport_size);
+				m_shader->set("Texture0", (TextureOGL*)q.texture);
 
-			//m_shader->set_tech("Simple");
-			//rgde::math::vec2f vec((float)viewPortDesc.width, (float)viewPortDesc.height);
-			//m_shader->set("ViewPortSize",&vec, 2 );
-			//m_shader->begin(0 );
-			//m_shader->begin_pass(0);
+				QuadVertex buffmem[VERTEX_PER_QUAD];
 
-			//texture* tex = (texture*)q.texture;
-			//m_device.set_texture(((texture*)tex)->get_platform_resource(), 0 );
+				float scaleX = 1.f;
+				float scaleY = 1.f;
+				float m_autoScale = true;
+				//if (m_autoScale)
+				//{
+				//	const Size viewport(viewport_size.x, viewport_size.y);
+				//	scaleX = viewport.width / m_originalsize.width;
+				//	scaleY = viewport.height / m_originalsize.height;
+				//}
 
-			//QuadVertex buffmem[VERTEX_PER_QUAD];
+				QuadVertex* temp_ptr = (QuadVertex*)buffmem;
+				unsigned int vert_filled = fill_vertex(q, temp_ptr, scaleX, scaleY);
 
-			//float scaleX = 1.f;
-			//float scaleY = 1.f;
-			//if(m_autoScale)
-			//{
-			//	const Size viewport = getViewportSize();
-			//	scaleX = viewport.width / m_originalsize.width;
-			//	scaleY = viewport.height / m_originalsize.height;
-			//}
+				size_t m_bufferPos = vert_filled;
 
-			//QuadVertex* temp_ptr = (QuadVertex*)buffmem;
-			//unsigned int vert_filled = fill_vertex(q, temp_ptr, scaleX, scaleY);
+				// if bufferPos is 0 there is no data in the buffer and nothing to render
+				if (m_bufferPos == 0)
+				{
+					return;
+				}
 
-			//m_bufferPos = vert_filled;
+				typedef unsigned short uint16;
+				const unsigned int prim_count = 2 * m_bufferPos / VERTEX_PER_QUAD;
 
-			//// if bufferPos is 0 there is no data in the buffer and nothing to render
-			//if (m_bufferPos == 0)
-			//{
-			//	return;
-			//}
+				static const uint16 index_data[6] = 
+				{
+					0,1,2, // 1st triangle
+					1,2,3  // 2nd triangle
+				};
 
-			//typedef rgde::uint16 uint16;
 
-			//const unsigned int prim_count = 2 * m_bufferPos / VERTEX_PER_QUAD;
+				//m_device.draw(triangle_list, m_bufferPos, prim_count, buffmem, sizeof(QuadVertex), index_data);			
 
-			//static const uint16 index_data[6] = 
-			//{
-			//	0,1,2, // 1st triangle
-			//	1,2,3  // 2nd triangle
-			//};
+				// reset buffer position to 0...
+				m_bufferPos = 0;				
+			}
+			m_shader->end();
 
-			//m_device.draw(triangle_list, m_bufferPos, prim_count, buffmem, sizeof(QuadVertex), index_data);			
-
-			//// reset buffer position to 0...
-			//m_bufferPos = 0;
-
-			//m_shader->end_pass();
-			//m_shader->end();
 		}
 		
 		//void RendererGL::setRenderStates()

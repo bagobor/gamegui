@@ -35,11 +35,11 @@ struct gpu_buffer {
 
 struct vertex_buffer : public gpu_buffer {
 private:
-	explicit vertex_buffer(size_t size, void* vb_data = 0);
+	explicit vertex_buffer(size_t size, void* vb_data = 0, bool is_dynamic = false);
 public:
-	static vb_ptr create(size_t size, void* data = 0);
+	static vb_ptr create(size_t size, void* data = 0, bool is_dynamic = false);
 	
-	void update(size_t size, void* vb_data);
+	void update(size_t size, void* vb_data, bool is_dynamic = false);
 	void bind();
 	void unbind();
 };
@@ -56,7 +56,7 @@ public:
 };
 
 struct vertex_atrib {
-	int index;
+	std::string name;
 	int size;
 	GLenum type;
 	bool norm;
@@ -75,15 +75,18 @@ public:
 	};
 
 	void update_ib(size_t size, void* ib_data);
-	void update_vb(size_t size, void* vb_data);
+	void update_vb(size_t size, void* vb_data, bool is_dynamic = false);
 	void bind();
 	void unbind();
 	void draw(draw_mode_t mode);
+	void setShader(gpu_program_ptr shader);
 
 	vb_ptr vb;
 	ib_ptr ib;
+	gpu_program_ptr shader;
 
 	platform_handle vdecl; //vao
+	std::vector<vertex_atrib> m_atribs;
 };
 
 struct gpu_program {
@@ -134,26 +137,23 @@ struct gpu_program {
 	void set(handle p, const glm::vec2& v);
 	void set(handle p, float value);
 
-	//void set(handle p, texture_ptr t);
-	//void set(handle p, texture_ptr t, size_t slot);
+	void set(handle p, gui::ogl_platform::TextureOGL* t);
+	void set(handle p, gui::ogl_platform::TextureOGL* t, size_t slot);
 
-	//void set(const char* name, texture_ptr t);
+	void set(const char* name, gui::ogl_platform::TextureOGL* t, size_t slot);
+	void set(const char* name, gui::ogl_platform::TextureOGL* t);
 	
 	void begin();
 	void end();
 
+	typedef std::map<std::string, unsigned> values_t;
+	values_t m_attribs;
+	values_t m_uniforms;
+
 private:
 	bool load(shader_desc* desc);
 		
-private:
+private:	
 	platform_handle prog;
 	int cur_texture_slot;
 };
-
-
-//struct material {
-//	
-//
-//	typedef std::map<std::string, gpu_program> contexts_t;
-//	contexts_t contexts;
-//};

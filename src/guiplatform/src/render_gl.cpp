@@ -1,14 +1,13 @@
 #include "stdafx.h"
 
 #include <GL/gl.h>
-
-#include "render_gl.h"
 #include "opengl.h"
 
+#include "../renderer_ogl.h"
+#include "render_gl.h"
 
 #include <gli/gli.hpp>
 #include <gli/core/texture2d.hpp>// Requires OpenGL >= 1.1 to be included before this include
-
 
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
@@ -81,6 +80,10 @@ bool gpu_program::load(shader_desc* desc) {
 
 		glGetActiveAttrib(prog.id, i, sizeof(infoLog), &length, &attrib_size, &attrib_type, infoLog);
 
+		unsigned location_id = glGetAttribLocation(prog.id, infoLog);
+
+		m_attribs[infoLog] = location_id;
+
 		//const char* param_type_str = to_str(attrib_type);
 		printf("#:%d name:%s type:%s size:%d\n", i, infoLog, "", attrib_size);
 	}
@@ -93,6 +96,9 @@ bool gpu_program::load(shader_desc* desc) {
 		GLenum attrib_type;
 
 		glGetActiveUniform(prog.id, i, sizeof(infoLog), &length, &attrib_size, &attrib_type, infoLog);
+
+		unsigned location_id = glGetUniformLocation(prog.id, infoLog);
+		m_uniforms[infoLog] = location_id;
 
 		//const char* param_type_str = to_str(attrib_type);
 		printf("name:%s type:%s size:%d\n", infoLog, "", attrib_size);
@@ -178,24 +184,28 @@ void gpu_program::end() {
 	cur_texture_slot = 0;
 }
 
-//void gpu_program::set(handle p, texture_ptr t) {
-//	if (p.id < 0) return;
-//	glUniform1i(p.id, cur_texture_slot);
-//	t->bind(cur_texture_slot);
-//	cur_texture_slot++;
-//}
-//
-//void gpu_program::set(handle p, texture_ptr t, size_t slot) {
-//	if (p.id < 0) return;
-//	glUniform1i(p.id, slot);
-//	t->bind(slot);
-//}
-//
-//void gpu_program::set(const char* name, texture_ptr t){
-//	handle h = get_handle(name);
-//	set(h, t);
-//}
+void gpu_program::set(handle p, gui::ogl_platform::TextureOGL* t) {
+	if (p.id < 0) return;
+	t->bind(cur_texture_slot);
+	glUniform1i(p.id, cur_texture_slot);	
+	cur_texture_slot++;
+}
 
+void gpu_program::set(handle p, gui::ogl_platform::TextureOGL* t, size_t slot) {
+	if (p.id < 0) return;
+	t->bind(slot);
+	glUniform1i(p.id, slot);	
+}
+
+void gpu_program::set(const char* name, gui::ogl_platform::TextureOGL* t, size_t slot) {
+	handle h = get_handle(name);
+	set(h, t, slot);
+}
+
+void gpu_program::set(const char* name, gui::ogl_platform::TextureOGL* t) {
+	handle h = get_handle(name);
+	set(h, t);
+}
 
 index_buffer::index_buffer(size_t size, void* ib_data) : gpu_buffer(size) {
 	update(size, ib_data);
@@ -217,15 +227,16 @@ void index_buffer::unbind() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-vertex_buffer::vertex_buffer(size_t size, void* vb_data) : gpu_buffer(size){
-	update(size, vb_data);
+vertex_buffer::vertex_buffer(size_t size, void* vb_data, bool is_dynamic) : gpu_buffer(size){
+	update(size, vb_data, is_dynamic);
 }
 
-void vertex_buffer::update(size_t size, void* vb_data) {
+void vertex_buffer::update(size_t size, void* vb_data, bool is_dynamic) {
 	this->size = size;
 	glBindBuffer(GL_ARRAY_BUFFER, h.id);
+	//TODO: check capacity !
 	if (size > 0)
-		glBufferData(GL_ARRAY_BUFFER, size, vb_data, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, size, vb_data, is_dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -256,8 +267,8 @@ gpu_buffer::~gpu_buffer() {
 //	glBindTexture(GL_TEXTURE_2D, h.id);
 //}
 
-vb_ptr vertex_buffer::create(size_t size, void* data) {
-	return vb_ptr(new vertex_buffer(size, data));
+vb_ptr vertex_buffer::create(size_t size, void* data, bool is_dynamic) {
+	return vb_ptr(new vertex_buffer(size, data, is_dynamic));
 }
 ib_ptr index_buffer::create(size_t size, void* data) {
 	return ib_ptr(new index_buffer(size, data));
@@ -271,23 +282,14 @@ gpu_program_ptr gpu_program::create(const char* vs, const char* fs) {
 
 
 mesh::mesh(const vertex_atrib* va, vb_ptr _vb, ib_ptr _ib) : vb(_vb), ib(_ib) {
+	vdecl.p = nullptr;
 	if (!ib) update_ib(0, 0);
 	if (!vb) update_vb(0, 0);
 
-	glGenVertexArrays(1, &vdecl.id);
-	bind();
-
-	vb->bind();
-
-	while (va->index >= 0) {
-		glVertexAttribPointer((GLuint)va->index, va->size, va->type, va->norm ? GL_TRUE : GL_FALSE, va->stride, BUFFER_OFFSET(va->offset));
-		glEnableVertexAttribArray(va->index);
-		++va;
+	for (size_t i = 0;; ++i) {
+		if (va[i].name.empty()) break;
+		m_atribs.push_back(va[i]);
 	}
-
-	vb->unbind();
-
-	unbind();
 }
 
 void mesh::update_ib(size_t size, void* ib_data) {
@@ -297,21 +299,44 @@ void mesh::update_ib(size_t size, void* ib_data) {
 		ib->update(size, ib_data);
 }
 
-void mesh::update_vb(size_t size, void* vb_data) {
+void mesh::update_vb(size_t size, void* vb_data, bool is_dynamic) {
 	if (!vb)
-		vb = vertex_buffer::create(size, vb_data);
+		vb = vertex_buffer::create(size, vb_data, is_dynamic);
 	else
-		vb->update(size, vb_data);
+		vb->update(size, vb_data, is_dynamic);
 }
 
 void mesh::bind() {
 	glBindVertexArray(vdecl.id);
-	ib->bind();
+	ib->bind();	
 }
 
 void mesh::unbind() {
 	ib->unbind();
 	glBindVertexArray(0);
+}
+
+void mesh::setShader(gpu_program_ptr shader) {
+	if (this->shader == shader) return;
+	this->shader = shader;
+
+	if (vdecl.id > 0)
+		glDeleteVertexArrays(1, &vdecl.id);
+
+	glGenVertexArrays(1, &vdecl.id);
+	bind();
+	vb->bind();
+
+	for (auto va : m_atribs) {
+		auto it = shader->m_attribs.find(va.name);
+		if (it == shader->m_attribs.end()) continue; // skip attribute
+		unsigned attrib_index = it->second;
+		glVertexAttribPointer((GLuint)attrib_index, va.size, va.type, va.norm ? GL_TRUE : GL_FALSE, va.stride, BUFFER_OFFSET(va.offset));
+		glEnableVertexAttribArray(attrib_index);
+	}
+
+	vb->unbind();
+	unbind();
 }
 
 void mesh::draw(draw_mode_t mode) {
