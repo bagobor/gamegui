@@ -12,28 +12,22 @@
 *.la
 *.a
 
-/build/win32/vc9/*.opensdf
-/build/win32/vc9/*.sdf
-/build/win32/vc9/*.suo
-
-/lib
-
 /temp
 /build/temp
-/build/win32/vs11/*.suo
 
-/build/win32/vs11/*.opensdf
-/build/win32/vs11/*.sdf
-
-/build/win32/vs11/ipch
-/build/win32/vs11/Debug
+/build/ipch
+/build/Debug
 /external/freetype/objs
-/external/glfw-3.0.3/*.suo
 
+*.sbr
+*.tlog
+*.obj
 *.user
 *.ipch
+*.pch
 *.opensdf
 *.sdf
+*.pdb
 *.suo
 *.lib
 win32
