@@ -151,7 +151,7 @@ void gpu_program::set(const char* name, const glm::vec4& v) {
 void gpu_program::set(const char* name, const glm::vec2& v) {
 	handle p = get_handle(name);
 	if (p.id < 0) return;
-	glUniform2fv(p.id, 2, &v[0]);
+	glUniform2fv(p.id, 1, &v[0]);
 }
 
 

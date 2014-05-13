@@ -83,14 +83,14 @@ FontPtr	Renderer::createFont(const std::string& name, const std::string& fontnam
 
 void Renderer::doRender() {
 	Size scale (1.f, 1.f);
-	if (m_autoScale)
+	/*if (m_autoScale)
 	{
 		Size& viewport = getViewportSize();
 		scale.width = viewport.width / m_originalsize.width;
 		scale.height = viewport.height / m_originalsize.height;
-	}
+	}*/
 
-	m_render_device.render(m_batches, m_quads, scale);
+	m_render_device.render(m_batches, m_quads, m_num_batches, scale);
 }
 
 void Renderer::immediateDraw(const Image& img, const Rect& dest_rect, float z, const Rect& clip_rect,const ColorRect& colors)

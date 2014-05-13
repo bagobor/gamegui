@@ -15,10 +15,12 @@
 // fine tune :)
 #define PixelAligned(x)	( ( (float)(int)(( x ) + (( x ) > 0.0f ? 0.5f : -0.5f)) ) - 0.5f )
 
+
+
 const char* vertex_shader_src =
 "#version 120 \n"
 " \n"
-"attribute vec4 a_position;\n"
+"attribute vec2 a_position;\n"
 "attribute vec2 a_texCoord;\n"
 "attribute vec4 a_color;\n"
 
@@ -35,9 +37,13 @@ const char* vertex_shader_src =
 "void main()\n"
 "{\n"
 "    gl_Position = vec4(\n"
-"		(2.0f * a_position.x / v_viewportSize.x) - 1.0f,\n"
-"		1.0f - (2.0f * a_position.y / v_viewportSize.y),\n"
-"		a_position.z,\n"
+//"		a_position.x,\n"
+//"		a_position.y,\n"
+"		a_position.x / v_viewportSize.x,\n"
+"		a_position.y / v_viewportSize.y,\n"
+//"		(2.0f * a_position.x / v_viewportSize.x) - 1.0f,\n"
+//"		1.0f - (2.0f * a_position.y / v_viewportSize.y),\n"
+"		0.5f,\n"
 "		1.0f\n"
 "	);\n"
 "\n"
@@ -46,7 +52,7 @@ const char* vertex_shader_src =
 "}\n";
 
 
-const char* fragment_shader_src = 
+const char* fragment_shader_src =
 "#version 120\n"
 "\n"
 "#ifdef GL_ES\n"
@@ -59,7 +65,8 @@ const char* fragment_shader_src =
 "\n"
 "void main()\n"
 "{\n"
-"	gl_FragColor = v_fragmentColor * texture2D(Texture0, v_texCoord);\n"
+"	gl_FragColor = v_fragmentColor;//  * texture2D(Texture0, v_texCoord);\n"
+"	gl_FragColor = vec4(1,1,1,1);//  * texture2D(Texture0, v_texCoord);\n"
 "}\n";
 
 
@@ -366,6 +373,13 @@ namespace gui
 			INDEXBUFFER_CAPACITY = QUADS_BUFFER * 6,
 		};
 
+		vertex_atrib va[] = {
+			{ "a_position", 2, GL_FLOAT, false, sizeof(QuadVertex), 0 },
+			{ "a_texCoord", 2, GL_FLOAT, false, sizeof(QuadVertex), sizeof(float)* 2 },
+			{ "a_color", 4, GL_UNSIGNED_BYTE, true, sizeof(QuadVertex), sizeof(float)* 4 },
+			{ "" }
+		};
+
 		namespace
 		{
 			// return value = buff offset in QuadInfo
@@ -422,14 +436,6 @@ namespace gui
 			//	float x, y, tu1, tv1;		//!< The transformed position for the vertex.
 			//	unsigned int diffuse;		//!< colour of the vertex
 			//};
-
-	
-			vertex_atrib va[] = {
-				{ "a_position", 2, GL_FLOAT, false, sizeof(QuadVertex), 0 },
-				{ "a_texCoord", 2, GL_FLOAT, false, sizeof(QuadVertex), sizeof(float)* 2 },
-				{ "a_color", 4, GL_UNSIGNED_BYTE, true, sizeof(QuadVertex), sizeof(float)* 4 },
-				{ "" }
-			};
 
 			unsigned short* data = new unsigned short[INDEXBUFFER_CAPACITY];
 
@@ -516,7 +522,7 @@ namespace gui
 	
 			//view_port viewPortDesc;
 			//m_device.get_viewport(viewPortDesc);
-
+			m_shader->set("v_viewportSize", glm::vec2(1024, 768));
 			m_shader->begin();
 			{
 				//shader->set("mvp", mLVP);
@@ -551,17 +557,32 @@ namespace gui
 				typedef unsigned short uint16;
 				const unsigned int prim_count = 2 * m_bufferPos / VERTEX_PER_QUAD;
 
-				static const uint16 index_data[6] = 
-				{
-					0,1,2, // 1st triangle
-					1,2,3  // 2nd triangle
-				};
+				//static const uint16 index_data[6] = 
+				//{
+				//	0,1,2, // 1st triangle
+				//	1,2,3  // 2nd triangle
+				//};
 
+#define BUFFER_OFFSET(buffer, i) ((char *)NULL + (i))
+				
 
-				//m_device.draw(triangle_list, m_bufferPos, prim_count, buffmem, sizeof(QuadVertex), index_data);			
+				for (auto va : va) {
+					auto it = m_shader->m_attribs.find(va.name);
+					if (it == m_shader->m_attribs.end()) continue; // skip attribute
+					unsigned attrib_index = it->second;
+					glVertexAttribPointer((GLuint)attrib_index, va.size, va.type, va.norm ? GL_TRUE : GL_FALSE, va.stride, BUFFER_OFFSET(temp_ptr, va.offset));
+					glEnableVertexAttribArray(attrib_index);
+				}
+
+#undef BUFFER_OFFSET
+				m_mesh->ib->bind();
+
+				//m_device.draw(triangle_list, m_bufferPos, prim_count, buffmem, sizeof(QuadVertex), index_data);
+				glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 
 				// reset buffer position to 0...
-				m_bufferPos = 0;				
+				m_bufferPos = 0;
+				m_mesh->ib->unbind();
 			}
 			m_shader->end();
 
@@ -590,17 +611,20 @@ namespace gui
 		/*************************************************************************
 		perform final rendering for all queued renderable quads.
 		*************************************************************************/
-		void RenderDeviceGL::render(const Batches& batches, const Quads& quads, Size scale)
+		QuadVertex buffmem[10000];
+
+		void RenderDeviceGL::render(const Batches& _batches, const Quads& _quads, size_t num_batches, Size scale)
 		{
+			
 			int i = 5;
-			//if (!m_buffer)
-			//	return;
+			if (!m_mesh) return;
 
 			//setRenderStates();
 			//m_currTexture.reset();
+			Texture* cur_texture = nullptr;
 
-			//float scaleX = 1.f;
-			//float scaleY = 1.f;
+			float scaleX = scale.width;
+			float scaleY = scale.height;
 			//if(m_autoScale)
 			//{
 			//	Size& viewport = getViewportSize();
@@ -608,69 +632,91 @@ namespace gui
 			//	scaleY = viewport.height / m_originalsize.height;
 			//}
 
-			//static DWORD s_quadOffset = 0;	// buffer offset in quads
-			//QuadVertex*	buffmem;
-			//
-			//static const unsigned int quad_size = VERTEX_PER_QUAD * sizeof(QuadVertex);
+			static unsigned long s_quadOffset = 0;	// buffer offset in quads
+			
+			
+			static const unsigned int quad_size = VERTEX_PER_QUAD * sizeof(QuadVertex);
 
-			//BatchInfo* batches = &m_batches.front();
-			//QuadInfo* quads = &m_quads.front();
+			const BatchInfo* batches = &_batches.front();
+			const QuadInfo* quads = &_quads.front();
+					
+			m_shader->begin();
+			for (std::size_t b = 0; b < num_batches; ++b)
+			{
+				const BatchInfo& batch = batches[b];
+				if ( VERTEX_PER_QUAD * (batch.numQuads + s_quadOffset) >= VERTEXBUFFER_CAPACITY)
+					s_quadOffset = 0;
 
-			//for (std::size_t b = 0; b < m_num_batches; ++b)
-			//{
-			//	BatchInfo& batch = batches[b];
-			//	if ( VERTEX_PER_QUAD * (batch.numQuads + s_quadOffset) >= VERTEXBUFFER_CAPACITY)
-			//		s_quadOffset = 0;
+				//buffmem = (QuadVertex*)m_buffer->lock
+				//	(
+				//	s_quadOffset * quad_size,
+				//	batches[b].numQuads * quad_size,
+				//	buffer::nooverwrite
+				//	);
 
-			//	buffmem = (QuadVertex*)m_buffer->lock
-			//		(
-			//		s_quadOffset * quad_size, 
-			//		batches[b].numQuads * quad_size,
-			//		buffer::nooverwrite
-			//		);
+				//if (!buffmem)
+				//	break;
 
-			//	if (!buffmem )
-			//		break;				
+				std::size_t numQ = batch.numQuads;
 
-			//	std::size_t numQ = batch.numQuads;
-			//	QuadInfo* quad = &quads[batch.startQuad];
-			//	for (std::size_t q = 0; q < numQ; ++q, ++quad)
-			//	{
-			//		fill_vertex(*quad, buffmem, scaleX, scaleY);
-			//	}
+				//QuadVertex*	buffmem = new QuadVertex[numQ*4];// nullptr;
+				QuadVertex* buff = (QuadVertex*)&(buffmem[0]);
+				const QuadInfo* quad = &quads[batch.startQuad];
+				for (std::size_t q = 0; q < numQ; ++q, ++quad)
+				{
+					fill_vertex(*quad, buff, scaleX, scaleY);
+				}
 
-			//	m_buffer->unlock();
+				TextureOGL* texture = (TextureOGL*)batch.texture;
+				m_shader->set("Texture0", texture);
 
-			//	gui::ogl_platform::texture* t = static_cast<gui::ogl_platform::texture*>(batch.texture);
-			//	m_device.set_texture(t->get_platform_resource(), 0);
+				//m_buffer->unlock();
+				m_mesh->update_vb(sizeof(QuadVertex)* 4 * numQ, buffmem, true);
 
-			//	m_device.draw
-			//		(
-			//		triangle_list,					//type
-			//		s_quadOffset * VERTEX_PER_QUAD, // base_vertex_index Ok
-			//		0,								// min_vertex_indexOk
-			//		numQ*VERTEX_PER_QUAD,			//num_vertices OK
-			//		0,								// Ok
-			//		numQ*2							// Ok
-			//		);
+				
 
-			//	s_quadOffset += (DWORD)numQ;
+				m_shader->set("v_viewportSize", glm::vec2(1, 1));				
 
-			//	if (batch.callbackInfo.window && batch.callbackInfo.afterRenderCallback)
-			//	{
-			//		m_shader->end_pass();
-			//		m_shader->end();
+				m_mesh->bind();
 
-			//		batch.callbackInfo.afterRenderCallback(batch.callbackInfo.window, batch.callbackInfo.dest, batch.callbackInfo.clip);
 
-			//		// if it was not last batch
-			//		if (b < m_num_batches -1)
-			//			setRenderStates();
-			//	}
-			//}
-			//
+				//gui::ogl_platform::texture* t = static_cast<gui::ogl_platform::texture*>(batch.texture);
+				//m_device.set_texture(t->get_platform_resource(), 0);
+
+				glDrawElements(GL_TRIANGLES, numQ*VERTEX_PER_QUAD, GL_UNSIGNED_SHORT, 0);
+
+				m_mesh->unbind();
+				
+
+				//delete[] buffmem;
+
+				//m_device.draw
+				//	(
+				//	triangle_list,					//type
+				//	s_quadOffset * VERTEX_PER_QUAD, // base_vertex_index Ok
+				//	0,								// min_vertex_indexOk
+				//	numQ*VERTEX_PER_QUAD,			//num_vertices OK
+				//	0,								// Ok
+				//	numQ*2							// Ok
+				//	);
+
+				s_quadOffset += (DWORD)numQ;
+
+				if (batch.callbackInfo.window && batch.callbackInfo.afterRenderCallback)
+				{
+					//m_shader->end_pass();
+					
+
+					batch.callbackInfo.afterRenderCallback(batch.callbackInfo.window, batch.callbackInfo.dest, batch.callbackInfo.clip);
+					//m_shader->end();
+					// if it was not last batch
+					//if (b < m_num_batches -1)
+					//	setRenderStates();
+				}
+			}
+			
 			//m_shader->end_pass();
-			//m_shader->end();
+			m_shader->end();
 		}
 
 		/*************************************************************************

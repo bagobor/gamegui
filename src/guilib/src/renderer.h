@@ -94,7 +94,7 @@ struct RenderDevice {
 	virtual TexturePtr createTexture(const std::string& filename) = 0;
 
 	virtual void renderImmediate(const QuadInfo& q) = 0;
-	virtual void render(const Batches& batches, const Quads& quads, Size scale = Size(1.0f,1.0f)) = 0;
+	virtual void render(const Batches& batches, const Quads& quads, size_t num_batches, Size scale = Size(1.0f, 1.0f)) = 0;
 
 	const ViewPort& getViewport() const { return viewport; }
 	virtual void setViewport(const ViewPort& vp) {
