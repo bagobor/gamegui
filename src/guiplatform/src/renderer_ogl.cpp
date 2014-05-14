@@ -437,28 +437,15 @@ namespace gui
 
 		RenderDeviceGL::RenderDeviceGL(filesystem_ptr fs, unsigned int max_quads)
 			: filesystem(fs)
-			//: Renderer(fs)
 		{
 			viewport.x = viewport.y = 0;
 			viewport.w = 1024;
 			viewport.h = 768;
 
-			init_gl();
-			
-			//m_needToAddCallback = false;
-			//Size size(getViewportSize());
-			
+			init_gl();			
 
 			m_shader = gpu_program::create(vertex_shader_src, fragment_shader_src);
-			//m_handleGuiTexture = m_shader->get_param("guitexture");
-			//m_handleViewPortSize = m_shader->get_param("viewportsize");
-
-			//struct QuadVertex
-			//{
-			//	float x, y, tu1, tv1;		//!< The transformed position for the vertex.
-			//	unsigned int diffuse;		//!< colour of the vertex
-			//};
-
+			
 			unsigned short* data = new unsigned short[INDEXBUFFER_CAPACITY];
 
 				for (int i = 0; i < VERTEXBUFFER_CAPACITY; i += VERTEX_PER_QUAD)
@@ -481,33 +468,7 @@ namespace gui
 
 			m_mesh = mesh::create(va, vbuffer, ibuffer);
 			m_mesh->setShader(m_shader);
-
-
-			//m_bufferPos     = 0;
-			//m_originalsize = display_size;
-
-			// Create a vertex buffer
-			//m_buffer = vertex_buffer::create(
-			//	m_device, 
-			//	m_vertexDeclaration, 
-			//	VERTEXBUFFER_CAPACITY * sizeof(QuadVertex),
-			//	resource::default, 
-			//	buffer::write_only | buffer::dynamic);
-
-
-			//if (!m_buffer)
-			//{
-			// Ideally, this would have been a RendererException, but we can't use that until the System object is created
-			// and that requires a Renderer passed to the constructor, so we throw this instead.
-			//	throw std::exception("Creation of VertexBuffer for Renderer object failed");
-			//}
-
-
-			// get the maximum available texture size.
-			// set max texture size the the smaller of max width and max height.
-			//m_maxTextureSize = 2048;//devCaps.MaxTextureWidth < devCaps.MaxTextureHeight ? devCaps.MaxTextureWidth : devCaps.MaxTextureHeight;
 		}
-
 
 		TexturePtr RenderDeviceGL::createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
 			auto texture = std::make_shared<TextureOGL>(*this);
@@ -542,15 +503,10 @@ namespace gui
 			glEnable(GL_DEPTH_TEST);
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-
-	
-			//view_port viewPortDesc;
 			//m_device.get_viewport(viewPortDesc);
 			m_shader->set("v_viewportSize", glm::vec2(1024, 768));
 			m_shader->begin();
 			{
-				//shader->set("mvp", mLVP);
-				//shader->set("mat_color", glm::vec4(1, 1, 1, 1));
 				glm::vec2 viewport_size(1024, 768);
 				m_shader->set("v_viewportSize", viewport_size);
 				m_shader->set("Texture0", (TextureOGL*)q.texture);
@@ -581,12 +537,6 @@ namespace gui
 				typedef unsigned short uint16;
 				const unsigned int prim_count = 2 * m_bufferPos / VERTEX_PER_QUAD;
 
-				//static const uint16 index_data[6] = 
-				//{
-				//	0,1,2, // 1st triangle
-				//	1,2,3  // 2nd triangle
-				//};
-
 #define BUFFER_OFFSET(buffer, i) ((char *)NULL + (i))
 				
 
@@ -601,7 +551,6 @@ namespace gui
 #undef BUFFER_OFFSET
 				m_mesh->ib->bind();
 
-				//m_device.draw(triangle_list, m_bufferPos, prim_count, buffmem, sizeof(QuadVertex), index_data);
 				glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 
 				// reset buffer position to 0...
@@ -609,32 +558,8 @@ namespace gui
 				m_mesh->ib->unbind();
 			}
 			m_shader->end();
-
 		}
 		
-		//void RendererGL::setRenderStates()
-		//{
-			// setup vertex stream
-			//m_device.set_stream_source(0, m_buffer, sizeof(QuadVertex));
-			//m_device.set_index_buffer(m_ibuffer);
-			//
-			//view_port viewPortDesc;
-			//m_device.get_viewport(viewPortDesc);
-
-			//m_device.set_decl(m_vertexDeclaration);
-
-			//m_shader->set_tech("simple");
-			//rgde::math::vec2f vec((float)viewPortDesc.width, (float)viewPortDesc.height);
-
-			//if (m_handleViewPortSize)
-			//	m_shader->set(m_handleViewPortSize,(float*)&vec, 2 );
-
-			//m_shader->begin(0);
-			//m_shader->begin_pass(0);
-		//}
-		/*************************************************************************
-		perform final rendering for all queued renderable quads.
-		*************************************************************************/
 		QuadVertex buffmem[10000];
 
 		void RenderDeviceGL::render(const Batches& _batches, const Quads& _quads, size_t num_batches, Size scale)
@@ -644,7 +569,6 @@ namespace gui
 			if (!m_mesh) return;
 
 			//setRenderStates();
-			//m_currTexture.reset();
 			Texture* cur_texture = nullptr;
 
 			float scaleX = scale.width;
@@ -683,9 +607,8 @@ namespace gui
 				//if (!buffmem)
 				//	break;
 
-				std::size_t numQ = batch.numQuads;
+				const std::size_t numQ = batch.numQuads;
 
-				//QuadVertex*	buffmem = new QuadVertex[numQ*4];// nullptr;
 				QuadVertex* buff = (QuadVertex*)&(buffmem[0]);
 				const QuadInfo* quad = &quads[batch.startQuad];
 				for (std::size_t q = 0; q < numQ; ++q, ++quad)
@@ -700,44 +623,21 @@ namespace gui
 
 				err = glGetError();
 				
-
 				//m_buffer->unlock();
-				m_mesh->update_vb(sizeof(QuadVertex)* 4 * numQ, buffmem, true);
-
-				
+				m_mesh->update_vb(sizeof(QuadVertex)* 4 * numQ, buffmem, true);				
 
 				m_shader->set("v_viewportSize", glm::vec2(1024, 768));				
 
 				m_mesh->bind();
-
-
-				//gui::ogl_platform::texture* t = static_cast<gui::ogl_platform::texture*>(batch.texture);
-				//m_device.set_texture(t->get_platform_resource(), 0);
-
+				
 				glDrawElements(GL_TRIANGLES, numQ*6, GL_UNSIGNED_SHORT, 0);
 
 				m_mesh->unbind();
-				
-
-				//delete[] buffmem;
-
-				//m_device.draw
-				//	(
-				//	triangle_list,					//type
-				//	s_quadOffset * VERTEX_PER_QUAD, // base_vertex_index Ok
-				//	0,								// min_vertex_indexOk
-				//	numQ*VERTEX_PER_QUAD,			//num_vertices OK
-				//	0,								// Ok
-				//	numQ*2							// Ok
-				//	);
 
 				s_quadOffset += (DWORD)numQ;
 
 				if (batch.callbackInfo.window && batch.callbackInfo.afterRenderCallback)
 				{
-					//m_shader->end_pass();
-					
-
 					batch.callbackInfo.afterRenderCallback(batch.callbackInfo.window, batch.callbackInfo.dest, batch.callbackInfo.clip);
 					//m_shader->end();
 					// if it was not last batch
@@ -746,80 +646,7 @@ namespace gui
 				}
 			}
 			
-			//m_shader->end_pass();
 			m_shader->end();
 		}
-
-		/*************************************************************************
-		setup states etc
-		*************************************************************************/
-		//void RendererGL::initPerFrameStates(void)
-		//{
-		//	// setup vertex stream
-		//	m_device.set_stream_source(0, m_buffer, sizeof(QuadVertex));
-		//	m_device.set_index_buffer(m_ibuffer);
-		//}
-
-		//TexturePtr	RendererGL::updateTexture(TexturePtr p, const void* buffPtr, unsigned int buffWidth, unsigned int buffHeight, Texture::PixelFormat pixFormat)
-		//{
-			//return TexturePtr();
-			//TexturePtr platform_tex = static_cast<texture&>(*p).get_platform_resource();
-
-			//surface_ptr surface = platform_tex->get_surface(0);
-			//surface::lock_data ld;
-			//bool res = surface->lock(ld);
-
-			//if (!res)
-			//{
-			//	platform_tex.reset();
-			//	throw std::exception("Failed to load texture from memory: IDirect3DTexture9::LockRect failed.");
-			//}
-			//else
-			//{
-			//	// copy data from buffer into texture
-			//	unsigned long* dst = (unsigned long*)ld.bytes;
-			//	unsigned long* src = (unsigned long*)buffPtr;
-
-			//	// RGBA
-			//	if (pixFormat == Texture::PF_RGBA)
-			//	{
-			//		for (unsigned int i = 0; i < buffHeight; ++i)
-			//		{
-			//			for (unsigned int j = 0; j < buffWidth; ++j)
-			//			{
-			//				//TODO: check for endian safety on non-MS platforms
-			//				unsigned char r = (unsigned char)(src[j] & 0xFF);
-			//				unsigned char g = (unsigned char)((src[j] >> 8) & 0xFF);
-			//				unsigned char b = (unsigned char)((src[j] >> 16)  & 0xFF);
-			//				unsigned char a = (unsigned char)((src[j] >> 24) & 0xFF);
-
-			//				dst[j] = rgde::math::color(r, g, b, a).data;
-			//			}
-
-			//			dst += ld.pitch / sizeof(unsigned long);
-			//			src += buffWidth;
-			//		}
-			//	}
-			//	// RGB
-			//	else
-			//	{
-			//		for (unsigned int i = 0; i < buffHeight; ++i)
-			//		{
-			//			for (unsigned int j = 0; j < buffWidth; ++j)
-			//			{
-			//				dst[j] = src[j];
-			//			}
-
-			//			dst += ld.pitch / sizeof(unsigned long);
-			//			src += buffWidth;
-			//		}
-			//	}
-
-			//	surface->unlock();
-			//}
-			//
-			//return p;
-		//}
-
 	}
 }

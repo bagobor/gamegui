@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<Filter Include="src">
+			<UniqueIdentifier>{E87840FE-7DF5-CE4B-8278-AE1798AEF66F}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="src\test">
+			<UniqueIdentifier>{EC43A02C-0910-D94A-B347-47158EDEEA06}</UniqueIdentifier>
+		</Filter>
+	</ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="..\..\src\test\efsw-test.cpp">
+			<Filter>src\test</Filter>
+		</ClCompile>
+	</ItemGroup>
+</Project>

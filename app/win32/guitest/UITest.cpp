@@ -8,7 +8,6 @@
 #include "uitest.h"
 #include <guiplatform/renderer_ogl.h>
 
-//#include <boost/filesystem.hpp>
 #include <iostream>
 #include <functional>
 
@@ -83,6 +82,7 @@ ui_test_application::ui_test_application(int w, int h, const char* title)
 	//, m_render_device(m_filesystem)
 	, m_elapsed(0)
 	, m_active(true)
+	, m_needReload(false)
 {
 	using namespace std::placeholders;
 	env.render_cb = std::bind(&ui_test_application::render, this);
@@ -94,6 +94,7 @@ ui_test_application::ui_test_application(int w, int h, const char* title)
 
 ui_test_application::~ui_test_application()
 {
+	m_fileWatcher.removeWatch(m_watchID);
 	m_system.reset();
 	m_render.reset();
 }
@@ -106,7 +107,10 @@ void ui_test_application::run()
 
 void ui_test_application::createGUISystem()
 {
-	filesystem_ptr fs(new gui_filesystem("/data/"));
+	gui_filesystem* fsp = new gui_filesystem("/data/");
+	filesystem_ptr fs(fsp);
+
+	m_watchID = m_fileWatcher.addWatch(fsp->root(), this, true);
 
 	m_render_device = std::make_shared<gui::ogl_platform::RenderDeviceGL>(fs, 1024);
 	m_render = std::make_shared<gui::Renderer>(*m_render_device, fs);
@@ -123,6 +127,8 @@ void ui_test_application::createGUISystem()
 		cursor.setType("CursorNormal");
 		//m_font = m_system->getWindowManager().loadFont("exotibi");
 	}
+
+	m_fileWatcher.watch();
 }
 
 void ui_test_application::resetGUISystem()
@@ -136,6 +142,12 @@ void ui_test_application::resetGUISystem()
 
 void ui_test_application::update()
 {
+	if (m_needReload) {
+		m_needReload = false;
+		resetGUISystem();
+		m_framecount = 0;
+	}
+
 	m_framecount++;
 	if(m_system)
 	{
@@ -330,6 +342,15 @@ void ui_test_application::onMousewheel(int delta) {
 	e.type = gui::event_mouse | gui::mouse_wheel;
 	e.mouse.delta = delta;
 	m_system->handle_event(e);
+}
+
+void ui_test_application::handleFileAction(efsw::WatchID watchid, const std::string& dir, const std::string& filename, efsw::Action action, std::string oldFilename)
+{
+	if (efsw::Actions::Modified == action) {
+		//resetGUISystem();
+		m_needReload = true;
+	}
+	//std::cout << "DIR (" << dir + ") FILE (" + (oldFilename.empty() ? "" : "from file " + oldFilename + " to ") + filename + ") has event " << getActionName(action) << std::endl;
 }
 
 void ui_test_application::onKey(int key, int action) {

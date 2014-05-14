@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
-<ImageButton name ="" file="" >
+<ImageButton name ="" file="" > 
 	<Properties>
-		<Visible>true</Visible>
-		<TabStop>false</TabStop>
+		<Visible>true</Visible> 
+		<TabStop>false</TabStop> 
         <Size>16 16</Size>
 		<StateImagery Imageset="skin">
 			<State Type="Normal" Image="CloseButton" />
@@ -10,7 +10,7 @@
 			<State Type="Pushed" Image="CloseButtonPushed" />
 		</StateImagery>
 	</Properties>
-	<Children />
+	<Children /> 
 	<Events>
         <On_Clicked>this.parent.visible = false</On_Clicked>
     </Events>

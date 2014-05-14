@@ -3,9 +3,11 @@
 #include <guilib/guilib.h>
 #include "base_application.h"
 //#include <boost/timer.hpp>
+#include <efsw/efsw.hpp>
+#include <iostream>
 
 
-class ui_test_application : public BaseApplication
+class ui_test_application : public BaseApplication, public efsw::FileWatchListener
 {
 public:
 	ui_test_application(int w, int h, const char* title);
@@ -43,6 +45,20 @@ protected:
 	void update();
 	void render();
 
+	std::string getActionName(efsw::Action action)
+	{
+		switch (action)
+		{
+		case efsw::Actions::Add:		return "Add";
+		case efsw::Actions::Modified:	return "Modified";
+		case efsw::Actions::Delete:		return "Delete";
+		case efsw::Actions::Moved:		return "Moved";
+		default:						return "Bad Action";
+		}
+	}
+
+	void handleFileAction(efsw::WatchID watchid, const std::string& dir, const std::string& filename, efsw::Action action, std::string oldFilename = "");
+
 protected:
 	std::string m_filename;
 
@@ -56,5 +72,8 @@ protected:
 	double m_elapsed;
 
 	int mouse_x, mouse_y;
+	efsw::FileWatcher m_fileWatcher;
+	efsw::WatchID m_watchID;
+	bool m_needReload;
 	//gui::FontPtr m_font;
 };

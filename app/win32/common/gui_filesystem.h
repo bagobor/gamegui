@@ -62,6 +62,8 @@ public:
 		return out;
 	}
 
+	const std::string& root() { return m_basedir; }
+
 protected:
 	std::string m_basedir;
 };
