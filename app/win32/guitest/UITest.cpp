@@ -84,16 +84,6 @@ ui_test_application::ui_test_application(int w, int h, const char* title)
 	, m_elapsed(0)
 	, m_active(true)
 {
-	//wchar_t buf[512];
-	//GetModuleFileNameW(NULL, &buf[0], 512);
-
-	//std::filesystem::wpath p(buf);
-	//p = p.branch_path().string() + L"/../data/";
-	//p.normalize();
-	//p += L"/../data/";
-	//std::wstring path = L"/../data/"; //p.branch_path().string();
-	//SetCurrentDirectoryW(L"../");
-
 	using namespace std::placeholders;
 	env.render_cb = std::bind(&ui_test_application::render, this);
 	env.update_cb = std::bind(&ui_test_application::update, this);
@@ -112,18 +102,6 @@ void ui_test_application::run()
 {	
 	createGUISystem();
 	BaseApplication::run();
-
-	//m_timer.restart();
-
-	//while( is_created() )
-	//{
-	//	if( !do_events() && m_active)
-	//	{
-	//		m_elapsed = m_timer.elapsed();
-			//update((float)m_elapsed);
-			//render();
-	//	}
-	//}
 }
 
 void ui_test_application::createGUISystem()
@@ -131,7 +109,6 @@ void ui_test_application::createGUISystem()
 	filesystem_ptr fs(new gui_filesystem("/data/"));
 
 	m_render_device = std::make_shared<gui::ogl_platform::RenderDeviceGL>(fs, 1024);
-
 	m_render = std::make_shared<gui::Renderer>(*m_render_device, fs);
 
 	if(m_system)
@@ -144,7 +121,6 @@ void ui_test_application::createGUISystem()
 		//::ShowCursor(FALSE);
 		Cursor& cursor = m_system->getCursor();
 		cursor.setType("CursorNormal");
-
 		//m_font = m_system->getWindowManager().loadFont("exotibi");
 	}
 }
@@ -165,25 +141,11 @@ void ui_test_application::update()
 	{
 		m_system->tick(env.dt);
 		m_system->draw();
-	}
-	
+	}	
 }
-
-//bool ui_test_application::do_events()
-//{
-//	MSG msg = {0};
-//	if( PeekMessage( &msg, NULL, 0U, 0U, PM_REMOVE ) )
-//	{
-//		TranslateMessage( &msg );
-//		DispatchMessage( &msg );
-//		return true;
-//	}
-//	return false;
-//}
 
 void ui_test_application::render()
 {
-	int i = 5;
 	//m_render_device->frame_begin();
 	//m_render_device.clear(rgde::math::color::Black);
 

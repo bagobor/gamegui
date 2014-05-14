@@ -35,7 +35,7 @@ Renderer::Renderer(RenderDevice& render_device, filesystem_ptr fs) :
 	m_maxTextureSize(4096),
 	m_originalsize(1.f, 1.f),
 	m_texmanager(*this),
-	m_autoScale(true),
+	m_autoScale(false),
 	m_num_quads(0),
 	m_num_batches(0),
 	m_currentCapturing(0),

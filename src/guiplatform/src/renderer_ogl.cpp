@@ -13,7 +13,9 @@
 #include "render_gl.h"
 
 // fine tune :)
-#define PixelAligned(x)	( ( (float)(int)(( x ) + (( x ) > 0.0f ? 0.5f : -0.5f)) ) - 0.5f )
+//#define PixelAligned(x)	( ( (float)(int)(( x ) + (( x ) > 0.0f ? 0.5f : -0.5f)) ) - 0.5f )
+
+#define PixelAligned(x)	((float)((int)( x )))
 
 
 
@@ -39,10 +41,10 @@ const char* vertex_shader_src =
 "    gl_Position = vec4(\n"
 //"		a_position.x,\n"
 //"		a_position.y,\n"
-"		a_position.x / v_viewportSize.x,\n"
-"		a_position.y / v_viewportSize.y,\n"
-//"		(2.0f * a_position.x / v_viewportSize.x) - 1.0f,\n"
-//"		1.0f - (2.0f * a_position.y / v_viewportSize.y),\n"
+// "		a_position.x / v_viewportSize.x,\n"
+//"		a_position.y / v_viewportSize.y,\n"
+"		(2.0f * a_position.x / v_viewportSize.x) - 1.0f,\n"
+"		1.0f - (2.0f * a_position.y / v_viewportSize.y),\n"
 "		0.5f,\n"
 "		1.0f\n"
 "	);\n"
@@ -65,8 +67,8 @@ const char* fragment_shader_src =
 "\n"
 "void main()\n"
 "{\n"
-"	gl_FragColor = v_fragmentColor;//  * texture2D(Texture0, v_texCoord);\n"
-"	gl_FragColor = vec4(1,1,1,1);//  * texture2D(Texture0, v_texCoord);\n"
+"	gl_FragColor = v_fragmentColor * texture2D(Texture0, v_texCoord);\n"
+//"	gl_FragColor = texture2D(Texture0, v_texCoord);\n"
 "}\n";
 
 
@@ -104,11 +106,12 @@ namespace gui
 			m_gl_handler(0)
 		{
 			glGenTextures(1, &m_gl_handler);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, m_gl_handler);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			glBindTexture(0, m_gl_handler);
 		}
 
 		TextureOGL::~TextureOGL() {
@@ -151,6 +154,8 @@ namespace gui
 			{
 				glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 			}
+
+			bind(0);
 
 			switch (format) {
 			//case Texture::PF_Default:
@@ -269,6 +274,17 @@ namespace gui
 				{
 					png_set_strip_16(png_ptr);
 				}
+
+				// Expanded earlier for grayscale, now take care of palette and rgb
+				if (m_nBitsPerComponent < 8) {
+					png_set_packing(png_ptr);
+				}
+				// update info
+				png_read_update_info(png_ptr, info_ptr);
+				m_nBitsPerComponent = png_get_bit_depth(png_ptr, info_ptr);
+				color_type = png_get_color_type(png_ptr, info_ptr);
+
+
 				// expand grayscale images to RGB
 				if (color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
 				{
@@ -281,8 +297,6 @@ namespace gui
 
 				//png_bytep* row_pointers = (png_bytep*)malloc( sizeof(png_bytep) * m_nHeight );
 				png_bytep* row_pointers = (png_bytep*)alloca(sizeof(png_bytep)* m_size.height);
-
-				png_read_update_info(png_ptr, info_ptr);
 				png_uint_32 rowbytes = png_get_rowbytes(png_ptr, info_ptr);
 
 				m_pData = new png_byte[rowbytes * m_size.height];
@@ -294,6 +308,12 @@ namespace gui
 				}
 				png_read_image(png_ptr, row_pointers);
 				png_read_end(png_ptr, NULL);
+
+				if (row_pointers != nullptr)
+				{
+					//free(row_pointers);
+				}
+
 				png_uint_32 channel = rowbytes / m_size.width;
 
 				bool m_bHasAlpha = (channel == 4);
@@ -419,7 +439,9 @@ namespace gui
 			: filesystem(fs)
 			//: Renderer(fs)
 		{
-			viewport.x = viewport.y = viewport.w = viewport.h = 0;
+			viewport.x = viewport.y = 0;
+			viewport.w = 1024;
+			viewport.h = 768;
 
 			init_gl();
 			
@@ -519,6 +541,8 @@ namespace gui
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glEnable(GL_DEPTH_TEST);
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+
 	
 			//view_port viewPortDesc;
 			//m_device.get_viewport(viewPortDesc);
@@ -615,7 +639,7 @@ namespace gui
 
 		void RenderDeviceGL::render(const Batches& _batches, const Quads& _quads, size_t num_batches, Size scale)
 		{
-			
+			GLenum err = glGetError();
 			int i = 5;
 			if (!m_mesh) return;
 
@@ -631,6 +655,8 @@ namespace gui
 			//	scaleX = viewport.width / m_originalsize.width;
 			//	scaleY = viewport.height / m_originalsize.height;
 			//}
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 			static unsigned long s_quadOffset = 0;	// buffer offset in quads
 			
@@ -667,15 +693,20 @@ namespace gui
 					fill_vertex(*quad, buff, scaleX, scaleY);
 				}
 
+				err = glGetError();
+
 				TextureOGL* texture = (TextureOGL*)batch.texture;
 				m_shader->set("Texture0", texture);
+
+				err = glGetError();
+				
 
 				//m_buffer->unlock();
 				m_mesh->update_vb(sizeof(QuadVertex)* 4 * numQ, buffmem, true);
 
 				
 
-				m_shader->set("v_viewportSize", glm::vec2(1, 1));				
+				m_shader->set("v_viewportSize", glm::vec2(1024, 768));				
 
 				m_mesh->bind();
 
@@ -683,7 +714,7 @@ namespace gui
 				//gui::ogl_platform::texture* t = static_cast<gui::ogl_platform::texture*>(batch.texture);
 				//m_device.set_texture(t->get_platform_resource(), 0);
 
-				glDrawElements(GL_TRIANGLES, numQ*VERTEX_PER_QUAD, GL_UNSIGNED_SHORT, 0);
+				glDrawElements(GL_TRIANGLES, numQ*6, GL_UNSIGNED_SHORT, 0);
 
 				m_mesh->unbind();
 				
