@@ -57,7 +57,7 @@ System::~System(void)
 
 void System::reset()
 {
-	reset(false);
+	reset(true);
 }
 
 void System::reset(bool complete)
