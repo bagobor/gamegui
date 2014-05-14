@@ -8,14 +8,30 @@
       <Rect Texture="0" SrcLeft="52" SrcTop="27" SrcRight="82" SrcBottom="47" XPos="0" YPos="0" />
     </Image>
 
-    <Image Name="CloseButton" Width="16.0" Height="16.0" >
-      <Rect Texture="0" SrcLeft="5" SrcTop="5" SrcRight="21" SrcBottom="21" XPos="0" YPos="0" />
+    <Image Name="CheckboxChecked" Width="13.0" Height="13.0" >
+      <Rect Texture="0" SrcLeft="148" SrcTop="31" SrcRight="161" SrcBottom="44" XPos="0" YPos="0" />
     </Image>
-    <Image Name="CloseButtonHover" Width="16.0" Height="16.0" >
-      <Rect Texture="0" SrcLeft="5" SrcTop="24" SrcRight="21" SrcBottom="40" XPos="0" YPos="0" />
+
+    <Image Name="CheckboxUnchecked" Width="13.0" Height="13.0" >
+      <Rect Texture="0" SrcLeft="120" SrcTop="31" SrcRight="133" SrcBottom="44" XPos="0" YPos="0" />
     </Image>
-    <Image Name="CloseButtonPushed" Width="16.0" Height="16.0" >
-      <Rect Texture="0" SrcLeft="5" SrcTop="43" SrcRight="21" SrcBottom="59" XPos="0" YPos="0" />
+
+    <Image Name="CheckboxCheckedHovered" Width="13.0" Height="13.0" >
+      <Rect Texture="0" SrcLeft="134" SrcTop="31" SrcRight="147" SrcBottom="44" XPos="0" YPos="0" />
+    </Image>
+
+    <Image Name="CheckboxUncheckedHovered" Width="13.0" Height="13.0" >
+      <Rect Texture="0" SrcLeft="106" SrcTop="31" SrcRight="119" SrcBottom="44" XPos="0" YPos="0" />
+    </Image>        
+
+    <Image Name="CloseButton" Width="17.0" Height="17.0" >
+      <Rect Texture="0" SrcLeft="5" SrcTop="5" SrcRight="24" SrcBottom="23" XPos="0" YPos="0" />
+    </Image>
+    <Image Name="CloseButtonHover" Width="17.0" Height="17.0" >
+      <Rect Texture="0" SrcLeft="5" SrcTop="24" SrcRight="22" SrcBottom="43" XPos="0" YPos="0" />
+    </Image>
+    <Image Name="CloseButtonPushed" Width="17.0" Height="17.0" >
+      <Rect Texture="0" SrcLeft="5" SrcTop="43" SrcRight="22" SrcBottom="59" XPos="0" YPos="0" />
     </Image>
 
     <Image Name="TitlebarLeft" Width="5.0" Height="20.0" >
@@ -89,8 +105,8 @@
     <Image Name="EditFrameRight" Width="5.0" Height="31.0" >
       <Rect Texture="0" SrcLeft="72" SrcTop="56" SrcRight="77" SrcBottom="87" XPos="0" YPos="0" />
     </Image>
-    <Image Name="EditFrameMiddle" XPos="51.0" YPos="56.0" Width="23.0" Height="31.0" >
-      <Rect Texture="0" SrcLeft="51" SrcTop="56" SrcRight="100" SrcBottom="100" XPos="0" YPos="0" />
+    <Image Name="EditFrameMiddle" Width="22.0" Height="31.0" >
+      <Rect Texture="0" SrcLeft="51" SrcTop="56" SrcRight="73" SrcBottom="87" XPos="0" YPos="0" />
     </Image>
     <Image Name="EditBoxCarat" Width="3.0" Height="16.0" >
       <Rect Texture="0" SrcLeft="91" SrcTop="56" SrcRight="94" SrcBottom="72" XPos="0" YPos="0" />

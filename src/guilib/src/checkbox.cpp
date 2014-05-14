@@ -17,6 +17,10 @@ namespace gui
 		m_checked(false),
 		m_hovered(false)
 	{
+		m_imgUncheckedHovered = nullptr;
+		m_imgCheckedHovered = nullptr;
+		m_imgUnchecked = nullptr;
+		m_imgChecked = nullptr;
 	}
 
 	Checkbox::~Checkbox(void)
@@ -85,7 +89,9 @@ namespace gui
 	{
 		Renderer& r = m_system.getRenderer();
 
-		const Image* state = m_checked ? m_imgChecked : m_imgUnchecked;
+		const Image* states[] = { m_imgUnchecked, m_imgChecked, m_imgUncheckedHovered, m_imgCheckedHovered };
+
+		const Image* state = states[(m_checked ? 1 : 0) + (m_hovered ? 2 : 0)];
 		float offset = 0.f;
 		if(state)
 		{
@@ -123,6 +129,15 @@ namespace gui
 				const Imageset& set = *m_imgset;
 				m_imgChecked = set[state("Checked")["Image"].value()];
 				m_imgUnchecked = set[state("Unchecked")["Image"].value()];
+				m_imgCheckedHovered = set[state("CheckedHovered")["Image"].value()];
+				if (!m_imgCheckedHovered) {
+					m_imgCheckedHovered = m_imgChecked;
+				}
+
+				m_imgUncheckedHovered = set[state("UncheckedHovered")["Image"].value()];
+				if (!m_imgUncheckedHovered) {
+					m_imgUncheckedHovered = m_imgUnchecked;
+				}
 			}
 		}
 	}

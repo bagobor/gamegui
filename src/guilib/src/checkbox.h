@@ -40,5 +40,7 @@ namespace gui
 		ImagesetPtr m_imgset;
 		const Image* m_imgUnchecked;
 		const Image* m_imgChecked;
+		const Image* m_imgUncheckedHovered;
+		const Image* m_imgCheckedHovered;
 	};
 }

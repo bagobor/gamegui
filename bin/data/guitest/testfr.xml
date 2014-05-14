@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
     <FrameWindow name="TestWindow" file="base\framewindow.xml" >
       <Properties>
-        <Area>0 0 256 128</Area>
+        <Area>0 0 256 178</Area>
         <Title>Caption</Title>
       </Properties>
       <Children>
         <Panel name="TestSubWindow" file="base\panel.xml" >
           <Properties>
-            <Area>10 20 236 104</Area>
+            <Area>10 20 236 184</Area>
           </Properties>
           <Children>
             <Editbox name="TestSubEditWindow" file="base\editbox.xml" >
@@ -19,7 +19,7 @@
             </Editbox>
             <Editbox name="TestSubEdit2Window" file="base\editbox.xml" >
               <Properties>
-                <Area>4 80 232 20</Area>
+                <Area>4 80 232 31</Area>
                 <MaxLength>1024</MaxLength>
                 <Text>Text2</Text>
               </Properties>
@@ -39,6 +39,12 @@
                 <On_Clicked>Hide()</On_Clicked>
               </Events>
             </Button>
+            <Checkbox name="checkTest" file="base\checkbox.xml">
+              <Properties>                
+                <Area>4 115 232 12</Area>
+                <Text>Hello world!</Text>
+              </Properties>
+            </Checkbox>
           </Children>
           <Events>
             <On_MouseButton>Test()</On_MouseButton>

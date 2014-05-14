@@ -1,0 +1,813 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"jo",
+				"job_model"
+			],
+			[
+				"resou",
+				"resources"
+			],
+			[
+				"pro",
+				"projects_layouts"
+			],
+			[
+				"tasks",
+				"task_layouts  (variable)"
+			],
+			[
+				"ass",
+				"assignees"
+			],
+			[
+				"tmpl",
+				"tmpl_name"
+			],
+			[
+				"user",
+				"userId"
+			],
+			[
+				"att",
+				"attributes"
+			],
+			[
+				"view",
+				"graphView"
+			],
+			[
+				"snap",
+				"snapped_pos"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "data/imageset/skin.imageset",
+			"settings":
+			{
+				"buffer_size": 5207,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "Packages/Python/Python.sublime-build",
+	"command_palette":
+	{
+		"height": 260.0,
+		"selected_items":
+		[
+			[
+				"tasks",
+				"Tasks: New document"
+			],
+			[
+				"gist",
+				"Package Control: Install Package"
+			],
+			[
+				"pa",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 522.0
+	},
+	"console":
+	{
+		"height": 212.0,
+		"history":
+		[
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/Denis/Downloads/shdr.js",
+		"/C/Users/Denis/dev/tms/client/web/sass/components/toolbar.scss",
+		"/C/Users/Denis/dev/tms/client/web/js/app/toolbars.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/task-overview.js",
+		"/C/Users/Denis/dev/tms/client/web/js/libs/tasym.tabcontrol.js",
+		"/C/Users/Denis/dev/tms/client/web/js/libs/tasym.toolbar.js",
+		"/C/Users/Denis/dev/tms/client/web/sass/tasym.scss",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/sidebar-statistics.js",
+		"/C/Users/Denis/dev/tms/server/code/routes/project.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/projects-list.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/content-generator.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/content-manager.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/formidable/test/standalone/test-content-transfer-encoding.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/mongoose/CONTRIBUTING.md",
+		"/C/Users/Denis/dev/tms/server/code/configs.json",
+		"/C/Users/Denis/dev/tms/client/native/credits.html",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/tasks-graph-item.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/tasks-graph.js",
+		"/C/Users/Denis/dev/tms/client/web/templates/tasks-grouper.html",
+		"/C/Users/Denis/dev/tms/client/web/templates/task-type.html",
+		"/C/Users/Denis/dev/tms/client/web/js/app/components-manager.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/collections/tasks.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/job-template-overview.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/task-type-overview.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/resources-roles.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/resources-people.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/collections/base.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/job-templates-list.js",
+		"/C/Users/Denis/dev/tms/server/code/app.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/socket.io-client/node_modules/ws/test/fixtures/agent1-key.pem",
+		"/C/Users/Denis/dev/tms/server/code/routes/task.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/less-middleware/node_modules/less/node_modules/source-map/test/source-map/test-array-set.js",
+		"/C/Users/Denis/dev/tms/server/tests/node_modules/request/tests/test-agentOptions.js",
+		"/C/Users/Denis/dev/tms/server/code/test.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/tasks.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/models/job.js",
+		"/C/Users/Denis/dev/tms/client/web/index.html",
+		"/C/Users/Denis/dev/tms/server/code/app_.js",
+		"/C/Users/Denis/dev/tms/info.todo",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/tasks-graph-helpers.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/graph-template-item.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/graph-templates.js",
+		"/C/Users/Denis/dev/tms/client/web/templates/graph-template-item.html",
+		"/C/Users/Denis/dev/tms/client/web/templates/graph-task-min.html",
+		"/C/Users/Denis/dev/tms/client/web/templates/graph-task.html",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/job-list.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/router.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/formage-admin/routes.js",
+		"/C/Users/Denis/dev/tms/client/web/js/libs/jquery.mcustomscrollbar.js",
+		"/C/Users/Denis/dev/tms/server/code/routes/job.js",
+		"/C/Users/Denis/dev/tms/server/code/routes/user.js",
+		"/C/Users/Denis/dev/tms/vitaly.log.mar14.json",
+		"/C/Users/Denis/dev/tms/eli.log.mar14.json",
+		"/C/Users/Denis/dev/tms/denis.log.feb14.json",
+		"/C/Users/Denis/dev/tms/denis.log.feb14.txt",
+		"/C/Users/Denis/dev/tms/denis.log.mar14.json",
+		"/C/Users/Denis/dev/tms/denis.log.mar14.txt",
+		"/C/Users/Denis/dev/tms/eli.log.feb14.json",
+		"/C/Users/Denis/dev/tms/vitaly.log.feb14.json",
+		"/C/Users/Denis/dev/tms/server/code/schemas.js",
+		"/C/Users/Denis/Desktop/custom-scrollbar-plugin/js/uncompressed/jquery.mCustomScrollbar.js",
+		"/C/Users/Denis/SkyDrive/structure.js",
+		"/C/Users/Denis/dev/tms/client/web/templates/project-item.html",
+		"/C/Users/Denis/dev/tms/client/web/templates/projects-man.html",
+		"/C/Users/Denis/dev/tms/client/web/.idea/inspectionProfiles/profiles_settings.xml",
+		"/C/Users/Denis/dev/tms/client/web/.idea/inspectionProfiles/Project_Default.xml",
+		"/C/Users/Denis/dev/tms/client/web/js/app/collections/projects.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/models/project.js",
+		"/C/Users/Denis/dev/tms/server/code/package.json",
+		"/C/Users/Denis/dev/tms/client/web/templates/dialog-project-create.html",
+		"/C/Users/Denis/dev/tms/client/web/js/libs/d3/src/geo/projection.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/projects-people.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/projects-man.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/project-item.js",
+		"/C/Users/Denis/dev/tms/client/web/admin-projects.html",
+		"/C/Users/Denis/dev/tms/client/web/templates/project-sidebar-params.html",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/mongoose/lib/drivers/node-mongodb-native/collection.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/socket.io-client/lib/vendor/web-socket-js/flash-src/com/hurlant/crypto/tls/TLSConnectionState.as",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/socket.io-client/lib/vendor/web-socket-js/flash-src/com/hurlant/crypto/tls/SSLConnectionState.as",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/socket.io-client/lib/vendor/web-socket-js/flash-src/com/hurlant/crypto/tls/IConnectionState.as",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/formidable/test/standalone/test-connection-aborted.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/mongoose/node_modules/mongodb/lib/mongodb/connection/connection_utils.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/mongoose/node_modules/mongodb/lib/mongodb/connection/connection_pool.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/connect-mongo/node_modules/mongodb/lib/mongodb/connection/connection_utils.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/connect-mongo/node_modules/mongodb/lib/mongodb/connection/connection_pool.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/mongoose/node_modules/mongodb/lib/mongodb/connection/connection.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/connect-mongo/node_modules/mongodb/lib/mongodb/connection/connection.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/mongoose/lib/drivers/node-mongodb-native/connection.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/mongoose/lib/connectionstate.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/collections/connections.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/connections-drawer.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/mongoose/lib/connection.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/models/connection.js",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/less-middleware/node_modules/node.extend/node_modules/is/component.json",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/jade/node_modules/transformers/node_modules/css/component.json",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/express/node_modules/connect/node_modules/qs/component.json",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/express/node_modules/connect/node_modules/bytes/component.json",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/stylus/node_modules/sax/component.json",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/socket.io-client/components/visionmedia-debug/component.json",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/socket.io-client/components/timoxley-to-array/component.json",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/socket.io-client/components/learnboost-socket.io-protocol/component.json",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/socket.io-client/components/learnboost-engine.io-client/component.json",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/socket.io-client/components/component-json-fallback/component.json",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/socket.io-client/components/component-json/component.json",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/socket.io-client/components/component-emitter/component.json",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/socket.io-client/components/component-bind/component.json",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/mongoose/node_modules/sliced/component.json",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/jade/component.json",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/node-sass/libsass/color_names.hpp",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/express/node_modules/connect/lib/middleware/cookieParser.js",
+		"/C/Users/Denis/dev/tms/client/web/upload/index.html",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/less-middleware/node_modules/less/test/less/errors/import-no-semi.less",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/node-sass/libsass/configure",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/node-sass/libsass/context.cpp",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/task-types.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/task-uploads.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/tasks-item.js",
+		"/C/Users/Denis/dev/tms/client/web/js/app/views/task-type-item.js",
+		"/C/Users/Denis/dev/tms/client/web/stylesheets/tasym.css",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/formage-admin/public/ckeditor/contents.css",
+		"/C/Users/Denis/dev/tms/client/web/js/libs/d3/src/geo/conic-equidistant.js",
+		"/C/Users/Denis/dev/tms/client/web/stylesheets/codemirror.css",
+		"/C/Users/Denis/dev/tms/client/web/chart-master.html",
+		"/C/Users/Denis/dev/tms/client/web/templates/results-outport.html",
+		"/C/Users/Denis/dev/tms/server/code/node_modules/less-middleware/node_modules/less/test/less/errors/multiple-guards-on-css-selectors.less",
+		"/C/Users/Denis/dev/tms/client/web/templates/message-item-change.html",
+		"/C/Users/Denis/dev/tms/client/web/.idea/misc.xml",
+		"/C/Users/Denis/dev/gd2-dev/GoblinDefenders/Resources/Xml/screens.xml"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 92.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"this.$leftSidebarAssignees.delegate",
+			"this.$leftSidebarAssignees.delegate('tr', 'click', function(e){",
+			"SidebarStatistics",
+			"this.sidebarTaskStatistic = new tasym.view.SidebarStatistics",
+			"getStatisticData",
+			"sidebarStatistics",
+			"SidebarStatistics",
+			"getStatisticData",
+			"isMyTasks",
+			"SidebarStatistics",
+			"getStatisticData",
+			"collectStates",
+			"isMyTasks",
+			"getStatisticData",
+			"getCommitUrl",
+			"getCommitUrl: function(raw_commit_msg) {",
+			"getStatisticData",
+			"getCommitUrl",
+			"getCommitUrl: function(raw_commit_msg) {",
+			"Task type title",
+			"sidebarAssignees",
+			"initSidebar",
+			"getStatistics",
+			"uniqConnectionId",
+			"getUniqId",
+			"mode",
+			"hideSidebarLayouts",
+			"innerSidebars",
+			"startButton",
+			".mCSB_container",
+			"_getProjectsPeopleOptForTask",
+			"peopleEditPanel",
+			"dataLeft",
+			"operating_mode",
+			"_validatedBeforeCreate",
+			"expandPeopleEditPanel",
+			"tryToRemoveTask",
+			"saveSelected",
+			"TasksGraph",
+			"selected",
+			"selection",
+			"tasks-graph.js",
+			"selected",
+			"saveSelected",
+			"enableEditMode",
+			"onSaveClicked",
+			"saveAllArray",
+			"_initPeopleEditView",
+			"_updatePeopleEditView",
+			"jobTemplate",
+			"getJobTemplateConnections",
+			"onTemplateDropped",
+			"cloneBlock",
+			"resetOutputsToVacant",
+			"drawConnection",
+			"renderConnection",
+			"createConnections",
+			"onGraphPeopleItemClick",
+			"renderTaskTypes",
+			"initUsersList",
+			"renderUsersList",
+			"sidebarContainerForAssigners",
+			"_getProjectsPeopleOptForProj",
+			"tryToStartJob",
+			"switchToolbar",
+			"expandTemplatePanel",
+			"createTemplate",
+			"_getSelectedTasks",
+			"peopleEdit",
+			"if (e.target.tagName !== 'INPUT'){",
+			"showContentTab",
+			"_scrollable_resize",
+			"_getTabsWithAccess",
+			"createLayouts",
+			"'tasymTabs'",
+			"_getTabsWithAccess",
+			"list-ports-tab",
+			"sidebar-project-list-tab",
+			"sys-sprite-graph-control-assign-icon",
+			"bell.svg",
+			"dashboard_layout",
+			"100006",
+			"10006",
+			"get",
+			"пуе",
+			"create",
+			"logout_fnc",
+			"\"actiontag\": 49271",
+			"\"actiontag\": 49271,",
+			"LabelBMFont_49272",
+			"\"name\": \"LabelBMFont_49272\",",
+			"                              \"name\": \"LabelBMFont_49272\",",
+			"\"tag\": 898,",
+			"registration",
+			"templateRender",
+			"projects-list",
+			"wrap",
+			"renderHeader",
+			"html",
+			"html :",
+			"html:",
+			"html",
+			"renderProjectsPeople",
+			"ProjectsPeople",
+			"saveUrl",
+			"projectsPeople",
+			"ProjectsPeople",
+			"sidebarsController",
+			"projectlist-sidebar-select",
+			"_addToAllModes",
+			"sidebarsController",
+			"startSelectedProject",
+			"switchToolbarToSelectedRowMode",
+			"projectlist-sidebar-select",
+			"setSidebarMode",
+			"sidebarParams",
+			"_addToAllModes",
+			"projectlist-sidebar-select",
+			" if(forShow) this._changeDisplayMode(forShow, 'show');",
+			".destroy",
+			"tasksGraphTasksCounter",
+			"initTemplates",
+			"GraphTemplates",
+			"_this.collection.remove(model.get('_id'));",
+			"itemOptions",
+			"itemProto",
+			"templatesList",
+			"GraphTemplates"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": false,
+		"use_buffer2": true,
+		"whole_word": true,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "data/imageset/skin.imageset",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5207,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								129,
+								129
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 245.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "gui.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": false,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"toolbars.",
+				"client\\web\\js\\app\\toolbars.js"
+			],
+			[
+				"tasym.to",
+				"client\\web\\js\\libs\\tasym.toolbar.js"
+			],
+			[
+				"content-",
+				"client\\web\\js\\app\\content-manager.js"
+			],
+			[
+				"task-gra",
+				"client\\web\\js\\app\\views\\tasks-graph.js"
+			],
+			[
+				"task.",
+				"client\\web\\js\\app\\models\\task.js"
+			],
+			[
+				"tasks",
+				"web\\js\\app\\views\\tasks.js"
+			],
+			[
+				"tasks-gra",
+				"web\\js\\app\\views\\tasks-graph-helpers.js"
+			],
+			[
+				"graph",
+				"web\\js\\app\\views\\tasks-graph.js"
+			],
+			[
+				"pro",
+				"code\\routes\\project.js"
+			],
+			[
+				"index",
+				"web\\index.html"
+			],
+			[
+				"config",
+				"code\\configs.json"
+			],
+			[
+				"app.js",
+				"code\\app.js"
+			],
+			[
+				"conte",
+				"web\\js\\app\\content-generator.js"
+			],
+			[
+				"task",
+				"web\\js\\app\\views\\tasks.js"
+			],
+			[
+				"conten",
+				"web\\js\\app\\content-manager.js"
+			],
+			[
+				"route",
+				"web\\js\\app\\router.js"
+			],
+			[
+				"mcus",
+				"web\\js\\libs\\jquery.mcustomscrollbar.js"
+			],
+			[
+				"tasym.ta",
+				"web\\js\\libs\\tasym.tabcontrol.js"
+			],
+			[
+				"job-list",
+				"web\\js\\app\\views\\job-list.js"
+			],
+			[
+				"depar",
+				"web\\js\\app\\collections\\departments.js"
+			],
+			[
+				"schema",
+				"code\\schemas.js"
+			],
+			[
+				"sch",
+				"code\\schemas.js"
+			],
+			[
+				"project",
+				"web\\js\\app\\models\\project.js"
+			],
+			[
+				"",
+				"web\\js\\app\\views\\job-list.js"
+			],
+			[
+				"common-li",
+				"web\\js\\app\\views\\common\\sidebar-list-item.js"
+			],
+			[
+				"projects-pe",
+				"web\\js\\app\\views\\projects-people.js"
+			],
+			[
+				"gra",
+				"web\\js\\app\\views\\graph-templates.js"
+			],
+			[
+				"graph-te",
+				"web\\js\\app\\views\\graph-templates.js"
+			],
+			[
+				"job-li",
+				"web\\js\\app\\views\\job-list.js"
+			],
+			[
+				"task-g",
+				"web\\js\\app\\views\\tasks-graph.js"
+			],
+			[
+				"graph-t",
+				"web\\templates\\graph-task.html"
+			],
+			[
+				"tasym.c",
+				"web\\stylesheets\\tasym.css"
+			],
+			[
+				"wave",
+				"Classes\\Wave.cpp"
+			],
+			[
+				"meshno",
+				"lime\\source\\scene\\MeshNode.cc"
+			],
+			[
+				"scenenode",
+				"lime\\source\\scene\\SceneNode.cc"
+			],
+			[
+				"scene",
+				"lime\\source\\scene\\SceneNode.cc"
+			],
+			[
+				"sce",
+				"lime\\include\\scene\\SceneNode.hh"
+			],
+			[
+				"scene.",
+				"lime\\source\\scene\\Scene.cc"
+			],
+			[
+				"sample_posteffects",
+				"media\\sample_posteffects.xml"
+			],
+			[
+				"app.",
+				"samples\\SampleAppFramework\\App.hh"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 102.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

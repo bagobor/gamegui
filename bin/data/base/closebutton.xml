@@ -3,10 +3,10 @@
 	<Properties>
 		<Visible>true</Visible> 
 		<TabStop>false</TabStop> 
-        <Size>16 16</Size>
+        <Size>17 17</Size>
 		<StateImagery Imageset="skin">
-			<State Type="Normal" Image="CloseButton" />
-			<State Type="Hovered" Image="CloseButtonHover" />
+			<State Type="Normal" Image="CloseButtonHover" />
+			<State Type="Hovered" Image="CloseButton" />
 			<State Type="Pushed" Image="CloseButtonPushed" />
 		</StateImagery>
 	</Properties>

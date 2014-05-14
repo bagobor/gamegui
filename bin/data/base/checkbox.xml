@@ -6,10 +6,12 @@
 		<Visible>true</Visible>
 		<Text></Text>
 		<TabStop>true</TabStop>
-        <Size>100 15</Size>
+        <Size>100 12</Size>
 		<StateImagery Imageset="skin">
 			<Checked Image="CheckboxChecked" />
 			<Unchecked Image="CheckboxUnchecked" />
+			<CheckedHovered Image="CheckboxCheckedHovered" />
+			<UncheckedHovered Image="CheckboxUncheckedHovered" />			
 		</StateImagery>
 	</Properties>
 	<Children />

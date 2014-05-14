@@ -170,7 +170,7 @@ namespace gui
 						}
 						rectnode = rectnode.next_sibling();
 					}
-					if(subImages.size())
+					if(!subImages.empty())
 					{
 						// TODO: optimize multiple copy
 						m_images.insert(std::make_pair(imgname, Image(this, imgname, Size(width, height), subImages)));
