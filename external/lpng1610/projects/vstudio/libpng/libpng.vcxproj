@@ -41,11 +41,15 @@
     <LinkIncremental>false</LinkIncremental>
     <CustomBuildBeforeTargets />
     <TargetName>$(ProjectName)16</TargetName>
+    <OutDir>$(SolutionDir)..\..\..\lib\win32\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\..\..\temp\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <CustomBuildBeforeTargets />
     <TargetName>$(ProjectName)16</TargetName>
+    <OutDir>$(SolutionDir)..\..\..\lib\win32\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\..\..\temp\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -119,10 +123,6 @@
     <ClCompile Include="..\..\..\pngrutil.c" />
     <ClCompile Include="..\..\..\pngset.c" />
     <ClCompile Include="..\..\..\pngtrans.c" />
-    <ClCompile Include="..\..\..\pngwio.c" />
-    <ClCompile Include="..\..\..\pngwrite.c" />
-    <ClCompile Include="..\..\..\pngwtran.c" />
-    <ClCompile Include="..\..\..\pngwutil.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

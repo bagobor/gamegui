@@ -299,6 +299,52 @@ bool ui_test_application::handleMouseButton(EventArgs::MouseButtons btn, EventAr
 	else
 		return false;
 }
+
+void ui_test_application::onMousebutton(int button, int action) {
+	if (!m_system || button > 2 || action > 1) return;
+	int gui_buttons_map[] = { gui::button_left, gui::button_right, gui::button_middle };
+	gui::event_type gui_actions_map[] = { gui::event_key_up, gui::event_key_down };
+
+	gui::event e = { 0 };
+	e.type = gui::event_mouse | gui::mouse_button;
+	e.type |= gui_actions_map[action];
+	e.mouse.button = gui_buttons_map[button];
+	m_system->handle_event(e);
+}
+
+void ui_test_application::onMousepos(int x, int y) {
+	mouse_x = x;
+	mouse_y = y;
+	if (!m_system) return;
+
+	gui::event e = {0};
+	e.type = gui::event_mouse | gui::mouse_move;
+	e.mouse.x = mouse_x;
+	e.mouse.y = mouse_y;
+	m_system->handle_event(e);
+}
+
+void ui_test_application::onMousewheel(int delta) {
+	if (!m_system) return;
+	gui::event e = {0};
+	e.type = gui::event_mouse | gui::mouse_wheel;
+	e.mouse.delta = delta;
+	m_system->handle_event(e);
+}
+
+void ui_test_application::onKey(int key, int action) {
+	if (!m_filename.empty() && key == 294 && action == 1)
+	{
+		resetGUISystem();
+		return;
+	}
+
+	if (!m_system) return;
+}
+
+void ui_test_application::onChar(int character, int action) {
+	if (!m_system) return;
+}
 //
 //bool ui_test_application::handleKeyboard(UINT_PTR key, EventArgs::ButtonState state)
 //{

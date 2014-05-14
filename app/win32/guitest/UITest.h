@@ -30,6 +30,12 @@ public:
 
 	void load(const std::string& xml);
 
+	// from BaseApplication
+	void onMousebutton(int button, int action);
+	void onMousepos(int x, int y);
+	void onMousewheel(int delta);
+	void onKey(int key, int action);
+	void onChar(int character, int action);
 
 protected:
 	void reinit();
@@ -48,5 +54,7 @@ protected:
 
 	bool m_active;
 	double m_elapsed;
+
+	int mouse_x, mouse_y;
 	//gui::FontPtr m_font;
 };
