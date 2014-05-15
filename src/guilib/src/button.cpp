@@ -213,10 +213,12 @@ ImageButton::~ImageButton(void)
 
 void ImageButton::render(const Rect& finalRect, const Rect& finalClip)
 {
-	States st; 
-	if(m_pushed) st = Pushed;
-	else if(m_hovered || m_focus) st = Hovered;
-	else st = Normal;
+	States st = Normal;
+
+	if(m_pushed) 
+		st = Pushed;
+	else if(m_hovered || m_focus) 
+		st = Hovered;
 	
 	const Image* i = m_stateimg[st];
 	if(i)
@@ -224,6 +226,8 @@ void ImageButton::render(const Rect& finalRect, const Rect& finalClip)
 		Renderer& r = m_system.getRenderer();
 		r.draw(*i, finalRect, 1.f, finalClip,  m_backColor, Stretch, Stretch);
 	}
+
+	Label::render(finalRect, finalClip);
 }
 
 void ImageButton::init(xml::node& node)

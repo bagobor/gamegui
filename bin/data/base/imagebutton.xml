@@ -3,6 +3,10 @@
 	<Properties>
 		<Visible>true</Visible>
 		<TabStop>true</TabStop>
+    <Text></Text>
+    <Spacing>1.0</Spacing>
+    <Font>Default</Font>
+    <Formatting>Centred</Formatting>    
 		<StateImagery Imageset="skin">
 			<State Type="Normal" Image="CloseButton" />
 			<State Type="Hovered" Image="CloseButtonHover" />

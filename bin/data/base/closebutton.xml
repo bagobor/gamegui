@@ -1,9 +1,13 @@
 <?xml version="1.0" ?>
 <ImageButton name ="" file="" > 
 	<Properties>
-		<Visible>true</Visible> 
+		<Visible>true</Visible>
+    <Text></Text>
 		<TabStop>false</TabStop> 
-        <Size>17 17</Size>
+    <Size>17 17</Size>
+    <Spacing>1.0</Spacing>
+    <Font>Default</Font>
+    <Formatting>Centred</Formatting>    
 		<StateImagery Imageset="skin">
 			<State Type="Normal" Image="CloseButtonHover" />
 			<State Type="Hovered" Image="CloseButton" />

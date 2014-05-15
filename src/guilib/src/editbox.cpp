@@ -404,7 +404,8 @@ namespace gui
 				Rect selrect(dest);
 				selrect.m_left += starts;
 				selrect.m_right = dest.m_left + stops;
-				selrect.setHeight(imgSize.height);
+				//selrect.setHeight(imgSize.height);
+				selrect.setHeight(clip.getHeight());
 				
 				r.draw(*m_selectImg, selrect, 1.f, finalClip,  m_backColor, Tile, Stretch);
 			}
@@ -431,7 +432,12 @@ namespace gui
 			Rect caretrect(dest);
 			caretrect.m_left += x;
 			caretrect.setSize(imgSize);
-			caretrect.offset(point(0.f, 2.f));
+			//caretrect.offset(point(0.f, 2.f));
+
+			float height = m_font->getLineSpacing();
+			float offset = (clip.getHeight() - caretrect.getHeight()) / 2;
+			caretrect.offset(point(0.f, offset));
+
 			r.draw(*m_caretImg, caretrect, 1.f, finalClip,  m_backColor, Stretch, Stretch);
 		}
 	}
