@@ -4,8 +4,6 @@ _ReSharper*
 *.opensdf
 *.sdf
 *.dir
-*.vcxproj*
-*.sln
 Win32
 Debug
 Release
@@ -21,7 +19,6 @@ cmake_uninstall.cmake
 docs/Doxyfile
 docs/html
 docs/warnings.txt
-src/config.h
 src/glfw3.pc
 src/glfwConfig.cmake
 src/glfwConfigVersion.cmake
