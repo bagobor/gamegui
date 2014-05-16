@@ -125,55 +125,51 @@ namespace gui
 					std::string imgname = imgnode["Name"].value();
 					float width = imgnode["Width"].as_float();
 					float height = imgnode["Height"].as_float();
+					bool isAdditiveBlend = imgnode["additive"].as_bool();
 
 					Image::SubImages subImages;
 
 					xml::node rectnode = imgnode.first_child();
 					while(!rectnode.empty())
 					{
-						if(std::string(rectnode.name()) == "Rect")
-						{
-							std::string texname = rectnode["Texture"].value();
-							TextureOrdinals::iterator it = textureOrdinals.find(texname);
-							if(it != textureOrdinals.end())
-							{
-								SubImage sub;
-								sub.m_ordinal = it->second;
-
-								float left = rectnode["SrcLeft"].as_float();
-								float top = rectnode["SrcTop"].as_float();
-								float right = rectnode["SrcRight"].as_float();
-								float bottom = rectnode["SrcBottom"].as_float();
-
-								sub.m_src = Rect(left, top, right, bottom);
-
-								float y = rectnode["YPos"].as_float();
-								float x = rectnode["XPos"].as_float();
-								sub.m_offset = point(x, y);
-
-								if(!rectnode["CropLeft"].empty())
-								{
-									float cropx = rectnode["CropLeft"].as_float();
-									float cropy = rectnode["CropTop"].as_float();
-									float w = rectnode["OrigWidth"].as_float();
-									float h = rectnode["OrigHeight"].as_float();
-									sub.m_crop = Rect(point(cropx, cropy), Size(w, h));
-								}
-								subImages.push_back(sub);
-							}
-							else
-							{
-								sys.logEvent(log::warning, std::string("The imageset ")
-									+ name + " can't find texture '" + texname + "' for the image '"
-									+ imgname + "'.");
-							}
+						if (std::string(rectnode.name()) != "Rect") continue;
+						
+						std::string texname = rectnode["Texture"].value();
+						TextureOrdinals::iterator it = textureOrdinals.find(texname);
+						if (it == textureOrdinals.end()) {
+							sys.logEvent(log::warning, std::string("The imageset ")
+								+ name + " can't find texture '" + texname + "' for the image '"
+								+ imgname + "'.");
+							continue;
 						}
+
+						SubImage sub;
+						sub.m_ordinal = it->second;
+
+						sub.m_src.m_left = rectnode["SrcLeft"].as_float();
+						sub.m_src.m_top = rectnode["SrcTop"].as_float();
+						sub.m_src.m_right = rectnode["SrcRight"].as_float();
+						sub.m_src.m_bottom = rectnode["SrcBottom"].as_float();
+
+						sub.m_offset.x = rectnode["YPos"].as_float();
+						sub.m_offset.y = rectnode["XPos"].as_float();
+
+						if (!rectnode["CropLeft"].empty())
+						{
+							float cropx = rectnode["CropLeft"].as_float();
+							float cropy = rectnode["CropTop"].as_float();
+							float w = rectnode["OrigWidth"].as_float();
+							float h = rectnode["OrigHeight"].as_float();
+							sub.m_crop = Rect(point(cropx, cropy), Size(w, h));
+						}
+						subImages.push_back(sub);
+						
 						rectnode = rectnode.next_sibling();
 					}
 					if(!subImages.empty())
 					{
 						// TODO: optimize multiple copy
-						m_images.insert(std::make_pair(imgname, Image(this, imgname, Size(width, height), subImages)));
+						m_images.insert(std::make_pair(imgname, Image(this, imgname, Size(width, height), subImages, isAdditiveBlend)));
 					}
 					else
 					{

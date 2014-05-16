@@ -495,7 +495,8 @@ namespace gui
 			glDisable(GL_CULL_FACE);
 			glDepthMask(GL_FALSE);
 			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBlendFunc(GL_SRC_ALPHA, (isAdditive ? GL_ONE : GL_ONE_MINUS_SRC_ALPHA));
 			glEnable(GL_DEPTH_TEST);
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -577,7 +578,7 @@ namespace gui
 			//	scaleY = viewport.height / m_originalsize.height;
 			//}
 			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			
 
 			static unsigned long s_quadOffset = 0;	// buffer offset in quads			
 			
@@ -592,6 +593,8 @@ namespace gui
 				const BatchInfo& batch = batches[b];
 				if ( VERTEX_PER_QUAD * (batch.numQuads + s_quadOffset) >= VERTEXBUFFER_CAPACITY)
 					s_quadOffset = 0;
+
+				glBlendFunc(GL_SRC_ALPHA, (batch.isAdditiveBlend ? GL_ONE : GL_ONE_MINUS_SRC_ALPHA));
 
 				//buffmem = (QuadVertex*)m_buffer->lock
 				//	(
