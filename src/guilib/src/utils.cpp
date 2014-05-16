@@ -72,8 +72,8 @@ namespace gui
 
 	Size StringToSize(const std::string& str)
 	{
-		int w,h;
-		sscanf(str.c_str(), "%d %d", &w, &h);
+		float w,h;
+		sscanf(str.c_str(), "%f %f", &w, &h);
 		return Size((float)w, (float)h);
 	}
 

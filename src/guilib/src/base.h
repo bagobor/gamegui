@@ -20,29 +20,29 @@ std::list<std::basic_string<Ch> > tokenize(const std::basic_string<Ch>& delim, c
 	return out_tokens;
 }
 //-----------------------------------------------------------------
-class  RefCounted 
-{
-public:
-	RefCounted():m_refCount(0){}
-	virtual ~RefCounted(){}
-private: 
-	int	m_refCount;
-	friend void intrusive_ptr_add_ref(RefCounted*);
-	friend void intrusive_ptr_release(RefCounted*);
-};
-
-inline void intrusive_ptr_add_ref(RefCounted* p)
-{
-	++(p->m_refCount);
-}
-
-inline void intrusive_ptr_release(RefCounted* p)
-{
-	--(p->m_refCount);
-
-	if (p->m_refCount == 0)
-		delete p;
-}
+//class  RefCounted 
+//{
+//public:
+//	RefCounted():m_refCount(0){}
+//	virtual ~RefCounted(){}
+//private: 
+//	int	m_refCount;
+//	friend void intrusive_ptr_add_ref(RefCounted*);
+//	friend void intrusive_ptr_release(RefCounted*);
+//};
+//
+//inline void intrusive_ptr_add_ref(RefCounted* p)
+//{
+//	++(p->m_refCount);
+//}
+//
+//inline void intrusive_ptr_release(RefCounted* p)
+//{
+//	--(p->m_refCount);
+//
+//	if (p->m_refCount == 0)
+//		delete p;
+//}
 //-----------------------------------------------------------------
 class named_object
 {

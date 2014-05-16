@@ -71,14 +71,10 @@ const char* fragment_shader_src =
 //"	gl_FragColor = texture2D(Texture0, v_texCoord);\n"
 "}\n";
 
-
-
 namespace gui
 {
 	namespace ogl_platform
 	{
-
-
 		unsigned int bitsPerPixelForFormat(Texture::PixelFormat format)
 		{
 			switch (format) {
@@ -492,7 +488,7 @@ namespace gui
 		{
 		}
 
-		void RenderDeviceGL::renderImmediate(const QuadInfo& q)
+		void RenderDeviceGL::renderImmediate(const QuadInfo& q, Texture* texture, bool isAdditive)
 		{
 			//if (!m_buffer)
 			//	return;
@@ -509,7 +505,7 @@ namespace gui
 			{
 				glm::vec2 viewport_size(1024, 768);
 				m_shader->set("v_viewportSize", viewport_size);
-				m_shader->set("Texture0", (TextureOGL*)q.texture);
+				m_shader->set("Texture0", (TextureOGL*)texture);
 
 				QuadVertex buffmem[VERTEX_PER_QUAD];
 
@@ -564,6 +560,7 @@ namespace gui
 
 		void RenderDeviceGL::render(const Batches& _batches, const Quads& _quads, size_t num_batches, Size scale)
 		{
+			//todo: handle additive blend!
 			GLenum err = glGetError();
 			int i = 5;
 			if (!m_mesh) return;
@@ -582,8 +579,7 @@ namespace gui
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-			static unsigned long s_quadOffset = 0;	// buffer offset in quads
-			
+			static unsigned long s_quadOffset = 0;	// buffer offset in quads			
 			
 			static const unsigned int quad_size = VERTEX_PER_QUAD * sizeof(QuadVertex);
 

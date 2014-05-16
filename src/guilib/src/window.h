@@ -10,6 +10,8 @@
 #include "align.h"
 #include "renderer.h"
 
+#include <luabind/luabind.hpp>
+
 #if defined(_MSC_VER)
 #	pragma warning(push)
 #	pragma warning(disable : 4251)
@@ -36,7 +38,7 @@ namespace gui
 	class  base_window :
 		public named_object,
 		public TreeNode<base_window>,
-		public RefCounted,
+		//public RefCounted,
 		public ScriptObject,
 		public events::sender
 	{
@@ -101,6 +103,7 @@ namespace gui
 		bool isTabStop() const { return m_tabstop; }
 
 		bool hitTest(const point& pt);
+		bool isCursorInside() const;
 
 		bool isDragable() const { return m_dragable; }
 		void setDragable(bool drag) { m_dragable = drag;}
@@ -144,10 +147,10 @@ namespace gui
 		base_window* nextSibling();
 		base_window* prevSibling();
 
-		point transformToWndCoord(const point& global); // translate to parent coords!
+		point transformToWndCoord(const point& global) const; // translate to parent coords!
 		point transformToRootCoord(const point& local);
 
-		void subscribeNamedEvent(std::string name, base_window* sender, std::string script);
+		void subscribeNamedEvent(std::string name, base_window* sender, luabind::object script_callback);
 		void unsubscribeNamedEvent(std::string name, base_window* sender);
 		void sendNamedEvent(std::string name);
 		void onNamedEvent(events::NamedEvent& e);
@@ -166,7 +169,6 @@ namespace gui
 		virtual bool onGameEvent(const std::string& ev);
 
 		bool isChildrenOf(const base_window* wnd);
-
 		
 		void setAfterRenderCallback(AfterRenderCallbackFunc func)
 		{
@@ -174,7 +176,6 @@ namespace gui
 		}
 
 	protected:
-
 		void ExecuteScript(const std::string& env, const std::string& script);
 		void thisset();
 		base_window& operator=(const base_window&) { return *this; }
@@ -199,48 +200,29 @@ namespace gui
 		Color			m_foreColor;
 
 		size_t			m_userData;
-		
-		bool			m_alwaysOnTop;
 
+		bool			m_alwaysOnTop;
 		bool			m_focus;
 		bool			m_ignoreInputEvents;
 		bool			m_tabstop;
-
 		bool			m_dragable;
 		bool			m_acceptDrop;
-
 		bool			m_tooltip;
-
 		bool			m_unsubscribePending;
-
 		bool			m_customDraw;
 		bool			m_invalidated;
 
 		std::string		m_drawhandler;
-
 		System&			m_system;
 		AfterRenderCallbackFunc m_afterRenderCallback;
 
 		typedef std::pair<std::string, base_window*> NamedEventEntry;
 		//typedef std::unordered_map<NamedEventEntry, std::string> NamedEventsMap;
-		typedef std::map<NamedEventEntry, std::string> NamedEventsMap;
+		typedef std::map<NamedEventEntry, luabind::object> NamedEventsMap;
 		NamedEventsMap m_scriptevents;
 		
 		typedef std::unordered_map<std::string, std::string> HandlerMap;
 		HandlerMap		m_handlers;
-
-		struct topmost_{
-			bool operator()(node_ptr obj) 
-			{
-				return obj->getAlwaysOnTop();
-			}
-		};
-		struct ntopmost_{
-			bool operator()(node_ptr obj) 
-			{
-				return !obj->getAlwaysOnTop();
-			}
-		};
 	};
 
 	typedef std::shared_ptr<base_window> window_ptr;

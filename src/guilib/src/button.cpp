@@ -48,13 +48,13 @@ bool Button::onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState s
 			m_pushed = true;
 			invalidate();
 		}
-		else
+		else if (m_pushed)
 		{
 			m_system.queryCaptureInput(0);
 			m_pushed = false;
 			
-			point pt = transformToWndCoord(m_system.getCursor().getPosition());
-			if(m_area.isPointInRect(pt))
+			//point pt = transformToWndCoord(m_system.getCursor().getPosition());
+			if(isCursorInside())
 			{
 				MouseEventArgs m;
 				m.name = "On_Clicked";
@@ -182,12 +182,11 @@ void Button::init(xml::node& node)
 			while(!statenode.empty())
 			{
 				States st = getStateByString(statenode["Type"].value());
-				StateImagery s;
+				StateImagery &s = m_states[st];
 				s.backImg = set[statenode("Background")["Image"].value()];
 				s.leftImg = set[statenode("Left")["Image"].value()];
 				s.rightImg = set[statenode("Right")["Image"].value()];
-				
-				m_states[st] = s;
+
 				statenode = statenode.next_sibling();
 			}
 		}

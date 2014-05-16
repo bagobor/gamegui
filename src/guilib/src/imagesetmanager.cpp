@@ -257,19 +257,11 @@ namespace gui
 		return Stretch;
 	}
 
-	std::string ImageOpsToString(ImageOps op)
+	const std::string& ImageOpsToString(ImageOps op)
 	{
-		switch(op)
-		{
-		case Tile:
-			return "Tile";
-			break;
-		case Stretch:
-		default:
-			return "Stretch";
-			break;
-		}
-		return "Stretch";
+		if (op > Tile) op = Stretch;
+		static const std::string type_names[] = { "Stretch", "Tile" };
+		return type_names[op];
 	}
 
 }

@@ -4,7 +4,6 @@
 #include "Size.h"
 #include <memory>
 #include <unordered_map>
-//#include <boost/shared_ptr.hpp>
 
 namespace xml
 {

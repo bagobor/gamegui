@@ -232,6 +232,10 @@ window_ptr WindowManager::loadXml(const std::string& filename)
 	{
 		std::for_each(newWindows.rbegin(), newWindows.rend(), std::bind(&base_window::onLoad, _1));
 	}
+
+	if (w)
+		w->onLoad();
+
 	return w;
 }
 

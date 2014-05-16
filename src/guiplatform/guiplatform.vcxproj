@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\external;..;$(SolutionDir)..\..\..\external\gli-0.5.1.0;$(SolutionDir)..\..\..\external\glm-0.9.5.2;$(SolutionDir)..\..\..\external\lpng1610;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\external;..;$(SolutionDir)..\..\..\external\gli-0.5.1.0;$(SolutionDir)..\..\..\external\glm-0.9.5.2;$(SolutionDir)..\..\..\external\lpng1610;$(SolutionDir)../../../external/luabind;$(SolutionDir)../../../external/lua/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -71,7 +71,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\external;..;$(SolutionDir)..\..\..\external\gli-0.5.1.0;$(SolutionDir)..\..\..\external\glm-0.9.5.2;$(SolutionDir)..\..\..\external\lpng1610;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\..\external;..;$(SolutionDir)..\..\..\external\gli-0.5.1.0;$(SolutionDir)..\..\..\external\glm-0.9.5.2;$(SolutionDir)..\..\..\external\lpng1610;$(SolutionDir)../../../external/luabind;$(SolutionDir)../../../external/lua/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;GUI_KERNING_ENABLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
