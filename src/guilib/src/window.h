@@ -105,8 +105,8 @@ namespace gui
 		bool hitTest(const point& pt);
 		bool isCursorInside() const;
 
-		bool isDraggable() const { return m_dragable; }
-		void setDraggable(bool drag) { m_dragable = drag;}
+		bool isDraggable() const { return m_draggable; }
+		void setDraggable(bool drag) { m_draggable = drag;}
 		bool isAcceptDrop() const { return m_acceptDrop; }
 		void setAcceptDrop(bool drop) { m_acceptDrop = drop;}
 
