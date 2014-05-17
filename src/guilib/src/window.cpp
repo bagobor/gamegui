@@ -22,7 +22,7 @@ base_window::base_window(System& sys, const std::string& name) :
 	m_tabstop(false),
 	m_ignoreInputEvents(false),
 	m_alwaysOnTop(false),
-	m_dragable(false),
+	m_draggable(false),
 	m_acceptDrop(false),
 	m_customDraw(false),
 	m_tooltip(false),
@@ -509,11 +509,10 @@ bool base_window::onMoved(void)
 		Rect area(m_area);
 		area.offset(pr.getPosition());
 
-		m_alignmentRect = Rect(
-			area.m_left - pr.m_left,
-			area.m_top - pr.m_top,
-			pr.m_right - area.m_right,
-			pr.m_bottom - area.m_bottom);
+		m_alignmentRect.m_left = area.m_left - pr.m_left;
+		m_alignmentRect.m_top = area.m_top - pr.m_top;
+		m_alignmentRect.m_right = pr.m_right - area.m_right;
+		m_alignmentRect.m_bottom = pr.m_bottom - area.m_bottom;
 	}
 	invalidate();
 	EventArgs a;
@@ -601,10 +600,10 @@ void base_window::init(xml::node& node)
 	{
 		m_tabstop = StringToBool(setting.first_child().value());
 	}
-	setting = node("Dragable");
+	setting = node("Draggable");
 	if(!setting.empty())
 	{
-		m_dragable = StringToBool(setting.first_child().value());
+		m_draggable = StringToBool(setting.first_child().value());
 	}
 	setting = node("AcceptDrop");
 	if(!setting.empty())
@@ -641,32 +640,27 @@ void base_window::init(xml::node& node)
 
 void base_window::parseEventHandlers(xml::node& node)
 {
-	if(!node.empty())
+	if (node.empty()) return;
+
+	xml::node handler = node.first_child();
+	while(!handler.empty())
 	{
-		xml::node handler = node.first_child();
-		while(!handler.empty())
-		{
-			addScriptEventHandler(handler.name(), handler.first_child().value());
-			handler = handler.next_sibling();
-		}
+		addScriptEventHandler(handler.name(), handler.first_child().value());
+		handler = handler.next_sibling();
 	}
 }
 
 void base_window::addScriptEventHandler(std::string name, std::string handler)
 {
-	if(!name.empty() && !handler.empty())
-	{
-		m_handlers[name] = handler;
-	}
+	if (name.empty() || handler.empty()) return;
+	m_handlers[name] = handler;
 }
 
 void base_window::CallAfterRenderCallback(const Rect& dest, const Rect& clip)
 {
-	if (m_afterRenderCallback)
-	{
-		Renderer& r = m_system.getRenderer();
-		r.addCallback(m_afterRenderCallback, this, dest, clip);
-	}
+	if (!m_afterRenderCallback) return;
+	Renderer& r = m_system.getRenderer();
+	r.addCallback(m_afterRenderCallback, this, dest, clip);
 }
 
 void base_window::draw(const point& offset, const Rect& clip)
@@ -757,46 +751,35 @@ point base_window::transformToRootCoord(const point& local)
 
 base_window* base_window::nextSibling()
 {
-	if(m_parent)
-	{
-		children_list& list = m_parent->getChildren();
-		if(list.size() <= 1)
-			return this;
-		child_iter it = std::find_if(list.begin(), list.end(), seeker(this));
-		if(it == list.end())
-		{
-			assert(false && "Link to parent is invalid!");
-		}
-		return (++it != list.end()) ? (*it).get() : (*list.begin()).get();
-	}
-	else
-	{
+	if (!m_parent) return this;
+	
+	children_list& list = m_parent->getChildren();
+	if(list.size() <= 1)
 		return this;
+	child_iter it = std::find_if(list.begin(), list.end(), seeker(this));
+	if(it == list.end())
+	{
+		assert(false && "Link to parent is invalid!");
 	}
+	return (++it != list.end()) ? (*it).get() : (*list.begin()).get();
 }
 
 base_window* base_window::prevSibling()
 {
-	if(m_parent)
-	{
-		children_list& list = m_parent->getChildren();
-		if(list.size() <= 1)
-			return this;
-		child_iter it = std::find_if(list.begin(), list.end(), seeker(this));
-		if(it == list.end())
-		{
-			assert(false && "Link to parent is invalid!");
-		}
-		if(it == list.begin())
-			return (*list.rbegin()).get();
-		--it;
-		return (*it).get();
-	}
-	else
-	{
+	if (!m_parent) return this;
+	
+	children_list& list = m_parent->getChildren();
+	if(list.size() <= 1)
 		return this;
+	child_iter it = std::find_if(list.begin(), list.end(), seeker(this));
+	if(it == list.end())
+	{
+		assert(false && "Link to parent is invalid!");
 	}
-
+	if(it == list.begin())
+		return (*list.rbegin()).get();
+	--it;
+	return (*it).get();
 }
 
 void base_window::thisset()
@@ -811,15 +794,13 @@ void base_window::subscribeNamedEvent(std::string name, base_window* sender, lua
 	//luabind::call_function<void>(std::ref(script_callback));
 	//	return; //nothing to do!
 //http://stackoverflow.com/questions/11529883/callback-to-lua-member-function/11529955#11529955
-	if(!name.empty())
-	{
-		NamedEventEntry entry = std::make_pair(name, sender);		
-		m_scriptevents.insert(std::make_pair(entry, script_callback));
+	if (name.empty()) return;
 
-		// support for a script events
-		subscribe<events::NamedEvent, base_window> (&base_window::onNamedEvent, sender);
-		
-	}
+	NamedEventEntry entry = std::make_pair(name, sender);		
+	m_scriptevents.insert(std::make_pair(entry, script_callback));
+
+	// support for a script events
+	subscribe<events::NamedEvent, base_window> (&base_window::onNamedEvent, sender);
 }
 
 void base_window::unsubscribeNamedEvent(std::string name, base_window* sender)
@@ -848,14 +829,18 @@ void base_window::onNamedEvent(events::NamedEvent& e)
 {
 	NamedEventEntry entry = std::make_pair(e.m_name, e.m_sender);
 	NamedEventsMap::iterator it = m_scriptevents.find(entry);
-	if (it == m_scriptevents.end()) return;
+	if (it == m_scriptevents.end()) {
+		entry = std::make_pair(e.m_name, nullptr);
+		it = m_scriptevents.find(entry);
+		if (it == m_scriptevents.end()) return;
+	}
 	
 	luabind::object script_callback = it->second;
 	if (!script_callback) return;
 
 	EventArgs arg("On_ScriptEvent");
 	luabind::globals (m_system.getScriptSystem().LuaState())["eventArgs"] = &arg;
-	luabind::call_function<void>(std::ref(script_callback), arg.name);
+	luabind::call_function<void>(std::ref(script_callback), std::string(arg.name));
 	//ExecuteScript(arg.name, script);
 	luabind::globals (m_system.getScriptSystem().LuaState())["eventArgs"] = 0;			
 }

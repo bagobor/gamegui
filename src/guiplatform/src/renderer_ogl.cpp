@@ -595,6 +595,7 @@ namespace gui
 					s_quadOffset = 0;
 
 				glBlendFunc(GL_SRC_ALPHA, (batch.isAdditiveBlend ? GL_ONE : GL_ONE_MINUS_SRC_ALPHA));
+				//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
 				//buffmem = (QuadVertex*)m_buffer->lock
 				//	(

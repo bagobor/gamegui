@@ -105,8 +105,8 @@ namespace gui
 		bool hitTest(const point& pt);
 		bool isCursorInside() const;
 
-		bool isDragable() const { return m_dragable; }
-		void setDragable(bool drag) { m_dragable = drag;}
+		bool isDraggable() const { return m_dragable; }
+		void setDraggable(bool drag) { m_dragable = drag;}
 		bool isAcceptDrop() const { return m_acceptDrop; }
 		void setAcceptDrop(bool drop) { m_acceptDrop = drop;}
 
@@ -205,7 +205,7 @@ namespace gui
 		bool			m_focus;
 		bool			m_ignoreInputEvents;
 		bool			m_tabstop;
-		bool			m_dragable;
+		bool			m_draggable;
 		bool			m_acceptDrop;
 		bool			m_tooltip;
 		bool			m_unsubscribePending;

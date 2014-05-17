@@ -160,9 +160,8 @@ namespace gui
 			};
 		}
 
-		class listener	: private details::base_listener
+		struct listener	: private details::base_listener
 		{
-		public:
 			template <typename Event>
 			void subscribe( std::function<void(Event)> func, details::base_sender *sender=0 ) {
 				details::base_listener::subscribe<Event>(func,sender);
@@ -186,9 +185,8 @@ namespace gui
 			}
 		};
 
-		class sender: public listener, public details::base_sender
+		struct sender: public listener, public details::base_sender
 		{
-		public:
 			template<typename Event>
 			void send_event(const Event& event) {
 				base_send_event(event);

@@ -50,4 +50,31 @@
 			</Properties>
 		</FrameWindow>
 	</Children>
+    <Events>
+        <On_Load>
+           log:msg("Password mode is 555655");
+           this:send("MAINWINDOW: loaded!");
+
+           local function TEST()
+           		log:msg("TEST_EVENT TEST_EVENTTEST_EVENT TEST_EVENT");
+           		log:msg(this.type);
+           end
+
+           --this:subscribe('TEST_EVENT', nil, 'log:msg("ON TEST EVENT");');
+           --TODO: неправильно обрабатывается подобная отправка тк указатель THIS у listener отличный от THIS у base_window
+           --this:subscribe('TEST_EVENT', this, TEST); 
+           this:subscribe('TEST_EVENT', nil, TEST); 
+
+		   this:send("TEST_EVENT");
+		   this:startTick();
+        </On_Load>
+
+        <TEST_EVENT>
+        	log:msg("TEST_EVENT TEST_EVENTTEST_EVENT TEST_EVENT");
+        </TEST_EVENT>
+        <On_Tick>
+        	log:msg("ONLY ONCE :/");
+        	this:stopTick();
+        </On_Tick>
+    </Events>	
 </root>

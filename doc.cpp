@@ -26,7 +26,7 @@
 			Backcolor - фоновый цвет окна rgba "%f %f %f %f" (ref: Color)
 			Forecolor - основной цвет окна rgba "%f %f %f %f" (ref: Color)
 			TabStop - true/false/0/1 будет ли контрол получать фокус по клавише TAB (ref: Bool)
-			Dragable - true/false/0/1 можно ли контрол перетаскивать (ref: Bool)
+			Draggable - true/false/0/1 можно ли контрол перетаскивать (ref: Bool)
 			AcceptDrop - 
 			AlwaysOnTop
 			Tooltip -  true/false/0/1 показывать ли тултип (ref: Bool)

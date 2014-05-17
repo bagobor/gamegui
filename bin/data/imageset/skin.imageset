@@ -27,7 +27,7 @@
     <Image Name="CloseButton" Width="17.0" Height="17.0" >
       <Rect Texture="0" SrcLeft="5" SrcTop="5" SrcRight="22" SrcBottom="23" XPos="0" YPos="0" />
     </Image>
-    <Image Name="CloseButtonHover" Width="17.0" Height="17.0" additive="1">
+    <Image Name="CloseButtonHover" Width="17.0" Height="17.0" additive="0">
       <Rect Texture="0" SrcLeft="5" SrcTop="24" SrcRight="22" SrcBottom="43" XPos="0" YPos="0" />
     </Image>
     <Image Name="CloseButtonPushed" Width="17.0" Height="17.0" >
