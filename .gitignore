@@ -10,11 +10,13 @@
 
 /temp
 /build/temp
-
+/bin/win32
 /build/ipch
 /build/Debug
 /external/freetype/objs
+/lib
 
+*.log
 *.sbr
 *.tlog
 *.obj
@@ -27,6 +29,8 @@
 *.suo
 *.lib
 *.bsc
+*.zip
+*.rar
 Debug
 ipch
 *.ilk
