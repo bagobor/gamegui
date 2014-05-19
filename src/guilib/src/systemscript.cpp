@@ -225,7 +225,7 @@ void System::makeLuaBinding(void)
 			.def("setTextFormatting", &Label::setTextFormatting)
 			.def("getTextFormatting", &Label::getTextFormatting)
 			,
-			class_ <ImageBox, bases<base_window> >("StaticImage")
+			class_ <ImageBox, bases<base_window> >("ImageBox")
 			.property("imageset", &ImageBox::getImageset, &ImageBox::setImageset)
 			.def("setImageset", &ImageBox::setImageset)
 			.def("getImageset", &ImageBox::getImageset)

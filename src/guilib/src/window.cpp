@@ -14,7 +14,7 @@ namespace gui
 base_window::base_window(System& sys, const std::string& name) : 
 	named_object(name),
 	m_system(sys),
-	m_visible(false),
+	m_visible(true),
 	m_enabled(true),
 	m_area(0.f, 0.f, 1.f, 1.f),
 	m_userData(0),
