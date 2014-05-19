@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<FrameWindow name ="" file="" >
+	<Properties>
+		<Movable>0</Movable>
+		<Font>Default</Font>
+		<Visible>true</Visible>
+		<Formatting>Centred</Formatting>
+		<Title />
+		<Caption Imageset="skin">
+			<Left Image="TitlebarLeft" />
+			<Right Image="TitlebarRight" />
+			<Background Image="TitlebarMiddle" />
+		</Caption>
+		<FrameImagery Imageset="skin">
+			<Background Image="Background" />
+			<Top Image="FrameTop" />
+			<TopLeft Image="FrameTopLeft" />
+			<TopRight Image="FrameTopRight" />
+			<Left Image="FrameLeft" />
+			<Right Image="FrameRight" />
+			<BottomLeft Image="FrameBottomLeft" />
+			<BottomRight Image="FrameBottomRight" />
+			<Bottom Image="FrameBottom" />
+		</FrameImagery>
+	</Properties>
+	<Children>
+        <ImageButton name="Close" file="base\closebutton.xml">
+            <Properties>
+            	<Stick>top | right</Stick>
+				<StickRect>0 2 2 0</StickRect>
+                <Align>top | right</Align>
+            </Properties>
+        </ImageButton>
+        <ImageButton name="Lock" file="base\lockbutton.xml">
+            <Properties>
+                <Stick>top | left</Stick>
+				<StickRect>2 2 0 0</StickRect>
+                <Align>top | left</Align>
+            </Properties>
+        </ImageButton>
+    </Children>
+	<Events />
+</FrameWindow>

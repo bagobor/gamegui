@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<ImageButton name ="" file="" >
+	<Properties>
+		<Visible>true</Visible>
+		<TabStop>true</TabStop>
+		<StateImagery Imageset="skin_interface_main">
+			<State Type="Normal" Image="Button" />
+			<State Type="Hovered" Image="Button" />
+			<State Type="Pushed" Image="Button" />
+		</StateImagery>
+	</Properties>
+	<Children />
+	<Events />
+</ImageButton>
