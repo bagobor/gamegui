@@ -1,6 +1,16 @@
 #include "stdafx.h"
 
-#include "window.h"
+//#include "window.h"
+#include <guilib/guilib.h>
+#include "../common/gui_filesystem.h"
+extern "C"
+{
+#include <lstate.h>
+#include <lauxlib.h>
+#include <lua.h>	
+#include <lualib.h>
+}
+
 
 using namespace std;
 
@@ -92,22 +102,29 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR params, int )
 
 	int width = 1024;
 	int height = 768;
-	std::wstring res(params);
+	//std::wstring res(params);
 
-	if(!res.empty())
-	{
-		size_t delim = res.find_first_of(L" ");
-		if(delim != std::wstring::npos)
-		{
-			width = _wtoi(res.substr(0, delim).c_str());
-			height = _wtoi(res.substr(delim).c_str());
-		}
-	}
+	//if(!res.empty())
+	//{
+	//	size_t delim = res.find_first_of(L" ");
+	//	if(delim != std::wstring::npos)
+	//	{
+	//		width = _wtoi(res.substr(0, delim).c_str());
+	//		height = _wtoi(res.substr(delim).c_str());
+	//	}
+	//}
 
 	RedirectIOToConsole();
 
-	TestWindow test(100, 100, width, height, L"GUI Test");
-	test.run();
+	if (lua_State* state = luaL_newstate()) {
+		luaL_openlibs(state);
+
+
+		lua_close(state);
+	}
+
+	//TestWindow test(100, 100, width, height, L"GUI Test");
+	//test.run();
 
 	return 0;
 }

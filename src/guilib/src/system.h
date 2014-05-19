@@ -175,6 +175,7 @@ namespace gui
 		void setAutoScale(bool status);
 
 		void			executeScript(const std::string& filename);	
+		void			executeScript(const std::string& filename, base_window* wnd);
 		
 		base_window*		createWindow(base_window* parent, const std::string& name, const std::string& type_or_path);
 		base_window*		loadXml(base_window& parent, const std::string& filename);

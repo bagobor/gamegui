@@ -247,35 +247,31 @@ void WindowManager::loadLeafWindow(window_ptr wnd, const std::string& xml)
 	
 	XmlDocumentPtr pdoc = loadCachedXml(file);
 	if(pdoc)
-	{
-		loadLuaFile(xml);
+	{		
 		xml::node n = pdoc->first_child();
 		loadWindowProperties(wnd, n);
 		loadWindowEvents(wnd, n);
+		loadLuaFile(xml, wnd);
 	}
 }
 
 window_ptr WindowManager::createFromFile(const std::string& filename, WindowVector& newWindows)
 {
-	window_ptr root;
 	//std::string file = m_system.getRenderer().getResourcePath();
 	//file += filename;
-	std::string file = filename;
-	XmlDocumentPtr pdoc = loadCachedXml(file);
-	if(pdoc)
-	{
-		loadLuaFile(filename);
-		xml::node window = pdoc->first_child(); //find root
-		if(!window.empty() && isWindowNode(window))
-		{
-			root = createWindow(window_ptr(), window, newWindows);
-		}
-	}
-	else
+	XmlDocumentPtr pdoc = loadCachedXml(filename);
+	if (!pdoc)
 	{
 		m_system.logEvent(log::warning, std::string("The file ") + filename + " wasn't found or corrupted");
+		return window_ptr();
 	}
+	xml::node window = pdoc->first_child(); //find root
+	
+	if(window.empty() || !isWindowNode(window))
+		return window_ptr();
 
+	window_ptr root = createWindow(window_ptr(), window, newWindows);
+	loadLuaFile(filename, root);
 	return root;
 }
 
@@ -421,30 +417,41 @@ bool WindowManager::isWindowNode(xml::node& node) const
 	return false;
 }
 
+void WindowManager::loadLuaFile(const std::string& xmlfile, window_ptr wnd) {
+	if (xmlfile.empty()) return;
+
+	size_t delim = xmlfile.find_last_of(".");
+	std::string filename = delim != std::string::npos ? xmlfile.substr(0, delim) : xmlfile;
+
+	if (filename.empty()) return;
+	
+	filename += ".lua";
+	LuaFilesVector::iterator it = std::find(m_loadedLuaFiles.begin(), m_loadedLuaFiles.end(), filename);
+	//if (it != m_loadedLuaFiles.end()) return;
+
+	//m_loadedLuaFiles.push_back(filename);
+	//std::string file = m_system.getRenderer().getResourcePath();
+	//file += name;
+	m_system.executeScript(filename, wnd.get());
+}
+
 void WindowManager::loadLuaFile(const std::string& xmlfile)
 {
-	if(xmlfile.empty())
-		return;
-	size_t delim = xmlfile.find_last_of(".");
-	std::string name;
-	if(delim != std::string::npos)
-		name = xmlfile.substr(0, delim);
-	else
-		name = xmlfile;
+	if (xmlfile.empty()) return;
 
-	if(!name.empty())
-	{		
-		name += ".lua";
-		LuaFilesVector::iterator it = std::find(m_loadedLuaFiles.begin(), m_loadedLuaFiles.end(), name);
-		if(it == m_loadedLuaFiles.end())
-		{
-			m_loadedLuaFiles.push_back(name);
-			//std::string file = m_system.getRenderer().getResourcePath();
-			//file += name;
-			std::string file = name;
-			m_system.executeScript(file);
-		}
-	}
+	size_t delim = xmlfile.find_last_of(".");
+	std::string filename = delim != std::string::npos ? xmlfile.substr(0, delim) : xmlfile;
+
+	if (filename.empty()) return;
+
+	filename += ".lua";
+	LuaFilesVector::iterator it = std::find(m_loadedLuaFiles.begin(), m_loadedLuaFiles.end(), filename);
+	if (it != m_loadedLuaFiles.end()) return;
+
+	m_loadedLuaFiles.push_back(filename);
+	//std::string file = m_system.getRenderer().getResourcePath();
+	//file += name;
+	m_system.executeScript(filename);
 }
 
 void WindowManager::onLoaded(window_ptr wnd)

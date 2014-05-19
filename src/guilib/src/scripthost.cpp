@@ -86,18 +86,14 @@ lua_State* ScriptSystem::LuaState()
 
 bool ScriptSystem::ExecuteString(const std::string& script, ScriptObject* obj, const std::string& filename)
 {
-	bool retval = false;
-	if(obj)
-	{
-		m_thisStack.push(obj);
-		retval = ExecuteString(script, filename);
-		m_thisStack.pop(m_state);
-	}
-	else
-	{
+	if (!obj) {
 		m_error = "An empty object passed to the script. ";
+		return false;
 	}
-	return retval;
+	m_thisStack.push(obj);
+	bool retval = ExecuteString(script, filename);
+	m_thisStack.pop(m_state);
+	return retval;	
 }
 
 bool ScriptSystem::ExecuteString(const std::string& script, const std::string& filename)
@@ -138,6 +134,17 @@ bool ScriptSystem::Execute(const std::string& script, const std::string& filenam
 		return false;
 	}
 	return true;
+}
+
+bool ScriptSystem::ExecuteFile(const std::string& filename, ScriptObject* obj) {
+	const std::string& script = LoadFile(filename);
+	if (script.empty()) return true;
+
+	m_error = "The file '";
+	m_error += filename;
+	m_error += "' cannot be loaded. ";
+		
+	return ExecuteString(script, obj, filename);
 }
 
 bool ScriptSystem::ExecuteFile(const std::string& filename)

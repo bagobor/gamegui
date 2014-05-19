@@ -59,6 +59,7 @@ namespace gui
 		XmlDocumentPtr loadCachedXml(const std::string& name);
 		bool isWindowNode(xml::node& node) const;
 		void loadLuaFile(const std::string& xmlfile);
+		void loadLuaFile(const std::string& xmlfile, window_ptr wnd);
 		
 	protected:
 		WindowManager& operator=(const WindowManager&) { return *this; }

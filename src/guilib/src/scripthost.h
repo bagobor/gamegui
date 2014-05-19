@@ -34,6 +34,7 @@ namespace gui
 		bool ExecuteString(const std::string& script, ScriptObject* obj, const std::string& filename = "unknown event");
 		bool ExecuteString(const std::string& script, const std::string& filename = "mem buffer");
 		bool ExecuteFile(const std::string& filename);
+		bool ExecuteFile(const std::string& filename, ScriptObject* obj);
 
 		const std::string& GetLastError() { return m_error; }
 
