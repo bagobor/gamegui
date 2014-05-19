@@ -1,16 +1,42 @@
 #pragma once
 
 struct lua_State;
+
 namespace gui
 {
-	class  ScriptObject
-	{
-	protected:
-		~ScriptObject() {}
+	class ScriptSystem;
+
+	struct ScriptObjectBase {
+		ScriptObjectBase(ScriptSystem& script_system);
+
+		virtual ~ScriptObjectBase() {}
+
+		virtual void thisset() = 0;
+
+		void thisreset(lua_State* state);
+
+		inline ScriptSystem& getScriptSystem() { return m_script_system; }
 
 	protected:
-		virtual void thisset() = 0;
-		void thisreset(lua_State* state);
+		ScriptSystem& m_script_system;
+		lua_State* m_state;
+	};
+
+	template<class T>
+	class  ScriptObject : public ScriptObjectBase
+	{
+	protected:
+		ScriptObject(ScriptSystem& script_system)
+			: ScriptObjectBase(script_system) {
+		}
+
+		~ScriptObject() {}
+
+		void thisset() {
+			if (!m_state) return;
+			luabind::globals(m_state)["this"] = (T*)this;
+		}
+		
 		friend class ScriptStack;
 	};
 }

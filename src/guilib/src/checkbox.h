@@ -36,6 +36,7 @@ namespace gui
 	protected:
 		bool m_checked;
 		bool m_hovered;
+		bool m_pushed;
 
 		ImagesetPtr m_imgset;
 		const Image* m_imgUnchecked;

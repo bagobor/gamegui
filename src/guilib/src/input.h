@@ -194,7 +194,11 @@ public:
 		K_OEM_CLEAR  = 0xFE //Clear key
 	};
 
-	EventArgs() : handled(false) {}
+	EventArgs() : handled(false), name(nullptr) {}
+	EventArgs(const char* _name) : handled(false), name(_name)
+	{
+	}
+
 	virtual ~EventArgs() {}
 
 	const char* name;

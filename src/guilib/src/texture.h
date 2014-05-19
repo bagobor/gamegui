@@ -4,7 +4,7 @@
 
 namespace gui
 {
-	class RenderDevice;
+	struct RenderDevice;
 
 
 	class Texture

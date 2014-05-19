@@ -124,13 +124,14 @@ void Renderer::immediateDraw(const Image& img, const Rect& dest_rect, float z, c
 
 			tex_rect *= info.texture->getSize();
 
-			// queue a quad to be rendered
-			QuadInfo quad;
+			// queue a quad to be rendered			
 			Rect rc(final_rect);
 			rc.m_left += info.offset.x;
 			rc.m_top += info.offset.y;
+
+			QuadInfo quad;
 			fillQuad(quad, rc, tex_rect, z, info, colors);
-			m_render_device.renderImmediate(quad);
+			m_render_device.renderImmediate(quad, info.texture, info.isAdditiveBlend);
 		}
 	}
 }
@@ -296,7 +297,7 @@ void Renderer::drawFromCache(base_window* window)
 
 	assert(v.num <= v.m_vec.size());
 
-	QuadInfo* cached_quads = &v.m_vec.front();
+	CachedQuad* cached_quads = &v.m_vec.front();
 
 	if (m_num_quads + v.num >= m_quads.size())
 		m_quads.resize((m_num_quads + v.num) * 2);
@@ -306,14 +307,23 @@ void Renderer::drawFromCache(base_window* window)
 
 	for (std::size_t a = 0; a < v.num; ++a)
 	{
-		quads[m_num_quads] = cached_quads[a];
+		CachedQuad& cq = cached_quads[a];
+		quads[m_num_quads] = cq;
 
-		if (!m_num_quads || quads[m_num_quads - 1].texture != quads[m_num_quads].texture ||
-			m_needToAddCallback ||
-			(m_num_batches && (m_num_quads - batches[m_num_batches - 1].startQuad + 1)*VERTEX_PER_QUAD >= VERTEXBUFFER_CAPACITY))
+		const bool isFirstBatch = (m_num_batches == 0);
+
+		bool needNewBatch = isFirstBatch || m_needToAddCallback;
+
+		if (!isFirstBatch) {
+			needNewBatch |= ((m_num_quads - batches[m_num_batches - 1].startQuad + 1)*VERTEX_PER_QUAD >= VERTEXBUFFER_CAPACITY);
+			needNewBatch |= batches[m_num_batches - 1].texture != cq.texture;
+			needNewBatch |= batches[m_num_batches - 1].isAdditiveBlend != cq.isAdditiveBlend;
+		}
+
+		if (needNewBatch)
 		{
-			// terminate current batch if one:
-			if (m_num_batches)
+			// terminate current batch if any:
+			if (!isFirstBatch)
 			{
 				batches[m_num_batches - 1].numQuads = m_num_quads - batches[m_num_batches - 1].startQuad;
 				if (!m_needToAddCallback)
@@ -326,8 +336,9 @@ void Renderer::drawFromCache(base_window* window)
 			}
 
 			// start next batch:
-			batches[m_num_batches].texture = quads[m_num_quads].texture;
+			batches[m_num_batches].texture = cq.texture;
 			batches[m_num_batches].startQuad = m_num_quads;
+			batches[m_num_batches].isAdditiveBlend = cq.isAdditiveBlend;
 
 			++m_num_batches;
 		}
@@ -477,7 +488,6 @@ void Renderer::fillQuad(QuadInfo& quad, const Rect& rc, const Rect& uv, float z,
 
 	assert(img.texture);
 	quad.z				= z;
-	quad.texture		= img.texture;
 	quad.texPosition	= uv;
 	quad.topLeftCol		= colors.m_top_left.getARGB();
 	quad.topRightCol	= colors.m_top_right.getARGB();
@@ -509,7 +519,6 @@ void Renderer::addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec
 	quad.positions[3].y = p3.y;
 
 	quad.z = z;
-	quad.texture = img.texture;
 	quad.texPosition = tex_rect;
 	quad.topLeftCol = colors.m_top_left.getARGB();
 	quad.topRightCol = colors.m_top_right.getARGB();
@@ -519,7 +528,7 @@ void Renderer::addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec
 	// if not queering, render directly (as in, right now!)
 	if (!m_isQueueing)
 	{
-		m_render_device.renderImmediate(quad);
+		m_render_device.renderImmediate(quad, img.texture, img.isAdditiveBlend);
 		return;
 	}
 
@@ -535,11 +544,17 @@ void Renderer::addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec
 
 	BatchInfo* batches = &m_batches[0];
 
+	const bool isFirstBatch = m_num_quads == 0;
 
-	if (!m_num_quads || quads[m_num_quads - 1].texture != quad.texture ||
-		m_needToAddCallback ||
-		(m_num_batches && (m_num_quads - batches[m_num_batches - 1].startQuad + 1)*VERTEX_PER_QUAD >= VERTEXBUFFER_CAPACITY))
-	{
+	bool needNewBatch = isFirstBatch || m_needToAddCallback;
+
+	if (!isFirstBatch) {
+		needNewBatch |= ((m_num_quads - batches[m_num_batches - 1].startQuad + 1)*VERTEX_PER_QUAD >= VERTEXBUFFER_CAPACITY);
+		needNewBatch |= batches[m_num_batches - 1].texture != img.texture;
+		needNewBatch |= batches[m_num_batches - 1].isAdditiveBlend != img.isAdditiveBlend;
+	}
+
+	if (needNewBatch) {
 		// finalize prev batch if one
 		if (m_num_batches)
 		{
@@ -555,9 +570,10 @@ void Renderer::addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec
 		}
 
 		// start new batch
-		batches[m_num_batches].texture = quad.texture;
+		batches[m_num_batches].texture = img.texture;
 		batches[m_num_batches].startQuad = m_num_quads;
 		batches[m_num_batches].numQuads = 0;
+		batches[m_num_batches].isAdditiveBlend = img.isAdditiveBlend;
 
 		++m_num_batches;
 	}

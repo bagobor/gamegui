@@ -6,7 +6,7 @@ struct lua_State;
 
 namespace gui
 {
-	class  ScriptObject;
+	struct  ScriptObjectBase;
 	struct filesystem;
 	typedef std::shared_ptr<filesystem> filesystem_ptr;
 
@@ -15,10 +15,10 @@ namespace gui
 	public:
 		ScriptStack();
 		void clear();
-		void push(ScriptObject* obj);
+		void push(ScriptObjectBase* obj);
 		void pop(lua_State* state);
 	private:
-		std::vector<ScriptObject*> m_stack;
+		std::vector<ScriptObjectBase*> m_stack;
 	};
 
 	class  ScriptSystem
@@ -29,11 +29,12 @@ namespace gui
 		ScriptSystem(filesystem_ptr fs, lua_State* externalState = NULL);
 		~ScriptSystem();
 
-		lua_State* LuaState();
+		lua_State* getLuaState();
 
-		bool ExecuteString(const std::string& script, ScriptObject* obj, const std::string& filename = "unknown event");
+		bool ExecuteString(const std::string& script, ScriptObjectBase* obj, const std::string& filename = "unknown event");
 		bool ExecuteString(const std::string& script, const std::string& filename = "mem buffer");
 		bool ExecuteFile(const std::string& filename);
+		bool ExecuteFile(const std::string& filename, ScriptObjectBase* obj);
 
 		const std::string& GetLastError() { return m_error; }
 

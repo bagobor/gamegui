@@ -381,7 +381,7 @@ bool System::handleMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonSta
 				{
 					if(target != m_rootWindow.get() && target != m_captureWindow)
 					{
-						if(target->isDragable())
+						if(target->isDraggable())
 						{
 							if(state == EventArgs::Down)
 							{
@@ -661,6 +661,13 @@ base_window* System::getTargetWindow(const point& pt) const
 	return GetTargetWindow(pt, m_rootWindow->getChildren()).get();
 }
 
+void System::executeScript(const std::string& filename, base_window* wnd) {
+	if (!m_scriptSys.ExecuteFile(filename, wnd))
+	{
+		logEvent(log::error, std::string("Unable to execute Lua file: ") + m_scriptSys.GetLastError());
+	}
+}
+
 void System::executeScript(const std::string& filename)
 {
 	if(!m_scriptSys.ExecuteFile(filename))
@@ -773,7 +780,7 @@ bool System::startDrag(base_window* wnd, point offset)
 
 	m_dragContainer->rise();
 	DragContainer* dc = getDragContainer();
-	if(wnd->isDragable() && dc->startDrag(wnd, offset))
+	if(wnd->isDraggable() && dc->startDrag(wnd, offset))
 	{
 		point pt = m_cursor.getPosition() - offset;
 		dc->setPosition(pt);

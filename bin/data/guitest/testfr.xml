@@ -42,7 +42,7 @@
             <Checkbox name="checkTest" file="base\checkbox.xml">
               <Properties>                
                 <Area>4 115 232 12</Area>
-                <Text>Hello world!</Text>
+                <Text>Hello world2!</Text>
               </Properties>
             </Checkbox>
           </Children>
@@ -54,6 +54,9 @@
       <Events>
         <On_Load>
           log:msg("On load test")
+          log:msg(this:getName())
+          --On_Load(this);
+          local obj = TestFrame();--:OnLoad(self);
         </On_Load>
       </Events>
     </FrameWindow>

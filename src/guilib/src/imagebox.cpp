@@ -95,5 +95,4 @@ namespace gui
 			setImage(setting.first_child().value());
 		}
 	}
-
 }

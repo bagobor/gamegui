@@ -12,7 +12,7 @@
       <Rect Texture="0" SrcLeft="148" SrcTop="31" SrcRight="161" SrcBottom="44" XPos="0" YPos="0" />
     </Image>
 
-    <Image Name="CheckboxUnchecked" Width="13.0" Height="13.0" >
+    <Image Name="CheckboxUnchecked" Width="13.0" Height="13.0">
       <Rect Texture="0" SrcLeft="120" SrcTop="31" SrcRight="133" SrcBottom="44" XPos="0" YPos="0" />
     </Image>
 
@@ -25,13 +25,13 @@
     </Image>        
 
     <Image Name="CloseButton" Width="17.0" Height="17.0" >
-      <Rect Texture="0" SrcLeft="5" SrcTop="5" SrcRight="24" SrcBottom="23" XPos="0" YPos="0" />
+      <Rect Texture="0" SrcLeft="5" SrcTop="5" SrcRight="22" SrcBottom="23" XPos="0" YPos="0" />
     </Image>
-    <Image Name="CloseButtonHover" Width="17.0" Height="17.0" >
+    <Image Name="CloseButtonHover" Width="17.0" Height="17.0" additive="0">
       <Rect Texture="0" SrcLeft="5" SrcTop="24" SrcRight="22" SrcBottom="43" XPos="0" YPos="0" />
     </Image>
     <Image Name="CloseButtonPushed" Width="17.0" Height="17.0" >
-      <Rect Texture="0" SrcLeft="5" SrcTop="43" SrcRight="22" SrcBottom="59" XPos="0" YPos="0" />
+      <Rect Texture="0" SrcLeft="5" SrcTop="43" SrcRight="22" SrcBottom="62" XPos="0" YPos="0" />
     </Image>
 
     <Image Name="TitlebarLeft" Width="5.0" Height="20.0" >
