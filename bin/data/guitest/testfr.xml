@@ -36,18 +36,18 @@
                 <Text>Click me</Text>
               </Properties>
               <Events>
-                <On_Clicked>Hide()</On_Clicked>
+                <On_Clicked>--TestFrame.OnLoad(this);</On_Clicked>
               </Events>
             </Button>
             <Checkbox name="checkTest" file="base\checkbox.xml">
-              <Properties>                
+              <Properties>
                 <Area>4 115 232 12</Area>
                 <Text>Hello world2!</Text>
               </Properties>
             </Checkbox>
           </Children>
           <Events>
-            <On_MouseButton>Test()</On_MouseButton>
+            <On_MouseButton>--TestFrame.OnLoad(this);</On_MouseButton>
           </Events>
         </Panel>
       </Children>
@@ -56,7 +56,9 @@
           log:msg("On load test")
           log:msg(this:getName())
           --On_Load(this);
-          local obj = TestFrame();--:OnLoad(self);
+          --local obj = TestFrame();--:OnLoad(self);
+          --TestFrame.OnLoad(this);
+          --On_Load(this);
         </On_Load>
       </Events>
     </FrameWindow>

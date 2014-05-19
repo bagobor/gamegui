@@ -1,5 +1,5 @@
 #pragma once
-
+#include <luabind/luabind.hpp>
 struct lua_State;
 
 namespace gui
@@ -23,7 +23,7 @@ namespace gui
 	};
 
 	template<class T>
-	class  ScriptObject : public ScriptObjectBase
+	class  ScriptObject : public ScriptObjectBase//, public luabind::wrap_base
 	{
 	protected:
 		ScriptObject(ScriptSystem& script_system)
