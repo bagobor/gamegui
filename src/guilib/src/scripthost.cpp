@@ -15,12 +15,16 @@ extern "C"
 
 namespace gui
 {
+	ScriptObjectBase::ScriptObjectBase(ScriptSystem& script_system)
+		: m_script_system(script_system), m_state(script_system.getLuaState())  {
+	}
 
-void ScriptObject::thisreset(lua_State* state)
-{
-	if(state)
+	
+
+	void ScriptObjectBase::thisreset(lua_State* state) {
+		if (!state) return;
 		luabind::globals(state)["this"] = 0;
-}
+	}
 
 ScriptStack::ScriptStack()
 {
@@ -30,7 +34,7 @@ void ScriptStack::clear()
 {
 	m_stack.clear();
 }
-void ScriptStack::push(ScriptObject* obj)
+void ScriptStack::push(ScriptObjectBase* obj)
 {
 	assert(obj);
 	obj->thisset();
@@ -66,11 +70,11 @@ ScriptSystem::ScriptSystem(filesystem_ptr fs, lua_State* externalState)
 		}
 	}
 	assert(m_state);
-	using namespace luabind;
-	open(m_state);
-	module(m_state)
+	
+	luabind::open(m_state);
+	luabind::module(m_state)
 		[
-			class_<ScriptObject>("ScriptObject")
+			luabind::class_<ScriptObjectBase>("ScriptObject")
 		];
 }
 ScriptSystem::~ScriptSystem()
@@ -79,12 +83,12 @@ ScriptSystem::~ScriptSystem()
 		lua_close(m_state);
 }
 
-lua_State* ScriptSystem::LuaState()
+lua_State* ScriptSystem::getLuaState()
 {
 	return m_state;
 }
 
-bool ScriptSystem::ExecuteString(const std::string& script, ScriptObject* obj, const std::string& filename)
+bool ScriptSystem::ExecuteString(const std::string& script, ScriptObjectBase* obj, const std::string& filename)
 {
 	if (!obj) {
 		m_error = "An empty object passed to the script. ";
@@ -136,7 +140,7 @@ bool ScriptSystem::Execute(const std::string& script, const std::string& filenam
 	return true;
 }
 
-bool ScriptSystem::ExecuteFile(const std::string& filename, ScriptObject* obj) {
+bool ScriptSystem::ExecuteFile(const std::string& filename, ScriptObjectBase* obj) {
 	const std::string& script = LoadFile(filename);
 	if (script.empty()) return true;
 

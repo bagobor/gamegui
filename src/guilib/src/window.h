@@ -39,7 +39,7 @@ namespace gui
 		public named_object,
 		public TreeNode<base_window>,
 		//public RefCounted,
-		public ScriptObject,
+		public ScriptObject<base_window>,
 		public events::sender
 	{
 	public:
@@ -177,7 +177,6 @@ namespace gui
 
 	protected:
 		void ExecuteScript(const std::string& env, const std::string& script);
-		void thisset();
 		base_window& operator=(const base_window&) { return *this; }
 
 		void Align();

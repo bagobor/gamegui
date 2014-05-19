@@ -31,7 +31,7 @@ void System::makeLuaBinding(void)
 {
 	logEvent(log::system, "Making LUA bindings...");
 	using namespace luabind;
-	module (m_scriptSys.LuaState())
+	module(m_scriptSys.getLuaState())
 		[
 			class_ <System>("System")
 			.property("root", &System::getRootWindow)
@@ -136,7 +136,7 @@ void System::makeLuaBinding(void)
 			.def("getImageCount", &Imageset::ImagesCount)
 			.def("getImageByIdx", &Imageset::GetImageByIdx)
 			,
-			class_ <base_window, bases<ScriptObject> >("BaseWindow")
+			class_ <base_window, bases<ScriptObjectBase> >("BaseWindow")
 			.property("parent", (base_window* (base_window::*)() const)&base_window::getParentConst)
 			.property("name", &base_window::getName, &base_window::setName)
 			.property("area", &base_window::getArea, &base_window::setArea)
@@ -622,9 +622,9 @@ void System::makeLuaBinding(void)
 			def("to_bindargs", &event_caster<BinderEventArgs>::apply)
 		];
 
-	globals(m_scriptSys.LuaState())["gui"] = this;
-	globals(m_scriptSys.LuaState())["render"] = m_renderHelper.get();
-	globals(m_scriptSys.LuaState())["log"] = &m_logger;
+		globals(m_scriptSys.getLuaState())["gui"] = this;
+		globals(m_scriptSys.getLuaState())["render"] = m_renderHelper.get();
+		globals(m_scriptSys.getLuaState())["log"] = &m_logger;
 }
 
 }
