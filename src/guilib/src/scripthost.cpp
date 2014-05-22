@@ -23,6 +23,7 @@ namespace gui
 
 	void ScriptObjectBase::thisreset(lua_State* state) {
 		if (!state) return;
+		//m_localtable = luabind::globals(state)["this"];
 		luabind::globals(state)["this"] = 0;
 	}
 

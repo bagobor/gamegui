@@ -64,11 +64,6 @@ void System::reset(bool complete)
 {
 	m_render.cleanup(complete);
 	m_windowMgr->reset(complete);
-	
-	if (complete) {
-		m_scriptSys.reset();
-		makeLuaBinding();
-	}
 
 	logEvent(log::system, "Resetting window tree...");
 	m_tickedWnd.clear();
@@ -84,6 +79,16 @@ void System::reset(bool complete)
 	m_dragging = false;
 	m_dragfired = false;
 	m_dragfreeze = false;
+	
+	m_rootWindow.reset();
+	m_dragContainer.reset();
+	m_tooltipWindow.reset();
+	m_menuWindow.reset();
+
+	if (complete) {
+		m_scriptSys.reset();
+		makeLuaBinding();
+	}
 
 	m_rootWindow = std::make_shared<base_window>(*this, "systemroot");
 	if(!m_rootWindow)
@@ -117,6 +122,9 @@ void System::reset(bool complete)
 	m_rootWindow->add(m_tooltipWindow);
 	m_rootWindow->add(m_menuWindow);
 	m_rootWindow->setAcceptDrop(true);
+
+
+
 	
 	logEvent(log::system, "Gui subsystem is ready");
 }
