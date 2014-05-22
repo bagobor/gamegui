@@ -18,6 +18,8 @@ namespace gui
 		virtual const char* getType() { return Self::GetType(); }
 
 		void setFont(const std::string& font);
+		const std::string&	getFontName() const;
+
 		void setFont(FontPtr font) { m_font = font; }
 		
 		virtual void setText(const std::string& text);

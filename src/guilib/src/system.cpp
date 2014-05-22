@@ -65,6 +65,11 @@ void System::reset(bool complete)
 	m_render.cleanup(complete);
 	m_windowMgr->reset(complete);
 	
+	if (complete) {
+		m_scriptSys.reset();
+		makeLuaBinding();
+	}
+
 	logEvent(log::system, "Resetting window tree...");
 	m_tickedWnd.clear();
 	m_subscribeTickWnd.clear();

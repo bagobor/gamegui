@@ -79,6 +79,11 @@ namespace gui
 		invalidate();
 	}
 
+	const std::string&	Label::getFontName() const { 
+		static std::string empty_string;
+		return m_font ? m_font->getName() : empty_string;
+	}
+
 	void Label::init(xml::node& node)
 	{
 		base_window::init(node);

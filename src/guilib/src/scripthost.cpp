@@ -60,7 +60,16 @@ ScriptSystem::ScriptSystem(filesystem_ptr fs, lua_State* externalState)
 , m_ext(true)
 , m_filesystem(fs)
 {
-	if(!m_state)
+	reset(externalState);
+}
+
+void ScriptSystem::reset(lua_State* externalState) {
+	if (!m_ext && m_state)
+		lua_close(m_state);
+
+	m_state = externalState;
+
+	if (!m_state)
 	{
 		m_state = luaL_newstate();
 		m_ext = false;
@@ -70,13 +79,14 @@ ScriptSystem::ScriptSystem(filesystem_ptr fs, lua_State* externalState)
 		}
 	}
 	assert(m_state);
-	
+
 	luabind::open(m_state);
 	luabind::module(m_state)
 		[
 			luabind::class_<ScriptObjectBase>("ScriptObject")
 		];
 }
+
 ScriptSystem::~ScriptSystem()
 {
 	if(!m_ext)

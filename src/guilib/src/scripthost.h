@@ -29,6 +29,8 @@ namespace gui
 		ScriptSystem(filesystem_ptr fs, lua_State* externalState = NULL);
 		~ScriptSystem();
 
+		void reset(lua_State* externalState = nullptr);
+
 		lua_State* getLuaState();
 
 		bool ExecuteString(const std::string& script, ScriptObjectBase* obj, const std::string& filename = "unknown event");

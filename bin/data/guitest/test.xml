@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <root>	
-	<Children>
+<!-- 	<Children>
 		<FrameWindow name="TestWindow" file="guitest\testfr.xml" >
 			<Children>
 				<Panel name="TestSubWindow">
@@ -76,5 +76,5 @@
         	log:msg("ONLY ONCE :/");
         	this:stopTick();
         </On_Tick>
-    </Events>	
+    </Events>	 -->
 </root>

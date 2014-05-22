@@ -72,7 +72,7 @@
       <OutputFile>$(OutDir)$(ProjectName)_d.exe</OutputFile>
       <AdditionalLibraryDirectories>$(SolutionDir)..\..\..\external\win32\dxsdk\Lib\x86;$(SolutionDir)..\..\..\external\boost\lib\;$(SolutionDir)..\..\..\external\win32\rgde\Lib\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>

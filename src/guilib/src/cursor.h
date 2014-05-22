@@ -18,8 +18,8 @@ namespace gui
 		~Cursor();
 
 		void setImageset(ImagesetPtr set) { m_cursors = set; }
-		void setType(const std::string& curname);
-		std::string getType(void) const;
+		void setType(std::string curname);
+		std::string getType() const;
 		void render();
 
 		void setPosition(point pt);
