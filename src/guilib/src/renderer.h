@@ -52,7 +52,7 @@ struct QuadInfo
 	bool				isAdditiveBlend;
 
 	//todo: remove from quad structure
-	Texture*	texture;
+	//Texture*	texture;
 
 	__inline bool operator<(const QuadInfo& other) const
 	{
@@ -75,6 +75,7 @@ struct BatchInfo
 	std::size_t startQuad;
 	std::size_t numQuads;
 	//QuadInfo* quads;
+	bool isAdditiveBlend;
 
 	RenderCallbackInfo callbackInfo;
 };
@@ -93,7 +94,7 @@ struct RenderDevice {
 	virtual TexturePtr createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) = 0;
 	virtual TexturePtr createTexture(const std::string& filename) = 0;
 
-	virtual void renderImmediate(const QuadInfo& q) = 0;
+	virtual void renderImmediate(const QuadInfo& q, Texture* texture, bool isAdditive = false) = 0;
 	virtual void render(const Batches& batches, const Quads& quads, size_t num_batches, Size scale = Size(1.0f, 1.0f)) = 0;
 
 	const ViewPort& getViewport() const { return viewport; }
@@ -202,8 +203,8 @@ protected:
 		addQuad(p[0], p[1], p[2], p[3], tr, z, img, colours);
 	}
 	void addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec2& p3, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colours);
-	void renderQuadDirect(const QuadInfo& q) {
-		m_render_device.renderImmediate(q);
+	void renderQuadDirect(const QuadInfo& q, Texture* texture, bool isAdditive = false) {
+		m_render_device.renderImmediate(q, texture, isAdditive);
 	}
 
 	void fillQuad(QuadInfo& quad, const Rect& rc, const Rect& uv, float z, const RenderImageInfo& img, const ColorRect& colors);
@@ -242,13 +243,18 @@ protected:
 	float	m_current_z;
 
 	//LoggerCallback m_log_cb;
+	struct CachedQuad : public QuadInfo {
+		Texture* texture;
+		bool isAdditive;
+	};
 
-	typedef std::vector <QuadInfo> CachedQuadList;
+	typedef std::vector <CachedQuad> CachedQuadList;
 	struct QuadCacheRecord
 	{	
 		CachedQuadList m_vec;
 		std::size_t num;
 	};
+
 	typedef std::map <base_window*, QuadCacheRecord> QuadCacheMap;
 	QuadCacheMap m_mapQuadList;
 	QuadCacheRecord* m_currentCapturing;

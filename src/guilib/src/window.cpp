@@ -14,7 +14,7 @@ namespace gui
 base_window::base_window(System& sys, const std::string& name) : 
 	named_object(name),
 	m_system(sys),
-	m_visible(false),
+	m_visible(true),
 	m_enabled(true),
 	m_area(0.f, 0.f, 1.f, 1.f),
 	m_userData(0),
@@ -22,7 +22,7 @@ base_window::base_window(System& sys, const std::string& name) :
 	m_tabstop(false),
 	m_ignoreInputEvents(false),
 	m_alwaysOnTop(false),
-	m_dragable(false),
+	m_draggable(false),
 	m_acceptDrop(false),
 	m_customDraw(false),
 	m_tooltip(false),
@@ -33,7 +33,8 @@ base_window::base_window(System& sys, const std::string& name) :
 	m_stick(0),
 	m_stickRect(0.f, 0.f, 0.f, 0.f),
 	m_afterRenderCallback(nullptr),
-	m_suspended(false)
+	m_suspended(false),
+	ScriptObject<base_window>(sys.getScriptSystem())
 {
 	m_backColor = Color(1.f, 1.f, 1.f);
 	m_foreColor = Color(0.f, 0.f, 0.f);
@@ -71,6 +72,11 @@ void base_window::setSize(const Size& sz)
 		onSized();
 		send_event(events::SizedEvent());
 	}
+}
+
+bool base_window::isCursorInside() const {
+	point pt = transformToWndCoord(m_system.getCursor().getPosition());
+	return m_area.isPointInRect(pt);
 }
 
 void base_window::invalidate()	
@@ -131,6 +137,19 @@ namespace
 		}
 	};
 }
+
+struct topmost_{
+	bool operator()(base_window::node_ptr obj)
+	{
+		return obj->getAlwaysOnTop();
+	}
+};
+struct ntopmost_{
+	bool operator()(base_window::node_ptr obj)
+	{
+		return !obj->getAlwaysOnTop();
+	}
+};
 
 void base_window::moveToFront(base_window* child)
 {
@@ -197,20 +216,19 @@ void base_window::addChildWindow(base_window* wnd)
 
 void base_window::callHandler(EventArgs* arg)
 {
-	if(!arg)
-		return;
+	if(!arg) return;
 
 	HandlerMap::iterator it = m_handlers.find(arg->name);
-	if(it != m_handlers.end())
-	{
-		std::string& handler = it->second;
-		if(!handler.empty())
-		{
-			luabind::globals (m_system.getScriptSystem().LuaState())["eventArgs"] = arg;
-			ExecuteScript(arg->name, handler);
-			luabind::globals (m_system.getScriptSystem().LuaState())["eventArgs"] = 0;
-		}
-	}
+	if (it == m_handlers.end()) return;
+
+	std::string& handler = it->second;
+	if (handler.empty()) return;
+
+	luabind::object globals = luabind::globals(m_system.getScriptSystem().getLuaState());
+
+	globals["eventArgs"] = arg;
+	ExecuteScript(arg->name, handler);
+	globals["eventArgs"] = 0;
 }
 
 void base_window::ExecuteScript(const std::string& env, const std::string& script)
@@ -491,11 +509,10 @@ bool base_window::onMoved(void)
 		Rect area(m_area);
 		area.offset(pr.getPosition());
 
-		m_alignmentRect = Rect(
-			area.m_left - pr.m_left,
-			area.m_top - pr.m_top,
-			pr.m_right - area.m_right,
-			pr.m_bottom - area.m_bottom);
+		m_alignmentRect.m_left = area.m_left - pr.m_left;
+		m_alignmentRect.m_top = area.m_top - pr.m_top;
+		m_alignmentRect.m_right = pr.m_right - area.m_right;
+		m_alignmentRect.m_bottom = pr.m_bottom - area.m_bottom;
 	}
 	invalidate();
 	EventArgs a;
@@ -583,10 +600,10 @@ void base_window::init(xml::node& node)
 	{
 		m_tabstop = StringToBool(setting.first_child().value());
 	}
-	setting = node("Dragable");
+	setting = node("Draggable");
 	if(!setting.empty())
 	{
-		m_dragable = StringToBool(setting.first_child().value());
+		m_draggable = StringToBool(setting.first_child().value());
 	}
 	setting = node("AcceptDrop");
 	if(!setting.empty())
@@ -623,33 +640,27 @@ void base_window::init(xml::node& node)
 
 void base_window::parseEventHandlers(xml::node& node)
 {
-	if(!node.empty())
+	if (node.empty()) return;
+
+	xml::node handler = node.first_child();
+	while(!handler.empty())
 	{
-		xml::node handler = node.first_child();
-		while(!handler.empty())
-		{
-			std::string name(handler.name());
-			m_handlers[name] = handler.first_child().value();
-			handler = handler.next_sibling();
-		}
+		addScriptEventHandler(handler.name(), handler.first_child().value());
+		handler = handler.next_sibling();
 	}
 }
 
 void base_window::addScriptEventHandler(std::string name, std::string handler)
 {
-	if(!name.empty() && !handler.empty())
-	{
-		m_handlers[name] = handler;
-	}
+	if (name.empty() || handler.empty()) return;
+	m_handlers[name] = handler;
 }
 
 void base_window::CallAfterRenderCallback(const Rect& dest, const Rect& clip)
 {
-	if (m_afterRenderCallback)
-	{
-		Renderer& r = m_system.getRenderer();
-		r.addCallback(m_afterRenderCallback, this, dest, clip);
-	}
+	if (!m_afterRenderCallback) return;
+	Renderer& r = m_system.getRenderer();
+	r.addCallback(m_afterRenderCallback, this, dest, clip);
 }
 
 void base_window::draw(const point& offset, const Rect& clip)
@@ -671,9 +682,12 @@ void base_window::draw(const point& offset, const Rect& clip)
 			{
 				EventArgs a;
 				a.name = "On_Draw";
-				luabind::globals (m_system.getScriptSystem().LuaState())["eventArgs"] = &a;
+
+				luabind::object globals = luabind::globals(m_system.getScriptSystem().getLuaState());
+
+				globals["eventArgs"] = &a;
 				ExecuteScript(a.name, m_drawhandler);
-				luabind::globals (m_system.getScriptSystem().LuaState())["eventArgs"] = 0;
+				globals["eventArgs"] = 0;
 			}
 
 			render(destrect, cliprect); // render self first
@@ -714,7 +728,7 @@ void base_window::draw(const point& offset, const Rect& clip)
 	}	
 }
 
-point base_window::transformToWndCoord(const point& global)
+point base_window::transformToWndCoord(const point& global) const
 {
 	base_window* parent = m_parent;
 	point out(global);
@@ -740,156 +754,135 @@ point base_window::transformToRootCoord(const point& local)
 
 base_window* base_window::nextSibling()
 {
-	if(m_parent)
-	{
-		children_list& list = m_parent->getChildren();
-		if(list.size() <= 1)
-			return this;
-		child_iter it = std::find_if(list.begin(), list.end(), seeker(this));
-		if(it == list.end())
-		{
-			assert(false && "Link to parent is invalid!");
-		}
-		return (++it != list.end()) ? (*it).get() : (*list.begin()).get();
-	}
-	else
-	{
+	if (!m_parent) return this;
+	
+	children_list& list = m_parent->getChildren();
+	if(list.size() <= 1)
 		return this;
+	child_iter it = std::find_if(list.begin(), list.end(), seeker(this));
+	if(it == list.end())
+	{
+		assert(false && "Link to parent is invalid!");
 	}
+	return (++it != list.end()) ? (*it).get() : (*list.begin()).get();
 }
 
 base_window* base_window::prevSibling()
 {
-	if(m_parent)
-	{
-		children_list& list = m_parent->getChildren();
-		if(list.size() <= 1)
-			return this;
-		child_iter it = std::find_if(list.begin(), list.end(), seeker(this));
-		if(it == list.end())
-		{
-			assert(false && "Link to parent is invalid!");
-		}
-		if(it == list.begin())
-			return (*list.rbegin()).get();
-		--it;
-		return (*it).get();
-	}
-	else
-	{
-		return this;
-	}
-
-}
-
-void base_window::thisset()
-{
-	if(m_system.getScriptSystem().LuaState())
-		luabind::globals(m_system.getScriptSystem().LuaState())["this"] = this;
-}
-
-void base_window::subscribeNamedEvent(std::string name, base_window* sender, std::string script)
-{
-	if(script.empty())
-		return; //nothing to do!
+	if (!m_parent) return this;
 	
-	if(!name.empty())
+	children_list& list = m_parent->getChildren();
+	if(list.size() <= 1)
+		return this;
+	child_iter it = std::find_if(list.begin(), list.end(), seeker(this));
+	if(it == list.end())
 	{
-		NamedEventEntry entry = std::make_pair(name, sender);
-		
-		m_scriptevents.insert(std::make_pair(entry,script));
-
-		// support for a script events
-		subscribe<events::NamedEvent, base_window> (&base_window::onNamedEvent, sender);
-		
+		assert(false && "Link to parent is invalid!");
 	}
+	if(it == list.begin())
+		return (*list.rbegin()).get();
+	--it;
+	return (*it).get();
+}
+
+//void base_window::thisset()
+//{
+//	if(m_system.getScriptSystem().LuaState())
+//		luabind::globals(m_system.getScriptSystem().LuaState())["this"] = this;
+//}
+
+void base_window::subscribeNamedEvent(std::string name, base_window* sender, luabind::object script_callback)
+{
+	//if (!script_callback) return;
+	//luabind::call_function<void>(std::ref(script_callback));
+	//	return; //nothing to do!
+//http://stackoverflow.com/questions/11529883/callback-to-lua-member-function/11529955#11529955
+	if (name.empty()) return;
+
+	NamedEventEntry entry = std::make_pair(name, sender);		
+	m_scriptevents.insert(std::make_pair(entry, script_callback));
+
+	// support for a script events
+	subscribe<events::NamedEvent, base_window> (&base_window::onNamedEvent, sender);
 }
 
 void base_window::unsubscribeNamedEvent(std::string name, base_window* sender)
 {
-	if(!name.empty())
-	{
-		NamedEventEntry entry = std::make_pair(name, sender);
-		NamedEventsMap::iterator it = m_scriptevents.find(entry);
-		if(it != m_scriptevents.end())
-		{			
-			m_scriptevents.erase(it);
-			if(sender != 0)
-				unsubscribe<events::NamedEvent>(sender);
+	if (name.empty()) return;
 
-			if(m_scriptevents.size() == 0)
-				unsubscribe<events::NamedEvent>();
-		}
-	}
+	NamedEventEntry entry = std::make_pair(name, sender);
+	NamedEventsMap::iterator it = m_scriptevents.find(entry);
+	if (it == m_scriptevents.end()) return;
+
+	m_scriptevents.erase(it);
+	if(sender)
+		unsubscribe<events::NamedEvent>(sender);
+
+	if(m_scriptevents.empty())
+		unsubscribe<events::NamedEvent>();
 }
 
 void base_window::sendNamedEvent(std::string name)
 {
-	if(!name.empty())
-		send_event(events::NamedEvent(name, this));
+	if (name.empty()) return;
+	send_event(events::NamedEvent(name, this));
 }
 
 void base_window::onNamedEvent(events::NamedEvent& e)
 {
 	NamedEventEntry entry = std::make_pair(e.m_name, e.m_sender);
 	NamedEventsMap::iterator it = m_scriptevents.find(entry);
-	if(it != m_scriptevents.end())
-	{
-		std::string& script = it->second;
-		if(!script.empty())
-		{
-			EventArgs arg;
-			arg.name = "On_ScriptEvent";
-			luabind::globals (m_system.getScriptSystem().LuaState())["eventArgs"] = &arg;
-			ExecuteScript(arg.name, script);
-			luabind::globals (m_system.getScriptSystem().LuaState())["eventArgs"] = 0;			
-		}
+	if (it == m_scriptevents.end()) {
+		entry = std::make_pair(e.m_name, nullptr);
+		it = m_scriptevents.find(entry);
+		if (it == m_scriptevents.end()) return;
 	}
+	
+	luabind::object script_callback = it->second;
+	if (!script_callback) return;
+
+	EventArgs arg("On_ScriptEvent");
+
+	luabind::object globals = luabind::globals(m_system.getScriptSystem().getLuaState());
+	globals["eventArgs"] = &arg;
+	luabind::call_function<void>(std::ref(script_callback), std::string(arg.name));
+	//ExecuteScript(arg.name, script);
+	globals["eventArgs"] = 0;
 }
 
 std::string base_window::getEventScript(const std::string& ev)
 {
 	HandlerMap::iterator it = m_handlers.find(ev);
-	if(it != m_handlers.end())
-	{
-		std::string& handler = it->second;
-		if(!handler.empty())
-		{
-			return std::string(handler);
-		}
-	}
-	return "";
+	if (it == m_handlers.end()) return std::string();
+
+	const std::string& handler = it->second;
+	return handler;	
 }
 
 bool base_window::onGameEvent(const std::string& ev)
 {
 	HandlerMap::iterator it = m_handlers.find(ev);
-	if(it != m_handlers.end())
-	{
-		std::string& handler = it->second;
-		if(!handler.empty())
-		{
-			EventArgs arg;
-			arg.name = ev.c_str();
-			luabind::globals (m_system.getScriptSystem().LuaState())["gameEventArgs"] = &arg;
-			ExecuteScript(ev, handler);
-			luabind::globals (m_system.getScriptSystem().LuaState())["gameEventArgs"] = 0;
-			return arg.handled;
-		}
-	}
-	return false;
+	if (it == m_handlers.end()) return false;
+
+	std::string& handler = it->second;
+	if (handler.empty()) return false;
+
+	EventArgs arg;
+	arg.name = ev.c_str();
+
+	luabind::object globals = luabind::globals(m_system.getScriptSystem().getLuaState());
+
+	globals["gameEventArgs"] = &arg;
+	ExecuteScript(ev, handler);
+	globals["gameEventArgs"] = 0;
+	return arg.handled;
 }
 
 bool base_window::isChildrenOf(const base_window* wnd)
 {
-	const base_window* parent = m_parent;
-
-	while(parent)
-	{
-		if(parent == wnd)
-			return true;
-		parent = parent->getParent();
-	}
-	return false;
+	if (!wnd || !m_parent) return false;
+	if (m_parent == wnd) return true;
+	return m_parent->isChildrenOf(wnd);
 }
+
 }

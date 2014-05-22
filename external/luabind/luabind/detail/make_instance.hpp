@@ -69,7 +69,8 @@ namespace luabind {
 
 			if (!cls)
 			{
-				throw std::runtime_error("Trying to use unregistered class: " + std::string(typeid(P).name()));
+				std::string type_name(typeid(P).name());
+				throw std::runtime_error("Trying to use unregistered class: " + type_name);
 			}
 
 			object_rep* instance = push_new_instance(L, cls);

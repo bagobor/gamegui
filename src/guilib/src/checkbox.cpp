@@ -15,7 +15,8 @@ namespace gui
 		m_imgChecked(0),
 		m_imgUnchecked(0),
 		m_checked(false),
-		m_hovered(false)
+		m_hovered(false),
+		m_pushed(false)
 	{
 		m_imgUncheckedHovered = nullptr;
 		m_imgCheckedHovered = nullptr;
@@ -46,14 +47,19 @@ namespace gui
 		if(state == EventArgs::Down)
 		{
 			m_system.queryCaptureInput(this);
+			m_pushed = true;
 		}
-		else
+		else if (m_pushed)
 		{
+			m_pushed = false;
 			m_system.queryCaptureInput(0);
-			m_checked = !m_checked;
-			EventArgs a;
-			a.name = "On_StateChanged";
-			callHandler(&a);
+
+			if (isCursorInside()) {
+				m_checked = !m_checked;
+				EventArgs a;
+				a.name = "On_StateChanged";
+				callHandler(&a);
+			}
 		}
 		invalidate();
 		return true;

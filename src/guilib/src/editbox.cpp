@@ -404,8 +404,10 @@ namespace gui
 				Rect selrect(dest);
 				selrect.m_left += starts;
 				selrect.m_right = dest.m_left + stops;
-				//selrect.setHeight(imgSize.height);
-				selrect.setHeight(clip.getHeight());
+				
+				//HACK: little tuning
+				selrect.setHeight(clip.getHeight()-1);
+				selrect.offset(point(0.f, 1));
 				
 				r.draw(*m_selectImg, selrect, 1.f, finalClip,  m_backColor, Tile, Stretch);
 			}

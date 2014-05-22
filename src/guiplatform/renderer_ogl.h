@@ -47,7 +47,7 @@ namespace gui
 			TexturePtr createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format);
 			TexturePtr createTexture(const std::string& filename);
 
-			void renderImmediate(const QuadInfo& q);
+			void renderImmediate(const QuadInfo& q, Texture* texture, bool isAdditive);
 			void render(const Batches& batches, const Quads& quads, size_t num_batches, Size scale);
 			
 			//void	initPerFrameStates();

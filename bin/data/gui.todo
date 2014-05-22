@@ -1,0 +1,62 @@
+BUGS:
+  ☐ файлы скриптов выполняются один для для одного файла XML а надо один раз для каждого объекта. (возможно это и плохая идея, надо подумать.)
+     ☐ вспомнить как сделана скриптовая система в CryEngine
+        ✔ скрипт выполняется один раз для каждого типа объектов (точно?) - создает базовую таблицу (уникальное имя) и ф-ии @done (14-05-18 17:06)
+          ✔ по сути выполнение скрипта добавляет в луа скоп уникальную таблицу для сущности (!) @done (14-05-18 17:05)
+          ✔ проверяется не был ли ранее загружен файли или не стоит ли флаг форсированной перезагрузки. @done (14-05-18 17:06)
+            ✔ если файл загрузился с ошибкой он перестаёт/не считается загруженным (Логично! если была ошибка значит надо будет перезагрузить его позже) @done (14-05-18 17:06)
+          ✔ имя скриптовой таблицы задается в XML сущности (entity) и является уникальным @done (14-05-18 17:06)
+        ☐ как сущность работает со своей таблицей
+          ☐ получение\хранение как достигается копирование таблицы в сущность?
+              ✔ CEntityScript - отвечает за скриптовую часть @done (14-05-18 17:08)
+              ☐ создается CScriptTable и иницализируется значением из скрипта - видимо серелизация. со всеми данными и функциями (!)
+                ✔ m_pEntityTable = m_pScriptSystem->CreateTable(true); - создается CScriptTable @done (14-05-18 17:30)
+                ✔   if (!m_pScriptSystem->GetGlobalValue(m_sTableName,m_pEntityTable)) @done (14-05-18 17:30)
+                   ☐ 
+          ☐ класс таблицы как работает
+
+  ☐ не работает св-во 'name' - какие-то глюки с перегрузкой ф-ий. надо разобраться. причем просто getName работает.... 
+  ☐ PropertyList на основе не интрузивных св-в
+  ☐ проверить что объекты удаляются корректно.
+  ☐ ставить this в скрипт и получать его назад - будет luabind::object это есть сктоптовая таблица объекта. с ней дальше можно рабоать \ хранить и пр!
+
+struct ScriptAnyValue
+{
+  ScriptAnyType type;
+  union
+  {
+    bool b;
+    float number;
+    const char *str;
+    IScriptTable *table;
+    const void *ptr;
+    HSCRIPTFUNCTION function;
+    struct { float x,y,z; } vec3;
+    struct { void * ptr; int nRef; } ud;
+  };
+  ScriptAnyValue( IScriptTable *value );  
+};
+
+inline ScriptAnyValue::ScriptAnyValue( IScriptTable *value ) : type(ANY_TTABLE)
+{
+  table = value;
+  if (table)
+    table->AddRef();
+};
+
+inline ScriptAnyValue::ScriptAnyValue( IScriptTable* _table,int ) : type(ANY_TTABLE)
+{
+  table = _table;
+  if (table)
+    table->AddRef();
+};
+
+bool GetGlobalValue( const char *sKey, IScriptTable * &value )
+{
+  ScriptAnyValue any(value,0);
+  return GetGlobalAny(sKey,any) && any.CopyTo(value);
+}
+
+inline bool ScriptAnyValue::CopyTo( IScriptTable *&value )const {
+  if (type==ANY_TTABLE) { value = table; return true; }; return false;
+};

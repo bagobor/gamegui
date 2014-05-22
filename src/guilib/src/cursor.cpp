@@ -39,7 +39,7 @@ point Cursor::getPosition() const
 }
 
 
-void Cursor::setType(const std::string& curname)
+void Cursor::setType(std::string curname)
 {
 	if(m_cursors)
 	{

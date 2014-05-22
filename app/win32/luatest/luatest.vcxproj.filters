@@ -10,11 +10,9 @@
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="luatest.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="window.cpp" />
   </ItemGroup>
 </Project>

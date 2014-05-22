@@ -64,7 +64,7 @@ void System::reset(bool complete)
 {
 	m_render.cleanup(complete);
 	m_windowMgr->reset(complete);
-	
+
 	logEvent(log::system, "Resetting window tree...");
 	m_tickedWnd.clear();
 	m_subscribeTickWnd.clear();
@@ -79,6 +79,16 @@ void System::reset(bool complete)
 	m_dragging = false;
 	m_dragfired = false;
 	m_dragfreeze = false;
+	
+	m_rootWindow.reset();
+	m_dragContainer.reset();
+	m_tooltipWindow.reset();
+	m_menuWindow.reset();
+
+	if (complete) {
+		m_scriptSys.reset();
+		makeLuaBinding();
+	}
 
 	m_rootWindow = std::make_shared<base_window>(*this, "systemroot");
 	if(!m_rootWindow)
@@ -112,6 +122,9 @@ void System::reset(bool complete)
 	m_rootWindow->add(m_tooltipWindow);
 	m_rootWindow->add(m_menuWindow);
 	m_rootWindow->setAcceptDrop(true);
+
+
+
 	
 	logEvent(log::system, "Gui subsystem is ready");
 }
@@ -381,7 +394,7 @@ bool System::handleMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonSta
 				{
 					if(target != m_rootWindow.get() && target != m_captureWindow)
 					{
-						if(target->isDragable())
+						if(target->isDraggable())
 						{
 							if(state == EventArgs::Down)
 							{
@@ -661,6 +674,13 @@ base_window* System::getTargetWindow(const point& pt) const
 	return GetTargetWindow(pt, m_rootWindow->getChildren()).get();
 }
 
+void System::executeScript(const std::string& filename, base_window* wnd) {
+	if (!m_scriptSys.ExecuteFile(filename, wnd))
+	{
+		logEvent(log::error, std::string("Unable to execute Lua file: ") + m_scriptSys.GetLastError());
+	}
+}
+
 void System::executeScript(const std::string& filename)
 {
 	if(!m_scriptSys.ExecuteFile(filename))
@@ -773,7 +793,7 @@ bool System::startDrag(base_window* wnd, point offset)
 
 	m_dragContainer->rise();
 	DragContainer* dc = getDragContainer();
-	if(wnd->isDragable() && dc->startDrag(wnd, offset))
+	if(wnd->isDraggable() && dc->startDrag(wnd, offset))
 	{
 		point pt = m_cursor.getPosition() - offset;
 		dc->setPosition(pt);

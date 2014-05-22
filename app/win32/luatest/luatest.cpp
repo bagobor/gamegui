@@ -1,6 +1,19 @@
 #include "stdafx.h"
 
-#include "window.h"
+//#include "window.h"
+#include <guilib/guilib.h>
+#include "../common/gui_filesystem.h"
+extern "C"
+{
+#include <lstate.h>
+#include <lauxlib.h>
+#include <lua.h>	
+#include <lualib.h>
+}
+
+#include <luabind/luabind.hpp>
+#include <luabind/raw_policy.hpp>
+
 
 using namespace std;
 
@@ -83,7 +96,39 @@ void RedirectIOToConsole()
 	ios::sync_with_stdio( true );
 }
 
-INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR params, int )
+void print_hello(int number) {
+	using namespace std;
+	cout << "hello world " << number << endl;
+}
+
+class NumberPrinter {
+public:
+	NumberPrinter(int number) :
+		m_number(number) 
+	{
+		int i = 5;
+	}
+
+	void print() {
+		cout << m_number << endl;
+	}
+
+	luabind::object properties() { return m_properties; }
+
+	luabind::object lua_indexmeta(luabind::object options, lua_State *L) {
+		return options;
+	}
+	luabind::object lua_newindex(luabind::object options, lua_State *L) {
+		return options;
+	}
+
+private:
+	luabind::object m_properties;
+	int m_number;
+};
+
+//INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR params, int )
+int main()
 {
 	// Enable run-time memory check for debug builds.
 //#if defined(DEBUG) | defined(_DEBUG)
@@ -92,22 +137,59 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR params, int )
 
 	int width = 1024;
 	int height = 768;
-	std::wstring res(params);
+	//std::wstring res(params);
 
-	if(!res.empty())
-	{
-		size_t delim = res.find_first_of(L" ");
-		if(delim != std::wstring::npos)
-		{
-			width = _wtoi(res.substr(0, delim).c_str());
-			height = _wtoi(res.substr(delim).c_str());
-		}
+	//if(!res.empty())
+	//{
+	//	size_t delim = res.find_first_of(L" ");
+	//	if(delim != std::wstring::npos)
+	//	{
+	//		width = _wtoi(res.substr(0, delim).c_str());
+	//		height = _wtoi(res.substr(delim).c_str());
+	//	}
+	//}
+
+	//RedirectIOToConsole();
+
+	if (lua_State* state = luaL_newstate()) {
+		luaL_openlibs(state);
+
+		luabind::open(state);
+
+
+
+		//#1 можно сохранить скриптовую таблицу объекта если сначала поставит объект в глобальную таблицу а потом прочитаь из нее
+		// и сохранить в объекте
+		//#2 разобраться с багом с эвентами, почему this разный. (так же не должно быть!)
+
+		luabind::module(state)[
+			luabind::def("print_hello", print_hello)
+		];
+
+		luabind::module(state)[
+			luabind::class_<NumberPrinter>("NumberPrinter")
+				.def(luabind::constructor<int>())				
+				.def("__index", &NumberPrinter::lua_indexmeta, luabind::raw_policy<3>())
+				.def("__newindex", &NumberPrinter::lua_newindex, luabind::raw_policy<3>())
+		];
+
+		luaL_dostring(
+			state,
+			"function add(first, second)\n"
+			"  return first + second\n"
+			"end\n"
+			"print('result: ' .. add(1,2));"
+			"local numbers = NumberPrinter(6)"
+			"numbers.hi = 5;"
+			);
+
+		int res = luabind::call_function<int>(state, "add", 2, 3);
+
+		lua_close(state);
 	}
 
-	RedirectIOToConsole();
-
-	TestWindow test(100, 100, width, height, L"GUI Test");
-	test.run();
+	//TestWindow test(100, 100, width, height, L"GUI Test");
+	//test.run();
 
 	return 0;
 }

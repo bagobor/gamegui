@@ -71,14 +71,10 @@ const char* fragment_shader_src =
 //"	gl_FragColor = texture2D(Texture0, v_texCoord);\n"
 "}\n";
 
-
-
 namespace gui
 {
 	namespace ogl_platform
 	{
-
-
 		unsigned int bitsPerPixelForFormat(Texture::PixelFormat format)
 		{
 			switch (format) {
@@ -492,14 +488,15 @@ namespace gui
 		{
 		}
 
-		void RenderDeviceGL::renderImmediate(const QuadInfo& q)
+		void RenderDeviceGL::renderImmediate(const QuadInfo& q, Texture* texture, bool isAdditive)
 		{
 			//if (!m_buffer)
 			//	return;
 			glDisable(GL_CULL_FACE);
 			glDepthMask(GL_FALSE);
 			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBlendFunc(GL_SRC_ALPHA, (isAdditive ? GL_ONE : GL_ONE_MINUS_SRC_ALPHA));
 			glEnable(GL_DEPTH_TEST);
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
@@ -509,7 +506,7 @@ namespace gui
 			{
 				glm::vec2 viewport_size(1024, 768);
 				m_shader->set("v_viewportSize", viewport_size);
-				m_shader->set("Texture0", (TextureOGL*)q.texture);
+				m_shader->set("Texture0", (TextureOGL*)texture);
 
 				QuadVertex buffmem[VERTEX_PER_QUAD];
 
@@ -564,6 +561,7 @@ namespace gui
 
 		void RenderDeviceGL::render(const Batches& _batches, const Quads& _quads, size_t num_batches, Size scale)
 		{
+			//todo: handle additive blend!
 			GLenum err = glGetError();
 			int i = 5;
 			if (!m_mesh) return;
@@ -580,10 +578,9 @@ namespace gui
 			//	scaleY = viewport.height / m_originalsize.height;
 			//}
 			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-			static unsigned long s_quadOffset = 0;	// buffer offset in quads
 			
+
+			static unsigned long s_quadOffset = 0;	// buffer offset in quads			
 			
 			static const unsigned int quad_size = VERTEX_PER_QUAD * sizeof(QuadVertex);
 
@@ -596,6 +593,9 @@ namespace gui
 				const BatchInfo& batch = batches[b];
 				if ( VERTEX_PER_QUAD * (batch.numQuads + s_quadOffset) >= VERTEXBUFFER_CAPACITY)
 					s_quadOffset = 0;
+
+				glBlendFunc(GL_SRC_ALPHA, (batch.isAdditiveBlend ? GL_ONE : GL_ONE_MINUS_SRC_ALPHA));
+				//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
 				//buffmem = (QuadVertex*)m_buffer->lock
 				//	(

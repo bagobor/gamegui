@@ -29,9 +29,17 @@ namespace gui
 
 void System::makeLuaBinding(void)
 {
+
+	registry::reg("x", &point::x);
+	registry::reg("y", &point::y);
+
+	// fix const ref on set/get function!
+	registry::reg("type", &Cursor::getType, &Cursor::setType);
+	//registry::reg("position", &Cursor::getPosition, &Cursor::setPosition);
+
 	logEvent(log::system, "Making LUA bindings...");
 	using namespace luabind;
-	module (m_scriptSys.LuaState())
+	module(m_scriptSys.getLuaState())
 		[
 			class_ <System>("System")
 			.property("root", &System::getRootWindow)
@@ -61,7 +69,7 @@ void System::makeLuaBinding(void)
 			class_ <Cursor>("Cursor")
 			.property("type", &Cursor::getType, &Cursor::setType)
 			.property("position", &Cursor::getPosition, &Cursor::setPosition)
-			,			
+			,
 			class_ <Rect>("Rect")
 			.def(constructor<>())
 			.def(constructor<float, float, float, float>())
@@ -136,30 +144,37 @@ void System::makeLuaBinding(void)
 			.def("getImageCount", &Imageset::ImagesCount)
 			.def("getImageByIdx", &Imageset::GetImageByIdx)
 			,
-			class_ <base_window, bases<ScriptObject> >("BaseWindow")
+			class_ <base_window, bases<ScriptObjectBase> >("BaseWindow")
 			.property("parent", (base_window* (base_window::*)() const)&base_window::getParentConst)
 			.property("name", &base_window::getName, &base_window::setName)
 			.property("area", &base_window::getArea, &base_window::setArea)
+			.property("type", &base_window::getType)
+			.property("visible", &base_window::getVisible, &base_window::setVisible)
+			.property("enabled", &base_window::getEnabled, &base_window::setEnabled)
+			.property("backcolor", &base_window::getBackColor, &base_window::setBackColor)
+			.property("forecolor", &base_window::getForeColor, &base_window::setForeColor)
+			.property("tag", &base_window::getUserData, &base_window::setUserData)
+			.property("alwaysOnTop", &base_window::getAlwaysOnTop, &base_window::setAlwaysOnTop)
+			.property("draggable", &base_window::isDraggable, &base_window::setDraggable)
+			.property("acceptDrop", &base_window::isAcceptDrop, &base_window::setAcceptDrop)
+			.def("getName", &base_window::getName)
+			.def("getType", &base_window::getType)
 			.def("setArea", &base_window::setArea)
 			.def("getArea", &base_window::getArea)
-			.property("visible", &base_window::getVisible, &base_window::setVisible)
+			.def("isCursorInside", &base_window::isCursorInside)
+			.def("hitTest", &base_window::hitTest)
 			.def("setVisible", &base_window::setVisible)
 			.def("getVisible", &base_window::getVisible)
-			.property("enabled", &base_window::getEnabled, &base_window::setEnabled)
 			.def("setEnabled", &base_window::setEnabled)
 			.def("getEnabled", &base_window::getEnabled)
-			.property("backcolor", &base_window::getBackColor, &base_window::setBackColor)
 			.def("setBackColor", &base_window::setBackColor)
-			.def("getBackColor", &base_window::getBackColor)
-			.property("forecolor", &base_window::getForeColor, &base_window::setForeColor)
+			.def("getBackColor", &base_window::getBackColor)			
 			.def("setForeColor", &base_window::setForeColor)
-			.def("getForeColor", &base_window::getForeColor)
-			.property("tag", &base_window::getUserData, &base_window::setUserData)
+			.def("getForeColor", &base_window::getForeColor)			
 			.def("setUserData", &base_window::setUserData)
 			.def("getUserData", &base_window::getUserData)
 			.def("moveToFront", (void(base_window::*)(void))&base_window::moveToFront)
-			.def("bringToBack", (void(base_window::*)(void))&base_window::bringToBack)
-			.property("alwaysOnTop", &base_window::getAlwaysOnTop, &base_window::setAlwaysOnTop)
+			.def("bringToBack", (void(base_window::*)(void))&base_window::bringToBack)			
 			.def("setAlwaysOnTop", &base_window::setAlwaysOnTop)
 			.def("getAlwaysOnTop", &base_window::getAlwaysOnTop)
 			.def("enableTooltip", &base_window::enableTooltip)
@@ -180,8 +195,6 @@ void System::makeLuaBinding(void)
 			.def("stopTick", &base_window::stopTick)
 			.def("transformToWndCoord", &base_window::transformToWndCoord)
 			.def("transformToRootCoord", &base_window::transformToRootCoord)
-			.property("dragable", &base_window::isDragable, &base_window::setDragable)
-			.property("acceptDrop", &base_window::isAcceptDrop, &base_window::setAcceptDrop)
 			,
 			def("to_statictext", &window_caster<Label>::apply),
 			def("to_staticimage", &window_caster<ImageBox>::apply),
@@ -215,27 +228,29 @@ void System::makeLuaBinding(void)
 			class_ <Label, bases<base_window> >("StaticText")
 			.property("text", &Label::getText, &Label::setText)
 			.property("spacing", &Label::getSpacing, &Label::setSpacing)
+			.property("formatting", &Label::getTextFormatting, &Label::setTextFormatting)
+			.property("font", &Label::getFontName, (void(Label::*)(const std::string& font))&Label::setFont)
 			.def("setFont", (void(Label::*)(const std::string& font))&Label::setFont)
+			.def("getFont", &Label::getFontName)
 			.def("setText", &Label::setText)
 			.def("appendText", &Label::appendText)
 			.def("getText", &Label::getText)
 			.def("setSpacing", &Label::setSpacing)
 			.def("getSpacing", &Label::getSpacing)
-			.property("formatting", &Label::getTextFormatting, &Label::setTextFormatting)
 			.def("setTextFormatting", &Label::setTextFormatting)
 			.def("getTextFormatting", &Label::getTextFormatting)
 			,
-			class_ <ImageBox, bases<base_window> >("StaticImage")
+			class_ <ImageBox, bases<base_window> >("ImageBox")
 			.property("imageset", &ImageBox::getImageset, &ImageBox::setImageset)
-			.def("setImageset", &ImageBox::setImageset)
-			.def("getImageset", &ImageBox::getImageset)
 			.property("image", &ImageBox::getImage, &ImageBox::setImage)
-			.def("setImage", &ImageBox::setImage)
-			.def("getImage", &ImageBox::getImage)
 			.property("vformat", &ImageBox::getVertFormat, &ImageBox::setVertFormat)
+			.property("hformat", &ImageBox::getHorzFormat, &ImageBox::setHorzFormat)
+			.def("setImageset", &ImageBox::setImageset)
+			.def("getImageset", &ImageBox::getImageset)			
+			.def("setImage", &ImageBox::setImage)
+			.def("getImage", &ImageBox::getImage)			
 			.def("setVertFormat", &ImageBox::setVertFormat)
 			.def("getVertFormat", &ImageBox::getVertFormat)
-			.property("hformat", &ImageBox::getHorzFormat, &ImageBox::setHorzFormat)
 			.def("setHorzFormat", &ImageBox::setHorzFormat)
 			.def("getHorzFormat", &ImageBox::getHorzFormat)
 			,
@@ -244,18 +259,18 @@ void System::makeLuaBinding(void)
 			class_ <FrameWindow, bases<Panel> >("FrameWindow")
 			//.def("setFont", &FrameWindow::setFont)
 			.property("caption", &FrameWindow::getCaption, &FrameWindow::setCaption)
-			.def("setCaption", &FrameWindow::setCaption)
-			.def("getCaption", &FrameWindow::getCaption)
 			.property("movable", &FrameWindow::getMovable, &FrameWindow::setMovable)
+			.property("clamp", &FrameWindow::getClamp, &FrameWindow::setClamp)
+			.property("formatting", &FrameWindow::getCaptionFormatting, &FrameWindow::setCaptionFormatting)
+			.property("captioncolor", &FrameWindow::getCaptionColor, &FrameWindow::setCaptionColor)
+			.def("setCaption", &FrameWindow::setCaption)
+			.def("getCaption", &FrameWindow::getCaption)			
 			.def("setMovable", &FrameWindow::setMovable)
 			.def("getMovable", &FrameWindow::getMovable)
-			.property("clamp", &FrameWindow::getClamp, &FrameWindow::setClamp)
 			.def("setClamp", &FrameWindow::setClamp)
-			.def("getClamp", &FrameWindow::getClamp)
-			.property("formatting", &FrameWindow::getCaptionFormatting, &FrameWindow::setCaptionFormatting)
+			.def("getClamp", &FrameWindow::getClamp)			
 			.def("setCaptionFormatting", &FrameWindow::setCaptionFormatting)
-			.def("getCaptionFormatting", &FrameWindow::getCaptionFormatting)
-			.property("captioncolor", &FrameWindow::getCaptionColor, &FrameWindow::setCaptionColor)
+			.def("getCaptionFormatting", &FrameWindow::getCaptionFormatting)			
 			.def("setCaptionColor", &FrameWindow::setCaptionColor)
 			.def("getCaptionColor", &FrameWindow::getCaptionColor)
 			,
@@ -617,9 +632,9 @@ void System::makeLuaBinding(void)
 			def("to_bindargs", &event_caster<BinderEventArgs>::apply)
 		];
 
-	globals(m_scriptSys.LuaState())["gui"] = this;
-	globals(m_scriptSys.LuaState())["render"] = m_renderHelper.get();
-	globals(m_scriptSys.LuaState())["log"] = &m_logger;
+		globals(m_scriptSys.getLuaState())["gui"] = this;
+		globals(m_scriptSys.getLuaState())["render"] = m_renderHelper.get();
+		globals(m_scriptSys.getLuaState())["log"] = &m_logger;
 }
 
 }
