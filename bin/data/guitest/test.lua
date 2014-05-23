@@ -19,5 +19,14 @@
 -- 	this.parent.parent.visible = false
 -- end
 
-log:msg("Password mode is 555555");
-log:msg(this.type);
+log:msg("Password mode is 5555552777777777");
+-- log:msg(this.type);
+function Test()
+	local rect = Rect(1,1,2,2);
+	rect.x111 = 5;
+	rect.width = 412;
+	-- print (rect.x111);
+	log:msg("Password mode is 55555521   " .. rect.x111 .. " --- " .. rect.width);
+end
+
+Test();

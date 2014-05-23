@@ -58,7 +58,31 @@
 			"file": "data/guitest/test.xml",
 			"settings":
 			{
-				"buffer_size": 2726,
+				"buffer_size": 2323,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/F/bitbucket/gamegui/doc.cpp",
+			"settings":
+			{
+				"buffer_size": 5383,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/E/programming/well/wellonline/client/bootstrap/GUI/gui/affectbar/wnd.lua",
+			"settings":
+			{
+				"buffer_size": 4955,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/E/programming/well/wellonline/client/bootstrap/GUI/gui/castingbar/wnd.xml",
+			"settings":
+			{
+				"buffer_size": 2865,
 				"line_ending": "Windows"
 			}
 		},
@@ -66,15 +90,23 @@
 			"file": "data/guitest/test.lua",
 			"settings":
 			{
-				"buffer_size": 758,
+				"buffer_size": 989,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "data/guitest/testfr.lua.bak",
+			"file": "data/base/menu.xml",
 			"settings":
 			{
-				"buffer_size": 618,
+				"buffer_size": 807,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "data/guitest/testfr.xml",
+			"settings":
+			{
+				"buffer_size": 2188,
 				"line_ending": "Windows"
 			}
 		},
@@ -82,15 +114,31 @@
 			"file": "data/guitest/testfr.lua",
 			"settings":
 			{
-				"buffer_size": 1607,
+				"buffer_size": 1356,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "data/base/common.lua",
+			"file": "/F/dev/my/cry_3_1_2_1742/Code/CryEngine/CryEntitySystem/EntityScript.cpp",
 			"settings":
 			{
-				"buffer_size": 28823,
+				"buffer_size": 18650,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/E/ce338_full_sicrit/Game/Scripts/Entities/Doors/AdvancedDoor.lua",
+			"settings":
+			{
+				"buffer_size": 22344,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
 				"line_ending": "Windows"
 			}
 		},
@@ -107,14 +155,6 @@
 			"settings":
 			{
 				"buffer_size": 5930,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "data/base/imagebutton.xml",
-			"settings":
-			{
-				"buffer_size": 492,
 				"line_ending": "Windows"
 			}
 		},
@@ -139,22 +179,6 @@
 			"settings":
 			{
 				"buffer_size": 462,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "data/guitest/testfr.xml",
-			"settings":
-			{
-				"buffer_size": 2210,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Users/denis/Desktop/projects/gamegui/scripting.info.lua",
-			"settings":
-			{
-				"buffer_size": 7997,
 				"line_ending": "Windows"
 			}
 		}
@@ -190,7 +214,11 @@
 	},
 	"console":
 	{
-		"height": 212.0
+		"height": 212.0,
+		"history":
+		[
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())"
+		]
 	},
 	"distraction_free":
 	{
@@ -203,7 +231,11 @@
 	},
 	"file_history":
 	[
-		"/C/Users/denis/Desktop/projects/gamegui/bin/data/base/drag.lua",
+		"/F/bitbucket/gamegui/bin/data/gui.todo",
+		"/E/programming/well/wellonline/client/bootstrap/GUI/gui/affectbar/slot.xml",
+		"/E/programming/well/wellonline/client/bootstrap/GUI/gui/castingbar/wnd.lua",
+		"/E/programming/well/wellonline/client/bootstrap/GUI/gui/character/playertab.lua",
+		"/E/programming/well/wellonline/client/bootstrap/GUI/gui/character/playertab.xml",
 		"/F/bitbucket/gamegui/bin/data/base/closebutton.xml",
 		"/C/Users/Denis/Downloads/shdr.js",
 		"/C/Users/Denis/dev/tms/client/web/sass/components/toolbar.scss",
@@ -326,19 +358,15 @@
 		"/C/Users/Denis/dev/tms/client/web/stylesheets/tasym.css",
 		"/C/Users/Denis/dev/tms/server/code/node_modules/formage-admin/public/ckeditor/contents.css",
 		"/C/Users/Denis/dev/tms/client/web/js/libs/d3/src/geo/conic-equidistant.js",
-		"/C/Users/Denis/dev/tms/client/web/stylesheets/codemirror.css",
-		"/C/Users/Denis/dev/tms/client/web/chart-master.html",
-		"/C/Users/Denis/dev/tms/client/web/templates/results-outport.html",
-		"/C/Users/Denis/dev/tms/server/code/node_modules/less-middleware/node_modules/less/test/less/errors/multiple-guards-on-css-selectors.less",
-		"/C/Users/Denis/dev/tms/client/web/templates/message-item-change.html"
+		"/C/Users/Denis/dev/tms/client/web/stylesheets/codemirror.css"
 	],
 	"find":
 	{
-		"height": 36.0
+		"height": 48.0
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 92.0,
 		"where_history":
 		[
 			""
@@ -349,6 +377,7 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"On_ActivityRemoved",
 			"CheckboxChecked",
 			"this.$leftSidebarAssignees.delegate",
 			"this.$leftSidebarAssignees.delegate('tr', 'click', function(e){",
@@ -475,8 +504,7 @@
 			"GraphTemplates",
 			"_this.collection.remove(model.get('_id'));",
 			"itemOptions",
-			"itemProto",
-			"templatesList"
+			"itemProto"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -485,7 +513,7 @@
 		"replace_history":
 		[
 		],
-		"reverse": false,
+		"reverse": true,
 		"show_context": false,
 		"use_buffer2": true,
 		"whole_word": true,
@@ -494,11 +522,12 @@
 	"groups":
 	[
 		{
-			"selected": 13,
+			"selected": 5,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 0,
@@ -514,31 +543,30 @@
 						],
 						"settings":
 						{
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 16,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
 					"file": "data/guitest/test.xml",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2726,
+						"buffer_size": 2323,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1406,
-								1406
+								2323,
+								2323
 							]
 						],
 						"settings":
@@ -646,54 +674,704 @@
 								"Python Django": "Python"
 							},
 							"codeintel_tooltips": "popup",
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
 							"sublime_auto_complete": true,
 							"syntax": "Packages/XML/XML.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 897.0,
+						"translation.y": 1035.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "data/guitest/test.lua",
+					"file": "/F/bitbucket/gamegui/doc.cpp",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 758,
+						"buffer_size": 5383,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								681,
-								681
+								879,
+								879
 							]
 						],
 						"settings":
 						{
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
-							"syntax": "Packages/Lua/Lua.tmLanguage"
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 92.0,
+						"translation.y": 180.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "data/guitest/testfr.lua.bak",
+					"file": "/E/programming/well/wellonline/client/bootstrap/GUI/gui/affectbar/wnd.lua",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 618,
+						"buffer_size": 4955,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								325,
+								325
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 495.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/E/programming/well/wellonline/client/bootstrap/GUI/gui/castingbar/wnd.xml",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2865,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								315,
+								315
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 900.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "data/guitest/test.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 989,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								989,
+								989
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 89.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "data/base/menu.xml",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 807,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								767,
+								767
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "data/guitest/testfr.xml",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2188,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2033,
+								2033
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 450.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "data/guitest/testfr.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1356,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1266,
+								1266
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 225.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/F/dev/my/cry_3_1_2_1742/Code/CryEngine/CryEntitySystem/EntityScript.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 18650,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1238,
+								1238
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 855.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "/E/ce338_full_sicrit/Game/Scripts/Entities/Doors/AdvancedDoor.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 22344,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2269,
+								2269
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 1260.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
 						"regions":
 						{
 						},
@@ -706,36 +1384,7 @@
 						],
 						"settings":
 						{
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "data/guitest/testfr.lua",
-					"settings":
-					{
-						"buffer_size": 1607,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1389,
-								1389
-							]
-						],
-						"settings":
-						{
+							"auto_name": "",
 							"codeintel": true,
 							"codeintel_config":
 							{
@@ -839,51 +1488,20 @@
 								"Python Django": "Python"
 							},
 							"codeintel_tooltips": "popup",
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
 							"sublime_auto_complete": true,
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1105.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "data/base/common.lua",
-					"settings":
-					{
-						"buffer_size": 28823,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								27043,
-								27043
-							]
-						],
-						"settings":
-						{
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
-							"syntax": "Packages/Lua/Lua.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 26082.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
+					"buffer": 12,
 					"file": "data/base/button.xml",
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 1023,
@@ -899,9 +1517,6 @@
 						],
 						"settings":
 						{
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
 							"syntax": "Packages/XML/XML.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
@@ -910,11 +1525,13 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 13,
 					"file": "data/imageset/skin.imageset",
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 5930,
@@ -924,8 +1541,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								842,
+								842
 							]
 						],
 						"settings":
@@ -1033,53 +1650,22 @@
 								"Python Django": "Python"
 							},
 							"codeintel_tooltips": "popup",
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
 							"sublime_auto_complete": true,
 							"syntax": "Packages/XML/XML.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1410.0,
+						"translation.y": 225.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "data/base/imagebutton.xml",
-					"settings":
-					{
-						"buffer_size": 492,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
-							"syntax": "Packages/XML/XML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
+					"buffer": 14,
 					"file": "data/base/closebutton.xml",
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 593,
@@ -1198,9 +1784,6 @@
 								"Python Django": "Python"
 							},
 							"codeintel_tooltips": "popup",
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
 							"sublime_auto_complete": true,
 							"syntax": "Packages/XML/XML.tmLanguage"
 						},
@@ -1208,11 +1791,19 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 13,
 					"type": "text"
-				},
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
 				{
-					"buffer": 10,
+					"buffer": 15,
 					"file": "data/base/checkbox.xml",
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 523,
@@ -1331,9 +1922,6 @@
 								"Python Django": "Python"
 							},
 							"codeintel_tooltips": "popup",
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
 							"sublime_auto_complete": true,
 							"syntax": "Packages/XML/XML.tmLanguage",
 							"translate_tabs_to_spaces": false
@@ -1342,11 +1930,13 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 15,
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 16,
 					"file": "data/base/editbox.xml",
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 462,
@@ -1356,15 +1946,12 @@
 						"selection":
 						[
 							[
-								310,
-								310
+								325,
+								325
 							]
 						],
 						"settings":
 						{
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
 							"syntax": "Packages/XML/XML.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
@@ -1372,172 +1959,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "data/guitest/testfr.xml",
-					"settings":
-					{
-						"buffer_size": 2210,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2145,
-								2145
-							]
-						],
-						"settings":
-						{
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10,
-							"codeintel_scan_exclude_dir":
-							{
-								"JavaScript":
-								[
-									"/build/",
-									"/min/"
-								]
-							},
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-								"PyWin32",
-								"jQuery",
-								"Rails"
-							],
-							"codeintel_snippets": true,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
-							"sublime_auto_complete": true,
-							"syntax": "Packages/XML/XML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 897.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "/C/Users/denis/Desktop/projects/gamegui/scripting.info.lua",
-					"settings":
-					{
-						"buffer_size": 7997,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4032,
-								4032
-							]
-						],
-						"settings":
-						{
-							"glsv_configured": true,
-							"glsv_enabled": 1,
-							"glsv_spec": 0,
-							"syntax": "Packages/Lua/Lua.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 8159.0,
-						"zoom_level": 1.0
-					},
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -1545,7 +1967,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 23.0
+		"height": 48.0
 	},
 	"input":
 	{
@@ -1560,6 +1982,12 @@
 				0,
 				1,
 				1
+			],
+			[
+				0,
+				1,
+				1,
+				2
 			]
 		],
 		"cols":
@@ -1570,6 +1998,7 @@
 		"rows":
 		[
 			0.0,
+			0.62523364486,
 			1.0
 		]
 	},
@@ -1582,6 +2011,7 @@
 	{
 		"height": 0.0
 	},
+	"project": "gui.sublime-project",
 	"replace":
 	{
 		"height": 42.0
@@ -1763,10 +2193,25 @@
 		],
 		"width": 380.0
 	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
 	"show_minimap": false,
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 178.0,
-	"status_bar_visible": true
+	"side_bar_width": 185.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+		"max_columns": 2
+	}
 }
