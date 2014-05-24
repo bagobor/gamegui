@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<root>
+  <Children>
+<FrameWindow name="TestWindow" file="guitest\testfr.xml" >
+  <Children>
+    <Panel name="TestSubWindow">
+      <Children>
+        <Editbox name="TestSubEditWindow" >
+          <Properties>
+            <Password>true</Password>
+          </Properties>
+        </Editbox>
+      </Children>
+    </Panel>
+  </Children>
+</FrameWindow>
+
+    </Children>    
+</root>

@@ -1,3 +1,6 @@
+log:msg("-------------HELLO FROM COMMON!")
+
+
 --- Useful constants. 
 OK = 1
 CANCEL = 2
