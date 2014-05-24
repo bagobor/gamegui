@@ -68,14 +68,15 @@ namespace gui
 		m_font->drawText(m_text, rc, 1.f, finalClip, m_format, m_foreColor, 1.f, 1.f);
 	}
 
-	void Label::setFont(const std::string& font)
+	void Label::setFont(const std::string& font_name)
 	{
-		if(font.empty()) return;
+		if(font_name.empty()) return;
 
-		m_font = m_system.getWindowManager().loadFont(font);
-		if(m_font)
-			m_font->setSpacing(m_spacing);
+		auto font  = m_system.getWindowManager().loadFont(font_name);
+		if (!font) return;
 
+		m_font = font;
+		m_font->setSpacing(m_spacing);
 		invalidate();
 	}
 
