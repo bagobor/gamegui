@@ -16,4 +16,4 @@ void named_object::setName(const std::string& name)
 	m_strName = name;
 }
 
-registry::types_t registry::types;
+//registry::types_t registry::types;

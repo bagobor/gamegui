@@ -29,13 +29,12 @@ namespace gui
 
 void System::makeLuaBinding(void)
 {
+	//registry::reg("x", &point::x);
+	//registry::reg("y", &point::y);
 
-	registry::reg("x", &point::x);
-	registry::reg("y", &point::y);
-
-	// fix const ref on set/get function!
-	registry::reg("type", &Cursor::getType, &Cursor::setType);
-	//registry::reg("position", &Cursor::getPosition, &Cursor::setPosition);
+	//// fix const ref on set/get function!
+	//registry::reg("type", &Cursor::getType, &Cursor::setType);
+	////registry::reg("position", &Cursor::getPosition, &Cursor::setPosition);
 
 	logEvent(log::system, "Making LUA bindings...");
 	using namespace luabind;

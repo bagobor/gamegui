@@ -17,6 +17,8 @@ int main()
     _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
 #endif
 
+	//_CrtSetBreakAlloc(9799);
+
 	int width = 1024;
 	int height = 768;
 	std::wstring res;// (params);
