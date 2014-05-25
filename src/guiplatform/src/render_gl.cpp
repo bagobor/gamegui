@@ -6,10 +6,6 @@
 #include "../renderer_ogl.h"
 #include "render_gl.h"
 
-#include <gli/gli.hpp>
-#include <gli/core/texture2d.hpp>// Requires OpenGL >= 1.1 to be included before this include
-
-
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 int get_gl_shader_type(int type) {
