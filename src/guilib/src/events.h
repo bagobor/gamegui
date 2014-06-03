@@ -48,11 +48,18 @@ namespace gui
 
 			//подписать listener на получение событий в функтор func от отправителя sender (если равен 0 - то от всех)
 			void subscribe (details::base_listener *listener, std::function<void(Event)> func, void *sender) {
-				subscription subs;
-				subs.m_listener = listener;
-				subs.m_func      = func;
-				subs.m_sender   = sender;
-				m_subscriptions[sender].push_back(subs);
+				subscription s = { listener, sender, func};
+				
+				// check for duplicates
+				subscriptions_list &subs = m_subscriptions[sender];
+				subscriptions_list::iterator i = subs.begin();
+				for (; i != subs.end(); ++i) {
+					if (i->m_listener == listener) {
+						return;
+					}
+				}
+
+				subs.push_back(s);
 			}
 
 			void unsubscribe (details::base_listener *listener) {

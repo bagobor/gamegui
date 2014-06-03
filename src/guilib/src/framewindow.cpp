@@ -115,13 +115,14 @@ namespace gui
 		float left = 0;
 		float right = 0;
 		float height = 0;
-		Rect componentRect;
+		
 		Size imgSize;
 
 		if (m_captionLeftImg)
 		{
 			// calculate final destination area
 			imgSize = m_captionLeftImg->GetSize();
+			Rect componentRect;
 			componentRect.m_left = finalRect.m_left;
 			componentRect.m_top  = finalRect.m_top;
 			componentRect.setSize(imgSize);
@@ -136,6 +137,7 @@ namespace gui
 		if (m_captionRightImg)
 		{
 			imgSize = m_captionRightImg->GetSize();
+			Rect componentRect;
 			componentRect.m_left = finalRect.m_right - imgSize.width;
 			componentRect.m_top  = finalRect.m_top;
 			componentRect.setSize(imgSize);
@@ -149,7 +151,7 @@ namespace gui
 		// center image
 		if (m_captionBackImg)
 		{
-			componentRect = finalRect;
+			Rect componentRect = finalRect;
 			componentRect.m_left += left;
 			componentRect.m_right -= right;
 			componentRect.m_bottom = componentRect.m_top + height;
@@ -164,6 +166,8 @@ namespace gui
 		
 		if(m_font)
 		{
+			Rect componentRect = finalRect;
+			componentRect.m_bottom = componentRect.m_top + height;
 			float font_height = m_font->getFontHeight();
 			float caption_height = componentRect.m_bottom - componentRect.m_top;
 			componentRect.m_top += (caption_height - font_height)*0.5f;

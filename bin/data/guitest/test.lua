@@ -30,3 +30,5 @@ function Test()
 end
 
 Test();
+
+gui:loadXml('guitest/debug_menu.xml')

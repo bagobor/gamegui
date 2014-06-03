@@ -14,10 +14,19 @@
             <Bottom Image="WindowBorderBottom" />
         </FrameImagery>
         <SelectImagery Imageset="skin" Image="TextSelectionBrush" />
+        <Items>
+            <Item text="File" icon="skin:FileMenuItem" color="0.7 0.7 0.7 1" selcolor="1 1 1 1"/>
+        </Items>
+
     </Properties>
     <Events>
-		<On_MenuClicked>
-			ContextMenu.On_MenuClicked()
-		</On_MenuClicked>
-	</Events>
+		  <On_MenuClicked>
+			  --ContextMenu.On_MenuClicked()
+        log:msg('On Menu Load');
+		  </On_MenuClicked>
+      <On_Load>
+        --ContextMenu.On_MenuClicked()
+        log:msg('On Menu Load');
+      </On_Load>
+    </Events>
 </Menu>

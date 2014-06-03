@@ -27,6 +27,8 @@ BaseApplication::BaseApplication(size_t w, size_t h, const char* title)
 
 		window = glfwCreateWindow(w, h, title, NULL, NULL);
 
+		glfwSwapInterval(1);
+
 		if (!glfwInit())
 			exit(EXIT_FAILURE);
 
