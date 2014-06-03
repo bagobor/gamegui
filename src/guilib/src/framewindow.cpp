@@ -30,6 +30,8 @@ namespace gui
 
 	void FrameWindow::rise()
 	{
+		if (getDisableRise()) return;
+
 		if(m_parent)
 			m_parent->moveToFront(this);
 

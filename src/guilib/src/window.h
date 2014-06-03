@@ -92,6 +92,9 @@ namespace gui
 		void setAlwaysOnTop(bool status) { m_alwaysOnTop = status; if(status) moveToFront(); }
 		bool getAlwaysOnTop() const { return m_alwaysOnTop; }
 
+		void setDisableRise(bool disable) { m_disableRise = disable; }
+		bool getDisableRise() const { return m_disableRise; }
+
 		virtual bool isCanHaveChildren(void) const { return true; }
 		base_window* findChildWindow(const std::string& name);
 		base_window const* getParent() const { return m_parent; }
@@ -210,6 +213,8 @@ namespace gui
 		bool			m_unsubscribePending;
 		bool			m_customDraw;
 		bool			m_invalidated;
+
+		bool			m_disableRise;
 
 		std::string		m_drawhandler;
 		System&			m_system;
