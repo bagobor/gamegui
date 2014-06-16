@@ -31,4 +31,4 @@ end
 
 Test();
 
-gui:loadXml('guitest/debug_menu.xml')
+--gui:loadXml('guitest/debug_menu.xml')

@@ -16,7 +16,7 @@ namespace gui
 
 	const std::wstring Font::DefaultWhitespace(L" \n\t\r");
 	const std::wstring Font::DefaultAlphanumerical(L"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890");
-	const std::wstring Font::DefaultWrapDelimiters(L" \n\t\r");
+	const std::wstring Font::DefaultWrapDelimiters(L",.:;!?- \n\t\r");
 
 	Font::Font (const std::string& name, const std::string& fontname, unsigned int size, Renderer& render) :
 		m_name (name),
@@ -30,11 +30,7 @@ namespace gui
 		m_spacing(1.f)
 	{
 		m_size = size;
-		if(size < 1)
-			m_size = 1;
-		else if(size > MAX_FONT_SIZE)
-			m_size = MAX_FONT_SIZE;
-
+		m_size = std::min<unsigned int>(MAX_FONT_SIZE, std::max<unsigned int>(1, m_size));
 	}
 
 	Font::~Font(void)
@@ -147,7 +143,6 @@ namespace gui
 	{
 		return getFormattedLineCount(UTF8ToUTF16(text), format_area, fmt, x_scale);
 	}
-
 
 	size_t Font::getFormattedLineCount(const std::wstring& text, const Rect& format_area, TextFormatting fmt, float x_scale)
 	{
@@ -384,41 +379,7 @@ namespace gui
 		if(Rect(draw_area).getIntersection(clip_rect).empty())
 			return;
 
-		//{ // draw text shadow
-		//	vec3	cur_pos(position);
-
-		//	float base_y = position.y;
-
-		//	for (size_t c = 0; c < text.length(); ++c)
-		//	{ 
-		//		if (const FontGlyph* glyph = getGlyphData(text[c]))
-		//		{
-		//			const Image* img = glyph->getImage();
-		//            
-		//			Size size = glyph->getSize(x_scale, y_scale);
-		//			float x = cur_pos.x + glyph->getOffsetX() * x_scale;					  
-		//			float y = cur_pos.y + glyph->getOffsetY() * y_scale;
-
-		//			Rect rec (x, y, x + size.width, y + size.height);
-
-		//			Rect shadow_rec (rec.m_left+.5f,rec.m_top+.5f,rec.m_right+1.f,rec.m_bottom+1.f);
-		//			Color shadow_color(0,0,0,colours.m_top_left.getAlpha());
-		//			ColorRect shadow_colours(shadow_color,shadow_color,
-		//										shadow_color,shadow_color);
-		//			
-		//			m_render.draw(*img, shadow_rec, cur_pos.z, clip_rect, shadow_colours);
-		//			//m_render.draw(*img, rec, cur_pos.z, clip_rect, shadow_colours);
-
-		//			cur_pos.x += glyph->getAdvance(x_scale);
-		//#ifdef GUI_KERNING_ENABLED
-		//			if (c < text.length() - 1)
-		//				cur_pos.x += glyph->getKerning(text[c+1]) * x_scale;
-		//#endif
-		//		}
-		//	}
-		//}
-
-		vec3	cur_pos(position);
+		vec3 cur_pos(position);
 
 		for (size_t c = 0; c < text.length(); ++c)
 		{ 
@@ -447,57 +408,8 @@ namespace gui
 		if(Rect(draw_area).getIntersection(clip_rect).empty())
 			return;
 
-	/*	{
-			vec3	cur_pos(position);
-
-			const FontGlyph* glyph;
-			float base_y = position.y;
-			size_t char_count = text.length();
-
-			// Calculate the length difference between the justified text and the same text, left aligned
-			// This space has to be shared between the space characters of the line
-			float lost_space = getFormattedTextExtent(text, draw_area, Justified, x_scale) - getTextExtent(text, x_scale);
-
-			// The number of spaces and tabs in the current line
-			unsigned int space_count = 0;
-			size_t c;
-			for (c = 0; c < char_count; ++c)
-				if ((text[c] == ' ') || (text[c] == '\t'))
-					++space_count;
-
-			// The width that must be added to each space character in order to transform the left aligned text in justified text
-			float shared_lost_space = 0.0;
-			if (space_count > 0)
-				shared_lost_space = lost_space / (float)space_count;
-
-			for (c = 0; c < char_count; ++c)
-			{
-				glyph = getGlyphData(text[c]);
-
-				if (glyph)
-				{
-					const Image* img = glyph->getImage();
-					Size size = glyph->getSize(x_scale, y_scale);
-					Rect rec (cur_pos.x + glyph->getOffsetX() * x_scale, cur_pos.y + glyph->getOffsetY() * y_scale, cur_pos.x + glyph->getOffsetX() * x_scale + size.width, cur_pos.y + glyph->getOffsetY() * y_scale + size.height);
-
-					Rect shadow_rec (rec.m_left+.5f,rec.m_top+.5f,rec.m_right+1.f,rec.m_bottom+1.f);
-					ColorRect shadow_color (Color(0,0,0,colours.m_top_left.getAlpha()),Color(0,0,0,colours.m_top_right.getAlpha()),Color(0,0,0,colours.m_bottom_left.getAlpha()),Color(0,0,0,colours.m_bottom_right.getAlpha()));
-					m_render.draw(*img, shadow_rec, cur_pos.z, clip_rect, shadow_color);
-
-					cur_pos.x += glyph->getAdvance(x_scale);
-	#ifdef GUI_KERNING_ENABLED
-					if (c < text.length() - 1)
-						cur_pos.x += glyph->getKerning(text[c+1]) * x_scale;
-	#endif
-					// That's where we adjust the size of each space character
-					if ((text[c] == ' ') || (text[c] == '\t'))
-						cur_pos.x += shared_lost_space;
-				}
-			}
-		}*/
-
 		{
-			vec3	cur_pos(position);
+			vec3 cur_pos(position);
 
 			const FontGlyph* glyph;
 			float base_y = position.y;
@@ -543,8 +455,6 @@ namespace gui
 				}
 			}
 		}
-
-
 	}
 
 	float Font::getFormattedTextExtent (const std::string& text, const Rect& format_area, TextFormatting fmt, float x_scale)

@@ -688,18 +688,8 @@ void base_window::draw(const point& offset, const Rect& clip)
 
 		//if (m_invalidated)
 		{
-			m_system.getRenderer().startCaptureForCache(this);			
-			if(m_customDraw && !m_drawhandler.empty())
-			{
-				EventArgs a;
-				a.name = "On_Draw";
+			m_system.getRenderer().startCaptureForCache(this);
 
-				luabind::object globals = luabind::globals(m_system.getScriptSystem().getLuaState());
-
-				globals["eventArgs"] = &a;
-				ExecuteScript(a.name, m_drawhandler);
-				globals["eventArgs"] = 0;
-			}
 
 			render(destrect, cliprect); // render self first
 			m_system.getRenderer().endCaptureForCache(this);		
@@ -732,6 +722,18 @@ void base_window::draw(const point& offset, const Rect& clip)
 		{
 			(*i)->draw(destrect.getPosition(), cliprect);
 			++i;
+		}
+
+		if (m_customDraw && !m_drawhandler.empty())
+		{
+			EventArgs a;
+			a.name = "On_Draw";
+
+			luabind::object globals = luabind::globals(m_system.getScriptSystem().getLuaState());
+
+			globals["eventArgs"] = &a;
+			ExecuteScript(a.name, m_drawhandler);
+			globals["eventArgs"] = 0;
 		}
 
 		// теперь скажем, что тут коллбак при отрисовке нужно сделать
