@@ -34,6 +34,7 @@ base_window::base_window(System& sys, const std::string& name) :
 	m_stickRect(0.f, 0.f, 0.f, 0.f),
 	m_afterRenderCallback(nullptr),
 	m_suspended(false),
+	m_disableRise(false),
 	ScriptObject<base_window>(sys.getScriptSystem())
 {
 	m_backColor = Color(1.f, 1.f, 1.f);
@@ -119,6 +120,8 @@ bool base_window::hitTest(const point& pt)
 
 void base_window::rise()
 {
+	if (getDisableRise()) return;
+	
 	if(m_parent)
 	{
 		m_parent->rise();
@@ -559,12 +562,13 @@ void base_window::stopTick(void)
 }
 
 void base_window::init(xml::node& node)
-{	
+{
 	xml::node setting = node("Visible");
 	if(!setting.empty())
 	{
 		m_visible = StringToBool(setting.first_child().value());
 	}
+	
 	setting = node("Align");
 	if(!setting.empty())
 	{
@@ -635,6 +639,13 @@ void base_window::init(xml::node& node)
 	{
 		setIgnoreInputEvents(StringToBool(setting.first_child().value()));
 	}
+
+	setting = node("DisableRise");
+	if (!setting.empty())
+	{
+		setDisableRise(StringToBool(setting.first_child().value()));
+	}
+
 	onMoved();
 }
 
@@ -677,18 +688,8 @@ void base_window::draw(const point& offset, const Rect& clip)
 
 		//if (m_invalidated)
 		{
-			m_system.getRenderer().startCaptureForCache(this);			
-			if(m_customDraw && !m_drawhandler.empty())
-			{
-				EventArgs a;
-				a.name = "On_Draw";
+			m_system.getRenderer().startCaptureForCache(this);
 
-				luabind::object globals = luabind::globals(m_system.getScriptSystem().getLuaState());
-
-				globals["eventArgs"] = &a;
-				ExecuteScript(a.name, m_drawhandler);
-				globals["eventArgs"] = 0;
-			}
 
 			render(destrect, cliprect); // render self first
 			m_system.getRenderer().endCaptureForCache(this);		
@@ -721,6 +722,18 @@ void base_window::draw(const point& offset, const Rect& clip)
 		{
 			(*i)->draw(destrect.getPosition(), cliprect);
 			++i;
+		}
+
+		if (m_customDraw && !m_drawhandler.empty())
+		{
+			EventArgs a;
+			a.name = "On_Draw";
+
+			luabind::object globals = luabind::globals(m_system.getScriptSystem().getLuaState());
+
+			globals["eventArgs"] = &a;
+			ExecuteScript(a.name, m_drawhandler);
+			globals["eventArgs"] = 0;
 		}
 
 		// теперь скажем, что тут коллбак при отрисовке нужно сделать

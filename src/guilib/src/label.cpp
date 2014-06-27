@@ -9,13 +9,15 @@
 
 namespace gui
 {
-
 	Label::Label(System& sys, const std::string& name) :
 		base_window(sys, name),
 		m_centred(true),
 		m_format(LeftAligned),
 		m_spacing(1.f)
 	{
+		m_shadow_offset = point(1, 1);
+		m_shadow_scale = Size(1.0f, 1.0f);
+		m_shadow_enabled = false;
 	}
 
 	Label::~Label(void)
@@ -65,6 +67,11 @@ namespace gui
 			float offset = (rc.getHeight() - height) / 2;
 			rc.offset(point(0.f, offset));
 		}
+		if (m_shadow_enabled) {
+			Rect shadow_rect = rc;
+			shadow_rect.offset(m_shadow_offset);
+			m_font->drawText(m_text, shadow_rect, 1.f, finalClip, m_format, m_backColor, m_shadow_scale.width, m_shadow_scale.height);
+		}
 		m_font->drawText(m_text, rc, 1.f, finalClip, m_format, m_foreColor, 1.f, 1.f);
 	}
 
@@ -93,6 +100,9 @@ namespace gui
 		if(!setting.empty())
 		{
 			m_font = m_system.getWindowManager().loadFont(setting.first_child().value());
+			m_shadow_enabled = setting["shadow"].as_bool();
+			m_shadow_scale = StringToSize(setting["shadow_scale"].value());
+			m_shadow_offset = StringToPoint(setting["shadpow_offset"].value());
 		}
 
 		setting = node("Formatting");

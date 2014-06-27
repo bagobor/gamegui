@@ -29,6 +29,8 @@ namespace gui
 
 	void Tooltip::rise()
 	{
+		if (getDisableRise()) return;
+
 		if(m_parent)
 		{
 			children_list& children = m_parent->getChildren();

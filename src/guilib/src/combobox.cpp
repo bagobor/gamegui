@@ -71,6 +71,7 @@ namespace gui
 
 	void Combobox::onListClick(const events::ClickEvent& e) 
 	{
+		static const std::string empty_string;
 		if(m_list)
 		{
 			hideList();
@@ -79,11 +80,11 @@ namespace gui
 			if(lb)
 			{
 				Label* st = lb->GetSelectedItem();
-				setText(st ? st->getText() : "");
+				setText(st ? st->getText() : empty_string);
 			}
 			else
 			{
-				setText("");
+				setText(empty_string);
 			}
 
 		}

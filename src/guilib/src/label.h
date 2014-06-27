@@ -45,6 +45,11 @@ namespace gui
 		TextFormatting m_format;
 		float m_spacing;
 
+		point m_shadow_offset;
+		Size m_shadow_scale;
+
+		bool m_shadow_enabled;
+		
 		bool m_centred;
 	};
 }

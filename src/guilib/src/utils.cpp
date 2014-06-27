@@ -30,7 +30,7 @@ namespace gui
 
 	point StringToPoint(const std::string& str)
 	{
-		int x, y;
+		int x=0, y=0;
 		sscanf(str.c_str(), "%d %d", &x, &y);
 		return point((float)x, (float)y);
 	}
@@ -72,7 +72,7 @@ namespace gui
 
 	Size StringToSize(const std::string& str)
 	{
-		float w,h;
+		float w=0,h=0;
 		sscanf(str.c_str(), "%f %f", &w, &h);
 		return Size((float)w, (float)h);
 	}
