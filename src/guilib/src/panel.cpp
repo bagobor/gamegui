@@ -50,7 +50,7 @@ namespace gui
 		if (m_toplImg)
 		{
 			// calculate final destination area
-			imageSize = m_toplImg->GetSize();
+			imageSize = m_toplImg->size();
 			finalRect.m_left = dest.m_left;
 			finalRect.m_top  = dest.m_top;
 			finalRect.setSize(imageSize);
@@ -70,7 +70,7 @@ namespace gui
 		if (m_toprImg)
 		{
 			// calculate final destination area
-			imageSize = m_toprImg->GetSize();
+			imageSize = m_toprImg->size();
 			finalRect.m_left = dest.m_right - imageSize.width;
 			finalRect.m_top  = dest.m_top;
 			finalRect.setSize(imageSize);
@@ -88,7 +88,7 @@ namespace gui
 		if (m_botlImg)
 		{
 			// calculate final destination area
-			imageSize = m_botlImg->GetSize();
+			imageSize = m_botlImg->size();
 			finalRect.m_left = dest.m_left;
 			finalRect.m_top  = dest.m_bottom - imageSize.height;
 			finalRect.setSize(imageSize);
@@ -106,7 +106,7 @@ namespace gui
 		if (m_botrImg)
 		{
 			// calculate final destination area
-			imageSize = m_botrImg->GetSize();
+			imageSize = m_botrImg->size();
 			finalRect.m_left = dest.m_right - imageSize.width;
 			finalRect.m_top  = dest.m_bottom - imageSize.height;
 			finalRect.setSize(imageSize);
@@ -123,7 +123,7 @@ namespace gui
 		if (m_topImg)
 		{
 			// calculate final destination area
-			imageSize = m_topImg->GetSize();
+			imageSize = m_topImg->size();
 			finalRect.m_left   = dest.m_left + topOffset;
 			finalRect.m_right  = finalRect.m_left + topWidth;
 			finalRect.m_top    = dest.m_top;
@@ -141,7 +141,7 @@ namespace gui
 		if (m_botImg)
 		{
 			// calculate final destination area
-			imageSize = m_botImg->GetSize();
+			imageSize = m_botImg->size();
 			finalRect.m_left   = dest.m_left + bottomOffset;
 			finalRect.m_right  = finalRect.m_left + bottomWidth;
 			finalRect.m_bottom = dest.m_bottom;
@@ -159,7 +159,7 @@ namespace gui
 		if (m_lImg)
 		{
 			// calculate final destination area
-			imageSize = m_lImg->GetSize();
+			imageSize = m_lImg->size();
 			finalRect.m_left   = dest.m_left;
 			finalRect.m_right  = finalRect.m_left + imageSize.width;
 			finalRect.m_top    = dest.m_top + leftOffset;
@@ -177,7 +177,7 @@ namespace gui
 		if (m_rImg)
 		{
 			// calculate final destination area
-			imageSize = m_rImg->GetSize();
+			imageSize = m_rImg->size();
 			finalRect.m_top    = dest.m_top + rightOffset;
 			finalRect.m_bottom = finalRect.m_top + rightHeight;
 			finalRect.m_right  = dest.m_right;

@@ -238,7 +238,7 @@ namespace gui
 			if (m_leftImg)
 			{
 				// calculate final destination area
-				imgSize = m_leftImg->GetSize();
+				imgSize = m_leftImg->size();
 				componentRect.m_left = finalRect.m_left;
 				componentRect.m_top  = finalRect.m_top;
 				componentRect.setSize(imgSize);
@@ -251,7 +251,7 @@ namespace gui
 			// right image
 			if (m_rightImg)
 			{
-				imgSize = m_rightImg->GetSize();
+				imgSize = m_rightImg->size();
 				componentRect.m_left = finalRect.m_right - imgSize.width;
 				componentRect.m_top  = finalRect.m_top;
 				componentRect.setSize(imgSize);
@@ -279,7 +279,7 @@ namespace gui
 			if (m_leftImg)
 			{
 				// calculate final destination area
-				imgSize = m_leftImg->GetSize();
+				imgSize = m_leftImg->size();
 				componentRect.m_left = finalRect.m_left;
 				componentRect.m_top  = finalRect.m_top;
 				componentRect.setSize(imgSize);
@@ -292,7 +292,7 @@ namespace gui
 			// bottom image
 			if (m_rightImg)
 			{
-				imgSize = m_rightImg->GetSize();
+				imgSize = m_rightImg->size();
 				componentRect.m_left = finalRect.m_left;
 				componentRect.m_top  = finalRect.m_bottom - imgSize.height;
 				componentRect.setSize(imgSize);

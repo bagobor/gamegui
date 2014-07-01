@@ -15,7 +15,8 @@ namespace gui
 		{
 			Normal,
 			Hovered,
-			Pushed
+			Pushed,
+			Disabled
 		};
 
 		struct StateImagery
@@ -44,6 +45,8 @@ namespace gui
 
 		virtual void init(xml::node& node);
 
+		States getState() const { return m_state; }
+
 	protected:
 		States getStateByString(const std::string& type);
 
@@ -53,8 +56,7 @@ namespace gui
 		
 		ImagesetPtr m_imgset;
 
-		bool m_hovered;
-		bool m_pushed;
+		States m_state;
 	};
 
 	class  ImageButton : public Button
@@ -70,6 +72,9 @@ namespace gui
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 
 		virtual void init(xml::node& node);
+
+		void setStateImage(States state, const Image* image) { m_stateimg[state] = image; }
+		const Image* getStateImage(States state) { return m_stateimg[state]; }
 
 	protected:
 		typedef std::map<unsigned int, const Image*> StateImages; 

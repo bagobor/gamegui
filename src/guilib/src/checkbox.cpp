@@ -101,7 +101,7 @@ namespace gui
 		float offset = 0.f;
 		if(state)
 		{
-			Size imgSize = state->GetSize();
+			Size imgSize = state->size();
 			Rect dest(finalRect);
 			dest.setWidth(imgSize.width);
 			offset += imgSize.width;

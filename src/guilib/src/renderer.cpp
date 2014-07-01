@@ -101,7 +101,7 @@ void Renderer::immediateDraw(const Image& img, const Rect& dest_rect, float z, c
 	// check if rect was totally clipped
 	if (final_rect.getWidth() != 0)
 	{
-		size_t images = img.GetCount();
+		size_t images = img.count();
 		for(size_t i = 0; i < images; ++i)
 		{
 			RenderImageInfo info;
@@ -138,7 +138,7 @@ void Renderer::immediateDraw(const Image& img, const Rect& dest_rect, float z, c
 
 void Renderer::draw(const Image& img, const Rect& dest_rect, float z, const Rect& clip_rect,const ColorRect& colors, ImageOps horz, ImageOps vert)
 {
-	Size imgSz = img.GetSize();
+	Size imgSz = img.size();
     
 	unsigned int horzTiles = 1;
 	unsigned int vertTiles = 1;
@@ -203,7 +203,7 @@ void Renderer::drawLine(const Image& img, const vec2* p, size_t size, float z, c
 
 	vec2 p0, p1, p2, p3;
 
-	size_t images = img.GetCount();
+	size_t images = img.count();
 	for(size_t i = 0; i < images; ++i)
 	{
 		RenderImageInfo info;
@@ -242,8 +242,8 @@ void Renderer::drawLine(const Image& img, const vec2* p, size_t size, float z, c
 
 void Renderer::draw(const Image& img, const Rect& dest_rect, float z, const Rect& clip_rect,const ColorRect& colors)
 {
-	const Size& sz = img.GetSize();
-	size_t images = img.GetCount();
+	const Size& sz = img.size();
+	size_t images = img.count();
 	for(size_t i = 0; i < images; ++i)
 	{
 		RenderImageInfo info;

@@ -51,7 +51,7 @@ std::string Cursor::getType() const
 {
 	if(m_currentCursor)
 	{
-		return m_currentCursor->GetName();
+		return m_currentCursor->name();
 	}
 	return "";
 }
@@ -60,7 +60,7 @@ void Cursor::render()
 {
 	if(m_currentCursor)
 	{
-		Rect dest(getPosition(), m_currentCursor->GetSize());
+		Rect dest(getPosition(), m_currentCursor->size());
 		m_render.immediateDraw(*m_currentCursor, dest, 0.f, Rect(point(0.f,0.f), m_render.getViewportSize()), Color(1.f, 1.f, 1.f));
 	}
 }

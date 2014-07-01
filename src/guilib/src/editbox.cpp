@@ -332,7 +332,7 @@ namespace gui
 		if (m_leftImg)
 		{
 			// calculate final destination area
-			imgSize = m_leftImg->GetSize();
+			imgSize = m_leftImg->size();
 			componentRect = finalRect;
 			componentRect.m_right = componentRect.m_left + imgSize.width;
 			left  = imgSize.width;
@@ -343,7 +343,7 @@ namespace gui
 		// right image
 		if (m_rightImg)
 		{
-			imgSize = m_rightImg->GetSize();
+			imgSize = m_rightImg->size();
 			componentRect = finalRect;
 			componentRect.m_left = finalRect.m_right - imgSize.width;
 			right = imgSize.width;
@@ -399,7 +399,7 @@ namespace gui
 			
 			if(m_selectImg)
 			{
-				imgSize = m_selectImg->GetSize();
+				imgSize = m_selectImg->size();
 				
 				Rect selrect(dest);
 				selrect.m_left += starts;
@@ -430,7 +430,7 @@ namespace gui
 				std::wstring tmp = outtext.substr(0, m_caretPos);
 				x = m_font->getFormattedTextExtent(tmp, Rect(), m_format);
 			}
-			imgSize = m_caretImg->GetSize();
+			imgSize = m_caretImg->size();
 			Rect caretrect(dest);
 			caretrect.m_left += x;
 			caretrect.setSize(imgSize);
@@ -611,7 +611,7 @@ namespace gui
 		if (m_leftImg)
 		{
 			// calculate final destination area
-			imgSize = m_leftImg->GetSize();
+			imgSize = m_leftImg->size();
 			componentRect = finalRect;
 			componentRect.m_right = componentRect.m_left + imgSize.width;
 			left  = imgSize.width;
@@ -622,7 +622,7 @@ namespace gui
 		// right image
 		if (m_rightImg)
 		{
-			imgSize = m_rightImg->GetSize();
+			imgSize = m_rightImg->size();
 			componentRect = finalRect;
 			componentRect.m_left = finalRect.m_right - imgSize.width;
 			right = imgSize.width;
