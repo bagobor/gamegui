@@ -15,8 +15,7 @@ namespace gui
 
 Button::Button(System& sys, const std::string& name) :
 	Label(sys, name),
-	m_pushed(false),
-	m_hovered(false)
+	m_state(Normal)
 {
 }
 
@@ -27,14 +26,14 @@ Button::~Button(void)
 bool Button::onMouseEnter(void)
 {
 	invalidate();
-	m_hovered = true;
+	m_state = Hovered;
 	return Label::onMouseEnter();
 }
 
 bool Button::onMouseLeave(void)
 {
 	invalidate();
-	m_hovered = false;
+	m_state = Normal;
 	return Label::onMouseLeave();
 }
 
@@ -45,13 +44,13 @@ bool Button::onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState s
 		if(state == EventArgs::Down)
 		{
 			m_system.queryCaptureInput(this);
-			m_pushed = true;
+			m_state = Pushed;
 			invalidate();
 		}
-		else if (m_pushed)
+		else if (m_state == Pushed)
 		{
 			m_system.queryCaptureInput(0);
-			m_pushed = false;
+			m_state = Hovered;
 			
 			//point pt = transformToWndCoord(m_system.getCursor().getPosition());
 			if(isCursorInside())
@@ -81,12 +80,12 @@ bool Button::onKeyboardButton(EventArgs::Keys key, EventArgs::ButtonState state)
 		if(state == EventArgs::Down)
 		{
 			//m_system.queryCaptureInput(this);
-			m_pushed = true;
+			m_state = Pushed;
 		}
 		else
 		{
 			//m_system.queryCaptureInput(0);
-			m_pushed = false;
+			m_state = Normal;
 			MouseEventArgs m;
 			m.name = "On_Clicked";
 			callHandler(&m);
@@ -102,17 +101,17 @@ bool Button::onKeyboardButton(EventArgs::Keys key, EventArgs::ButtonState state)
 
 bool Button::onCaptureLost(void)
 {
-	m_pushed = false;
+	m_state = Normal;
 	invalidate();
 	return true;
 }
 
 void Button::render(const Rect& finalRect, const Rect& finalClip)
 {
-	States st; 
-	if(m_pushed) st = Pushed;
-	else if(m_hovered || m_focus) st = Hovered;
-	else st = Normal;	
+	States st = m_state;
+	/*	if(m_pushed) st = Pushed;
+		else if(m_hovered || m_focus) st = Hovered;
+		else st = Normal;*/
 	StateImagery& state = m_states[st];
 	float left = 0;
 	float right = 0;
@@ -125,7 +124,7 @@ void Button::render(const Rect& finalRect, const Rect& finalClip)
     if (state.leftImg)
     {
         // calculate final destination area
-        imgSize = state.leftImg->GetSize();
+		imgSize = state.leftImg->size();
         componentRect.m_left = finalRect.m_left;
         componentRect.m_top  = finalRect.m_top;
 		componentRect.m_right = finalRect.m_left + imgSize.width;
@@ -140,7 +139,7 @@ void Button::render(const Rect& finalRect, const Rect& finalClip)
 	// right image
     if (state.rightImg)
     {
-        imgSize = state.rightImg->GetSize();
+		imgSize = state.rightImg->size();
         componentRect.m_left = finalRect.m_right - imgSize.width;
         componentRect.m_top  = finalRect.m_top;
         componentRect.m_right = finalRect.m_right;
@@ -197,6 +196,7 @@ Button::States Button::getStateByString(const std::string& type)
 {
 	if(type == "Hovered") return Hovered;
 	else if(type == "Pushed") return Pushed;
+	else if (type == "Disabled") return Disabled;
 	return Normal;
 }
 
@@ -212,12 +212,12 @@ ImageButton::~ImageButton(void)
 
 void ImageButton::render(const Rect& finalRect, const Rect& finalClip)
 {
-	States st = Normal;
+	States st = m_state;
 
-	if(m_pushed) 
-		st = Pushed;
-	else if(m_hovered || m_focus) 
-		st = Hovered;
+	//if(m_pushed) 
+	//	st = Pushed;
+	//else if(m_hovered || m_focus) 
+	//	st = Hovered;
 	
 	const Image* i = m_stateimg[st];
 	if(i)
@@ -267,7 +267,7 @@ Thumb::~Thumb(void)
 
 bool Thumb::onMouseMove(void)
 {
-	if(m_pushed)
+	if(m_state == Pushed)
 	{
 		point pt = transformToWndCoord(m_system.getCursor().getPosition());
 		point newpos = pt - m_offset;
@@ -301,7 +301,7 @@ bool Thumb::onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState st
 		if(state == EventArgs::Down && m_movable)
 		{
 			m_system.queryCaptureInput(this);
-			m_pushed = true;
+			m_state = Pushed;
 
 			point pt = transformToWndCoord(m_system.getCursor().getPosition());
 			m_offset = pt - m_area.getPosition();
@@ -309,10 +309,10 @@ bool Thumb::onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState st
 		}
 		else
 		{
-			if(m_pushed)
+			if(m_state == Pushed)
 				m_system.queryCaptureInput(0);
 
-			m_pushed = false;
+			m_state = Hovered;
 		}
 		invalidate();
 	}
@@ -427,10 +427,10 @@ ScrollThumb::~ScrollThumb(void)
 
 void ScrollThumb::render(const Rect& finalRect, const Rect& finalClip)
 {
-	States st; 
-	if(m_pushed) st = Pushed;
+	States st = m_state;
+/*	if(m_pushed) st = Pushed;
 	else if(m_hovered || m_focus) st = Hovered;
-	else st = Normal;	
+	else st = Normal;*/	
 	StateImagery& state = m_states[st];
 	float left = 0;
 	float right = 0;
@@ -445,7 +445,7 @@ void ScrollThumb::render(const Rect& finalRect, const Rect& finalClip)
 		if (state.leftImg)
 		{
 			// calculate final destination area
-			imgSize = state.leftImg->GetSize();
+			imgSize = state.leftImg->size();
 			componentRect.m_left = finalRect.m_left;
 			componentRect.m_top  = finalRect.m_top;
 			componentRect.setSize(imgSize);
@@ -458,7 +458,7 @@ void ScrollThumb::render(const Rect& finalRect, const Rect& finalClip)
 		// right image
 		if (state.rightImg)
 		{
-			imgSize = state.rightImg->GetSize();
+			imgSize = state.rightImg->size();
 			componentRect.m_left = finalRect.m_right - imgSize.width;
 			componentRect.m_top  = finalRect.m_top;
 			componentRect.setSize(imgSize);
@@ -486,7 +486,7 @@ void ScrollThumb::render(const Rect& finalRect, const Rect& finalClip)
 		if (state.leftImg)
 		{
 			// calculate final destination area
-			imgSize = state.leftImg->GetSize();
+			imgSize = state.leftImg->size();
 			componentRect.m_left = finalRect.m_left;
 			componentRect.m_top  = finalRect.m_top;
 			componentRect.setSize(imgSize);
@@ -499,7 +499,7 @@ void ScrollThumb::render(const Rect& finalRect, const Rect& finalClip)
 		// bottom image
 		if (state.rightImg)
 		{
-			imgSize = state.rightImg->GetSize();
+			imgSize = state.rightImg->size();
 			componentRect.m_left = finalRect.m_left;
 			componentRect.m_top  = finalRect.m_bottom - imgSize.height;
 			componentRect.setSize(imgSize);

@@ -50,16 +50,16 @@ namespace gui
 		/// @brief - An empty image
 		Image();
 
-		const Size& GetSize() const;
-		Imageset* GetParent() const;
+		const Size& size() const;
+		Imageset* parent() const;
 		/// @brief - returns count of subimages
-		size_t GetCount() const;
+		size_t count() const;
 		/// @brief - render info for an image
 		/// @param info - output
 		/// @param subimage - in range [0, GetCount())
 		void GetRenderInfo(RenderImageInfo& info, size_t subimage) const;
 		
-		const std::string& GetName() const;
+		const std::string& name() const;
 
 		void setAdditiveBlend(bool is_addivie) { m_isAdditiveBlend = is_addivie; }
 		bool getAdditiveBlend()  const { return m_isAdditiveBlend; }
@@ -72,22 +72,22 @@ namespace gui
 		bool m_isAdditiveBlend;
 	};
 
-	inline const Size& Image::GetSize() const
+	inline const Size& Image::size() const
 	{
 		return m_size;
 	}
 
-	inline Imageset* Image::GetParent() const
+	inline Imageset* Image::parent() const
 	{
 		return m_parent;
 	}
 
-	inline size_t Image::GetCount() const
+	inline size_t Image::count() const
 	{
 		return m_data.size();
 	}
 
-	inline const std::string& Image::GetName() const
+	inline const std::string& Image::name() const
 	{
 		return m_name;
 	}

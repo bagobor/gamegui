@@ -102,7 +102,7 @@ namespace gui
 			m_font = m_system.getWindowManager().loadFont(setting.first_child().value());
 			m_shadow_enabled = setting["shadow"].as_bool();
 			m_shadow_scale = StringToSize(setting["shadow_scale"].value());
-			m_shadow_offset = StringToPoint(setting["shadpow_offset"].value());
+			m_shadow_offset = StringToPoint(setting["shadow_offset"].value());
 		}
 
 		setting = node("Formatting");

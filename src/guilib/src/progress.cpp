@@ -90,7 +90,7 @@ void ProgressBar::render(const Rect& finalRect, const Rect& finalClip)
 	if (m_leftImg)
     {
         // calculate final destination area
-        imgSize = m_leftImg->GetSize();
+		imgSize = m_leftImg->size();
 		componentRect.m_right = componentRect.m_left + imgSize.width;
 		componentRect.m_bottom = componentRect.m_top + imgSize.height;
 		left  = imgSize.width;
@@ -103,7 +103,7 @@ void ProgressBar::render(const Rect& finalRect, const Rect& finalClip)
 	// right image
     if (m_rightImg)
     {
-        imgSize = m_rightImg->GetSize();
+		imgSize = m_rightImg->size();
         componentRect.m_left = componentRect.m_right - imgSize.width;
         componentRect.m_bottom = componentRect.m_top + imgSize.height;
 

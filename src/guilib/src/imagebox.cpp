@@ -52,7 +52,7 @@ namespace gui
 	const std::string ImageBox::getImage() const
 	{
 		if(m_img)
-			return m_img->GetName();
+			return m_img->name();
 
 		return std::string();
 	}

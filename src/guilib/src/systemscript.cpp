@@ -132,8 +132,8 @@ void System::makeLuaBinding(void)
 				value("Stretch", Stretch),
 				value("Tile", Tile)
 			]
-			.def("GetName", &Image::GetName)
-			.def("GetSize", &Image::GetSize)
+			.def("getName", &Image::name)
+			.def("getSize", &Image::size)
 			.property("AdditiveBlend", &Image::getAdditiveBlend, &Image::setAdditiveBlend)
 			.def("setAdditiveBlend", &Image::setAdditiveBlend)
 			.def("getAdditiveBlend", &Image::getAdditiveBlend)
@@ -197,11 +197,12 @@ void System::makeLuaBinding(void)
 			.def("transformToWndCoord", &base_window::transformToWndCoord)
 			.def("transformToRootCoord", &base_window::transformToRootCoord)
 			,
-			def("to_statictext", &window_caster<Label>::apply),
-			def("to_staticimage", &window_caster<ImageBox>::apply),
+			def("to_label", &window_caster<Label>::apply),
+			def("to_imagebox", &window_caster<ImageBox>::apply),
 			def("to_checkbox", &window_caster<Checkbox>::apply),
 			def("to_editbox", &window_caster<Editbox>::apply),
 			def("to_button", &window_caster<Button>::apply),
+			def("to_imagebutton", &window_caster<ImageButton>::apply),
 			def("to_panel", &window_caster<Panel>::apply),
 			def("to_framewindow", &window_caster<FrameWindow>::apply),
 			def("to_progress", &window_caster<Progress>::apply),
@@ -317,8 +318,21 @@ void System::makeLuaBinding(void)
 			class_ <ScrollThumb, bases<Thumb> >("ScrollThumb")			
 			,
 			class_ <Button, bases<Label> >("Button")
+			.enum_("States")
+			[
+				value("Normal", Button::Normal),
+				value("Hovered", Button::Hovered),
+				value("Pushed", Button::Pushed),
+				value("Disabled", Button::Disabled)
+			]
 			.property("name", &Button::getName)
+			.def("getState", &Button::getState)
 			,
+			class_<ImageButton, bases<Button> >("ImageButton")
+			.def("getStateImage", &ImageButton::getStateImage)
+			.def("setStateImage", &ImageButton::setStateImage)
+			,
+
 			class_ <Slider, bases<base_window> >("Slider")
 			.property("scroll", &Slider::getScrollPosition, &Slider::setScrollPosition)
 			.def("getScroll", &Slider::getScrollPosition)

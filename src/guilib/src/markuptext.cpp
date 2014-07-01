@@ -292,7 +292,7 @@ namespace gui
 				
 				if(img)
 				{
-					Size imgsize = img->GetSize();
+					Size imgsize = img->size();
 
 					if(imgsize.width > maxwidth - xpos)
 					{

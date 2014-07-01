@@ -123,7 +123,7 @@ namespace gui
 		if (m_captionLeftImg)
 		{
 			// calculate final destination area
-			imgSize = m_captionLeftImg->GetSize();
+			imgSize = m_captionLeftImg->size();
 			Rect componentRect;
 			componentRect.m_left = finalRect.m_left;
 			componentRect.m_top  = finalRect.m_top;
@@ -138,7 +138,7 @@ namespace gui
 		// right image
 		if (m_captionRightImg)
 		{
-			imgSize = m_captionRightImg->GetSize();
+			imgSize = m_captionRightImg->size();
 			Rect componentRect;
 			componentRect.m_left = finalRect.m_right - imgSize.width;
 			componentRect.m_top  = finalRect.m_top;
