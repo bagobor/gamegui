@@ -117,7 +117,8 @@ PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB = 0;
 template<typename T>
 bool getproc(T& proc_ptr, const char* proc_name) {
 	proc_ptr = (T)wglGetProcAddress(proc_name);
-	return proc_ptr != 0;
+	bool isGood = proc_ptr != 0;
+	return isGood;
 }
 
 #define GLPROC( T ) getproc(T, # T)

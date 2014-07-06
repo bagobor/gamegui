@@ -74,6 +74,8 @@ namespace gui
 			filesystem_ptr filesystem;
 			gpu_program_ptr m_shader;
 			mesh_ptr m_mesh;
+			//for Immediate Drawing of sprites
+			mesh_ptr m_small_mesh;
 		};
 	}
 }

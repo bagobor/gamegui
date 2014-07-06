@@ -14,16 +14,6 @@ typedef std::shared_ptr<struct index_buffer> ib_ptr;
 typedef std::shared_ptr<struct mesh> mesh_ptr;
 typedef std::shared_ptr<struct gpu_program> gpu_program_ptr;
 
-//struct texture {
-//	static texture_ptr create(const char* filename);
-//	virtual ~texture();
-//
-//	void bind(size_t slot);
-//
-//	size_t width, height;
-//	platform_handle h;
-//};
-
 struct gpu_buffer {
 	gpu_buffer(size_t size_in_bytes);
 	virtual ~gpu_buffer();
@@ -99,9 +89,6 @@ struct gpu_program {
 		void set(const glm::vec4& v) {p->set(*this, v);}
 		void set(const glm::vec2& v) { p->set(*this, v); }
 		void set(float v) {p->set(*this, v);}
-		
-		//void set(texture_ptr t) {p->set(*this, t);}
-		//void set(texture_ptr t, size_t slot) {p->set(*this, t, slot);}
 	};
 
 	struct shader_desc {
@@ -155,5 +142,5 @@ private:
 		
 private:	
 	platform_handle prog;
-	int cur_texture_slot;
+	std::map<std::string, size_t> m_texture_slots;
 };

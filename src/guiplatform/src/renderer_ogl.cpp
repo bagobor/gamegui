@@ -5,6 +5,7 @@
 
 #include <GL/GL.h>
 
+
 #include "../renderer_ogl.h"
 #include "opengl.h"
 
@@ -17,10 +18,38 @@
 
 #define PixelAligned(x)	((float)((int)( x )))
 
+#include <GL/glu.h>
+
+void CheckOpenGLError(const char* stmt, const char* fname, int line)
+{
+	GLenum err = glGetError();
+	if (err != GL_NO_ERROR)
+	{
+		const char* err_string = (const char*)gluErrorString(err);
+		printf("[GL ERROR]  %s [%08x]\n%s\nat %s:%i\n", err_string, err, stmt, fname, line);
+		abort();
+	}
+}
+
+#ifdef _DEBUG
+#define GL_CHECK(stmt) do { \
+	stmt; \
+	CheckOpenGLError(#stmt, __FILE__, __LINE__); \
+} while (0)
+#else
+#define GL_CHECK(stmt) stmt
+#endif
+
+//#define GLErrCheck() 
+//GLenum errCode = glGetError();
+//if (errCode != GL_NO_ERROR) {
+//	const char* error_str = (const char*)gluErrorString(errCode);
+//	printf("[GL ERROR] %s", error_str);
+//}
 
 
 const char* vertex_shader_src =
-"#version 120 \n"
+"#version 330 \n"
 " \n"
 "attribute vec2 a_position;\n"
 "attribute vec2 a_texCoord;\n"
@@ -55,7 +84,7 @@ const char* vertex_shader_src =
 
 
 const char* fragment_shader_src =
-"#version 120\n"
+"#version 330\n"
 "\n"
 "#ifdef GL_ES\n"
 "precision lowp float;\n"
@@ -101,22 +130,22 @@ namespace gui
 			renderer(r),
 			m_gl_handler(0)
 		{
-			glGenTextures(1, &m_gl_handler);
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, m_gl_handler);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			GL_CHECK(glGenTextures(1, &m_gl_handler));
+			GL_CHECK(glActiveTexture(GL_TEXTURE0));
+			GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_gl_handler));
+			GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+			GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+			GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+			GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 		}
 
 		TextureOGL::~TextureOGL() {
-			glDeleteTextures(1, &m_gl_handler);
+			GL_CHECK(glDeleteTextures(1, &m_gl_handler));
 		}
 
 		void TextureOGL::bind(size_t slot){
-			glActiveTexture(GL_TEXTURE0 + slot);
-			glBindTexture(GL_TEXTURE_2D, m_gl_handler);
+			GL_CHECK(glActiveTexture(GL_TEXTURE0 + slot));
+			GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_gl_handler));
 		}
 
 		bool TextureOGL::init(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
@@ -136,19 +165,19 @@ namespace gui
 
 			if (bytesPerRow % 8 == 0)
 			{
-				glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
+				GL_CHECK(glPixelStorei(GL_UNPACK_ALIGNMENT, 8));
 			}
 			else if (bytesPerRow % 4 == 0)
 			{
-				glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+				GL_CHECK(glPixelStorei(GL_UNPACK_ALIGNMENT, 4));
 			}
 			else if (bytesPerRow % 2 == 0)
 			{
-				glPixelStorei(GL_UNPACK_ALIGNMENT, 2);
+				GL_CHECK(glPixelStorei(GL_UNPACK_ALIGNMENT, 2));
 			}
 			else
 			{
-				glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+				GL_CHECK(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
 			}
 
 			bind(0);
@@ -156,19 +185,19 @@ namespace gui
 			switch (format) {
 			//case Texture::PF_Default:
 			case Texture::PF_RGBA8888:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+				GL_CHECK(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data));
 				return true;
 
 			case Texture::PF_RGB888:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)width, (GLsizei)height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+				GL_CHECK(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)width, (GLsizei)height, 0, GL_RGB, GL_UNSIGNED_BYTE, data));
 				return true;
 
 			case Texture::PF_RGBA4444:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
+				GL_CHECK(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data));
 				return true;
 
 			case Texture::PF_RGB565:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)width, (GLsizei)height, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
+				GL_CHECK(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)width, (GLsizei)height, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data));
 				return true;
 			}
 
@@ -464,6 +493,10 @@ namespace gui
 
 			m_mesh = mesh::create(va, vbuffer, ibuffer);
 			m_mesh->setShader(m_shader);
+
+			auto small_vbuffer = vertex_buffer::create(4 * sizeof(QuadVertex), nullptr, true);
+			m_small_mesh = mesh::create(va, small_vbuffer, ibuffer);
+			m_small_mesh->setShader(m_shader);
 		}
 
 		TexturePtr RenderDeviceGL::createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
@@ -490,25 +523,27 @@ namespace gui
 
 		void RenderDeviceGL::renderImmediate(const QuadInfo& q, Texture* texture, bool isAdditive)
 		{
-			//if (!m_buffer)
-			//	return;
-			glDisable(GL_CULL_FACE);
-			glDepthMask(GL_FALSE);
-			glEnable(GL_BLEND);
-			//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glBlendFunc(GL_SRC_ALPHA, (isAdditive ? GL_ONE : GL_ONE_MINUS_SRC_ALPHA));
-			glEnable(GL_DEPTH_TEST);
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			if (!m_small_mesh)
+				return;
 
-			//m_device.get_viewport(viewPortDesc);
-			m_shader->set("v_viewportSize", glm::vec2(1024, 768));
+			GL_CHECK(glDisable(GL_CULL_FACE));
+			GL_CHECK(glDepthMask(GL_FALSE));
+			GL_CHECK(glEnable(GL_BLEND));
+			//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			GL_CHECK(glBlendFunc(GL_SRC_ALPHA, (isAdditive ? GL_ONE : GL_ONE_MINUS_SRC_ALPHA)));
+			GL_CHECK(glEnable(GL_DEPTH_TEST));
+			GL_CHECK(glPolygonMode(GL_FRONT_AND_BACK, GL_FILL));
+
+			//GLuint vao;
+			//glGenVertexArrays(1, &vao);			
+		
 			m_shader->begin();
 			{
 				glm::vec2 viewport_size(1024, 768);
 				m_shader->set("v_viewportSize", viewport_size);
 				m_shader->set("Texture0", (TextureOGL*)texture);
 
-				QuadVertex buffmem[VERTEX_PER_QUAD];
+				static QuadVertex buffmem[VERTEX_PER_QUAD];
 
 				float scaleX = 1.f;
 				float scaleY = 1.f;
@@ -526,33 +561,21 @@ namespace gui
 				size_t m_bufferPos = vert_filled;
 
 				// if bufferPos is 0 there is no data in the buffer and nothing to render
-				if (m_bufferPos == 0)
-				{
-					return;
+				if (m_bufferPos > 0) {
+					m_small_mesh->update_vb(sizeof(QuadVertex)* 4, buffmem, true);
+
+					typedef unsigned short uint16;
+					const unsigned int prim_count = 2 * m_bufferPos / VERTEX_PER_QUAD;
+
+					m_small_mesh->bind();
+
+					GL_CHECK(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0));
+
+					// reset buffer position to 0...
+					m_bufferPos = 0;
+					m_small_mesh->unbind();
 				}
 
-				typedef unsigned short uint16;
-				const unsigned int prim_count = 2 * m_bufferPos / VERTEX_PER_QUAD;
-
-#define BUFFER_OFFSET(buffer, i) ((char *)NULL + (i))
-				
-
-				for (auto va : va) {
-					auto it = m_shader->m_attribs.find(va.name);
-					if (it == m_shader->m_attribs.end()) continue; // skip attribute
-					unsigned attrib_index = it->second;
-					glVertexAttribPointer((GLuint)attrib_index, va.size, va.type, va.norm ? GL_TRUE : GL_FALSE, va.stride, BUFFER_OFFSET(temp_ptr, va.offset));
-					glEnableVertexAttribArray(attrib_index);
-				}
-
-#undef BUFFER_OFFSET
-				m_mesh->ib->bind();
-
-				glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-
-				// reset buffer position to 0...
-				m_bufferPos = 0;
-				m_mesh->ib->unbind();
 			}
 			m_shader->end();
 		}
@@ -561,9 +584,6 @@ namespace gui
 
 		void RenderDeviceGL::render(const Batches& _batches, const Quads& _quads, size_t num_batches, Size scale)
 		{
-			//todo: handle additive blend!
-			GLenum err = glGetError();
-			int i = 5;
 			if (!m_mesh) return;
 
 			//setRenderStates();
@@ -577,7 +597,7 @@ namespace gui
 			//	scaleX = viewport.width / m_originalsize.width;
 			//	scaleY = viewport.height / m_originalsize.height;
 			//}
-			glEnable(GL_BLEND);
+			GL_CHECK(glEnable(GL_BLEND));
 			
 
 			static unsigned long s_quadOffset = 0;	// buffer offset in quads			
@@ -594,7 +614,7 @@ namespace gui
 				if ( VERTEX_PER_QUAD * (batch.numQuads + s_quadOffset) >= VERTEXBUFFER_CAPACITY)
 					s_quadOffset = 0;
 
-				glBlendFunc(GL_SRC_ALPHA, (batch.isAdditiveBlend ? GL_ONE : GL_ONE_MINUS_SRC_ALPHA));
+				GL_CHECK(glBlendFunc(GL_SRC_ALPHA, (batch.isAdditiveBlend ? GL_ONE : GL_ONE_MINUS_SRC_ALPHA)));
 				//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
 				//buffmem = (QuadVertex*)m_buffer->lock
@@ -616,21 +636,17 @@ namespace gui
 					fill_vertex(*quad, buff, scaleX, scaleY);
 				}
 
-				err = glGetError();
 
 				TextureOGL* texture = (TextureOGL*)batch.texture;
 				m_shader->set("Texture0", texture);
-
-				err = glGetError();
 				
-				//m_buffer->unlock();
 				m_mesh->update_vb(sizeof(QuadVertex)* 4 * numQ, buffmem, true);				
 
 				m_shader->set("v_viewportSize", glm::vec2(1024, 768));				
 
 				m_mesh->bind();
 				
-				glDrawElements(GL_TRIANGLES, numQ*6, GL_UNSIGNED_SHORT, 0);
+				GL_CHECK(glDrawElements(GL_TRIANGLES, numQ * 6, GL_UNSIGNED_SHORT, 0));
 
 				m_mesh->unbind();
 
@@ -639,10 +655,6 @@ namespace gui
 				if (batch.callbackInfo.window && batch.callbackInfo.afterRenderCallback)
 				{
 					batch.callbackInfo.afterRenderCallback(batch.callbackInfo.window, batch.callbackInfo.dest, batch.callbackInfo.clip);
-					//m_shader->end();
-					// if it was not last batch
-					//if (b < m_num_batches -1)
-					//	setRenderStates();
 				}
 			}
 			
