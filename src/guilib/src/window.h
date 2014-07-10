@@ -36,7 +36,6 @@ namespace gui
 	}
 
 	class  base_window :
-		public named_object,
 		public TreeNode<base_window>,
 		//public RefCounted,
 		public ScriptObject<base_window>,
@@ -47,8 +46,11 @@ namespace gui
 		base_window(System& sys, const std::string& name = std::string());
 		virtual ~base_window();
 
+		std::string const& getName() const;
+		void setName(const std::string& name);		
+
 		static const char* GetType() { return "base_window"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		void suspendLayout() { m_suspended = true; onSuspendLayout(); }
 		void resumeLayout() { m_suspended = false; onResumeLayout(); }
@@ -227,6 +229,8 @@ namespace gui
 		
 		typedef std::unordered_map<std::string, std::string> HandlerMap;
 		HandlerMap		m_handlers;
+
+		std::string m_strName;
 	};
 
 	typedef std::shared_ptr<base_window> window_ptr;

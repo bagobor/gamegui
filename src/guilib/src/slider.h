@@ -12,7 +12,7 @@ namespace gui
 		virtual ~Slider();
 
 		static const char* GetType() { return "Slider"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		float getScrollPosition() const;
 		void setScrollPosition(float p);
@@ -47,7 +47,7 @@ namespace gui
 		virtual ~ScrollBar();
 
 		static const char* GetType() { return "ScrollBar"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual bool onLoad();
 		virtual bool onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState state);

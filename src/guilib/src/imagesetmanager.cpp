@@ -246,18 +246,22 @@ namespace gui
 	ImageOps StringToImageOps(const std::string& str)
 	{
 		if(str == "Tile" || str == "tile")
-			return Tile;
+			return ImageOps::Tile;
 		if(str == "Stretch" || str == "stretch")
-			return Stretch;
-
-		return Stretch;
+			return ImageOps::Stretch;
+		if (str == "None" || str == "none")
+			return ImageOps::None;
+		if (str == "Zoom" || str == "zoom")
+			return ImageOps::Zoom;
+		if (str == "Center" || str == "center")
+			return ImageOps::Center;
+		return ImageOps::Stretch;
 	}
 
 	const std::string& ImageOpsToString(ImageOps op)
 	{
-		if (op > Tile) op = Stretch;
-		static const std::string type_names[] = { "Stretch", "Tile" };
-		return type_names[op];
+		if (op > ImageOps::Tile) op = ImageOps::Stretch;
+		static const std::string type_names[] = { "Stretch", "Tile", "None", "Zoom", "Center" };
+		return type_names[(unsigned)op];
 	}
-
 }

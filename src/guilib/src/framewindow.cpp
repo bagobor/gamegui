@@ -133,7 +133,7 @@ namespace gui
 			height = imgSize.height;
 
 			// draw this element.
-			r.draw(*m_captionLeftImg, componentRect, 1.f, finalClip,  m_backColor, Stretch, Stretch);
+			r.draw(*m_captionLeftImg, componentRect, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 		}
 		// right image
 		if (m_captionRightImg)
@@ -148,7 +148,7 @@ namespace gui
 			right = imgSize.width;
 
 			// draw this element.
-			r.draw(*m_captionRightImg, componentRect, 1.f, finalClip,  m_backColor, Stretch, Stretch);
+			r.draw(*m_captionRightImg, componentRect, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 		}
 		// center image
 		if (m_captionBackImg)
@@ -159,7 +159,7 @@ namespace gui
 			componentRect.m_bottom = componentRect.m_top + height;
 	        
 			// draw this element.
-			r.draw(*m_captionBackImg, componentRect, 1.f, finalClip,  m_backColor, Tile, Stretch);
+			r.draw(*m_captionBackImg, componentRect, 1.f, finalClip, m_backColor, ImageOps::Tile, ImageOps::Stretch);
 		}
 
 		//rendering frame

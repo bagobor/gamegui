@@ -15,7 +15,7 @@ namespace gui
 		virtual ~Label();
 
 		static const char* GetType() { return "Label"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		void setFont(const std::string& font);
 		const std::string&	getFontName() const;

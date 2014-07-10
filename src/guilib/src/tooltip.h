@@ -11,7 +11,7 @@ namespace gui
 		virtual ~Tooltip(void);
 
 		static const char* GetType() { return "Tooltip"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual void rise();
 

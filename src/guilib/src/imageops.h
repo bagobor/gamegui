@@ -5,10 +5,13 @@
 namespace gui
 {
 	/// @brief - type to render
-	enum ImageOps
+	enum class ImageOps
 	{
-		Stretch,
-		Tile
+		Stretch = 0,
+		Tile,
+		None,
+		Zoom,
+		Center
 	};
 
 	ImageOps StringToImageOps(const std::string& str);

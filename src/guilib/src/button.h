@@ -33,7 +33,7 @@ namespace gui
 		virtual ~Button(void);
 
 		static const char* GetType() { return "Button"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 
@@ -67,7 +67,7 @@ namespace gui
 		virtual ~ImageButton();
 
 		static const char* GetType() { return "ImageButton"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 
@@ -89,7 +89,7 @@ namespace gui
 		virtual ~Thumb(void);
 
 		static const char* GetType() { return "Thumb"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		float getProgress() const;
 		void setProgress(float p);
@@ -119,7 +119,7 @@ namespace gui
 		virtual ~ScrollThumb(void);
 
 		static const char* GetType() { return "ScrollThumb"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 		
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 

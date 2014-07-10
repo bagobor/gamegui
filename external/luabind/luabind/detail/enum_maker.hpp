@@ -24,11 +24,11 @@
 #ifndef LUABIND_ENUM_MAKER_HPP_INCLUDED
 #define LUABIND_ENUM_MAKER_HPP_INCLUDED
 
-#include <vector>
-#include <string>
-
 #include <luabind/config.hpp>
 #include <luabind/detail/class_rep.hpp>
+
+#include <vector>
+#include <string>
 
 namespace luabind
 {
@@ -45,12 +45,14 @@ namespace luabind
 
 	struct value
 	{
-	friend class std::vector<value>;
+		friend class std::vector<value>;
 		template<class T>
 		value(const char* name, T v)
 			: name_(name)
-			, val_(v)
-		{}
+			, val_(static_cast<int>(v))
+		{
+			assert(static_cast<T>(val_) == v);
+		}
 
 		const char* name_;
 		int val_;
@@ -65,7 +67,7 @@ namespace luabind
 			return v;
 		}
 
-	private: 
+	private:
 
 		value() {}
 	};
@@ -93,14 +95,14 @@ namespace luabind
 		template<class From>
 		struct enum_maker
 		{
-			explicit enum_maker(From& from): from_(from) {}
+			explicit enum_maker(From& from) : from_(from) {}
 
 			From& operator[](const value& val)
 			{
 				from_.add_static_constant(val.name_, val.val_);
 				return from_;
 			}
-			
+
 			From& operator[](const value_vector& values)
 			{
 				for (value_vector::const_iterator i = values.begin(); i != values.end(); ++i)
@@ -114,11 +116,10 @@ namespace luabind
 			From& from_;
 
 		private:
-            void operator=(enum_maker const&); // C4512, assignment operator could not be generated
+			void operator=(enum_maker const&); // C4512, assignment operator could not be generated
 			template<class T> void operator,(T const&) const;
 		};
 	}
 }
 
 #endif // LUABIND_ENUM_MAKER_HPP_INCLUDED
-

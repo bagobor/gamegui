@@ -104,14 +104,14 @@ void Menu::render(const Rect& finalRect, const Rect& finalClip)
 		{
 			Rect rc(0.f, h, 2 * m_margin + m_itemHeight + m_actualWidth, h + 2 * m_margin + m_itemHeight);
 			rc.offset(finalRect.getPosition());
-			r.draw(*m_selImg, rc, 1.f, finalClip,  m_backColor, Stretch, Stretch);
+			r.draw(*m_selImg, rc, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 		}
 
 		if(item.icon)
 		{
 			iconrect.setPosition(point(m_margin, h + m_margin));
 			iconrect.offset(left);
-			r.draw(*item.icon, iconrect, 1.f, finalClip,  m_backColor, Stretch, Stretch);			
+			r.draw(*item.icon, iconrect, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 		}		
 
 		itemrect.setPosition(point(3 * m_margin + m_itemHeight, h + m_margin));

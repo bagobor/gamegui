@@ -105,7 +105,7 @@ namespace gui
 			Rect dest(finalRect);
 			dest.setWidth(imgSize.width);
 			offset += imgSize.width;
-			r.draw(*state, dest, 1.f, finalClip,  m_backColor, Stretch, Stretch);
+			r.draw(*state, dest, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 		}
 		
 		Rect desttext(finalRect);

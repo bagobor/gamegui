@@ -13,8 +13,8 @@ namespace gui
 	ImageBox::ImageBox(System& sys, const std::string& name) :
 		base_window(sys, name),
 		m_img(0),
-		m_vformat(Stretch),
-		m_hformat(Stretch)
+		m_vformat(ImageOps::Stretch),
+		m_hformat(ImageOps::Stretch)
 	{
 	}
 

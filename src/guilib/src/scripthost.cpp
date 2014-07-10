@@ -85,6 +85,7 @@ void ScriptSystem::reset(lua_State* externalState) {
 	luabind::module(m_state)
 		[
 			luabind::class_<ScriptObjectBase>("ScriptObject")
+			.def("scriptState", &ScriptObjectBase::getScriptRepl)
 		];
 }
 

@@ -97,7 +97,7 @@ void ProgressBar::render(const Rect& finalRect, const Rect& finalClip)
 		height = imgSize.height;
 
         // draw this element.
-        r.draw(*m_leftImg, componentRect, 1.f, clip,  m_backColor, Stretch, Stretch);
+		r.draw(*m_leftImg, componentRect, 1.f, clip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
     }
 	componentRect = targetRect;
 	// right image
@@ -110,7 +110,7 @@ void ProgressBar::render(const Rect& finalRect, const Rect& finalClip)
 		right = imgSize.width;
 
         // draw this element.
-        r.draw(*m_rightImg, componentRect, 1.f, clip,  m_backColor, Stretch, Stretch);
+		r.draw(*m_rightImg, componentRect, 1.f, clip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
     }
 	componentRect = targetRect;
 	// center image
@@ -121,7 +121,7 @@ void ProgressBar::render(const Rect& finalRect, const Rect& finalClip)
 		componentRect.m_bottom = componentRect.m_top + height;
         
 		// draw this element.
-        r.draw(*m_backImg, componentRect, 1.f, clip,  m_backColor, Tile, Stretch);
+		r.draw(*m_backImg, componentRect, 1.f, clip, m_backColor, ImageOps::Tile, ImageOps::Stretch);
     }
 
 	Progress::render(finalRect, finalClip);
@@ -168,7 +168,7 @@ void ImageBar::render(const Rect& finalRect, const Rect& finalClip)
 	if (m_backImg)
     {		        
 		// draw this element.
-        r.draw(*m_backImg, finalRect, 1.f, finalClip,  m_backColor, Stretch, Stretch);
+		r.draw(*m_backImg, finalRect, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
     }
 
 	if (m_backImg)
@@ -179,7 +179,7 @@ void ImageBar::render(const Rect& finalRect, const Rect& finalClip)
 			clip.setWidth(clip.getWidth() * m_progress);
 		}
 		// draw this element.
-        r.draw(*m_foreImg, finalRect, 1.f, clip,  m_backColor, Stretch, Stretch);
+		r.draw(*m_foreImg, finalRect, 1.f, clip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
     }
 
 	Progress::render(finalRect, finalClip);

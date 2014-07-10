@@ -12,7 +12,7 @@ namespace gui
 		virtual ~Combobox();
 
 		static const char* GetType() { return "Combobox"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual bool onLoad();
 		virtual bool onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState state);

@@ -59,6 +59,8 @@
           --local obj = TestFrame();--:OnLoad(self);
           --TestFrame.OnLoad(this);
           --On_Load(this);
+          log:msg("window name is " .. this.name);
+
         </On_Load>
       </Events>
     </FrameWindow>

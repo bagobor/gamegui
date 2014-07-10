@@ -148,12 +148,12 @@ void Renderer::draw(const Image& img, const Rect& dest_rect, float z, const Rect
 
 	switch (horz)
     {		
-	case Tile:
+	case ImageOps::Tile:
 		if(dest_rect.getWidth() <= 0.f)
 			return;
 		horzTiles = (unsigned int)((dest_rect.getWidth() + (imgSz.width - 1)) / imgSz.width);
 		break;
-	case Stretch:
+	case ImageOps::Stretch:
 	default:
 		imgSz.width = dest_rect.getWidth();
 		break;
@@ -161,12 +161,12 @@ void Renderer::draw(const Image& img, const Rect& dest_rect, float z, const Rect
 
 	switch (vert)
     {
-	case Tile:
+	case ImageOps::Tile:
 		if(dest_rect.getHeight() <= 0.f)
 			return;
 		vertTiles = (unsigned int)((dest_rect.getHeight() + (imgSz.height - 1)) / imgSz.height);
 		break;
-	case Stretch:
+	case ImageOps::Stretch:
 	default:
 		imgSz.height = dest_rect.getHeight();
 		break;

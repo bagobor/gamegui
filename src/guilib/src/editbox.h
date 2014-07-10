@@ -15,7 +15,7 @@ namespace gui
 		virtual ~Editbox();
 
 		static const char* GetType() { return "Editbox"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 
@@ -86,7 +86,7 @@ namespace gui
 		virtual ~KeyBinder();
 
 		static const char* GetType() { return "KeyBinder"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 		

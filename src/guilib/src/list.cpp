@@ -174,7 +174,7 @@ namespace gui
 			rc.offset(finalRect.getPosition());
 
 			Renderer& r = m_system.getRenderer();
-			r.draw(*m_selection, rc, 1.f, finalClip,  m_backColor, Tile, Stretch);
+			r.draw(*m_selection, rc, 1.f, finalClip, m_backColor, ImageOps::Tile, ImageOps::Stretch);
 		}
 	}
 
@@ -331,7 +331,7 @@ namespace gui
 
 				const Image* img = p->collapsed ? m_folded : m_unfolded;
 				if(img)
-					r.draw(*img, s, 1.f, finalClip,  m_backColor, Stretch, Stretch);
+					r.draw(*img, s, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 
 				++i;
 			}

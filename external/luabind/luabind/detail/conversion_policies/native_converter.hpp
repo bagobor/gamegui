@@ -203,6 +203,11 @@ namespace luabind {
 		: default_converter<std::string>
 	{};
 
+	//template <>
+	//struct default_converter<const std::string&>
+	//	: default_converter<std::string>
+	//{};
+
 	template <>
 	struct default_converter<char const*>
 	{

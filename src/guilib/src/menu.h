@@ -25,7 +25,7 @@ namespace gui
 		virtual ~Menu(void);
 
 		static const char* GetType() { return "Menu"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual void rise();
 		void setFont(const std::string& font);

@@ -16,7 +16,7 @@ namespace gui
 		virtual ~Progress();
 
 		static const char* GetType() { return "Progress"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 
@@ -41,7 +41,7 @@ namespace gui
 		virtual ~ProgressBar();
 
 		static const char* GetType() { return "ProgressBar"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 
@@ -67,7 +67,7 @@ namespace gui
 		virtual ~ImageBar(void);
 
 		static const char* GetType() { return "ImageBar"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 

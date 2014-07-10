@@ -63,7 +63,7 @@ namespace gui
 
 
 			// draw this element.
-			r.draw(*m_toplImg, finalRect, 1.f, clip,  m_backColor, Stretch, Stretch);
+			r.draw(*m_toplImg, finalRect, 1.f, clip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 		}
 
 		// top-right image
@@ -81,7 +81,7 @@ namespace gui
 			rightHeight -= rightOffset;
 
 			// draw this element.
-			r.draw(*m_toprImg, finalRect, 1.f, clip,  m_backColor, Stretch, Stretch);
+			r.draw(*m_toprImg, finalRect, 1.f, clip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 		}
 
 		// bottom-left image
@@ -99,7 +99,7 @@ namespace gui
 			leftHeight   -= imageSize.height;
 
 			// draw this element.
-			r.draw(*m_botlImg, finalRect, 1.f, clip,  m_backColor, Stretch, Stretch);
+			r.draw(*m_botlImg, finalRect, 1.f, clip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 		}
 
 		// bottom-right image
@@ -116,7 +116,7 @@ namespace gui
 			rightHeight -= imageSize.height;
 
 			// draw this element.
-			r.draw(*m_botrImg, finalRect, 1.f, clip,  m_backColor, Stretch, Stretch);        
+			r.draw(*m_botrImg, finalRect, 1.f, clip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 		}
 
 		// top image
@@ -134,7 +134,7 @@ namespace gui
 			backgroundRect.m_top += imageSize.height;
 
 			// draw this element.
-			r.draw(*m_topImg, finalRect, 1.f, clip,  m_backColor, Tile, Stretch);
+			r.draw(*m_topImg, finalRect, 1.f, clip, m_backColor, ImageOps::Tile, ImageOps::Stretch);
 		}
 
 		// bottom image
@@ -152,7 +152,7 @@ namespace gui
 			backgroundRect.m_bottom -= imageSize.height;
 
 			// draw this element.
-			r.draw(*m_botImg, finalRect, 1.f, clip,  m_backColor, Tile, Stretch);
+			r.draw(*m_botImg, finalRect, 1.f, clip, m_backColor, ImageOps::Tile, ImageOps::Stretch);
 		}
 
 		// left image
@@ -170,7 +170,7 @@ namespace gui
 			backgroundRect.m_left += imageSize.width;
 
 			// draw this element.
-			r.draw(*m_lImg, finalRect, 1.f, clip,  m_backColor, Stretch, Tile);
+			r.draw(*m_lImg, finalRect, 1.f, clip, m_backColor, ImageOps::Stretch, ImageOps::Tile);
 		}
 
 		// right image
@@ -188,13 +188,13 @@ namespace gui
 			backgroundRect.m_right -= imageSize.width;
 
 			// draw this element.
-			r.draw(*m_rImg, finalRect, 1.f, clip,  m_backColor, Stretch, Tile);
+			r.draw(*m_rImg, finalRect, 1.f, clip, m_backColor, ImageOps::Stretch, ImageOps::Tile);
 		}
 
 		if (m_backImg)
 		{
 			// render background image.
-			r.draw(*m_backImg, backgroundRect, 1.f, clip,  m_backColor, Tile, Tile);
+			r.draw(*m_backImg, backgroundRect, 1.f, clip, m_backColor, ImageOps::Tile, ImageOps::Tile);
 		}
 	}
 

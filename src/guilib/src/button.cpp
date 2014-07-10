@@ -134,7 +134,7 @@ void Button::render(const Rect& finalRect, const Rect& finalClip)
 		left  = imgSize.width;
 
         // draw this element.
-        r.draw(*state.leftImg, componentRect, 1.f, finalClip,  m_backColor, Stretch, Stretch);
+		r.draw(*state.leftImg, componentRect, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
     }
 	// right image
     if (state.rightImg)
@@ -149,7 +149,7 @@ void Button::render(const Rect& finalRect, const Rect& finalClip)
 		right = imgSize.width;
 
         // draw this element.
-        r.draw(*state.rightImg, componentRect, 1.f, finalClip,  m_backColor, Stretch, Stretch);
+		r.draw(*state.rightImg, componentRect, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
     }
 	// center image
     if (state.backImg)
@@ -159,7 +159,7 @@ void Button::render(const Rect& finalRect, const Rect& finalClip)
 		componentRect.m_right -= right;
         
 		// draw this element.
-        r.draw(*state.backImg, componentRect, 1.f, finalClip,  m_backColor, Tile, Stretch);
+		r.draw(*state.backImg, componentRect, 1.f, finalClip, m_backColor, ImageOps::Tile, ImageOps::Stretch);
     }
 
 	Label::render(finalRect, finalClip);	
@@ -223,7 +223,7 @@ void ImageButton::render(const Rect& finalRect, const Rect& finalClip)
 	if(i)
 	{	
 		Renderer& r = m_system.getRenderer();
-		r.draw(*i, finalRect, 1.f, finalClip,  m_backColor, Stretch, Stretch);
+		r.draw(*i, finalRect, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 	}
 
 	Label::render(finalRect, finalClip);
@@ -453,7 +453,7 @@ void ScrollThumb::render(const Rect& finalRect, const Rect& finalClip)
 			left  = imgSize.width;
 
 			// draw this element.
-			r.draw(*state.leftImg, componentRect, 1.f, finalClip,  m_backColor, Stretch, Stretch);
+			r.draw(*state.leftImg, componentRect, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 		}
 		// right image
 		if (state.rightImg)
@@ -467,7 +467,7 @@ void ScrollThumb::render(const Rect& finalRect, const Rect& finalClip)
 			right = imgSize.width;
 
 			// draw this element.
-			r.draw(*state.rightImg, componentRect, 1.f, finalClip,  m_backColor, Stretch, Stretch);
+			r.draw(*state.rightImg, componentRect, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 		}
 		// center image
 		if (state.backImg)
@@ -477,7 +477,7 @@ void ScrollThumb::render(const Rect& finalRect, const Rect& finalClip)
 			componentRect.m_right -= right;
 	        
 			// draw this element.
-			r.draw(*state.backImg, componentRect, 1.f, finalClip,  m_backColor, Tile, Stretch);
+			r.draw(*state.backImg, componentRect, 1.f, finalClip, m_backColor, ImageOps::Tile, ImageOps::Stretch);
 		}
 	}
 	else
@@ -494,7 +494,7 @@ void ScrollThumb::render(const Rect& finalRect, const Rect& finalClip)
 			left  = imgSize.height;
 
 			// draw this element.
-			r.draw(*state.leftImg, componentRect, 1.f, finalClip,  m_backColor, Stretch, Stretch);
+			r.draw(*state.leftImg, componentRect, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 		}
 		// bottom image
 		if (state.rightImg)
@@ -508,7 +508,7 @@ void ScrollThumb::render(const Rect& finalRect, const Rect& finalClip)
 			right = imgSize.height;
 
 			// draw this element.
-			r.draw(*state.rightImg, componentRect, 1.f, finalClip,  m_backColor, Stretch, Stretch);
+			r.draw(*state.rightImg, componentRect, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 		}
 		// center image
 		if (state.backImg)
@@ -518,7 +518,7 @@ void ScrollThumb::render(const Rect& finalRect, const Rect& finalClip)
 			componentRect.m_bottom -= right;
 	        
 			// draw this element.
-			r.draw(*state.backImg, componentRect, 1.f, finalClip,  m_backColor, Stretch, Tile);
+			r.draw(*state.backImg, componentRect, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Tile);
 		}
 	}
 }

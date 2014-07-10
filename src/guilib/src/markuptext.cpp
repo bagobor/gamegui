@@ -433,7 +433,7 @@ namespace gui
 			rc.offset(finalRect.getPosition());
 			if (img->img)
 			{
-				r.draw(*img->img, rc, 1.f, finalClip,  m_backColor, Stretch, Stretch);
+				r.draw(*img->img, rc, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 			}
 			++cimg;
 		}

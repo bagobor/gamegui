@@ -18,7 +18,7 @@ namespace gui
 		virtual ~FrameWindow();
 
 		static const char* GetType() { return "FrameWindow"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual void rise();
 		

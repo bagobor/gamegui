@@ -13,7 +13,7 @@ namespace gui
 		virtual ~BaseList();
 
 		static const char* GetType() { return "BaseList"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual void Clear();
 
@@ -51,7 +51,7 @@ namespace gui
 		virtual ~ListBox(void);
 
 		static const char* GetType() { return "ListBox"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		void AddItem(const std::string& name);
 
@@ -129,7 +129,7 @@ namespace gui
 		virtual ~CategorizedList(void);
 
 		static const char* GetType() { return "CategorizedList"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		unsigned int AddCategory(const std::string& name);
 		Category* GetCategoryByIndex(unsigned int idx);

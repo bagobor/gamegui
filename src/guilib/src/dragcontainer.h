@@ -11,7 +11,7 @@ namespace gui
 		virtual ~DragContainer(void);
 
 		static const char* GetType() { return "DragContainer"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual void rise();
 

@@ -104,7 +104,7 @@ namespace gui
 		virtual ~MarkupBase();
 
 		static const char* GetType() { return "MarkupBase"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual void setText(const std::string& text);
 
@@ -143,7 +143,7 @@ namespace gui
 		virtual ~MarkupText(void);
 
 		static const char* GetType() { return "MarkupText"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual bool onMouseMove();
 		virtual bool onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState state);

@@ -17,6 +17,8 @@ namespace gui
 
 		inline ScriptSystem& getScriptSystem() { return m_script_system; }
 
+		luabind::object getScriptRepl() { return m_localtable; }
+
 	protected:
 		ScriptSystem& m_script_system;
 		lua_State* m_state;

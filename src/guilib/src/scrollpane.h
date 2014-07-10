@@ -15,7 +15,7 @@ namespace gui
 		virtual ~ScrollPane();
 
 		static const char* GetType() { return "ScrollPane"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual bool onLoad();
 		virtual bool onSized(bool update = true);

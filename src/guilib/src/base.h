@@ -68,18 +68,7 @@ std::list<std::basic_string<Ch> > tokenize(const std::basic_string<Ch>& delim, c
 //		delete p;
 //}
 //-----------------------------------------------------------------
-class named_object
-{
-public:
-	explicit named_object(const std::string& name);
-	virtual ~named_object(){}
 
-	const std::string& getName() const;
-	void setName(const std::string& name);
-
-private:
-	std::string m_strName;
-};
 //
 //struct prop_holder {
 //	enum type_t {

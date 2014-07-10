@@ -12,7 +12,7 @@ namespace gui
 {
 
 base_window::base_window(System& sys, const std::string& name) : 
-	named_object(name),
+	m_strName(name),
 	m_system(sys),
 	m_visible(true),
 	m_enabled(true),
@@ -41,10 +41,22 @@ base_window::base_window(System& sys, const std::string& name) :
 	m_foreColor = Color(0.f, 0.f, 0.f);
 }
 
+
 base_window::~base_window()
 {
 	m_system.getRenderer().clearCache(this);
 }
+
+std::string const& base_window::getName() const
+{
+	return m_strName;
+}
+
+void base_window::setName(const std::string& name)
+{
+	m_strName = name;
+}
+
 
 void base_window::setArea(const Rect& rc) 
 { 

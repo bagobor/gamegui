@@ -17,7 +17,7 @@ namespace gui
 		virtual ~ImageBox();
 		
 		static const char* GetType() { return "ImageBox"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		void setImageset(const std::string& set);
 		const std::string getImageset() const;

@@ -15,7 +15,7 @@ namespace gui
 		virtual ~Panel(void);
 
 		static const char* GetType() { return "Panel"; }
-		virtual const char* getType() { return Self::GetType(); }
+		virtual const char* getType() const { return Self::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 		virtual void init(xml::node& node);
