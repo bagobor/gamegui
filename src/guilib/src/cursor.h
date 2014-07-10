@@ -25,8 +25,14 @@ namespace gui
 		void setPosition(point pt);
 		point getPosition() const;
 
+		bool isVisible() const { return m_visible; }
+		void setVisible(bool visible)  { m_visible = visible; }
+		void hide() { m_visible = false; }
+		void show() { m_visible = true; }
+
 	protected:
 		Cursor& operator=(const Cursor&) { return *this; }
+		bool			m_visible;
 		ImagesetPtr		m_cursors;	
 		point			m_cursorPos;
 		point			m_renderPos;

@@ -96,6 +96,7 @@
 
             local cursor = gui.cursor;
             local pos = cursor.position;
+            cursor.visible = false;
 
             local window = gui:getTargetWindow(pos);
             local text = "?";

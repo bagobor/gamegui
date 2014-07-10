@@ -17,7 +17,6 @@ System::System(Renderer& render, const std::string& scheme,
 			   lua_State* externalLua, log& l)
 : 	m_logger(l),
 	m_render(render),
-	m_bShowCursor(true),
 	m_focusWindow(0),
 	m_exclusiveInputWindow(0),
 	m_captureWindow(0),
@@ -689,10 +688,14 @@ void System::executeScript(const std::string& filename)
 	}
 }
 
+void System::setShowCursor(bool visible) {
+	m_cursor.setVisible(visible);
+}
+
 void System::render()
 {	
 	m_render.doRender();
-	if(m_bShowCursor)
+	if(m_cursor.isVisible())
 		getCursor().render();
 }
 namespace

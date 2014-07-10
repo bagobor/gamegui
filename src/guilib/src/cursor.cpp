@@ -9,6 +9,7 @@ namespace gui
 Cursor::Cursor(Renderer& r) 
 	: m_render(r)
 	, m_currentCursor(0)
+	, m_visible(true)
 {
 }
 

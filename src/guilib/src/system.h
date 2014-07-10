@@ -122,7 +122,7 @@ namespace gui
 
 		Cursor& getCursor() { return m_cursor; }
 		const Cursor& getCursorConst() const { return m_cursor; }
-		void setShowCursor(bool status) { m_bShowCursor = status; }
+		void setShowCursor(bool visible);
 		
 		void logEvent(log::level level, const std::string& message);
 
