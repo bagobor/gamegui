@@ -211,11 +211,9 @@ void gpu_program::set(handle p, gui::ogl_platform::TextureOGL* t) {
 		texture_slot = m_texture_slots.size();
 		m_texture_slots[p.name] = texture_slot;
 	}
-	
 
 	t->bind(texture_slot);
 	GL_CHECK(glUniform1i(p.id, texture_slot));
-	m_texture_slots.clear();
 }
 
 void gpu_program::set(handle p, gui::ogl_platform::TextureOGL* t, size_t slot) {
