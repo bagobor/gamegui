@@ -148,9 +148,9 @@ void System::makeLuaBinding(void)
 			.def("getImageCount", &Imageset::ImagesCount)
 			.def("getImageByIdx", &Imageset::GetImageByIdx)
 			,
-			class_<ScriptObject<base_window>, ScriptObjectBase>("ScriptObjectBaseWindow")
+			class_<ScriptObject<base_window>, ScriptObjectBase, luabind::wrap_base>("ScriptObjectBaseWindow")
 			,
-			class_ <base_window, bases<ScriptObject<base_window> > >("BaseWindow")
+			class_ <base_window, ScriptObject<base_window>, luabind::wrap_base >("BaseWindow")
 			.property("parent", (base_window* (base_window::*)() const)&base_window::getParentConst)			
 			.property("area", &base_window::getArea, &base_window::setArea)			
 			.property("type", &base_window::getType)

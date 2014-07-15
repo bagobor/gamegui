@@ -14,7 +14,7 @@ namespace gui
 	class  Cursor
 	{
 	public:
-		Cursor(Renderer& r);
+		explicit Cursor(Renderer& r);
 		~Cursor();
 
 		void setImageset(ImagesetPtr set) { m_cursors = set; }

@@ -218,7 +218,6 @@ namespace gui
 		bool m_autoScale;
 
 		Cursor		m_cursor;
-		bool		m_bShowCursor;
 		base_window*	m_exclusiveInputWindow;
 
 		window_ptr		m_rootWindow;

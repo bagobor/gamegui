@@ -1,5 +1,8 @@
 #pragma once
 #include <luabind/luabind.hpp>
+#include <luabind/weak_ref.hpp>
+#include <luabind/get_main_thread.hpp>
+
 struct lua_State;
 
 namespace gui
@@ -26,7 +29,7 @@ namespace gui
 	};
 
 	template<class T>
-	class  ScriptObject : public ScriptObjectBase//, public luabind::wrap_base
+	class  ScriptObject : public ScriptObjectBase, public luabind::wrap_base
 	{
 	protected:
 		ScriptObject(ScriptSystem& script_system)
@@ -34,6 +37,17 @@ namespace gui
 
 			luabind::globals(m_state)["this"] = (T*)this;
 			m_localtable = luabind::globals(m_state)["this"];
+
+			//luabind::wrapped_self_t& wrapper = luabind::detail::wrap_access::ref(*this);
+			//if (!wrapper.m_strong_ref.is_valid()) {
+			//	lua_State* L = m_localtable.interpreter();
+			//	luabind::weak_ref(m_state, L, 1).swap(luabind::detail::wrap_access::ref(*this));
+			//	//wrapper.get(wrapper.state());
+			//	wrapper.m_strong_ref.set(wrapper.state());
+			//	//wrapper.get(m_localtable.interpreter());
+			//	//wrapper.m_strong_ref.set(m_localtable.interpreter());
+			//}
+
 			thisreset(m_state);
 		}
 
