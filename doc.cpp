@@ -1,47 +1,49 @@
-	<root> - системного корневое окно.
-		создается автоматически на старте системы
-	 	в него добавляются остальные окна и контролы. 
+XML files structure:	
 
-	<base_window> - базовое окно (виджет) от которого произошли все остальные контролы, не имеет собственного отображения.
+	<root> - system 'root' window
+		Create automaticly on system state
+	 	This winwdow is 'parent' for all other windows.
+
+	<base_window> - base window (widget) base class for all other widgets/windows. Have no any visual.
 		Parameters:
-			Visible - true/false/0/1 - определяет видимо ли это окно и все его дочерние окна. (ref: Bool)
-			Align - список флагов разделенных символами ", |"
+			Visible - true/false/0/1 - determite window visibility (and all child windows) (type: Bool)
+			Align - flags lis with delemeters ", |"
 				[l|L]eft 	- 
 				[t|T]op  	-
 				[r|R]ight 	-
 				[b|B]ottom 	-
 				[h|H]center -
 				[v|V]center -
-			Stick - список флагов разделенных символами ", |"
+			Stick - flags lis with delemeters ", |"
 				[l|L]eft 	- 
 				[t|T]op  	-
 				[r|R]ight 	-
 				[b|B]ottom 	-
 				[h|H]center -
 				[v|V]center -
-			StickRect - регион x y w h
-			Area - область и позиция контрола (x y w h) "%f %f %f %f" (ref: Color)
-				x,y - позиция левого верхнего угла 
-				w,h - ширина и высота контрола
-			Backcolor - фоновый цвет окна rgba "%f %f %f %f" (ref: Color)
-			Forecolor - основной цвет окна rgba "%f %f %f %f" (ref: Color)
-			TabStop - true/false/0/1 будет ли контрол получать фокус по клавише TAB (ref: Bool)
-			Draggable - true/false/0/1 можно ли контрол перетаскивать (ref: Bool)
+			StickRect - region x y w h
+			Area - windows size и position (x y w h) "%f %f %f %f" (type: Rect)
+				x,y - top-left angle position
+				w,h - widht and height
+			Backcolor - window backgourd color rgba "%f %f %f %f" (type: Color)
+			Forecolor - window fore (base or content) rgba "%f %f %f %f" (type: Color)
+			TabStop - true/false/0/1  (type: Bool)
+			Draggable - true/false/0/1  (type: Bool)
 			AcceptDrop - 
 			AlwaysOnTop
-			Tooltip -  true/false/0/1 показывать ли тултип (ref: Bool)
-			Size - "%f %f" w h размер контрола, 
-			Pos - "%f %f" x y позиция левого верхнего угла контрола
-			IgnoreInputEvents - true/false/0/1 игнорировать или нет контром события ввода. (ref: Bool)
+			Tooltip -  true/false/0/1 is tooltip enabled (type: Bool)
+			Size - "%f %f" w h window size 
+			Pos - "%f %f" x y windows position
+			IgnoreInputEvents - true/false/0/1  (type: Bool)
 
 		Events - Script Event Handlers, 
-			- параметры вызова эвента передаются в переменной 'eventArgs':		  
-				- string name - имя эвента 
-				- bool handled - был ли он уже обработан
+			- event params are passed as 'eventArgs' variable with fields:
+				- string name - event name 
+				- bool handled - 'true' if event already was handled by other window/control
 
-			Эвенты базового контрола:		
-			- On_Draw - вызывается при рендере контрола. наличие этого обработчика включает кастомную отрисовку контрола через скрипт.
-			- On_Load - вызывается после окончания загрузки контрола.
+			Base windows script events:
+			- On_Draw - on window render. 
+			- On_Load - called just after window fully created
 			- On_MouseEnter
 			- On_MouseLeave
 			- On_MouseMove
@@ -57,11 +59,11 @@
 			- On_FocusLost
 			- On_Sized
 			- On_Moved
-			- On_Tick - вызывается каждый апдейт. по умолчанию выключен. включается\выключается ф-иями startTick/stopTick
+			- On_Tick - called on each gui update. disabled by default. controlled by 'startTick' and 'stopTick' functions.
 			- On_TooltipShow
 			- On_TooltipHide
 
-		Children - дочерние контролы
+		Children - child widgets
 
 	<Label> - для отображения текста
 		Parameters:
