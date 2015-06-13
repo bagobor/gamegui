@@ -20,7 +20,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "guilib", "..\..\..\src\guil
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "guiplatform", "..\..\..\src\guiplatform\guiplatform.vcxproj", "{BC858287-6E14-485B-BC3B-AECF1377FEAD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freetype", "..\..\..\external\freetype\builds\win32\vc2012\freetype.vcxproj", "{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freetype", "..\..\..\external\freetype\builds\windows\vc2013\freetype.vcxproj", "{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glfw", "..\..\..\external\glfw-3.0.3\src\glfw.vcxproj", "{C2D1B6CF-72A9-4CD1-AE20-489CEBA7C1C7}"
 EndProject

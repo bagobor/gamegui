@@ -159,13 +159,8 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\external\freetype\builds\win32\vc2012\freetype.vcxproj">
+    <ProjectReference Include="..\..\..\external\freetype\builds\windows\vc2013\freetype.vcxproj">
       <Project>{78b079bd-9fc7-4b9e-b4a6-96da0f00248b}</Project>
-      <Private>false</Private>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\..\..\external\glfw-3.0.3\src\glfw.vcxproj">
       <Project>{c2d1b6cf-72a9-4cd1-ae20-489ceba7c1c7}</Project>
