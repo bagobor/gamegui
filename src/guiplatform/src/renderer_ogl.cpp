@@ -51,18 +51,18 @@ void CheckOpenGLError(const char* stmt, const char* fname, int line)
 const char* vertex_shader_src =
 "#version 330 \n"
 " \n"
-"attribute vec2 a_position;\n"
-"attribute vec2 a_texCoord;\n"
-"attribute vec4 a_color;\n"
+"in vec2 a_position;\n"
+"in vec2 a_texCoord;\n"
+"in vec4 a_color;\n"
 
 "#ifdef GL_ES\n"
 "uniform lowp vec2 v_viewportSize;\n"
-"varying lowp vec4 v_fragmentColor;\n"
-"varying mediump vec2 v_texCoord;\n"
+"out lowp vec4 v_fragmentColor;\n"
+"out mediump vec2 v_texCoord;\n"
 "#else\n"
 "uniform vec2 v_viewportSize; \n"
-"varying vec4 v_fragmentColor; \n"
-"varying vec2 v_texCoord; \n"
+"out vec4 v_fragmentColor; \n"
+"out vec2 v_texCoord; \n"
 "#endif\n"
 
 "void main()\n"
@@ -90,13 +90,14 @@ const char* fragment_shader_src =
 "precision lowp float;\n"
 "#endif\n"
 "\n"
-"varying vec4 v_fragmentColor;\n"
-"varying vec2 v_texCoord;\n"
+"in vec4 v_fragmentColor;\n"
+"in vec2 v_texCoord;\n"
 "uniform sampler2D Texture0;\n"
+"out vec4 color;\n"
 "\n"
 "void main()\n"
 "{\n"
-"	gl_FragColor = v_fragmentColor * texture2D(Texture0, v_texCoord);\n"
+"	color = v_fragmentColor * texture2D(Texture0, v_texCoord);\n"
 //"	gl_FragColor = texture2D(Texture0, v_texCoord);\n"
 "}\n";
 
@@ -584,7 +585,7 @@ namespace gui
 
 		void RenderDeviceGL::render(const Batches& _batches, const Quads& _quads, size_t num_batches, Size scale)
 		{
-			if (!m_mesh) return;
+			if (!m_mesh || !m_shader) return;
 
 			//setRenderStates();
 			Texture* cur_texture = nullptr;
