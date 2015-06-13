@@ -68,6 +68,7 @@
     <ClCompile Include="..\..\..\external\lua\ltablib.c" />
     <ClCompile Include="..\..\..\external\lua\ltm.c" />
     <ClCompile Include="..\..\..\external\lua\lundump.c" />
+    <ClCompile Include="..\..\..\external\lua\lutf8lib.c" />
     <ClCompile Include="..\..\..\external\lua\lvm.c" />
     <ClCompile Include="..\..\..\external\lua\lzio.c" />
   </ItemGroup>
