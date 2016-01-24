@@ -34,9 +34,9 @@ namespace gui
 	protected:
 		ScriptObject(ScriptSystem& script_system)
 			: ScriptObjectBase(script_system) {
-
-			luabind::globals(m_state)["this"] = (T*)this;
-			m_localtable = luabind::globals(m_state)["this"];
+			// hack
+			luabind::globals(m_state)["{EEAB0E64-3313-49FC-A3C6-B7508A46CFFA}"] = (T*)this;
+			m_localtable = luabind::globals(m_state)["{EEAB0E64-3313-49FC-A3C6-B7508A46CFFA}"];
 
 			//luabind::wrapped_self_t& wrapper = luabind::detail::wrap_access::ref(*this);
 			//if (!wrapper.m_strong_ref.is_valid()) {
@@ -48,7 +48,7 @@ namespace gui
 			//	//wrapper.m_strong_ref.set(m_localtable.interpreter());
 			//}
 
-			thisreset(m_state);
+			//thisreset(m_state);
 		}
 
 		~ScriptObject() {}

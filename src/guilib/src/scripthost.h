@@ -43,7 +43,7 @@ namespace gui
 		filesystem_ptr filesystem() { return m_filesystem; }
 
 	protected:
-		std::string LoadFile(const std::string& filename);
+		const std::string& LoadFile(const std::string& filename);
 		std::string GetLuaError();
 		bool Execute(const std::string& script, const std::string& filename);
 	
@@ -55,5 +55,8 @@ namespace gui
 		bool m_ext;
 
 		filesystem_ptr m_filesystem;
+
+		typedef std::map<std::string, std::string> script_cache_t;
+		script_cache_t m_cache;
 	};
 }

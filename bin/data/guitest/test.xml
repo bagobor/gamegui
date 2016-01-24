@@ -66,7 +66,7 @@
            		log:msg(this.type);
            end
 
-           --TODO: неправильно обрабатывается подобная отправка тк указатель THIS у listener отличный от THIS у base_window
+           --TODO: fix case when THIS pointer is different from THIS of base_window
            --this:subscribe('TEST_EVENT', this, TEST);
            this:subscribe('TEST_EVENT', nil, TEST);
 
@@ -89,7 +89,7 @@
             log:msg("SCRIPT VALUE: " .. this.script_value .. '  Ticks: ' .. tickargs.delta);
         	this:stopTick();
         </On_Tick>
-        <On_Draw>
+        <On_Draw> <!-- debug render of windget name on mouse hover -->
             --log:msg("On Root Render");
             local mng = gui:getWindowManager();
             local font = mng:getFont("");
@@ -106,7 +106,6 @@
             end
 
             render:drawText(font, text, Rect(pos.x+20, pos.y, pos.x+600, pos.y+600), Rect(0, 0, 5000, 5000), Font.LeftAligned, Color(1,0,1,1));
-
         </On_Draw>
     </Events>
 </root>

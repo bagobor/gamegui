@@ -98,7 +98,6 @@ const char* fragment_shader_src =
 "void main()\n"
 "{\n"
 "	color = v_fragmentColor * texture2D(Texture0, v_texCoord);\n"
-//"	gl_FragColor = texture2D(Texture0, v_texCoord);\n"
 "}\n";
 
 namespace gui

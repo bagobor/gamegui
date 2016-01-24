@@ -250,8 +250,9 @@ void base_window::ExecuteScript(const std::string& env, const std::string& scrip
 {
 	if(!m_system.getScriptSystem().ExecuteString(script, this, env))
 	{
+		std::string err = m_system.getScriptSystem().GetLastError();
 		m_system.logEvent(log::error, std::string("Unable to execute Lua handler '")+ env + std::string("' in object ") + getName());
-		m_system.logEvent(log::error, m_system.getScriptSystem().GetLastError());
+		m_system.logEvent(log::error, err);
 	}
 }
 

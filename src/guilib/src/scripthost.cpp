@@ -65,6 +65,8 @@ ScriptSystem::ScriptSystem(filesystem_ptr fs, lua_State* externalState)
 }
 
 void ScriptSystem::reset(lua_State* externalState) {
+	m_cache.clear();
+
 	if (!m_ext && m_state)
 		lua_close(m_state);
 
@@ -101,7 +103,7 @@ lua_State* ScriptSystem::getLuaState()
 }
 
 bool ScriptSystem::ExecuteString(const std::string& script, ScriptObjectBase* obj, const std::string& filename)
-{
+{	
 	if (!obj) {
 		m_error = "An empty object passed to the script. ";
 		return false;
@@ -114,6 +116,7 @@ bool ScriptSystem::ExecuteString(const std::string& script, ScriptObjectBase* ob
 
 bool ScriptSystem::ExecuteString(const std::string& script, const std::string& filename)
 {
+	m_error.clear();
 	bool success = false;
 	if(m_state)
 	{
@@ -143,22 +146,23 @@ bool ScriptSystem::ExecuteString(const std::string& script, const std::string& f
 
 bool ScriptSystem::Execute(const std::string& script, const std::string& filename)
 {
-	if(int result = lua_pcall(m_state, 0, 0, 0))
+	m_error.clear();
+	int result = lua_pcall(m_state, 0, 0, 0);
+	const bool isError = result != 0;
+	if (isError)
 	{
-		m_error = "Can't execute LUA string: ";
-		m_error += GetLuaError();
-		return false;
+		m_error = "Can't execute LUA string: " + GetLuaError();
 	}
-	return true;
+
+	return !isError;
 }
 
 bool ScriptSystem::ExecuteFile(const std::string& filename, ScriptObjectBase* obj) {
 	const std::string& script = LoadFile(filename);
-	if (script.empty()) return true;
-
-	m_error = "The file '";
-	m_error += filename;
-	m_error += "' cannot be loaded. ";
+	
+	if (script.empty()) {		
+		return false;
+	}
 		
 	return ExecuteString(script, obj, filename);
 }
@@ -177,10 +181,20 @@ bool ScriptSystem::ExecuteFile(const std::string& filename)
 	return true; // just empty file
 }
 
-std::string ScriptSystem::LoadFile(const std::string& filename)
+const std::string& ScriptSystem::LoadFile(const std::string& filename)
 {
 	std::string str = m_filesystem->load_text(filename);
-	return str;
+
+	auto it = m_cache.find(filename);
+	if (it == m_cache.end())
+		it = m_cache.insert(std::make_pair(filename, str)).first;
+	
+	if (str.empty())
+	{
+		m_error = " '" + filename + "' not found.";
+	}
+
+	return it->second;
 }
 
 std::string ScriptSystem::GetLuaError()

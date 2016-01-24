@@ -595,7 +595,8 @@ bool System::isSysKeyPressed(unsigned int key)
 
 void System::logEvent(log::level level, const std::string& message)
 {
-	m_logger.write(level, message);
+	if (!message.empty())
+		m_logger.write(level, message);
 }
 
 base_window* System::find(const std::string& name)
