@@ -5,7 +5,7 @@
 
 #include	<shlobj.h>
 
-#include "uitest.h"
+#include "ui_application.h"
 #include <guiplatform/renderer_ogl.h>
 
 #include <iostream>
@@ -72,9 +72,9 @@ public:
 
 gui_log g_log;
 
-#include "../common/gui_filesystem.h"
+#include "../common/filesystem_win.h"
 
-ui_test_application::ui_test_application(int w, int h, const char* title)
+ui_application::ui_application(int w, int h, const char* title)
 	: BaseApplication(w, h, title)
 	, m_render(NULL)
 	, m_system(NULL)
@@ -85,32 +85,31 @@ ui_test_application::ui_test_application(int w, int h, const char* title)
 	, m_needReload(false)
 {
 	using namespace std::placeholders;
-	env.render_cb = std::bind(&ui_test_application::render, this);
-	env.update_cb = std::bind(&ui_test_application::update, this);
+	env.render_cb = std::bind(&ui_application::render, this);
+	env.update_cb = std::bind(&ui_application::update, this);
 
 	//show();
 	update();	
 }
 
-ui_test_application::~ui_test_application()
+ui_application::~ui_application()
 {
 	m_fileWatcher.removeWatch(m_watchID);
 	m_system.reset();
 	m_render.reset();
 }
 
-void ui_test_application::run()
+void ui_application::run()
 {	
 	createGUISystem();
 	BaseApplication::run();
 }
 
-void ui_test_application::createGUISystem()
+void ui_application::createGUISystem()
 {
-	gui_filesystem* fsp = new gui_filesystem("/data/");
-	filesystem_ptr fs(fsp);
+	filesystem_ptr fs = std::make_shared<win::filesystem>("/data/");
 
-	m_watchID = m_fileWatcher.addWatch(fsp->root(), this, true);
+	m_watchID = m_fileWatcher.addWatch(fs->get_root_dir(0), this, true);
 
 	m_render_device = std::make_shared<gui::ogl_platform::RenderDeviceGL>(fs, 1024);
 	m_render = std::make_shared<gui::Renderer>(*m_render_device, fs);
@@ -131,7 +130,7 @@ void ui_test_application::createGUISystem()
 	m_fileWatcher.watch();
 }
 
-void ui_test_application::resetGUISystem()
+void ui_application::resetGUISystem()
 {
 	if(m_render)
 		m_render->clearRenderList();
@@ -140,7 +139,7 @@ void ui_test_application::resetGUISystem()
 		m_system->reset();	
 }
 
-void ui_test_application::update()
+void ui_application::update()
 {
 	if (m_needReload) {
 		m_needReload = false;
@@ -156,128 +155,20 @@ void ui_test_application::update()
 	}	
 }
 
-void ui_test_application::render()
+void ui_application::render()
 {
-	//m_render_device->frame_begin();
-	//m_render_device.clear(rgde::math::color::Black);
-
 	if (m_system)
-	{		
-	//	//m_font->drawText("THE", gui::Rect(20,20,200,200), 1.f);
-
-	//	//gui::Renderer& r = m_system->getRenderer();
-	//	//struct vec2 {float x, y;};
-	//	//vec2 points[] = 
-	//	//{
-	//	//	{0,50}, 
-	//	//	{70,50}, 
-	//	//	{80,90},
-	//	//	{110,0},
-	//	//	{130,60},
-	//	//	{150,50},
-	//	//	{260,50},
-	//	//};
-
-	//	//gui::Imageset* imageset = m_system->getWindowManager().getImageset("skin");
-	//	//const gui::Image* img = imageset->GetImage("Background");
-
-	//	//r.drawLine(*img, (gui::vec2*)points, 7, 1, gui::Rect(0,0,400,400), 0xFFFF0F0F, 7);
-
+	{
 		m_system->render();
 	}
-
-	//m_render_device->frame_end();
-	//m_render_device.present();
 }
 
-bool ui_test_application::isFinished() 
+bool ui_application::isFinished()
 {
-	/*if(m_framecount >= 50)
-	return true;*/
-
 	return false;
 }
-//
-//core::windows::result ui_test_application::wnd_proc(ushort message, uint wparam, long lparam )
-//{
-//	switch (message)
-//	{
-//	case WM_CHAR:
-//		handleChar((UINT_PTR)wparam);
-//		return 0;
-//
-//	case WM_LBUTTONDOWN:
-//		handleMouseButton(EventArgs::Left, EventArgs::Down);
-//		return 0;
-//
-//	case WM_LBUTTONUP:
-//		handleMouseButton(EventArgs::Left, EventArgs::Up);
-//		return 0;
-//
-//	case WM_RBUTTONDOWN:
-//		handleMouseButton(EventArgs::Right, EventArgs::Down);
-//		return 0;
-//
-//	case WM_RBUTTONUP:
-//		handleMouseButton(EventArgs::Right, EventArgs::Up);
-//		return 0;
-//
-//	case WM_MBUTTONDOWN:
-//		handleMouseButton(EventArgs::Middle, EventArgs::Down);				
-//		return 0;
-//
-//	case WM_MBUTTONUP:
-//		handleMouseButton(EventArgs::Middle, EventArgs::Up);
-//		return 0;
-//
-//	case WM_ACTIVATE:	// Watch For Window Activate Message
-//		m_active = !HIWORD(wparam);// Check Minimization State
-//		return 0;
-//
-//	case WM_KEYDOWN:
-//		{
-//			if ('Q' == wparam || 'q' == wparam || VK_ESCAPE == wparam)
-//				exit(0);
-//
-//			handleKeyboard((UINT_PTR)wparam, EventArgs::Down);
-//
-//			return 0;
-//		}
-//
-//	case WM_KEYUP:
-//		handleKeyboard((UINT_PTR)wparam, EventArgs::Up);
-//		return 0;
-//
-//	case WM_SIZE:
-//		//resize_scene(LOWORD(lparam), HIWORD(lparam));
-//		return 0;
-//
-//	case WM_MOUSEWHEEL:
-//		{
-//			int delta = GET_WHEEL_DELTA_WPARAM(wparam);
-//			if(m_system) {
-//				gui::event e = {0};
-//				e.type = gui::event_mouse | gui::mouse_wheel;
-//				e.mouse.delta = delta;
-//				m_system->handle_event(e);
-//			}
-//		}
-//		return 0;
-//
-//	case WM_MOUSEMOVE:
-//		if(m_system){
-//			gui::event e = {0};
-//			e.type = gui::event_mouse | gui::mouse_move;
-//			e.mouse.x = LOWORD(lparam);
-//			e.mouse.y = HIWORD(lparam);
-//			return m_system->handle_event(e);
-//		}
-//		return 0;
-//	}
-//	return window::wnd_proc(message, wparam, lparam);
-//}
 
-void ui_test_application::handleViewportChange()
+void ui_application::handleViewportChange()
 {
 	if(!m_system) return;
 
@@ -287,33 +178,34 @@ void ui_test_application::handleViewportChange()
 }
 
 
-bool ui_test_application::handleMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState state)
+bool ui_application::handleMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState state)
 {
-	if(m_system) {
-		gui::event e = {0};
-		e.type = gui::event_mouse | gui::mouse_button;
-		e.type |= (state == EventArgs::Down) ? gui::event_key_down : gui::event_key_up;
-
-		switch(btn) {
-			case EventArgs::Left:
-				e.mouse.button = gui::button_left;
-				break;
-			case EventArgs::Middle:
-				e.mouse.button = gui::button_middle;
-				break;
-			case EventArgs::Right:
-				e.mouse.button = gui::button_right;
-				break;
-		}
-
-		return m_system->handle_event(e);
-	}
-	else
+	if (!m_system) {
 		return false;
+	}
+
+	gui::event e = {0};
+	e.type = gui::event_mouse | gui::mouse_button;
+	e.type |= (state == EventArgs::Down) ? gui::event_key_down : gui::event_key_up;
+
+	switch(btn) {
+		case EventArgs::Left:
+			e.mouse.button = gui::button_left;
+			break;
+		case EventArgs::Middle:
+			e.mouse.button = gui::button_middle;
+			break;
+		case EventArgs::Right:
+			e.mouse.button = gui::button_right;
+			break;
+	}
+
+	return m_system->handle_event(e);
 }
 
-void ui_test_application::onMousebutton(int button, int action) {
+void ui_application::onMousebutton(int button, int action) {
 	if (!m_system || button > 2 || action > 1) return;
+
 	int gui_buttons_map[] = { gui::button_left, gui::button_right, gui::button_middle };
 	gui::event_type gui_actions_map[] = { gui::event_key_up, gui::event_key_down };
 
@@ -324,9 +216,10 @@ void ui_test_application::onMousebutton(int button, int action) {
 	m_system->handle_event(e);
 }
 
-void ui_test_application::onMousepos(int x, int y) {
+void ui_application::onMousepos(int x, int y) {
 	mouse_x = x;
 	mouse_y = y;
+
 	if (!m_system) return;
 
 	gui::event e = {0};
@@ -336,34 +229,33 @@ void ui_test_application::onMousepos(int x, int y) {
 	m_system->handle_event(e);
 }
 
-void ui_test_application::onMousewheel(int delta) {
+void ui_application::onMousewheel(int delta) {
 	if (!m_system) return;
+
 	gui::event e = {0};
 	e.type = gui::event_mouse | gui::mouse_wheel;
 	e.mouse.delta = delta;
 	m_system->handle_event(e);
 }
 
-void ui_test_application::handleFileAction(efsw::WatchID watchid, const std::string& dir, const std::string& filename, efsw::Action action, std::string oldFilename)
+void ui_application::handleFileAction(efsw::WatchID watchid, const std::string& dir, const std::string& filename, efsw::Action action, std::string oldFilename)
 {
 	if (efsw::Actions::Modified == action) {
-		//resetGUISystem();
 		m_needReload = true;
 	}
-	//std::cout << "DIR (" << dir + ") FILE (" + (oldFilename.empty() ? "" : "from file " + oldFilename + " to ") + filename + ") has event " << getActionName(action) << std::endl;
+	printf("DIR (%s) FILE (%s to %s) has event %s", dir.c_str(), oldFilename.c_str(), filename.c_str(), getActionName(action).c_str());
 }
 
-void ui_test_application::onKey(int key, int action) {
+void ui_application::onKey(int key, int action) {
+
 	if (!m_filename.empty() && key == 294 && action == 1)
 	{
 		resetGUISystem();
 		return;
 	}
-
-	if (!m_system) return;
 }
 
-void ui_test_application::onChar(int character, int action) {
+void ui_application::onChar(int character, int action) {
 	if (!m_system) return;
 }
 //
@@ -400,8 +292,22 @@ void ui_test_application::onChar(int character, int action) {
 
 
 
-void ui_test_application::load(const std::string& xml)
+void ui_application::load(const std::string& xml)
 {
 	if(!m_system) return;
 	gui::base_window* wnd = m_system->loadXml(xml);
+}
+
+const std::string& ui_application::getActionName(efsw::Action action)
+{
+	static std::string action_names[] = {
+		"Bad Action",
+		"Add",
+		"Delete",
+		"Modified"
+		"Moved"
+	};
+	action = (efsw::Actions::Action)(action < 0 ? 0 : action);
+	action = (efsw::Actions::Action)(action <= efsw::Actions::Moved ? action : 0);
+	return action_names[action];
 }

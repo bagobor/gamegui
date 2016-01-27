@@ -1,13 +1,13 @@
 #pragma once
 
-#include "uitest.h"
+#include "ui_application.h"
 
 
-class Xml2Test : public ui_test_application
+class ui_sample : public ui_application
 {
 public:
-	Xml2Test(int w, int h, const char* title);
-	~Xml2Test(void);
+	ui_sample(int w, int h, const char* title);
+	~ui_sample(void);
 		
 	virtual void createGUISystem();
 	virtual void resetGUISystem();

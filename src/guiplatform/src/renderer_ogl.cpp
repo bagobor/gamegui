@@ -1,24 +1,22 @@
 #include "stdafx.h"
 
-
 #include <guilib/guilib.h>
-
 #include <GL/GL.h>
-
+#include <GL/glu.h>
 
 #include "../renderer_ogl.h"
 #include "opengl.h"
 
 #include "png.h"
-
 #include "render_gl.h"
 
-// fine tune :)
-//#define PixelAligned(x)	( ( (float)(int)(( x ) + (( x ) > 0.0f ? 0.5f : -0.5f)) ) - 0.5f )
 
+// fine tune :)
+// for directx
+//#define PixelAligned(x)	( ( (float)(int)(( x ) + (( x ) > 0.0f ? 0.5f : -0.5f)) ) - 0.5f )
+// for opengl, reduce controls blurring
 #define PixelAligned(x)	((float)((int)( x )))
 
-#include <GL/glu.h>
 
 void CheckOpenGLError(const char* stmt, const char* fname, int line)
 {
@@ -422,7 +420,7 @@ namespace gui
 			{ "a_position", 2, GL_FLOAT, false, sizeof(QuadVertex), 0 },
 			{ "a_texCoord", 2, GL_FLOAT, false, sizeof(QuadVertex), sizeof(float)* 2 },
 			{ "a_color", 4, GL_UNSIGNED_BYTE, true, sizeof(QuadVertex), sizeof(float)* 4 },
-			{ "" }
+			{ 0 }
 		};
 
 		namespace

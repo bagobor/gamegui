@@ -46,7 +46,7 @@ public:
 };
 
 struct vertex_atrib {
-	std::string name;
+	const char* name;
 	int size;
 	GLenum type;
 	bool norm;

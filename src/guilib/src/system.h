@@ -58,6 +58,13 @@ namespace gui
 		/// returns zero terminated string
 		virtual std::string load_text(const std::string& filename) = 0;
 		virtual data_ptr load_binary(const std::string& filename) = 0;
+
+		const std::string& get_root_dir(size_t root_index);
+		// depricated
+		const std::string& root() { return get_root_dir(0); }
+
+	protected:
+		std::vector<std::string> m_roots;
 	};
 	typedef std::shared_ptr<filesystem> filesystem_ptr;
 

@@ -1,31 +1,27 @@
 #pragma once
 
-using namespace gui;
+namespace win {
 
-class gui_filesystem : public gui::filesystem
+class filesystem : public gui::filesystem
 {
 public:
-	gui_filesystem(const std::string& basedir) 
+	filesystem(const std::string& basedir)
 	{
 		char buff[256];
 		int size = GetModuleFileNameA(NULL, buff, 256);
 
 		std::string path(buff, size);
-
 		int pos = path.find_last_of('\\');
-
-		m_basedir = path.substr(0, pos) + "/.." + basedir;
-
-		//m_basedir = m_basedir + "data/";
+		std::string ui_root_dir = path.substr(0, pos) + "/.." + basedir;
+		m_roots.push_back(ui_root_dir);
 	}
 
-	~gui_filesystem() {
-	}
+	~filesystem() { }
 
 	virtual std::string load_text(const std::string& filename) 	{
 		std::string out;
 
-		std::string full_filename = m_basedir + filename;
+		std::string full_filename = get_root_dir(0) + filename;
 
 		if (FILE *fp = fopen(full_filename.c_str(), "rb"))
 		{
@@ -41,7 +37,7 @@ public:
 	virtual data_ptr load_binary(const std::string& filename) {
 		data_ptr out;
 
-		std::string full_filename = m_basedir + filename;
+		std::string full_filename = get_root_dir(0) + filename;
 		if (FILE *fp = fopen(full_filename.c_str(), "rb"))
 		{
 			fseek(fp, 0, SEEK_END);
@@ -61,9 +57,6 @@ public:
 
 		return out;
 	}
-
-	const std::string& root() { return m_basedir; }
-
-protected:
-	std::string m_basedir;
 };
+
+}

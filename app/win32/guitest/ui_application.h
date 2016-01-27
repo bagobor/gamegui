@@ -2,16 +2,15 @@
 
 #include <guilib/guilib.h>
 #include "base_application.h"
-//#include <boost/timer.hpp>
 #include <efsw/efsw.hpp>
 #include <iostream>
 
 
-class ui_test_application : public BaseApplication, public efsw::FileWatchListener
+class ui_application : public BaseApplication, public efsw::FileWatchListener
 {
 public:
-	ui_test_application(int w, int h, const char* title);
-	~ui_test_application();
+	ui_application(int w, int h, const char* title);
+	~ui_application();
 
 	void run();
 
@@ -25,8 +24,6 @@ public:
 	bool handleMouseMove(int x, int y);
 	bool handleMouseWheel(int diff);
 	bool handleMouseButton(gui::EventArgs::MouseButtons btn, gui::EventArgs::ButtonState state);
-	//virtual bool handleKeyboard(UINT_PTR key, gui::EventArgs::ButtonState state);
-	//bool handleChar(UINT_PTR ch);
 
 	void handleViewportChange();
 
@@ -45,18 +42,7 @@ protected:
 	void update();
 	void render();
 
-	std::string getActionName(efsw::Action action)
-	{
-		switch (action)
-		{
-		case efsw::Actions::Add:		return "Add";
-		case efsw::Actions::Modified:	return "Modified";
-		case efsw::Actions::Delete:		return "Delete";
-		case efsw::Actions::Moved:		return "Moved";
-		default:						return "Bad Action";
-		}
-	}
-
+	const std::string& getActionName(efsw::Action action);
 	void handleFileAction(efsw::WatchID watchid, const std::string& dir, const std::string& filename, efsw::Action action, std::string oldFilename = "");
 
 protected:
@@ -75,5 +61,4 @@ protected:
 	efsw::FileWatcher m_fileWatcher;
 	efsw::WatchID m_watchID;
 	bool m_needReload;
-	//gui::FontPtr m_font;
 };

@@ -3,6 +3,7 @@
 
 
 _env env = { 0 };
+
 BaseApplication* BaseApplication::g_Instance;// = 0;
 
 BaseApplication::BaseApplication(size_t w, size_t h, const char* title) 
@@ -26,6 +27,7 @@ BaseApplication::BaseApplication(size_t w, size_t h, const char* title)
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 		window = glfwCreateWindow(w, h, title, NULL, NULL);
+		glfwSetWindowUserPointer(window, this);
 
 		glfwSwapInterval(1);
 
@@ -107,4 +109,20 @@ int BaseApplication::run() {
 	}
 
 	return 0;
+}
+
+void BaseApplication::_OnWindowsizefun(GLFWwindow*, int w, int h) {
+	g_Instance->onWindowSize(w, h);
+}
+
+void BaseApplication::_OnMousebuttonfun(GLFWwindow*, int button, int action, int mods) {
+	g_Instance->onMousebutton(button, action);
+}
+
+void BaseApplication::_OnMouseposfun(GLFWwindow*, double x, double y) {
+	g_Instance->onMousepos(x, y);
+}
+
+void BaseApplication::_OnKeyfun(GLFWwindow*, int key, int scancode, int action, int mods) {
+	g_Instance->onKey(key, action);
 }

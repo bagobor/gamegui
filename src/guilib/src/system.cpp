@@ -13,6 +13,12 @@ namespace gui
 
 log s_null_log;
 
+const std::string& filesystem::get_root_dir(size_t root_index) {
+	static std::string empty_string;
+	if (root_index >= m_roots.size()) return empty_string;
+	return m_roots[root_index];
+}
+
 System::System(Renderer& render, const std::string& scheme,
 			   lua_State* externalLua, log& l)
 : 	m_logger(l),

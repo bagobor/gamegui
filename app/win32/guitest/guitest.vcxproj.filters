@@ -12,20 +12,20 @@
     <ClInclude Include="guicon.h">
       <Filter>console</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\gui_filesystem.h">
+    <ClInclude Include="base_application.h" />
+    <ClInclude Include="ui_application.h" />
+    <ClInclude Include="..\common\filesystem_win.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="UITest.h" />
-    <ClInclude Include="Xml2Test.h" />
-    <ClInclude Include="base_application.h" />
+    <ClInclude Include="ui_sample.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="guicon.cpp">
       <Filter>console</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="UITest.cpp" />
-    <ClCompile Include="Xml2Test.cpp" />
     <ClCompile Include="base_application.cpp" />
+    <ClCompile Include="ui_application.cpp" />
+    <ClCompile Include="ui_sample.cpp" />
   </ItemGroup>
 </Project>

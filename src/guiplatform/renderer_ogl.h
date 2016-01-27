@@ -50,30 +50,10 @@ namespace gui
 			void renderImmediate(const QuadInfo& q, Texture* texture, bool isAdditive);
 			void render(const Batches& batches, const Quads& quads, size_t num_batches, Size scale);
 			
-			//void	initPerFrameStates();
-			//void	constructor_impl(const Size& display_size);
-			//void	setRenderStates();
-
-
-			//rgde::render::device& m_device;
-			//rgde::render::texture_ptr m_currTexture;
-			//rgde::render::vertex_buffer_ptr	m_buffer;
-			//rgde::render::index_buffer_ptr	m_ibuffer;
-			//rgde::render::vertex_declaration_ptr m_vertexDeclaration;
-			//int m_bufferPos;	
-
-			//typedef rgde::render::effects::effect shader_effect;
-			//typedef rgde::render::effects::param_ptr shader_handle;
-
-			//typedef std::shared_ptr<shader_effect> shader_ptr;
-			//shader_ptr				m_shader;
-
-
-			//shader_handle m_handleViewPortSize;
-			//shader_handle m_handleGuiTexture;	 
 			filesystem_ptr filesystem;
 			gpu_program_ptr m_shader;
 			mesh_ptr m_mesh;
+
 			//for Immediate Drawing of sprites
 			mesh_ptr m_small_mesh;
 		};

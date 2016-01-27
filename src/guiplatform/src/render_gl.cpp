@@ -302,8 +302,7 @@ mesh::mesh(const vertex_atrib* va, vb_ptr _vb, ib_ptr _ib) : vb(_vb), ib(_ib) {
 	if (!ib) update_ib(0, 0);
 	if (!vb) update_vb(0, 0);
 
-	for (size_t i = 0;; ++i) {
-		if (va[i].name.empty()) break;
+	for (size_t i = 0; va[i].name; ++i) {
 		m_atribs.push_back(va[i]);
 	}
 }

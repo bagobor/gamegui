@@ -1,8 +1,8 @@
 #include <windows.h>
 #include "guicon.h"
-#include "xml2test.h"
+#include "ui_sample.h"
 
-#include "base_application.h"
+//#include "base_application.h"
 
 using namespace gui;
 
@@ -36,8 +36,8 @@ int main()
 	//RedirectIOToConsole();
 
 	{
-		Xml2Test g_test(width, height, "GUI Test");
-		g_test.run();
+		ui_sample sample(width, height, "GUI sample");
+		sample.run();
 	}
 
 	//const int window_width = 800,
