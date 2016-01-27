@@ -89,6 +89,10 @@ struct RenderDevice {
 		unsigned x, y, w, h;
 	};
 
+	struct RenderCommand {
+		TexturePtr texture;
+	};
+
 	virtual ~RenderDevice() = 0 {};
 
 	virtual TexturePtr createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) = 0;
@@ -98,13 +102,7 @@ struct RenderDevice {
 	virtual void render(const Batches& batches, const Quads& quads, size_t num_batches, Size scale = Size(1.0f, 1.0f)) = 0;
 
 	const ViewPort& getViewport() const { return viewport; }
-	virtual void setViewport(const ViewPort& vp) {
-		viewport = vp;
-	}
-
-	struct RenderCommand {
-		TexturePtr texture;
-	};
+	virtual void setViewport(const ViewPort& vp) { viewport = vp; }
 
 protected:
 	ViewPort viewport;
@@ -115,6 +113,7 @@ typedef std::shared_ptr<RenderDevice> RenderDevicePtr;
 //TODO: rename to Canvas
 class  Renderer
 {
+	friend TextureCache;
 	Renderer& operator=(const Renderer&);
 public:
 	Renderer(RenderDevice& render_device, filesystem_ptr fs);
@@ -144,21 +143,10 @@ public:
 	virtual void	setQueueingEnabled(bool queueing)  { m_isQueueing = queueing; }
 	bool			isQueueingEnabled(void) const { return m_isQueueing; }
 
-	TexturePtr	createTexture(const std::string& filename) {return m_texmanager.createTexture(filename);}
-
-	TexturePtr	createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
-		return m_render_device.createTexture(data, width, height, format);
-	}
-
-	TexturePtr	createTexture(unsigned int width, unsigned int height, Texture::PixelFormat format) {
-		return createTexture(NULL, width, height, format );
-	}
-
-	TexturePtr	updateTexture(TexturePtr p, const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
-		if (p)
-			p->update(data, width, height, format);
-		return p;
-	}
+	TexturePtr	createTexture(const std::string& filename);
+	TexturePtr	createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format);
+	TexturePtr	createTexture(unsigned int width, unsigned int height, Texture::PixelFormat format);
+	TexturePtr	updateTexture(TexturePtr p, const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format);
 
 	FontPtr	createFont(const std::string& name, const std::string& fontname, unsigned int size);	
 
@@ -175,22 +163,14 @@ public:
 	float	getCurrentZ() const			{return m_current_z;}
 	float	getZLayer(unsigned int layer) const {return m_current_z - ((float)layer * GuiZLayerStep);}
 
-	void setAutoScale(bool status) { m_autoScale = status; }
-	bool isAutoScale() const { return m_autoScale; }
-
-	Size getViewportSize() const {		
-		const RenderDevice::ViewPort& vp = m_render_device.getViewport();
-		return Size((float)vp.w, (float)vp.h);
-	}
-
-	Rect virtualToRealCoord( const Rect& virtualRect ) const;
-	Rect realToVirtualCoord( const Rect& realRect ) const;
-
-	//void setLogCallback(LoggerCallback log_cb) {m_log_cb = log_cb;}
-
+	//bool isAutoScale() const { return m_autoScale; }
+	Size getViewportSize() const;
+	
 	void cleanup(bool complete);
 
 	filesystem_ptr filesystem() {return m_filesystem;}
+	RenderDevice& renderDeivce() { return m_render_device; }
+	const RenderDevice& renderDeivce() const { return m_render_device; }
 
 protected:
 	inline void addQuad(const Rect& r, const Rect& tr, float z, const RenderImageInfo& img, const ColorRect& colours) {
@@ -202,23 +182,16 @@ protected:
 
 		addQuad(p[0], p[1], p[2], p[3], tr, z, img, colours);
 	}
+
 	void addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec2& p3, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colours);
 	void renderQuadDirect(const QuadInfo& q, Texture* texture, bool isAdditive = false) {
 		m_render_device.renderImmediate(q, texture, isAdditive);
 	}
 
 	void fillQuad(QuadInfo& quad, const Rect& rc, const Rect& uv, float z, const RenderImageInfo& img, const ColorRect& colors);
-	void sortQuads();	
+	void sortQuads();
 	
-	friend TextureCache;
-	TexturePtr	createTextureInstance(const std::string& filename) {
-		return m_render_device.createTexture(filename);
-	}
-	
-	RenderDevice& renderDeivce() { return m_render_device; }
-	const RenderDevice& renderDeivce() const { return m_render_device; }
-		
-	void computeVirtualDivRealFactor(Size& coefOut) const;
+	TexturePtr createTextureInstance(const std::string& filename);
 
 protected:
 	TextureCache m_texmanager; 
@@ -235,7 +208,7 @@ protected:
 	unsigned int m_maxTextureSize;
 
 	bool m_isQueueing;
-	bool m_autoScale;
+	//bool m_autoScale;
 
 	const float	GuiZInitialValue;
 	const float	GuiZElementStep;

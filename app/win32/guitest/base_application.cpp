@@ -4,61 +4,59 @@
 
 _env env = { 0 };
 
-BaseApplication* BaseApplication::g_Instance;// = 0;
-
-BaseApplication::BaseApplication(size_t w, size_t h, const char* title) 
-: m_ready(false), window(nullptr) {
-	g_Instance = this;
-
-	if (glfwInit() != GL_TRUE) return; 
-		
-	{
-		//glfwWindowHint(GLFW_RED_BITS, 8);
-		//glfwWindowHint(GLFW_GREEN_BITS, 8);
-		//glfwWindowHint(GLFW_BLUE_BITS, 8);
-		//glfwWindowHint(GLFW_ALPHA_BITS, 8);
-		//glfwWindowHint(GLFW_DEPTH_BITS, 16);
-
-		//glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-
-		//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-
-		window = glfwCreateWindow(w, h, title, NULL, NULL);
-		glfwSetWindowUserPointer(window, this);
-
-		glfwSwapInterval(1);
-
+struct glfw_helper
+{
+	glfw_helper() {
 		if (!glfwInit())
 			exit(EXIT_FAILURE);
-
-		if (!window)
-		{
-			glfwTerminate();
-			exit(EXIT_FAILURE);
-		}
-
-		glfwMakeContextCurrent(window);
-
-		// Window resize callback function
-		glfwSetWindowSizeCallback(window, _OnWindowsizefun );
-		//// Set keyboard input callback function
-		glfwSetKeyCallback(window, _OnKeyfun);
-		glfwSetMouseButtonCallback(window, _OnMousebuttonfun);
-		glfwSetCursorPosCallback(window, _OnMouseposfun);
-
-		m_ready = true;
 	}
+
+	~glfw_helper() {
+		glfwTerminate();
+	}
+} _glfw_helper;
+
+BaseApplication::BaseApplication(size_t w, size_t h, const char* title) 
+: window(nullptr), m_width(w), m_height(h) {
+	glfwWindowHint(GLFW_RED_BITS, 8);
+	glfwWindowHint(GLFW_GREEN_BITS, 8);
+	glfwWindowHint(GLFW_BLUE_BITS, 8);
+	//glfwWindowHint(GLFW_ALPHA_BITS, 8);
+	glfwWindowHint(GLFW_DEPTH_BITS, 16);
+
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	window = glfwCreateWindow(m_width, m_height, title, NULL, NULL);
+	if (!window)
+	{
+		exit(EXIT_FAILURE);
+	}
+	
+	glfwSetWindowUserPointer(window, this);
+
+	glfwSwapInterval(1);	
+	glfwMakeContextCurrent(window);
+
+	// Window resize callback function
+	glfwSetWindowSizeCallback(window, _OnWindowsizefun );
+	//// Set keyboard input callback function
+	glfwSetKeyCallback(window, _OnKeyfun);
+	glfwSetMouseButtonCallback(window, _OnMousebuttonfun);
+	glfwSetCursorPosCallback(window, _OnMouseposfun);
 }
 
 BaseApplication::~BaseApplication() {
 	glfwDestroyWindow(window);
-	glfwTerminate();
-	g_Instance = nullptr;
 }
 
+void BaseApplication::onWindowSize(int w, int h) {
+	m_width = w;
+	m_height = h;
+}
 
 int BaseApplication::run() {
 	// the time of the previous frame
@@ -92,7 +90,7 @@ int BaseApplication::run() {
 		//glFrontFace(GL_CCW);
 		glDisable(GL_DEPTH_TEST);
 
-		glViewport(0, 0, 1024, 768);
+		glViewport(0, 0, m_width, m_height);
 
 		glClearColor(0.32f, 0.33f, 0.35f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -111,18 +109,22 @@ int BaseApplication::run() {
 	return 0;
 }
 
-void BaseApplication::_OnWindowsizefun(GLFWwindow*, int w, int h) {
-	g_Instance->onWindowSize(w, h);
+void BaseApplication::_OnWindowsizefun(GLFWwindow* window, int w, int h) {
+	BaseApplication* app = static_cast<BaseApplication*>(glfwGetWindowUserPointer(window));
+	app->onWindowSize(w, h);
 }
 
-void BaseApplication::_OnMousebuttonfun(GLFWwindow*, int button, int action, int mods) {
-	g_Instance->onMousebutton(button, action);
+void BaseApplication::_OnMousebuttonfun(GLFWwindow* window, int button, int action, int mods) {
+	BaseApplication* app = static_cast<BaseApplication*>(glfwGetWindowUserPointer(window));
+	app->onMousebutton(button, action);
 }
 
-void BaseApplication::_OnMouseposfun(GLFWwindow*, double x, double y) {
-	g_Instance->onMousepos(x, y);
+void BaseApplication::_OnMouseposfun(GLFWwindow* window, double x, double y) {
+	BaseApplication* app = static_cast<BaseApplication*>(glfwGetWindowUserPointer(window));
+	app->onMousepos(x, y);
 }
 
-void BaseApplication::_OnKeyfun(GLFWwindow*, int key, int scancode, int action, int mods) {
-	g_Instance->onKey(key, action);
+void BaseApplication::_OnKeyfun(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	BaseApplication* app = static_cast<BaseApplication*>(glfwGetWindowUserPointer(window));
+	app->onKey(key, action);
 }

@@ -24,18 +24,19 @@ void Cursor::setPosition(point pt)
 
 point Cursor::getPosition() const
 {	
-	Size vp = m_render.getViewportSize();
-	if(m_render.isAutoScale() && vp.width && vp.height)
-	{
+	auto vp = m_render.renderDeivce().getViewport();
+	//Size vp = m_render.getViewportSize();
+	//if(m_render.isAutoScale() && vp.width && vp.height)
+	//{
 		Size sz = m_render.getOriginalSize();
-		float cx = sz.width / vp.width;
-		float cy = sz.height / vp.height;
+		float cx = sz.width / vp.w;
+		float cy = sz.height / vp.h;
 		
 		return point(m_cursorPos.x * cx, m_cursorPos.y * cy);
-	}
-	else
+	//}
+	//else
 	{
-		return m_cursorPos;
+		//return m_cursorPos;
 	}
 }
 

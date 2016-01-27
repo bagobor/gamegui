@@ -37,6 +37,8 @@ public:
 	void onChar(int character, int action);
 
 protected:
+	virtual void onWindowSize(int w, int h);
+
 	void reinit();
 	void resize_scene(unsigned int width, unsigned int height);	
 	void update();

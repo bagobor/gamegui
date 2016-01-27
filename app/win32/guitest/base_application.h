@@ -25,12 +25,15 @@ struct GLFWwindow;
 class BaseApplication {
 public:	
 	BaseApplication(size_t w, size_t h, const char* title);
-	~BaseApplication();
+	virtual ~BaseApplication();
 
 	int run();
 
+	size_t width() const { return m_width; }
+	size_t height() const { return m_height; }
+
 protected:
-	virtual void onWindowSize(int /*w*/,int /*h*/) {}
+	virtual void onWindowSize(int w, int h);
 	virtual int  onWindowclose(void) { return 0;}
 	virtual void onWindowrefresh(void) {}
 	virtual void onMousebutton(int /*button*/, int /*action*/) {}
@@ -40,8 +43,6 @@ protected:
 	virtual void onChar( int /*character*/, int /*action*/ ) {}
 
 private:
-	static BaseApplication* g_Instance;// = 0;
-
 	static void _OnWindowsizefun(GLFWwindow*, int w, int h);
 	static void _OnMousebuttonfun(GLFWwindow*, int button, int action, int mods);
 	static void _OnMouseposfun(GLFWwindow*, double x, double y);
@@ -52,5 +53,5 @@ private:
 	static void _OnCharfun(int character, int action);
 	
 	GLFWwindow* window;
-	bool m_ready;
+	size_t m_width, m_height;
 };

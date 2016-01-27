@@ -30,7 +30,7 @@ System::System(Renderer& render, const std::string& scheme,
 	m_containsMouse(0),
 	m_cursor(render),
 	m_sytemkeys(0),
-	m_autoScale(true),
+	m_autoScale(false),
 	m_dragging(false),
 	m_dragfired(false),
 	m_dragfreeze(false),
@@ -869,8 +869,9 @@ void System::unsubscribeTick(base_window* wnd)
 
 void System::setAutoScale(bool status)
 {
+	status = false;
 	m_autoScale = status;
-	m_render.setAutoScale(status);
+	//m_render.setAutoScale(status);
 	m_rootWindow->setSize(m_render.getSize());
 	m_rootWindow->onSized(true);
 }

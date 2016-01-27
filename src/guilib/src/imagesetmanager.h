@@ -29,7 +29,7 @@ namespace gui
 	//struct RenderImageInfo;
 	struct RenderImageInfo
 	{
-		RenderImageInfo() : texture(0), isAdditiveBlend(false) {}
+		RenderImageInfo() : texture(nullptr), isAdditiveBlend(false) {}
 		Texture* texture;
 		Rect pixel_rect;
 		point offset;

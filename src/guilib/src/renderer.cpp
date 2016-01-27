@@ -35,7 +35,7 @@ Renderer::Renderer(RenderDevice& render_device, filesystem_ptr fs) :
 	m_maxTextureSize(4096),
 	m_originalsize(1.f, 1.f),
 	m_texmanager(*this),
-	m_autoScale(false),
+	//m_autoScale(false),
 	m_num_quads(0),
 	m_num_batches(0),
 	m_currentCapturing(0),
@@ -203,21 +203,23 @@ void Renderer::drawLine(const Image& img, const vec2* p, size_t size, float z, c
 
 	vec2 p0, p1, p2, p3;
 
-	size_t images = img.count();
-	for(size_t i = 0; i < images; ++i)
+	const size_t images = img.count();
+	for(size_t img_idx = 0; img_idx < images; ++img_idx)
 	{
 		RenderImageInfo info;
-		img.GetRenderInfo(info, i);
+		img.GetRenderInfo(info, img_idx);
 		if(!info.texture)
 			continue;
 
 		Rect source_rect = info.pixel_rect;
 		source_rect *= info.texture->getSize();
 
+		const vec2* arr = p;
+
 		for(size_t i = 0; i < size - 1; ++i)
 		{
-			const vec2& v1 = p[i];
-			const vec2& v2 = p[i+1];
+			const vec2& v1 = *arr; ++arr;
+			const vec2& v2 = *arr; ++arr;
 
 			vec2 dir = make_normal(v2-v1);
 
@@ -425,11 +427,36 @@ void Renderer::sortQuads(void)
 
 const Size Renderer::getSize(void)
 {
-	if(m_autoScale)
-		return getOriginalSize();
-	else
+	//if(m_autoScale)
+	//	return getOriginalSize();
+	//else
 		return getViewportSize();
 }
+
+TexturePtr Renderer::createTextureInstance(const std::string& filename) 
+{
+	return m_render_device.createTexture(filename);
+}
+
+
+TexturePtr	Renderer::createTexture(const std::string& filename) { 
+	return m_texmanager.createTexture(filename); 
+}
+
+TexturePtr	Renderer::createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
+	return m_render_device.createTexture(data, width, height, format);
+}
+
+TexturePtr	Renderer::createTexture(unsigned int width, unsigned int height, Texture::PixelFormat format) {
+	return createTexture(NULL, width, height, format);
+}
+
+TexturePtr	Renderer::updateTexture(TexturePtr p, const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
+	if (p)
+		p->update(data, width, height, format);
+	return p;
+}
+
 
 void Renderer::cleanup(bool complete)
 {
@@ -442,41 +469,10 @@ void Renderer::cleanup(bool complete)
 	}	
 }
 
-void Renderer::computeVirtualDivRealFactor(Size& coefOut) const
+Size Renderer::getViewportSize() const 
 {
-	if (!m_autoScale)
-	{
-		coefOut.width = 1.0f;
-		coefOut.height = 1.0f;
-		return;
-	}
-	const Size& original = getOriginalSize(); 
-	const Size& current = getViewportSize();
-	coefOut = current/original;	
-}
-
-Rect Renderer::virtualToRealCoord( const Rect& virtualRect ) const
-{
-	Rect result = virtualRect;
-	Size k;
-	computeVirtualDivRealFactor(k);
-	result.m_left *= k.width;
-	result.m_right *= k.width;
-	result.m_top *= k.height;
-	result.m_bottom *= k.height;
-	return result;
-}
-
-Rect Renderer::realToVirtualCoord( const Rect& realRect ) const
-{
-	Size k;
-	computeVirtualDivRealFactor(k);
-	Rect result = realRect;
-	result.m_left /= k.width;
-	result.m_right /= k.width;
-	result.m_top /= k.height;
-	result.m_bottom /= k.height;
-	return result;
+	const RenderDevice::ViewPort& vp = m_render_device.getViewport();
+	return Size((float)vp.w, (float)vp.h);
 }
 
 void Renderer::fillQuad(QuadInfo& quad, const Rect& rc, const Rect& uv, float z, const RenderImageInfo& img, const ColorRect& colors)

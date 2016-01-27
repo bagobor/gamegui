@@ -157,6 +157,10 @@ void ui_application::update()
 
 void ui_application::render()
 {
+	if (m_render) {
+		m_render->setOriginalSize(gui::Size(width(), height()));
+	}
+
 	if (m_system)
 	{
 		m_system->render();
@@ -166,6 +170,20 @@ void ui_application::render()
 bool ui_application::isFinished()
 {
 	return false;
+}
+
+void ui_application::onWindowSize(int w, int h) {
+	BaseApplication::onWindowSize(w, h);
+
+	gui::RenderDevice::ViewPort vp = {
+		0,0,w,h
+	};
+
+	if (m_render_device) {
+		m_render_device->setViewport(vp);
+	}
+
+	handleViewportChange();
 }
 
 void ui_application::handleViewportChange()
