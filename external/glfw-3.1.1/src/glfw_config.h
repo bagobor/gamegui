@@ -35,57 +35,57 @@
 //========================================================================
 
 // Define this to 1 if building GLFW for X11
-#cmakedefine _GLFW_X11
+//#cmakedefine _GLFW_X11
 // Define this to 1 if building GLFW for Win32
-#cmakedefine _GLFW_WIN32
+#define _GLFW_WIN32
 // Define this to 1 if building GLFW for Cocoa
-#cmakedefine _GLFW_COCOA
+//#cmakedefine _GLFW_COCOA
 // Define this to 1 if building GLFW for Wayland
-#cmakedefine _GLFW_WAYLAND
+//#cmakedefine _GLFW_WAYLAND
 // Define this to 1 if building GLFW for Mir
-#cmakedefine _GLFW_MIR
+//#cmakedefine _GLFW_MIR
 
 // Define this to 1 if building GLFW for EGL
-#cmakedefine _GLFW_EGL
+//#cmakedefine _GLFW_EGL
 // Define this to 1 if building GLFW for GLX
-#cmakedefine _GLFW_GLX
+//#cmakedefine _GLFW_GLX
 // Define this to 1 if building GLFW for WGL
-#cmakedefine _GLFW_WGL
+#define _GLFW_WGL
 // Define this to 1 if building GLFW for NSGL
-#cmakedefine _GLFW_NSGL
+//#cmakedefine _GLFW_NSGL
 
 // Define this to 1 if building as a shared library / dynamic library / DLL
-#cmakedefine _GLFW_BUILD_DLL
+//#cmakedefine _GLFW_BUILD_DLL
 
 // Define this to 1 if glfwSwapInterval should ignore DWM compositing status
-#cmakedefine _GLFW_USE_DWM_SWAP_INTERVAL
+//#cmakedefine _GLFW_USE_DWM_SWAP_INTERVAL
 // Define this to 1 to force use of high-performance GPU on Optimus systems
-#cmakedefine _GLFW_USE_OPTIMUS_HPG
+//#cmakedefine _GLFW_USE_OPTIMUS_HPG
 
-// Define this to 1 if the XInput X11 extension is available
-#cmakedefine _GLFW_HAS_XINPUT
-// Define this to 1 if the Xxf86vm X11 extension is available
-#cmakedefine _GLFW_HAS_XF86VM
-// Define this to 1 if glXGetProcAddress is available
-#cmakedefine _GLFW_HAS_GLXGETPROCADDRESS
-// Define this to 1 if glXGetProcAddressARB is available
-#cmakedefine _GLFW_HAS_GLXGETPROCADDRESSARB
-// Define this to 1 if glXGetProcAddressEXT is available
-#cmakedefine _GLFW_HAS_GLXGETPROCADDRESSEXT
-// Define this to 1 if dlopen is available
-#cmakedefine _GLFW_HAS_DLOPEN
+//// Define this to 1 if the XInput X11 extension is available
+//#cmakedefine _GLFW_HAS_XINPUT
+//// Define this to 1 if the Xxf86vm X11 extension is available
+//#cmakedefine _GLFW_HAS_XF86VM
+//// Define this to 1 if glXGetProcAddress is available
+//#cmakedefine _GLFW_HAS_GLXGETPROCADDRESS
+//// Define this to 1 if glXGetProcAddressARB is available
+//#cmakedefine _GLFW_HAS_GLXGETPROCADDRESSARB
+//// Define this to 1 if glXGetProcAddressEXT is available
+//#cmakedefine _GLFW_HAS_GLXGETPROCADDRESSEXT
+//// Define this to 1 if dlopen is available
+//#cmakedefine _GLFW_HAS_DLOPEN
 
-// Define this to 1 if glfwInit should change the current directory
-#cmakedefine _GLFW_USE_CHDIR
-// Define this to 1 if glfwCreateWindow should populate the menu bar
-#cmakedefine _GLFW_USE_MENUBAR
-// Define this to 1 if windows should use full resolution on Retina displays
-#cmakedefine _GLFW_USE_RETINA
+//// Define this to 1 if glfwInit should change the current directory
+//#cmakedefine _GLFW_USE_CHDIR
+//// Define this to 1 if glfwCreateWindow should populate the menu bar
+//#cmakedefine _GLFW_USE_MENUBAR
+//// Define this to 1 if windows should use full resolution on Retina displays
+//#cmakedefine _GLFW_USE_RETINA
 
 // Define this to 1 if using OpenGL as the client library
-#cmakedefine _GLFW_USE_OPENGL
+#define _GLFW_USE_OPENGL
 // Define this to 1 if using OpenGL ES 1.1 as the client library
-#cmakedefine _GLFW_USE_GLESV1
-// Define this to 1 if using OpenGL ES 2.0 as the client library
-#cmakedefine _GLFW_USE_GLESV2
+//#cmakedefine _GLFW_USE_GLESV1
+//// Define this to 1 if using OpenGL ES 2.0 as the client library
+//#cmakedefine _GLFW_USE_GLESV2
 

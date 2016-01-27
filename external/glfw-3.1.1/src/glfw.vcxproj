@@ -204,29 +204,26 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="config.h" />
+    <ClCompile Include="win32_tls.c" />
+    <ClCompile Include="winmm_joystick.c" />
+    <ClInclude Include="glfw_config.h" />
     <ClInclude Include="internal.h" />
     <ClInclude Include="..\include\GLFW\glfw3.h" />
     <ClInclude Include="..\include\GLFW\glfw3native.h" />
+    <ClInclude Include="wgl_context.h" />
     <ClInclude Include="win32_platform.h" />
-    <ClInclude Include="wgl_platform.h" />
-    <ClCompile Include="clipboard.c" />
     <ClCompile Include="context.c" />
-    <ClCompile Include="gamma.c" />
     <ClCompile Include="init.c" />
     <ClCompile Include="input.c" />
-    <ClCompile Include="joystick.c" />
     <ClCompile Include="monitor.c" />
-    <ClCompile Include="time.c" />
     <ClCompile Include="window.c" />
-    <ClCompile Include="win32_clipboard.c" />
-    <ClCompile Include="win32_gamma.c" />
     <ClCompile Include="win32_init.c" />
-    <ClCompile Include="win32_joystick.c" />
     <ClCompile Include="win32_monitor.c" />
     <ClCompile Include="win32_time.c" />
     <ClCompile Include="win32_window.c" />
     <ClCompile Include="wgl_context.c" />
+    <ClInclude Include="win32_tls.h" />
+    <ClInclude Include="winmm_joystick.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

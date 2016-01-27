@@ -29,9 +29,9 @@
 #define _internal_h_
 
 
-#if defined(_GLFW_USE_CONFIG_H)
+//#if defined(_GLFW_USE_CONFIG_H)
  #include "glfw_config.h"
-#endif
+//#endif
 
 #define _GLFW_VERSION_NUMBER "3.1.1"
 

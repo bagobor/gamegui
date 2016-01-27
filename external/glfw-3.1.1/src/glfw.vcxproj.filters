@@ -1,13 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="clipboard.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="context.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gamma.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="init.c">
@@ -16,28 +10,13 @@
     <ClCompile Include="input.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="joystick.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="monitor.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="time.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="window.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win32_clipboard.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win32_gamma.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="win32_init.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="win32_joystick.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="win32_monitor.c">
@@ -52,11 +31,10 @@
     <ClCompile Include="wgl_context.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="winmm_joystick.c" />
+    <ClCompile Include="win32_tls.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="internal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -69,9 +47,10 @@
     <ClInclude Include="win32_platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="wgl_platform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="wgl_context.h" />
+    <ClInclude Include="winmm_joystick.h" />
+    <ClInclude Include="win32_tls.h" />
+    <ClInclude Include="glfw_config.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

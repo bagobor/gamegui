@@ -62,7 +62,7 @@
     </CustomBuildStep>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../../external/luabind;$(SolutionDir)../../../external/lua/;$(SolutionDir)../../../external;$(SolutionDir)../../../external/glfw-3.0.3/include;$(SolutionDir)..\..\..\src\;$(SolutionDir)../../../external/efsw/include;$(SolutionDir)..\..\..\external\glm-0.9.5.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../external/luabind;$(SolutionDir)../../../external/lua/;$(SolutionDir)../../../external;$(SolutionDir)../../../external/glfw-3.1.1/include;$(SolutionDir)..\..\..\src\;$(SolutionDir)../../../external/efsw/include;$(SolutionDir)..\..\..\external\glm-0.9.6.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;DEBUG;PROFILE;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;STRSAFE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -94,7 +94,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>$(SolutionDir)../../../external/luabind;$(SolutionDir)../../../external/lua/;$(SolutionDir)../../../external;$(SolutionDir)../../../external/glfw-3.0.3/include;$(SolutionDir)..\..\..\src\;$(SolutionDir)../../../external/efsw/include;$(SolutionDir)..\..\..\external\glm-0.9.5.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)../../../external/luabind;$(SolutionDir)../../../external/lua/;$(SolutionDir)../../../external;$(SolutionDir)../../../external/glfw-3.1.1/include;$(SolutionDir)..\..\..\src\;$(SolutionDir)../../../external/efsw/include;$(SolutionDir)..\..\..\external\glm-0.9.6.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;STRSAFE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -162,13 +162,8 @@
     <ProjectReference Include="..\..\..\external\freetype\builds\windows\vc2013\freetype.vcxproj">
       <Project>{78b079bd-9fc7-4b9e-b4a6-96da0f00248b}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\external\glfw-3.0.3\src\glfw.vcxproj">
+    <ProjectReference Include="..\..\..\external\glfw-3.1.1\src\glfw.vcxproj">
       <Project>{c2d1b6cf-72a9-4cd1-ae20-489ceba7c1c7}</Project>
-      <Private>false</Private>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\..\..\external\lpng1617\projects\vstudio\libpng\libpng.vcxproj">
       <Project>{d6973076-9317-4ef2-a0b8-b7a18ac0713e}</Project>
