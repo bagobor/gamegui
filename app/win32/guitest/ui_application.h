@@ -5,12 +5,19 @@
 #include <efsw/efsw.hpp>
 #include <iostream>
 
+namespace gui
+{
+	namespace platform_win32
+	{
+		class log;
+	}
+}
 
-class ui_application : public BaseApplication, public efsw::FileWatchListener
+class ApplicationGUI : public BaseApplicationGLFW, public efsw::FileWatchListener
 {
 public:
-	ui_application(int w, int h, const char* title);
-	~ui_application();
+	ApplicationGUI(int w, int h, const char* title);
+	~ApplicationGUI();
 
 	void run();
 
@@ -29,7 +36,7 @@ public:
 
 	void load(const std::string& xml);
 
-	// from BaseApplication
+	// from BaseApplicationGLFW
 	void onMousebutton(int button, int action);
 	void onMousepos(int x, int y);
 	void onMousewheel(int delta);
@@ -39,8 +46,8 @@ public:
 protected:
 	virtual void onWindowSize(int w, int h);
 
-	void reinit();
-	void resize_scene(unsigned int width, unsigned int height);	
+	//void reinit();
+	//void resize_scene(unsigned int width, unsigned int height);	
 	void update();
 	void render();
 
@@ -52,7 +59,8 @@ protected:
 
 	gui::RenderDevicePtr m_render_device;
 	std::shared_ptr<gui::Renderer> m_render;
-	std::shared_ptr<gui::System> m_system;		
+	std::shared_ptr<gui::System> m_system;
+	std::shared_ptr<gui::log> m_log;
 
 	unsigned int m_framecount;
 

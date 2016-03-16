@@ -1,31 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="console">
-      <UniqueIdentifier>{ac69e769-96e4-4b6d-ace1-067e84d80f64}</UniqueIdentifier>
-    </Filter>
     <Filter Include="common">
       <UniqueIdentifier>{2c0efdf7-1ce1-4311-8969-f95d10f20340}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="guicon.h">
-      <Filter>console</Filter>
-    </ClInclude>
     <ClInclude Include="base_application.h" />
     <ClInclude Include="ui_application.h" />
-    <ClInclude Include="..\common\filesystem_win.h">
+    <ClInclude Include="..\common\gui_filesystem_win.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="ui_sample.h" />
+    <ClInclude Include="..\common\gui_log_win.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="guicon.cpp">
-      <Filter>console</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="base_application.cpp" />
     <ClCompile Include="ui_application.cpp" />
-    <ClCompile Include="ui_sample.cpp" />
+    <ClCompile Include="console_win32.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

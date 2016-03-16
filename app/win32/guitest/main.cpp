@@ -1,15 +1,12 @@
-#include <windows.h>
-#include "guicon.h"
-#include "ui_sample.h"
+#include "ui_application.h"
 
-//#include "base_application.h"
+#ifdef _WINDOWS
+	void RedirectIOToConsole();
+#else
+	void RedirectIOToConsole() {}
+#endif
 
-using namespace gui;
 
-//--------------------------------------------------------------------------------------
-// Initialize everything and go into a render loop
-//--------------------------------------------------------------------------------------
-//INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR params, int )
 int main()
 {
     // Enable run-time memory check for debug builds.
@@ -22,7 +19,7 @@ int main()
 	int width = 1024;
 	int height = 768;
 	std::wstring res;// (params);
-
+	
 	if (!res.empty())
 	{
 		size_t delim = res.find_first_of(L" ");
@@ -33,22 +30,12 @@ int main()
 		}
 	}
 
-	//RedirectIOToConsole();
+	RedirectIOToConsole();
 
 	{
-		ui_sample sample(width, height, "GUI sample");
+		ApplicationGUI sample(width, height, "GUI sample");
 		sample.run();
 	}
 
-	//const int window_width = 800,
-	//	window_height = 600;
-
-	//int result_code = 0;
-
-	//{
-	//	BaseApplication app(window_width, window_height, "gui test");
-	//	result_code = app.run();
-	//}
-    
     return 0;
 }

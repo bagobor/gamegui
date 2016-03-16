@@ -121,18 +121,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\common\gui_log_win.h" />
     <ClInclude Include="base_application.h" />
-    <ClInclude Include="guicon.h" />
-    <ClInclude Include="..\common\filesystem_win.h" />
+    <ClInclude Include="..\common\gui_filesystem_win.h" />
     <ClInclude Include="ui_application.h" />
-    <ClInclude Include="ui_sample.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base_application.cpp" />
-    <ClCompile Include="guicon.cpp" />
+    <ClCompile Include="console_win32.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ui_application.cpp" />
-    <ClCompile Include="ui_sample.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\build\win32\vs2013\lua.vcxproj">

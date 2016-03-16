@@ -11,103 +11,41 @@
 #include <iostream>
 #include <functional>
 
+#include "../common/gui_filesystem_win.h"
+#include "../common/gui_log_win.h"
+
 using namespace gui;
 
-class gui_log : public log
-{
-public: 
-	gui_log() : 
-	  m_hFile(INVALID_HANDLE_VALUE)
-	{
-		  wchar_t	wpath[MAX_PATH];
-		  // init app data path
-		  SHGetFolderPathW(NULL, CSIDL_APPDATA | CSIDL_FLAG_CREATE, NULL, SHGFP_TYPE_CURRENT, wpath);
-
-		  char buff[256];
-		  int size = GetModuleFileNameA(NULL, buff, 256);
-
-		  std::string path(buff, size);
-
-		  int pos = path.find_last_of('\\');
-
-		  path = path.substr(0, pos);
-
-
-		  std::string log = path + "/guitest.log";
-		  //std::wstring log(wpath);
-		  //log += L"\\RGDEngine\\guitest.log";
-		  m_hFile = CreateFileA(log.c_str(), GENERIC_WRITE, FILE_SHARE_READ, 0, CREATE_ALWAYS, 0, 0);
-	}
-
-	~gui_log() {
-		if(m_hFile != INVALID_HANDLE_VALUE)
-			CloseHandle(m_hFile);
-	}
-
-	void write(log::level l, const std::string& msg) 
-	{
-		static const char* type2str[log::log_levels_num] = {"sys", "msg", "wrn", "ERR", "CRITICAL"};
-		const char* type = type2str[l];
-
-		SYSTEMTIME st;
-		GetLocalTime(&st);
-
-		static char con_timestamp[32] = {0};
-		_snprintf(con_timestamp, 32, "[%02d:%02d:%02d][%s] ", st.wHour, st.wMinute, st.wSecond, type);
-		std::cout << con_timestamp << msg.c_str() << std::endl;
-
-		if(m_hFile == INVALID_HANDLE_VALUE)
-			return;
-
-		static char timestamp[32] = {0};
-		_snprintf(timestamp, 32, "[%04d.%02d.%02d %02d:%02d:%02d][%s] ", st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond, type);
-	
-		std::string m = timestamp + msg + "\n";
-		DWORD len = (DWORD)m.length();
-		WriteFile(m_hFile, m.c_str(), len, &len, 0);
-	}
-
-	HANDLE m_hFile;
-};
-
-gui_log g_log;
-
-#include "../common/filesystem_win.h"
-
-ui_application::ui_application(int w, int h, const char* title)
-	: BaseApplication(w, h, title)
+ApplicationGUI::ApplicationGUI(int w, int h, const char* title)
+	: BaseApplicationGLFW(w, h, title)
 	, m_render(NULL)
 	, m_system(NULL)
-	//, window(math::vec2i(x, y), math::vec2i(w, h), title, 0, WS_BORDER | WS_CAPTION | WS_SYSMENU)
-	//, m_render_device(m_filesystem)
 	, m_elapsed(0)
 	, m_active(true)
 	, m_needReload(false)
 {
-	using namespace std::placeholders;
-	env.render_cb = std::bind(&ui_application::render, this);
-	env.update_cb = std::bind(&ui_application::update, this);
-
-	//show();
-	update();	
+	update();
+	m_filename = "guitest/test.xml";
 }
 
-ui_application::~ui_application()
+ApplicationGUI::~ApplicationGUI()
 {
 	m_fileWatcher.removeWatch(m_watchID);
 	m_system.reset();
 	m_render.reset();
+	m_log.reset();
 }
 
-void ui_application::run()
+void ApplicationGUI::run()
 {	
 	createGUISystem();
-	BaseApplication::run();
+	BaseApplicationGLFW::run();
 }
 
-void ui_application::createGUISystem()
+void ApplicationGUI::createGUISystem()
 {
-	filesystem_ptr fs = std::make_shared<win::filesystem>("/data/");
+	filesystem_ptr fs = std::make_shared<platform_win32::filesystem>("/data/");
+	m_log = std::make_shared<platform_win32::log>();
 
 	m_watchID = m_fileWatcher.addWatch(fs->get_root_dir(0), this, true);
 
@@ -116,30 +54,31 @@ void ui_application::createGUISystem()
 
 	if(m_system)
 		m_system.reset();
-
-	m_system = std::make_shared<System>(*m_render, "default", nullptr, g_log);
+	
+	m_system = std::make_shared<System>(*m_render, "default", nullptr, *m_log);
 
 	if(m_system)
 	{
-		//::ShowCursor(FALSE);
 		Cursor& cursor = m_system->getCursor();
 		cursor.setType("CursorNormal");
-		//m_font = m_system->getWindowManager().loadFont("exotibi");
 	}
 
 	m_fileWatcher.watch();
+	load(m_filename);
 }
 
-void ui_application::resetGUISystem()
+void ApplicationGUI::resetGUISystem()
 {
 	if(m_render)
 		m_render->clearRenderList();
 
 	if(m_system)
-		m_system->reset();	
+		m_system->reset();
+
+	load(m_filename);
 }
 
-void ui_application::update()
+void ApplicationGUI::update()
 {
 	if (m_needReload) {
 		m_needReload = false;
@@ -150,12 +89,12 @@ void ui_application::update()
 	m_framecount++;
 	if(m_system)
 	{
-		m_system->tick(env.dt);
+		m_system->tick(frameDt());
 		m_system->draw();
 	}	
 }
 
-void ui_application::render()
+void ApplicationGUI::render()
 {
 	if (m_render) {
 		m_render->setOriginalSize(gui::Size(width(), height()));
@@ -167,13 +106,13 @@ void ui_application::render()
 	}
 }
 
-bool ui_application::isFinished()
+bool ApplicationGUI::isFinished()
 {
 	return false;
 }
 
-void ui_application::onWindowSize(int w, int h) {
-	BaseApplication::onWindowSize(w, h);
+void ApplicationGUI::onWindowSize(int w, int h) {
+	BaseApplicationGLFW::onWindowSize(w, h);
 
 	gui::RenderDevice::ViewPort vp = {
 		0,0,w,h
@@ -186,7 +125,7 @@ void ui_application::onWindowSize(int w, int h) {
 	handleViewportChange();
 }
 
-void ui_application::handleViewportChange()
+void ApplicationGUI::handleViewportChange()
 {
 	if(!m_system) return;
 
@@ -196,7 +135,7 @@ void ui_application::handleViewportChange()
 }
 
 
-bool ui_application::handleMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState state)
+bool ApplicationGUI::handleMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState state)
 {
 	if (!m_system) {
 		return false;
@@ -221,7 +160,7 @@ bool ui_application::handleMouseButton(EventArgs::MouseButtons btn, EventArgs::B
 	return m_system->handle_event(e);
 }
 
-void ui_application::onMousebutton(int button, int action) {
+void ApplicationGUI::onMousebutton(int button, int action) {
 	if (!m_system || button > 2 || action > 1) return;
 
 	int gui_buttons_map[] = { gui::button_left, gui::button_right, gui::button_middle };
@@ -234,7 +173,7 @@ void ui_application::onMousebutton(int button, int action) {
 	m_system->handle_event(e);
 }
 
-void ui_application::onMousepos(int x, int y) {
+void ApplicationGUI::onMousepos(int x, int y) {
 	mouse_x = x;
 	mouse_y = y;
 
@@ -247,7 +186,7 @@ void ui_application::onMousepos(int x, int y) {
 	m_system->handle_event(e);
 }
 
-void ui_application::onMousewheel(int delta) {
+void ApplicationGUI::onMousewheel(int delta) {
 	if (!m_system) return;
 
 	gui::event e = {0};
@@ -256,7 +195,7 @@ void ui_application::onMousewheel(int delta) {
 	m_system->handle_event(e);
 }
 
-void ui_application::handleFileAction(efsw::WatchID watchid, const std::string& dir, const std::string& filename, efsw::Action action, std::string oldFilename)
+void ApplicationGUI::handleFileAction(efsw::WatchID watchid, const std::string& dir, const std::string& filename, efsw::Action action, std::string oldFilename)
 {
 	if (efsw::Actions::Modified == action) {
 		m_needReload = true;
@@ -264,7 +203,7 @@ void ui_application::handleFileAction(efsw::WatchID watchid, const std::string& 
 	printf("DIR (%s) FILE (%s to %s) has event %s", dir.c_str(), oldFilename.c_str(), filename.c_str(), getActionName(action).c_str());
 }
 
-void ui_application::onKey(int key, int action) {
+void ApplicationGUI::onKey(int key, int action) {
 
 	if (!m_filename.empty() && key == 294 && action == 1)
 	{
@@ -273,7 +212,7 @@ void ui_application::onKey(int key, int action) {
 	}
 }
 
-void ui_application::onChar(int character, int action) {
+void ApplicationGUI::onChar(int character, int action) {
 	if (!m_system) return;
 }
 //
@@ -310,13 +249,13 @@ void ui_application::onChar(int character, int action) {
 
 
 
-void ui_application::load(const std::string& xml)
+void ApplicationGUI::load(const std::string& xml)
 {
 	if(!m_system) return;
 	gui::base_window* wnd = m_system->loadXml(xml);
 }
 
-const std::string& ui_application::getActionName(efsw::Action action)
+const std::string& ApplicationGUI::getActionName(efsw::Action action)
 {
 	static std::string action_names[] = {
 		"Bad Action",
