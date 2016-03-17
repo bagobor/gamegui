@@ -72,7 +72,7 @@ void base_window::setPosition(const point& pt)
 		invalidate();
 		m_area.setPosition(pt);
 		onMoved();
-		send_event(events::MovedEvent());
+		send(events::MovedEvent());
 	}
 }
 
@@ -83,7 +83,7 @@ void base_window::setSize(const Size& sz)
 		invalidate();
 		m_area.setSize(sz);
 		onSized();
-		send_event(events::SizedEvent());
+		send(events::SizedEvent());
 	}
 }
 
@@ -851,7 +851,7 @@ void base_window::unsubscribeNamedEvent(std::string name, base_window* sender)
 void base_window::sendNamedEvent(std::string name)
 {
 	if (name.empty()) return;
-	send_event(events::NamedEvent(name, this));
+	send(events::NamedEvent(name, this));
 }
 
 void base_window::onNamedEvent(events::NamedEvent& e)

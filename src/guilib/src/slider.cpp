@@ -92,7 +92,7 @@ namespace gui
 			e.name = "On_Tracked";
 			callHandler(&e);
 			
-			send_event(events::TrackEvent());
+			send(events::TrackEvent());
 			invalidate();
 		}
 	}

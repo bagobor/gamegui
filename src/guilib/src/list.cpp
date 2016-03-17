@@ -215,7 +215,7 @@ namespace gui
 	{
 		if(state == EventArgs::Up)
 		{
-			send_event(events::ClickEvent());
+			send(events::ClickEvent());
 		}
 		return true;
 	}

@@ -42,7 +42,7 @@ namespace gui
 		const Rect& getRect() const { return m_rect; }
 
 		const bool isLoaded() const { return m_isLoaded; }
-		void setLoaded() { m_isLoaded = true; }
+
 		void setAdvance (float advance) { m_advance = advance; }
 		void setImage (const Image* image) { m_image = image; }
 #ifdef GUI_KERNING_ENABLED

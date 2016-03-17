@@ -59,7 +59,7 @@ bool Button::onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState s
 				m.name = "On_Clicked";
 				callHandler(&m);
 
-				send_event(events::ClickEvent());
+				send(events::ClickEvent());
 			}
 			invalidate();
 		}
@@ -90,7 +90,7 @@ bool Button::onKeyboardButton(EventArgs::Keys key, EventArgs::ButtonState state)
 			m.name = "On_Clicked";
 			callHandler(&m);
 
-			send_event(events::ClickEvent());
+			send(events::ClickEvent());
 		}
 		invalidate();
 		return true;
@@ -289,7 +289,7 @@ bool Thumb::onMouseMove(void)
 		invalidate();
 	
 		m_area = testarea;
-		send_event(events::TrackEvent());
+		send(events::TrackEvent());
 	}
 	return true;
 }
@@ -371,7 +371,7 @@ void Thumb::setProgress(float p)
 	}
 	invalidate();
 	m_area.setPosition(pt);
-	send_event(events::TrackEvent());
+	send(events::TrackEvent());
 }
 
 void Thumb::setTrackarea(const Rect& rc)
