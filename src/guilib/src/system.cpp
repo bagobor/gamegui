@@ -95,7 +95,7 @@ void System::reset(bool complete)
 		makeLuaBinding();
 	}
 
-	m_rootWindow = std::make_shared<base_window>(*this, "systemroot");
+	m_rootWindow = std::make_shared<WindowBase>(*this, "systemroot");
 	if(!m_rootWindow)
 		throw std::exception("Couldn't create root window!");
 
@@ -154,7 +154,7 @@ Menu* System::getMenu() const
 	return static_cast<Menu*>(m_menuWindow.get()); 
 }
 
-base_window* System::createWindow(base_window* parent, const std::string& name, const std::string& type)
+WindowBase* System::createWindow(WindowBase* parent, const std::string& name, const std::string& type)
 {
 	if(!parent) return NULL;
 
@@ -165,7 +165,7 @@ base_window* System::createWindow(base_window* parent, const std::string& name, 
 	return p.get();
 }
 
-base_window* System::loadXml(base_window& parent, const std::string& filename)
+WindowBase* System::loadXml(WindowBase& parent, const std::string& filename)
 {
 	window_ptr p = loadXml_(filename);
 	if(!p) return NULL;
@@ -174,7 +174,7 @@ base_window* System::loadXml(base_window& parent, const std::string& filename)
 	parent.add(p);
 	return p.get();	
 }
-base_window*	System::loadXml(const std::string& filename)
+WindowBase*	System::loadXml(const std::string& filename)
 {
 	window_ptr p = loadXml_(filename);
 	if(!p) return NULL;
@@ -279,7 +279,7 @@ bool System::handleMouseMove(int x, int y)
 			}
 		}
 		
-		base_window* mouseWnd = getTargetWindow(m_cursor.getPosition());
+		WindowBase* mouseWnd = getTargetWindow(m_cursor.getPosition());
 		if(m_dragfired)
 		{
 			getDragContainer()->update(mouseWnd, m_cursor.getPosition());
@@ -314,7 +314,7 @@ bool System::handleMouseMove(int x, int y)
 			}
 		}
 
-		base_window* target = m_containsMouse;
+		WindowBase* target = m_containsMouse;
 		if(m_captureWindow)
 		{
 			target = m_captureWindow;
@@ -327,7 +327,7 @@ bool System::handleMouseMove(int x, int y)
 		{
 			if(target->onMouseMove())
 				return true;
-			target = const_cast<base_window*>(target->getParent());
+			target = const_cast<WindowBase*>(target->getParent());
 		}
 	}
 
@@ -344,7 +344,7 @@ bool System::handleMouseWheel(int diff)
 
 	if(m_rootWindow)
 	{
-		base_window* target = m_containsMouse;
+		WindowBase* target = m_containsMouse;
 		if(m_captureWindow)
 		{
 			target = m_captureWindow;
@@ -357,7 +357,7 @@ bool System::handleMouseWheel(int diff)
 		{
 			if(target->onMouseWheel(diff))
 				return true;
-			target = const_cast<base_window*>(target->getParent());
+			target = const_cast<WindowBase*>(target->getParent());
 		}
 	}
 
@@ -374,7 +374,7 @@ bool System::handleMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonSta
 
 	if(m_rootWindow)
 	{
-		base_window* target = m_containsMouse;
+		WindowBase* target = m_containsMouse;
 		if(m_captureWindow)
 		{
 			target = m_captureWindow;
@@ -429,7 +429,7 @@ bool System::handleMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonSta
 			{
 				if(target->onMouseButton(btn, state))
 					return true;
-				target = const_cast<base_window*>(target->getParent());
+				target = const_cast<WindowBase*>(target->getParent());
 			}
 		}
 	}
@@ -447,7 +447,7 @@ bool System::handleMouseDouble(EventArgs::MouseButtons btn)
 
 	if(m_rootWindow)
 	{
-		base_window* target = m_containsMouse;
+		WindowBase* target = m_containsMouse;
 		if(m_captureWindow)
 		{
 			target = m_captureWindow;
@@ -462,17 +462,17 @@ bool System::handleMouseDouble(EventArgs::MouseButtons btn)
 		{
 			if(target->onMouseDouble(btn))
 				return true;
-			target = const_cast<base_window*>(target->getParent());
+			target = const_cast<WindowBase*>(target->getParent());
 		}
 	}	
 	return false;
 }
 
-base_window* getTabstopWindow(base_window::children_list& list)
+WindowBase* getTabstopWindow(WindowBase::children_list& list)
 {
-	base_window* ret = NULL;
-	base_window::child_riter i = list.rbegin();
-	base_window::child_riter end = list.rend();
+	WindowBase* ret = NULL;
+	WindowBase::child_riter i = list.rbegin();
+	WindowBase::child_riter end = list.rend();
 	while(i != end)
 	{
 		if(!(*i)->isTabStop())
@@ -547,7 +547,7 @@ bool System::proceedSystemKey(EventArgs::Keys key, EventArgs::ButtonState state)
 			{
 				if(m_sytemkeys & SHIFT)
 				{
-					base_window* sibling = m_focusWindow->prevSibling();
+					WindowBase* sibling = m_focusWindow->prevSibling();
 					while(!sibling->isTabStop())
 					{
 						if(sibling == m_focusWindow)
@@ -558,7 +558,7 @@ bool System::proceedSystemKey(EventArgs::Keys key, EventArgs::ButtonState state)
 				}
 				else
 				{
-					base_window* sibling = m_focusWindow->nextSibling();
+					WindowBase* sibling = m_focusWindow->nextSibling();
 					while(!sibling->isTabStop())
 					{
 						if(sibling == m_focusWindow)
@@ -605,7 +605,7 @@ void System::logEvent(log::level level, const std::string& message)
 		m_logger.write(level, message);
 }
 
-base_window* System::find(const std::string& name)
+WindowBase* System::find(const std::string& name)
 {
 	if(m_rootWindow)
 		return m_rootWindow->findChildWindow(name);
@@ -613,7 +613,7 @@ base_window* System::find(const std::string& name)
 	return 0;
 }
 
-bool System::queryInputFocus(base_window* wnd)
+bool System::queryInputFocus(WindowBase* wnd)
 {
 	if(m_focusWindow)
 	{
@@ -633,7 +633,7 @@ bool System::queryInputFocus(base_window* wnd)
 	return true;
 }
 
-void System::queryCaptureInput(base_window* wnd)
+void System::queryCaptureInput(WindowBase* wnd)
 {
 	if(m_captureWindow)
 	{
@@ -645,7 +645,7 @@ void System::queryCaptureInput(base_window* wnd)
 		m_captureWindow->onCaptureGained();
 }
 
-void System::EnterExclusiveInputMode(base_window* wnd)
+void System::EnterExclusiveInputMode(WindowBase* wnd)
 {
 	if(wnd)
 		m_exclusiveInputWindow = wnd;
@@ -655,11 +655,11 @@ void System::LeaveExclusiveInputMode()
 	m_exclusiveInputWindow = 0;
 }
 
-window_ptr GetTargetWindow(const point& pt, base_window::children_list& list)
+window_ptr GetTargetWindow(const point& pt, WindowBase::children_list& list)
 {
 	window_ptr ret;
-	base_window::child_riter i = list.rbegin();
-	base_window::child_riter end = list.rend();
+	WindowBase::child_riter i = list.rbegin();
+	WindowBase::child_riter end = list.rend();
 	while(i != end)
 	{
 		window_ptr p = (*i);
@@ -675,12 +675,12 @@ window_ptr GetTargetWindow(const point& pt, base_window::children_list& list)
 	return ret;
 }
 
-base_window* System::getTargetWindow(const point& pt) const
+WindowBase* System::getTargetWindow(const point& pt) const
 {
 	return GetTargetWindow(pt, m_rootWindow->getChildren()).get();
 }
 
-void System::executeScript(const std::string& filename, base_window* wnd) {
+void System::executeScript(const std::string& filename, WindowBase* wnd) {
 	if (!m_scriptSys.ExecuteFile(filename, wnd))
 	{
 		logEvent(log::error, std::string("Unable to execute Lua file: ") + m_scriptSys.GetLastError());
@@ -708,7 +708,7 @@ void System::render()
 namespace
 {
 	struct tickClear{
-		bool operator()(base_window* obj) 
+		bool operator()(WindowBase* obj) 
 		{
 			return obj->isUnsubscribePending();
 		}
@@ -717,12 +717,12 @@ namespace
 void System::tick(float delta)
 {
 	m_inTick = true;
-	std::vector<base_window*>::iterator i = m_tickedWnd.begin();
-	std::vector<base_window*>::iterator end = m_tickedWnd.end();
-	std::vector<base_window*>::size_type subscribeTickWndSize = m_subscribeTickWnd.size();
+	std::vector<WindowBase*>::iterator i = m_tickedWnd.begin();
+	std::vector<WindowBase*>::iterator end = m_tickedWnd.end();
+	std::vector<WindowBase*>::size_type subscribeTickWndSize = m_subscribeTickWnd.size();
 	while(i != end)
 	{
-		base_window* wnd = (*i);
+		WindowBase* wnd = (*i);
 		if(wnd)
 			wnd->onTick(delta);
 		++i;
@@ -735,7 +735,7 @@ void System::tick(float delta)
 
 	if(subscribeTickWndSize)
 	{
-		std::vector<base_window*>::size_type tickedWndSize = m_tickedWnd.size();
+		std::vector<WindowBase*>::size_type tickedWndSize = m_tickedWnd.size();
 		m_tickedWnd.resize(tickedWndSize + subscribeTickWndSize);
 		std::copy(m_subscribeTickWnd.begin(), m_subscribeTickWnd.end(), m_tickedWnd.begin() + tickedWndSize);
 		m_subscribeTickWnd.clear();
@@ -780,7 +780,7 @@ void System::draw()
 	m_render.endBatching();
 
 }
-void System::showTooltip(base_window* wnd)
+void System::showTooltip(WindowBase* wnd)
 {
 	if(wnd && wnd->hasTooltip())
 	{
@@ -788,7 +788,7 @@ void System::showTooltip(base_window* wnd)
 	}
 	static_cast<Tooltip*>(m_tooltipWindow.get())->show();
 }
-void System::hideTooltip(base_window* wnd)
+void System::hideTooltip(WindowBase* wnd)
 {
 	if(wnd && wnd->hasTooltip())
 	{
@@ -797,7 +797,7 @@ void System::hideTooltip(base_window* wnd)
 	static_cast<Tooltip*>(m_tooltipWindow.get())->reset();
 }
 
-bool System::startDrag(base_window* wnd, point offset)
+bool System::startDrag(WindowBase* wnd, point offset)
 {
 	if(!wnd) return false;
 
@@ -808,7 +808,7 @@ bool System::startDrag(base_window* wnd, point offset)
 		point pt = m_cursor.getPosition() - offset;
 		dc->setPosition(pt);
 		m_dragfired = true;
-		base_window* mouseWnd = getTargetWindow(m_cursor.getPosition());
+		WindowBase* mouseWnd = getTargetWindow(m_cursor.getPosition());
 		dc->update(mouseWnd, pt);
 		return true;
 	}
@@ -836,17 +836,17 @@ bool System::stopDrag(void)
 	return !m_dragfired;
 }
 
-void System::subscribeTick(base_window* wnd)
+void System::subscribeTick(WindowBase* wnd)
 {
 	if(!wnd) return;
 
-	std::vector<base_window*>::iterator i = std::find(m_tickedWnd.begin(), m_tickedWnd.end(), wnd);
+	std::vector<WindowBase*>::iterator i = std::find(m_tickedWnd.begin(), m_tickedWnd.end(), wnd);
 	if(i != m_tickedWnd.end())
 		return;
 	
 	if(m_inTick)
 	{
-		std::vector<base_window*>::iterator i = std::find(m_subscribeTickWnd.begin(), m_subscribeTickWnd.end(), wnd);
+		std::vector<WindowBase*>::iterator i = std::find(m_subscribeTickWnd.begin(), m_subscribeTickWnd.end(), wnd);
 		if(i != m_subscribeTickWnd.end())
 			return;
 		m_subscribeTickWnd.push_back(wnd);
@@ -857,12 +857,12 @@ void System::subscribeTick(base_window* wnd)
 	}
 }
 
-void System::unsubscribeTick(base_window* wnd)
+void System::unsubscribeTick(WindowBase* wnd)
 {
 	if(m_inTick) return;
 	if(!wnd) return;
 
-	std::vector<base_window*>::iterator i = std::find(m_tickedWnd.begin(), m_tickedWnd.end(), wnd);
+	std::vector<WindowBase*>::iterator i = std::find(m_tickedWnd.begin(), m_tickedWnd.end(), wnd);
 	if(i != m_tickedWnd.end())
 		m_tickedWnd.erase(i);
 }
@@ -900,7 +900,7 @@ bool System::isMouseInGui(float x, float y) const
 	const point pt(x, y);
 	if(m_rootWindow)
 	{
-		base_window* mouseWnd = getTargetWindow(pt);
+		WindowBase* mouseWnd = getTargetWindow(pt);
 		if(mouseWnd != m_rootWindow.get())
 		{
 			return true;

@@ -248,7 +248,7 @@ public:
 	const wchar_t* ch;
 };
 
-class base_window;
+class WindowBase;
 
 class  DragEventArgs : public EventArgs
 {
@@ -257,7 +257,7 @@ public:
 	virtual ~DragEventArgs() {}
 	
 	point offset;	
-	base_window*	subj;
+	WindowBase*	subj;
 };
 
 class  TickEventArgs : public EventArgs

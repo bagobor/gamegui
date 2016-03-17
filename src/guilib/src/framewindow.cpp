@@ -35,7 +35,7 @@ namespace gui
 		if(m_parent)
 			m_parent->moveToFront(this);
 
-		base_window::rise();
+		WindowBase::rise();
 	}
 
 	void FrameWindow::setFont(const std::string& font)
@@ -100,7 +100,7 @@ namespace gui
 
 			m_tracking = false;
 		}
-		return base_window::onMouseButton(btn, state);
+		return WindowBase::onMouseButton(btn, state);
 	}
 
 	bool FrameWindow::onCaptureLost(void)

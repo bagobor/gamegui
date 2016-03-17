@@ -4,15 +4,15 @@
 
 namespace gui
 {
-	class Slider : public base_window
+	class Slider : public WindowBase
 	{
 	public:
-		typedef Slider Self;
+		typedef Slider self_t;
 		Slider(System& sys, const std::string& name = std::string());
 		virtual ~Slider();
 
 		static const char* GetType() { return "Slider"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		float getScrollPosition() const;
 		void setScrollPosition(float p);
@@ -39,15 +39,15 @@ namespace gui
 		float m_step;
 	};
 
-	class  ScrollBar : public Slider
+	class ScrollBar : public Slider
 	{
 	public:
-		typedef ScrollBar Self;
+		typedef ScrollBar self_t;
 		ScrollBar(System& sys, const std::string& name = std::string());
 		virtual ~ScrollBar();
 
 		static const char* GetType() { return "ScrollBar"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		virtual bool onLoad();
 		virtual bool onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState state);

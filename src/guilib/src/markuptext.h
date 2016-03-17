@@ -24,15 +24,14 @@ namespace gui
 			Text() : area(0.f, 0.f, 0.f, 0.f), start(0), len(0), col(1.f, 1.f, 1.f), selected(false), selcol(1.f, 1.f, 1.f), parent(0) {}
 			bool isHit(point& pt) 
 			{ 
-				if(!parent)
-					return false;
+				if(!parent) return false;
 				Rect rc(area);
 				rc.offset(parent->area.getPosition());
 				return rc.isPointInRect(pt);
 			}
 		};
 
-		typedef std::shared_ptr<Text> PText;
+		typedef std::shared_ptr<Text> TextPtr;
 
 		struct Img
 		{
@@ -41,23 +40,21 @@ namespace gui
 			Img() : area(0.f, 0.f, 0.f, 0.f) {}
 			bool isHit(point& pt) { return area.isPointInRect(pt); }
 		};
-		typedef std::shared_ptr<Img> PImg;
+		typedef std::shared_ptr<Img> ImagePtr;
 		
-
 		struct TextLine
 		{
 			Rect			area;
 			size_t			start;
 			size_t			len;
-			bool			haveImg; // TODO: remove
-			std::vector<PText> children;
-			std::vector<PImg> images;
-			TextLine() : area(0.f, 0.f, 0.f, 0.f), start(0), len(0), haveImg(false) {}
+			std::vector<TextPtr> children;
+			std::vector<ImagePtr> images;
+			TextLine() : area(0.f, 0.f, 0.f, 0.f), start(0), len(0) {}
 			
 			bool isEmpty() { return children.empty() && images.empty(); }
 			
-			void addChunk(PText chunk, float spacing);
-			void addChunk(PImg img)
+			void addChunk(TextPtr chunk, float spacing);
+			void addChunk(ImagePtr img)
 			{
 				if(img)
 				{
@@ -77,12 +74,13 @@ namespace gui
 		{
 			ActiveText::TextNode*			parent;
 			size_t				tooltip;
-			std::vector<PText>	masked;
-			std::vector<PImg>	maskedimg;
+			std::vector<TextPtr>	masked;
+			std::vector<ImagePtr>	maskedimg;
 			TooltipArea() : tooltip(0), parent(0) {}
 
-			bool isEmpty() { return masked.empty() && maskedimg.empty(); }
+			bool isEmpty() const { return masked.empty() && maskedimg.empty(); }
 		};
+
 		typedef std::shared_ptr<TooltipArea> PTooltipArea;
 
 		struct LinkArea
@@ -90,8 +88,8 @@ namespace gui
 			ActiveText::TextNode*		parent;
 			std::string		type;
 			size_t			id;
-			std::vector<PText>	masked;
-			std::vector<PImg>	maskedimg;
+			std::vector<TextPtr>	masked;
+			std::vector<ImagePtr>	maskedimg;
 			LinkArea() : id(0), parent(0) {}
 
 			bool isEmpty() { return masked.empty() && maskedimg.empty(); }
@@ -99,12 +97,12 @@ namespace gui
 		typedef std::shared_ptr<LinkArea> PLinkArea;
 		
 
-		typedef MarkupBase Self;
+		typedef MarkupBase self_t;
 		MarkupBase(System& sys, const std::string& name = std::string());
 		virtual ~MarkupBase();
 
 		static const char* GetType() { return "MarkupBase"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		virtual void setText(const std::string& text);
 
@@ -127,23 +125,22 @@ namespace gui
 		Rect m_viewport;
 
 		std::vector<PTextLine>	m_textlines;
-		std::vector<PImg>		m_images;
+		std::vector<ImagePtr>		m_images;
 		std::vector<PTooltipArea>	m_tooltips;
 		std::vector<PLinkArea>	m_links;
 
 		ActiveText::Parser m_parser;
-
 	};
 
 	class  MarkupText : public MarkupBase
 	{
 	public:
-		typedef MarkupText Self;
+		typedef MarkupText self_t;
 		MarkupText(System& sys, const std::string& name = std::string());
 		virtual ~MarkupText(void);
 
 		static const char* GetType() { return "MarkupText"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		virtual bool onMouseMove();
 		virtual bool onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState state);

@@ -10,21 +10,17 @@ namespace gui
 	class  Checkbox : public Label
 	{
 	public:
-		typedef Checkbox Self;
+		typedef Checkbox self_t;
 		Checkbox(System& sys, const std::string& name = std::string());
 		virtual ~Checkbox();
 		
 		static const char* GetType() { return "Checkbox"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 
 		bool isChecked() const { return m_checked; }
-		void setChecked(bool check)
-		{
-			m_checked = check;
-			invalidate();
-		}
+		void setChecked(bool check);
 
 		virtual bool onMouseEnter();
 		virtual bool onMouseLeave();

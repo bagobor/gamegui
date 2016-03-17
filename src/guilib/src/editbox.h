@@ -10,12 +10,12 @@ namespace gui
 	class  Editbox : public Label
 	{
 	public:
-		typedef Editbox Self;
+		typedef Editbox self_t;
 		Editbox(System& sys, const std::string& name = std::string());
 		virtual ~Editbox();
 
 		static const char* GetType() { return "Editbox"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 
@@ -81,12 +81,12 @@ namespace gui
 	class  KeyBinder : public Label
 	{
 	public:
-		typedef KeyBinder Self;
+		typedef KeyBinder self_t;
 		KeyBinder(System& sys, const std::string& name = std::string());
 		virtual ~KeyBinder();
 
 		static const char* GetType() { return "KeyBinder"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 		
@@ -98,8 +98,7 @@ namespace gui
 		virtual bool onChar(const wchar_t* text);
 
 		virtual void init(xml::node& node);
-
-
+		
 	protected:
 		ImagesetPtr		m_imgset;
 		const Image*	m_backImg;

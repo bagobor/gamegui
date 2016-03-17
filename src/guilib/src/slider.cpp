@@ -12,7 +12,7 @@ namespace gui
 {
 
 	Slider::Slider(System& sys, const std::string& name) : 
-		base_window(sys, name),
+		WindowBase(sys, name),
 		m_thumb(0),
 		m_pos(0.f),
 		m_step(0.f),
@@ -64,14 +64,14 @@ namespace gui
 			}
 		}
 
-		return base_window::onLoad();
+		return WindowBase::onLoad();
 	}
 
 	bool Slider::onSized(bool update)
 	{
 		updateThumb();
 
-		return base_window::onSized();
+		return WindowBase::onSized();
 	}
 
 	void Slider::updateThumb()
@@ -99,7 +99,7 @@ namespace gui
 
 	void Slider::init(xml::node& node)
 	{
-		base_window::init(node);
+		WindowBase::init(node);
 	}
 
 	ScrollBar::ScrollBar(System& sys, const std::string& name) : 

@@ -4,7 +4,7 @@
 namespace gui
 {
 	Tooltip::Tooltip(System& sys, const std::string& name) :
-		base_window(sys, name),	
+		WindowBase(sys, name),	
 		m_fadein(0.f),
 		m_fadeout(0.f)
 	{
@@ -18,8 +18,8 @@ namespace gui
 	{
 		struct seeker
 		{
-			const base_window* m_ptr;
-			seeker(const base_window* ptr) : m_ptr(ptr){}
+			const WindowBase* m_ptr;
+			seeker(const WindowBase* ptr) : m_ptr(ptr){}
 			bool operator()(window_ptr obj) 
 			{
 				return obj ? (obj.get() == m_ptr) : false;

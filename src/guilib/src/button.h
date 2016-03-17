@@ -28,12 +28,12 @@ namespace gui
 		};
 
 	public:
-		typedef Button Self;
+		typedef Button self_t;
 		Button(System& sys, const std::string& name = std::string());
 		virtual ~Button(void);
 
 		static const char* GetType() { return "Button"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 
@@ -52,22 +52,21 @@ namespace gui
 
 	protected:
 		typedef std::map<unsigned int, StateImagery> StateMap; 
-		StateMap m_states;
-		
-		ImagesetPtr m_imgset;
 
+		StateMap m_states;		
+		ImagesetPtr m_imgset;
 		States m_state;
 	};
 
 	class  ImageButton : public Button
 	{
 	public:
-		typedef ImageButton Self;
+		typedef ImageButton self_t;
 		ImageButton(System& sys, const std::string& name = std::string());
 		virtual ~ImageButton();
 
 		static const char* GetType() { return "ImageButton"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 
@@ -84,12 +83,12 @@ namespace gui
 	class  Thumb : public ImageButton
 	{
 	public:
-		typedef Thumb Self;
+		typedef Thumb self_t;
 		Thumb(System& sys, const std::string& name = std::string());
 		virtual ~Thumb(void);
 
 		static const char* GetType() { return "Thumb"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		float getProgress() const;
 		void setProgress(float p);
@@ -114,12 +113,12 @@ namespace gui
 	class  ScrollThumb : public Thumb
 	{
 	public:
-		typedef ScrollThumb Self;
+		typedef ScrollThumb self_t;
 		ScrollThumb(System& sys, const std::string& name = std::string());
 		virtual ~ScrollThumb(void);
 
 		static const char* GetType() { return "ScrollThumb"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 		
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 

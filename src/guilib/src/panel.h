@@ -7,15 +7,15 @@ namespace gui
 	class Imageset;
 	typedef std::shared_ptr<Imageset> ImagesetPtr;
 
-	class Panel : public base_window
+	class Panel : public WindowBase
 	{
 	public:
-		typedef Panel Self;
+		typedef Panel self_t;
 		Panel(System& sys, const std::string& name = std::string());
 		virtual ~Panel(void);
 
 		static const char* GetType() { return "Panel"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 		virtual void init(xml::node& node);

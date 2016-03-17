@@ -23,6 +23,21 @@ namespace gui
 		};
 	}
 
+	struct VisibleTask
+	{
+		bool visible;
+		VisibleTask(bool v) : visible(v) {}
+		void operator () (window_ptr w) { if (w) w->setVisible(visible); }
+	};
+
+	struct HeightCalcTask
+	{
+		float& height;
+		HeightCalcTask(float& h) : height(h) {}
+		void operator () (window_ptr w) { if (w) height += w->getArea().getHeight(); }
+		HeightCalcTask& operator=(const HeightCalcTask& rhs) { rhs; }
+	};
+
 	BaseList::BaseList(System& sys, const std::string& name) 
 	: Panel(sys, name)
 	, m_drawpanel(false)
@@ -39,10 +54,10 @@ namespace gui
 	bool BaseList::onLoad(void)
 	{
 		layoutItems();
-		return base_window::onLoad();
+		return WindowBase::onLoad();
 	}
 
-	void BaseList::Clear()
+	void BaseList::clear()
 	{
 		m_children.clear();
 		invalidate();
@@ -61,7 +76,7 @@ namespace gui
 	bool BaseList::onResumeLayout(void)
 	{
 		layoutItems();
-		return base_window::onResumeLayout();
+		return WindowBase::onResumeLayout();
 	}
 
 	void BaseList::layoutItems()
@@ -140,7 +155,7 @@ namespace gui
 	{
 	}
 
-	void ListBox::AddItem(const std::string& name)
+	void ListBox::addItem(const std::string& name)
 	{
 		if(m_font && !name.empty())
 		{
@@ -159,7 +174,7 @@ namespace gui
 		}
 	}
 
-	Label* ListBox::GetSelectedItem() const
+	Label* ListBox::getSelectedItem() const
 	{
 		return m_selectedItem ? static_cast<Label*>(m_selectedItem.get()) : 0;
 	}
@@ -290,7 +305,7 @@ namespace gui
 
 			if(!p->collapsed)
 			{
-				size += p->CalcHeight();
+				size += p->calcHeight();
 			}
 			p->area.m_top = pos;
 			p->area.m_left = m_indent;
@@ -368,7 +383,7 @@ namespace gui
 		}
 	}
 
-	unsigned int CategorizedList::AddCategory(const std::string& name)
+	unsigned int CategorizedList::addCategory(const std::string& name)
 	{
 		CategoryPtr p(new Category(*this, name));
 		m_categories.push_back(p);
@@ -376,7 +391,7 @@ namespace gui
 		return (unsigned int)m_categories.size() - 1;
 	}
 
-	CategorizedList::Category* CategorizedList::GetCategoryByIndex(unsigned int idx)
+	CategorizedList::Category* CategorizedList::getCategoryByIndex(unsigned int idx)
 	{
 		if(idx >= m_categories.size())
 			return NULL;
@@ -384,12 +399,12 @@ namespace gui
 		return m_categories[idx].get();
 	}
 
-	unsigned int CategorizedList::GetCategoryCount() const
+	unsigned int CategorizedList::getCategoryCount() const
 	{
 		return (unsigned int)m_categories.size();
 	}
 
-	void CategorizedList::RemoveCategory(unsigned int idx)
+	void CategorizedList::removeCategory(unsigned int idx)
 	{
 		m_categories.erase(m_categories.begin() + idx);
 		layoutItems();
@@ -402,13 +417,13 @@ namespace gui
 	}
 
 
-	void CategorizedList::Category::Rename(const std::string& n)
+	void CategorizedList::Category::rename(const std::string& n)
 	{
 		name = n;
 		parent.invalidate();
 	}
 
-	unsigned int CategorizedList::Category::Add(base_window* wnd)
+	unsigned int CategorizedList::Category::add(WindowBase* wnd)
 	{
 		children.push_back(window_ptr(wnd));
 		if(collapsed)
@@ -420,7 +435,7 @@ namespace gui
 		return (unsigned int)children.size() - 1;
 	}
 
-	void CategorizedList::Category::Remove(unsigned int idx)
+	void CategorizedList::Category::remove(unsigned int idx)
 	{
 		if(idx >= children.size())
 			return;
@@ -430,7 +445,7 @@ namespace gui
 		parent.layoutItems();
 	}
 
-	base_window*	CategorizedList::Category::GetWndByIndex(unsigned int idx)
+	WindowBase* CategorizedList::Category::getWndByIndex(unsigned int idx)
 	{
 		if(idx >= children.size())
 			return NULL;
@@ -438,19 +453,19 @@ namespace gui
 		return children[idx].get();
 	}
 
-	unsigned int CategorizedList::Category::GetChildrenCount() const
+	unsigned int CategorizedList::Category::getChildrenCount() const
 	{
-		return (unsigned int)children.size();
+		return static_cast<unsigned int>(children.size());
 	}
 
-	void CategorizedList::Category::Fold(bool status)
+	void CategorizedList::Category::fold(bool status)
 	{
 		collapsed = status;
 		std::for_each(children.begin(), children.end(), VisibleTask(!status));
 		parent.layoutItems();
 	}
 
-	float CategorizedList::Category::CalcHeight()
+	float CategorizedList::Category::calcHeight()
 	{
 		float height = 0.f;
 		HeightCalcTask task(height);
@@ -460,7 +475,7 @@ namespace gui
 
 	void CategorizedList::Category::layoutChildren()
 	{
-		FontPtr font = parent.GetFont();
+		FontPtr font = parent.getFont();
 		float pos = font ? font->getLineSpacing() : 0.f;
 		std::vector<window_ptr>::iterator i = children.begin();
 		std::vector<window_ptr>::iterator end = children.end();
@@ -483,7 +498,7 @@ namespace gui
 			if(i != m_categories.end())
 			{
 				CategoryPtr p = *i;
-				p->Fold(!p->collapsed);
+				p->fold(!p->collapsed);
 			}
 		}
 		return true;

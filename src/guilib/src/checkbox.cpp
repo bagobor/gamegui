@@ -147,4 +147,10 @@ namespace gui
 			}
 		}
 	}
+
+	void Checkbox::setChecked(bool check)
+	{
+		m_checked = check;
+		invalidate();
+	}
 }

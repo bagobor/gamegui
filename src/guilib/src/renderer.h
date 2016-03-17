@@ -12,8 +12,8 @@
 
 namespace gui
 {
-class base_window;
-typedef std::function <void (base_window* wnd, const Rect& dest, const Rect& clip)> AfterRenderCallbackFunc;
+class WindowBase;
+typedef std::function <void (WindowBase* wnd, const Rect& dest, const Rect& clip)> AfterRenderCallbackFunc;
 
 struct filesystem;
 typedef std::shared_ptr<filesystem> filesystem_ptr;
@@ -64,7 +64,7 @@ struct QuadInfo
 struct RenderCallbackInfo
 {
 	AfterRenderCallbackFunc afterRenderCallback;
-	base_window* window;
+	WindowBase* window;
 	Rect dest;
 	Rect clip;
 };
@@ -119,7 +119,7 @@ public:
 	Renderer(RenderDevice& render_device, filesystem_ptr fs);
 	virtual ~Renderer();
 
-	void addCallback( AfterRenderCallbackFunc callback,base_window* window, const Rect& dest, const Rect& clip);
+	void addCallback( AfterRenderCallbackFunc callback,WindowBase* window, const Rect& dest, const Rect& clip);
 
 	void	drawLine(const Image& img, const vec2* p, size_t size, float z, const Rect& clip_rect, const Color& color, float width);
 	
@@ -129,16 +129,16 @@ public:
 	void	immediateDraw(const Image& img, const Rect& dest_rect, float z, const Rect& clip_rect, const ColorRect& colors);
 	void	doRender();
 
-	virtual void startCaptureForCache(base_window* window);
-	virtual void endCaptureForCache(base_window* window);
-	void drawFromCache(base_window* window);
-	void clearCache(base_window* window = 0);
+	virtual void startCaptureForCache(WindowBase* window);
+	virtual void endCaptureForCache(WindowBase* window);
+	void drawFromCache(WindowBase* window);
+	void clearCache(WindowBase* window = 0);
 	
 	virtual	void	clearRenderList();	
 	
 	virtual void	beginBatching();
 	virtual void	endBatching();	
-	bool			isExistInCache(base_window* window) const;
+	bool			isExistInCache(WindowBase* window) const;
 	
 	virtual void	setQueueingEnabled(bool queueing)  { m_isQueueing = queueing; }
 	bool			isQueueingEnabled(void) const { return m_isQueueing; }
@@ -228,7 +228,7 @@ protected:
 		std::size_t num;
 	};
 
-	typedef std::map <base_window*, QuadCacheRecord> QuadCacheMap;
+	typedef std::map <WindowBase*, QuadCacheRecord> QuadCacheMap;
 	QuadCacheMap m_mapQuadList;
 	QuadCacheRecord* m_currentCapturing;
 

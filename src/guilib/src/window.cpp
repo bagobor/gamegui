@@ -11,7 +11,7 @@
 namespace gui
 {
 
-base_window::base_window(System& sys, const std::string& name) : 
+WindowBase::WindowBase(System& sys, const std::string& name) : 
 	m_strName(name),
 	m_system(sys),
 	m_visible(true),
@@ -35,37 +35,37 @@ base_window::base_window(System& sys, const std::string& name) :
 	m_afterRenderCallback(nullptr),
 	m_suspended(false),
 	m_disableRise(false),
-	ScriptObject<base_window>(sys.getScriptSystem())
+	ScriptObject<WindowBase>(sys.getScriptSystem())
 {
 	m_backColor = Color(1.f, 1.f, 1.f);
 	m_foreColor = Color(0.f, 0.f, 0.f);
 }
 
 
-base_window::~base_window()
+WindowBase::~WindowBase()
 {
 	m_system.getRenderer().clearCache(this);
 }
 
-std::string const& base_window::getName() const
+std::string const& WindowBase::getName() const
 {
 	return m_strName;
 }
 
-void base_window::setName(const std::string& name)
+void WindowBase::setName(const std::string& name)
 {
 	m_strName = name;
 }
 
 
-void base_window::setArea(const Rect& rc) 
+void WindowBase::setArea(const Rect& rc) 
 { 
 	m_area = rc;
 	onMoved();
 	onSized();
 }
 
-void base_window::setPosition(const point& pt) 
+void WindowBase::setPosition(const point& pt) 
 {
 	if(pt != m_area.getPosition())
 	{
@@ -76,7 +76,7 @@ void base_window::setPosition(const point& pt)
 	}
 }
 
-void base_window::setSize(const Size& sz) 
+void WindowBase::setSize(const Size& sz) 
 {
 	if(sz != m_area.getSize())
 	{
@@ -87,12 +87,12 @@ void base_window::setSize(const Size& sz)
 	}
 }
 
-bool base_window::isCursorInside() const {
+bool WindowBase::isCursorInside() const {
 	point pt = transformToWndCoord(m_system.getCursor().getPosition());
 	return m_area.isPointInRect(pt);
 }
 
-void base_window::invalidate()	
+void WindowBase::invalidate()	
 {
 	//m_system.getRenderer().clearCache(this);
 
@@ -106,7 +106,7 @@ void base_window::invalidate()
 	}
 }
 
-void base_window::setVisible(bool visible) 
+void WindowBase::setVisible(bool visible) 
 {
 	EventArgs a;
 	a.name = visible ? "On_Show" : "On_Hide";
@@ -114,12 +114,12 @@ void base_window::setVisible(bool visible)
 	m_visible = visible;
 }
 
-void base_window::setInputFocus(bool query)
+void WindowBase::setInputFocus(bool query)
 {
 	m_focus = query ? m_system.queryInputFocus(this) : true;
 }
 
-bool base_window::hitTest(const point& pt)
+bool WindowBase::hitTest(const point& pt)
 {
 	if(!m_visible)
 		return false;
@@ -130,7 +130,7 @@ bool base_window::hitTest(const point& pt)
 	return false;
 }
 
-void base_window::rise()
+void WindowBase::rise()
 {
 	if (getDisableRise()) return;
 	
@@ -144,8 +144,8 @@ namespace
 {
 	struct seeker
 	{
-		const base_window* m_ptr;
-		seeker(const base_window* ptr) : m_ptr(ptr){}
+		const WindowBase* m_ptr;
+		seeker(const WindowBase* ptr) : m_ptr(ptr){}
 		bool operator()(window_ptr obj) 
 		{
 			return obj ? (obj.get() == m_ptr) : false;
@@ -154,19 +154,19 @@ namespace
 }
 
 struct topmost_{
-	bool operator()(base_window::node_ptr obj)
+	bool operator()(WindowBase::node_ptr obj)
 	{
 		return obj->getAlwaysOnTop();
 	}
 };
 struct ntopmost_{
-	bool operator()(base_window::node_ptr obj)
+	bool operator()(WindowBase::node_ptr obj)
 	{
 		return !obj->getAlwaysOnTop();
 	}
 };
 
-void base_window::moveToFront(base_window* child)
+void WindowBase::moveToFront(WindowBase* child)
 {
 	if(m_children.size() <= 1)
 		return;
@@ -186,7 +186,7 @@ void base_window::moveToFront(base_window* child)
 	}
 }
 
-void base_window::bringToBack(base_window* child)
+void WindowBase::bringToBack(WindowBase* child)
 {
 	if(m_children.size() <= 1)
 		return;
@@ -206,30 +206,30 @@ void base_window::bringToBack(base_window* child)
 	}
 }
 
-void base_window::moveToFront()
+void WindowBase::moveToFront()
 {
 	if(m_parent)
 		m_parent->moveToFront(this);	
 }
 
-void base_window::bringToBack()
+void WindowBase::bringToBack()
 {
 	if(m_parent)
 		m_parent->bringToBack(this);
 }
 
-base_window* base_window::findChildWindow(const std::string& name)
+WindowBase* WindowBase::findChildWindow(const std::string& name)
 {
 	window_ptr p = find(name);
 	return p.get();
 }
 
-void base_window::addChildWindow(base_window* wnd)
+void WindowBase::addChildWindow(WindowBase* wnd)
 {
 	if(wnd) add(window_ptr(wnd));
 }
 
-void base_window::callHandler(EventArgs* arg)
+void WindowBase::callHandler(EventArgs* arg)
 {
 	if(!arg) return;
 
@@ -242,11 +242,11 @@ void base_window::callHandler(EventArgs* arg)
 	luabind::object globals = luabind::globals(m_system.getScriptSystem().getLuaState());
 
 	globals["eventArgs"] = arg;
-	ExecuteScript(arg->name, handler);
+	executeScript(arg->name, handler);
 	globals["eventArgs"] = 0;
 }
 
-void base_window::ExecuteScript(const std::string& env, const std::string& script)
+void WindowBase::executeScript(const std::string& env, const std::string& script)
 {
 	if(!m_system.getScriptSystem().ExecuteString(script, this, env))
 	{
@@ -257,21 +257,21 @@ void base_window::ExecuteScript(const std::string& env, const std::string& scrip
 }
 
 
-bool base_window::onMouseEnter(void)
+bool WindowBase::onMouseEnter(void)
 {
 	MouseEventArgs m;
 	m.name = "On_MouseEnter";	
 	callHandler(&m);
 	return m.handled; 
 }
-bool base_window::onMouseLeave(void)
+bool WindowBase::onMouseLeave(void)
 {
 	MouseEventArgs m;
 	m.name = "On_MouseLeave";
 	callHandler(&m);
 	return m.handled; 
 }
-bool base_window::onMouseMove(void)
+bool WindowBase::onMouseMove(void)
 {
 	MouseEventArgs m;
 	m.name = "On_MouseMove";
@@ -281,7 +281,7 @@ bool base_window::onMouseMove(void)
 	callHandler(&m);
 	return m.handled; 
 }
-bool base_window::onMouseWheel(int delta)
+bool WindowBase::onMouseWheel(int delta)
 {
 	MouseEventArgs m;
 	m.name = "On_MouseWheel";
@@ -289,7 +289,7 @@ bool base_window::onMouseWheel(int delta)
 	callHandler(&m);
 	return m.handled; 
 }
-bool base_window::onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState state)
+bool WindowBase::onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState state)
 {
 	MouseEventArgs m;
 	m.name = "On_MouseButton";
@@ -298,7 +298,7 @@ bool base_window::onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonSt
 	callHandler(&m);
 	return m.handled; 
 }
-bool base_window::onMouseDouble(EventArgs::MouseButtons btn)
+bool WindowBase::onMouseDouble(EventArgs::MouseButtons btn)
 {
 	MouseEventArgs m;
 	m.name = "On_MouseDouble";
@@ -306,7 +306,7 @@ bool base_window::onMouseDouble(EventArgs::MouseButtons btn)
 	callHandler(&m);
 	return m.handled;
 }
-bool base_window::onChar(const wchar_t* text)
+bool WindowBase::onChar(const wchar_t* text)
 {
 	KeyEventArgs k;
 	k.name = "On_Char";
@@ -314,7 +314,7 @@ bool base_window::onChar(const wchar_t* text)
 	callHandler(&k);
 	return k.handled; 
 }
-bool base_window::onKeyboardButton(EventArgs::Keys key, EventArgs::ButtonState state)
+bool WindowBase::onKeyboardButton(EventArgs::Keys key, EventArgs::ButtonState state)
 {
 	KeyEventArgs k;
 	k.name = "On_KeyboardButton";
@@ -323,14 +323,14 @@ bool base_window::onKeyboardButton(EventArgs::Keys key, EventArgs::ButtonState s
 	callHandler(&k);
 	return k.handled; 
 }
-bool base_window::onCaptureGained(void)
+bool WindowBase::onCaptureGained(void)
 {
 	EventArgs a;
 	a.name = "On_CaptureGained";
 	callHandler(&a);
 	return a.handled; 
 }
-bool base_window::onCaptureLost(void)
+bool WindowBase::onCaptureLost(void)
 {
 	EventArgs a;
 	a.name = "On_CaptureLost";
@@ -338,14 +338,14 @@ bool base_window::onCaptureLost(void)
 	return a.handled; 
 }
 
-bool base_window::onSuspendLayout(void)
+bool WindowBase::onSuspendLayout(void)
 {
 	EventArgs a;
 	a.name = "On_SuspendLayout";
 	callHandler(&a);
 	return a.handled; 
 }
-bool base_window::onResumeLayout(void)
+bool WindowBase::onResumeLayout(void)
 {
 	EventArgs a;
 	a.name = "On_ResumeLayout";
@@ -353,14 +353,14 @@ bool base_window::onResumeLayout(void)
 	return a.handled; 
 }
 
-bool base_window::onFocusGained(void)
+bool WindowBase::onFocusGained(void)
 {
 	EventArgs a;
 	a.name = "On_FocusGained";
 	callHandler(&a);
 	return a.handled; 
 }
-bool base_window::onFocusLost(base_window* newFocus)
+bool WindowBase::onFocusLost(WindowBase* newFocus)
 {
 	EventArgs a;
 	a.name = "On_FocusLost";
@@ -368,7 +368,7 @@ bool base_window::onFocusLost(base_window* newFocus)
 	return a.handled; 
 }
 
-bool base_window::onLoad(void)
+bool WindowBase::onLoad(void)
 {
 	onMoved();
 	if(m_alwaysOnTop)
@@ -390,7 +390,7 @@ bool base_window::onLoad(void)
 	return a.handled; 
 }
 
-bool base_window::onSized(bool update)
+bool WindowBase::onSized(bool update)
 {
 	if(update)
 	{
@@ -413,7 +413,7 @@ bool base_window::onSized(bool update)
 	return true;
 }
 
-void base_window::Align()
+void WindowBase::align()
 {
 	if(!m_parent)
 		return;
@@ -473,7 +473,7 @@ void base_window::Align()
 	}
 }
 
-void base_window::Stick()
+void WindowBase::stick()
 {
 	if(!m_parent)
 		return;
@@ -516,11 +516,11 @@ void base_window::Stick()
 	}
 }
 
-bool base_window::onMoved(void)
+bool WindowBase::onMoved(void)
 {
 	if(m_parent)
 	{
-		Stick();
+		stick();
 		const Rect& pr = m_parent->getArea();
 		Rect area(m_area);
 		area.offset(pr.getPosition());
@@ -537,7 +537,7 @@ bool base_window::onMoved(void)
 	return true;
 }
 
-bool base_window::onTick(float delta)
+bool WindowBase::onTick(float delta)
 {
 	TickEventArgs a;
 	a.name = "On_Tick";
@@ -546,7 +546,7 @@ bool base_window::onTick(float delta)
 	return a.handled;
 }
 
-bool base_window::onTooltipShow()
+bool WindowBase::onTooltipShow()
 {
 	EventArgs a;
 	a.name = "On_TooltipShow";
@@ -554,7 +554,7 @@ bool base_window::onTooltipShow()
 	return a.handled;
 }
 
-bool base_window::onTooltipHide()
+bool WindowBase::onTooltipHide()
 {
 	EventArgs a;
 	a.name = "On_TooltipHide";
@@ -562,19 +562,19 @@ bool base_window::onTooltipHide()
 	return a.handled;
 }
 
-void base_window::startTick(void)
+void WindowBase::startTick(void)
 {
 	m_unsubscribePending = false;
 	m_system.subscribeTick(this);
 }
 
-void base_window::stopTick(void)
+void WindowBase::stopTick(void)
 {
 	m_unsubscribePending = true;
 	m_system.setTickClear();
 }
 
-void base_window::init(xml::node& node)
+void WindowBase::init(xml::node& node)
 {
 	xml::node setting = node("Visible");
 	if(!setting.empty())
@@ -662,7 +662,7 @@ void base_window::init(xml::node& node)
 	onMoved();
 }
 
-void base_window::parseEventHandlers(xml::node& node)
+void WindowBase::parseEventHandlers(xml::node& node)
 {
 	if (node.empty()) return;
 
@@ -674,20 +674,20 @@ void base_window::parseEventHandlers(xml::node& node)
 	}
 }
 
-void base_window::addScriptEventHandler(std::string name, std::string handler)
+void WindowBase::addScriptEventHandler(std::string name, std::string handler)
 {
 	if (name.empty() || handler.empty()) return;
 	m_handlers[name] = handler;
 }
 
-void base_window::CallAfterRenderCallback(const Rect& dest, const Rect& clip)
+void WindowBase::callAfterRenderCallback(const Rect& dest, const Rect& clip)
 {
 	if (!m_afterRenderCallback) return;
 	Renderer& r = m_system.getRenderer();
 	r.addCallback(m_afterRenderCallback, this, dest, clip);
 }
 
-void base_window::draw(const point& offset, const Rect& clip)
+void WindowBase::draw(const point& offset, const Rect& clip)
 {
 	if(m_visible)
 	{
@@ -745,18 +745,17 @@ void base_window::draw(const point& offset, const Rect& clip)
 			luabind::object globals = luabind::globals(m_system.getScriptSystem().getLuaState());
 
 			globals["eventArgs"] = &a;
-			ExecuteScript(a.name, m_drawhandler);
+			executeScript(a.name, m_drawhandler);
 			globals["eventArgs"] = 0;
 		}
 
-		// теперь скажем, что тут коллбак при отрисовке нужно сделать
-		CallAfterRenderCallback(destrect,cliprect);
+		callAfterRenderCallback(destrect,cliprect);
 	}	
 }
 
-point base_window::transformToWndCoord(const point& global) const
+point WindowBase::transformToWndCoord(const point& global) const
 {
-	base_window* parent = m_parent;
+	WindowBase* parent = m_parent;
 	point out(global);
 	if(parent)
 	{
@@ -766,9 +765,9 @@ point base_window::transformToWndCoord(const point& global) const
 	return out;
 }
 
-point base_window::transformToRootCoord(const point& local)
+point WindowBase::transformToRootCoord(const point& local)
 {
-	base_window* parent = m_parent;
+	WindowBase* parent = m_parent;
 	point out(local);
 	if(parent)
 	{
@@ -778,7 +777,7 @@ point base_window::transformToRootCoord(const point& local)
 	return out;
 }
 
-base_window* base_window::nextSibling()
+WindowBase* WindowBase::nextSibling()
 {
 	if (!m_parent) return this;
 	
@@ -793,7 +792,7 @@ base_window* base_window::nextSibling()
 	return (++it != list.end()) ? (*it).get() : (*list.begin()).get();
 }
 
-base_window* base_window::prevSibling()
+WindowBase* WindowBase::prevSibling()
 {
 	if (!m_parent) return this;
 	
@@ -811,13 +810,13 @@ base_window* base_window::prevSibling()
 	return (*it).get();
 }
 
-//void base_window::thisset()
+//void WindowBase::thisset()
 //{
 //	if(m_system.getScriptSystem().LuaState())
 //		luabind::globals(m_system.getScriptSystem().LuaState())["this"] = this;
 //}
 
-void base_window::subscribeNamedEvent(std::string name, base_window* sender, luabind::object script_callback)
+void WindowBase::subscribeNamedEvent(std::string name, WindowBase* sender, luabind::object script_callback)
 {
 	//if (!script_callback) return;
 	//luabind::call_function<void>(std::ref(script_callback));
@@ -829,10 +828,10 @@ void base_window::subscribeNamedEvent(std::string name, base_window* sender, lua
 	m_scriptevents.insert(std::make_pair(entry, script_callback));
 
 	// support for a script events
-	subscribe<events::NamedEvent, base_window> (&base_window::onNamedEvent, sender);
+	subscribe<events::NamedEvent, WindowBase> (&WindowBase::onNamedEvent, sender);
 }
 
-void base_window::unsubscribeNamedEvent(std::string name, base_window* sender)
+void WindowBase::unsubscribeNamedEvent(std::string name, WindowBase* sender)
 {
 	if (name.empty()) return;
 
@@ -848,13 +847,13 @@ void base_window::unsubscribeNamedEvent(std::string name, base_window* sender)
 		unsubscribe<events::NamedEvent>();
 }
 
-void base_window::sendNamedEvent(std::string name)
+void WindowBase::sendNamedEvent(std::string name)
 {
 	if (name.empty()) return;
 	send(events::NamedEvent(name, this));
 }
 
-void base_window::onNamedEvent(events::NamedEvent& e)
+void WindowBase::onNamedEvent(events::NamedEvent& e)
 {
 	NamedEventEntry entry = std::make_pair(e.m_name, e.m_sender);
 	NamedEventsMap::iterator it = m_scriptevents.find(entry);
@@ -876,7 +875,7 @@ void base_window::onNamedEvent(events::NamedEvent& e)
 	globals["eventArgs"] = 0;
 }
 
-std::string base_window::getEventScript(const std::string& ev)
+std::string WindowBase::getEventScript(const std::string& ev)
 {
 	HandlerMap::iterator it = m_handlers.find(ev);
 	if (it == m_handlers.end()) return std::string();
@@ -885,7 +884,7 @@ std::string base_window::getEventScript(const std::string& ev)
 	return handler;	
 }
 
-bool base_window::onGameEvent(const std::string& ev)
+bool WindowBase::onGameEvent(const std::string& ev)
 {
 	HandlerMap::iterator it = m_handlers.find(ev);
 	if (it == m_handlers.end()) return false;
@@ -899,12 +898,12 @@ bool base_window::onGameEvent(const std::string& ev)
 	luabind::object globals = luabind::globals(m_system.getScriptSystem().getLuaState());
 
 	globals["gameEventArgs"] = &arg;
-	ExecuteScript(ev, handler);
+	executeScript(ev, handler);
 	globals["gameEventArgs"] = 0;
 	return arg.handled;
 }
 
-bool base_window::isChildrenOf(const base_window* wnd)
+bool WindowBase::isChildrenOf(const WindowBase* wnd)
 {
 	if (!wnd || !m_parent) return false;
 	if (m_parent == wnd) return true;

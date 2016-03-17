@@ -58,7 +58,7 @@ Renderer::~Renderer(void)
 
 }
 
-void Renderer::addCallback(AfterRenderCallbackFunc callback, base_window* window, const Rect& dest, const Rect& clip)
+void Renderer::addCallback(AfterRenderCallbackFunc callback, WindowBase* window, const Rect& dest, const Rect& clip)
 {
 	// если сразу должны были рисовать, то сразу запускаем коллбак
 	if (!m_isQueueing)
@@ -104,8 +104,7 @@ void Renderer::immediateDraw(const Image& img, const Rect& dest_rect, float z, c
 		size_t images = img.count();
 		for(size_t i = 0; i < images; ++i)
 		{
-			RenderImageInfo info;
-			img.GetRenderInfo(info, i);
+			RenderImageInfo info = img.getRenderInfo(i);
 			if(!info.texture)
 				continue;
 			const Rect& source_rect = info.pixel_rect;
@@ -206,8 +205,7 @@ void Renderer::drawLine(const Image& img, const vec2* p, size_t size, float z, c
 	const size_t images = img.count();
 	for(size_t img_idx = 0; img_idx < images; ++img_idx)
 	{
-		RenderImageInfo info;
-		img.GetRenderInfo(info, img_idx);
+		RenderImageInfo info = img.getRenderInfo(img_idx);
 		if(!info.texture)
 			continue;
 
@@ -248,8 +246,7 @@ void Renderer::draw(const Image& img, const Rect& dest_rect, float z, const Rect
 	size_t images = img.count();
 	for(size_t i = 0; i < images; ++i)
 	{
-		RenderImageInfo info;
-		img.GetRenderInfo(info, i);
+		RenderImageInfo info = img.getRenderInfo(i);
 		if(!info.texture)
 			continue;
 
@@ -290,7 +287,7 @@ void Renderer::draw(const Image& img, const Rect& dest_rect, float z, const Rect
 	}
 }
 
-void Renderer::drawFromCache(base_window* window)
+void Renderer::drawFromCache(WindowBase* window)
 {
 	assert(window);
 	QuadCacheMap::iterator i = m_mapQuadList.find(window);
@@ -349,7 +346,7 @@ void Renderer::drawFromCache(base_window* window)
 	}
 }
 
-void Renderer::clearCache(base_window* window)
+void Renderer::clearCache(WindowBase* window)
 {
 	if (window)
 	{
@@ -362,13 +359,13 @@ void Renderer::clearCache(base_window* window)
 		m_mapQuadList.clear();
 }
 
-bool Renderer::isExistInCache(base_window* window) const
+bool Renderer::isExistInCache(WindowBase* window) const
 {
 	QuadCacheMap::const_iterator i = m_mapQuadList.find(window);
 	return i != m_mapQuadList.end() && i->second.num > 0;
 }
 
-void Renderer::startCaptureForCache(base_window* window)
+void Renderer::startCaptureForCache(WindowBase* window)
 {
 	QuadCacheMap::iterator i = m_mapQuadList.find(window);
 	if (i == m_mapQuadList.end())
@@ -385,7 +382,7 @@ void Renderer::startCaptureForCache(base_window* window)
 	}
 		
 }
-void Renderer::endCaptureForCache(base_window* window)
+void Renderer::endCaptureForCache(WindowBase* window)
 {
 	m_currentCapturing = NULL;
 }

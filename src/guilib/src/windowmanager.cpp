@@ -35,32 +35,32 @@ WindowManager::WindowManager(System& sys, const std::string& scheme) :
 
 	sys.logEvent(log::system, "Registering window factory creators");
 
-	m_factory->RegisterCreator("root", CreatorPtr(new RootCreator(sys, "root")));
-	m_factory->RegisterCreator<base_window>();	
-	m_factory->RegisterCreator<Label>();
-	m_factory->RegisterCreator<ImageBox>();
-	m_factory->RegisterCreator<Button>();
-	m_factory->RegisterCreator<ImageButton>();
-	m_factory->RegisterCreator<Thumb>();
-	m_factory->RegisterCreator<ScrollThumb>();
-	m_factory->RegisterCreator<Slider>();
-	m_factory->RegisterCreator<ScrollBar>();
-	m_factory->RegisterCreator<Checkbox>();
-	m_factory->RegisterCreator<Editbox>();
-	m_factory->RegisterCreator<KeyBinder>();
-	m_factory->RegisterCreator<FrameWindow>();
-	m_factory->RegisterCreator<Panel>();
-	m_factory->RegisterCreator<Progress>();
-	m_factory->RegisterCreator<ProgressBar>();
-	m_factory->RegisterCreator<ImageBar>();
-	m_factory->RegisterCreator<ScrollPane>();
-	m_factory->RegisterCreator<BaseList>();
-	m_factory->RegisterCreator<ListBox>();
-	m_factory->RegisterCreator<CategorizedList>();
-	m_factory->RegisterCreator<Combobox>();
-	m_factory->RegisterCreator<MarkupBase>();
-	m_factory->RegisterCreator<MarkupText>();
-	m_registredTypes = m_factory->GetTypesList();	
+	m_factory->registerCreator("root", CreatorPtr(new RootCreator(sys, "root")));
+	m_factory->registerCreator<WindowBase>();	
+	m_factory->registerCreator<Label>();
+	m_factory->registerCreator<ImageBox>();
+	m_factory->registerCreator<Button>();
+	m_factory->registerCreator<ImageButton>();
+	m_factory->registerCreator<Thumb>();
+	m_factory->registerCreator<ScrollThumb>();
+	m_factory->registerCreator<Slider>();
+	m_factory->registerCreator<ScrollBar>();
+	m_factory->registerCreator<Checkbox>();
+	m_factory->registerCreator<Editbox>();
+	m_factory->registerCreator<KeyBinder>();
+	m_factory->registerCreator<FrameWindow>();
+	m_factory->registerCreator<Panel>();
+	m_factory->registerCreator<Progress>();
+	m_factory->registerCreator<ProgressBar>();
+	m_factory->registerCreator<ImageBar>();
+	m_factory->registerCreator<ScrollPane>();
+	m_factory->registerCreator<BaseList>();
+	m_factory->registerCreator<ListBox>();
+	m_factory->registerCreator<CategorizedList>();
+	m_factory->registerCreator<Combobox>();
+	m_factory->registerCreator<MarkupBase>();
+	m_factory->registerCreator<MarkupText>();
+	m_registredTypes = m_factory->getTypesList();	
 }
 
 WindowManager::~WindowManager(void)
@@ -230,7 +230,7 @@ window_ptr WindowManager::loadXml(const std::string& filename)
 	
 	if(!newWindows.empty())
 	{
-		std::for_each(newWindows.rbegin(), newWindows.rend(), std::bind(&base_window::onLoad, _1));
+		std::for_each(newWindows.rbegin(), newWindows.rend(), std::bind(&WindowBase::onLoad, _1));
 	}
 
 	if (w)
@@ -460,9 +460,9 @@ void WindowManager::onLoaded(window_ptr wnd)
 	{
 		wnd->onLoad();
 		
-		base_window::children_list& children = wnd->getChildren();
-		base_window::child_iter i = children.begin();
-		base_window::child_iter end = children.end();
+		WindowBase::children_list& children = wnd->getChildren();
+		WindowBase::child_iter i = children.begin();
+		WindowBase::child_iter end = children.end();
 		while(i != end)
 		{
 			onLoaded((*i));

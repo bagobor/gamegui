@@ -13,12 +13,12 @@ namespace gui
 	class  FrameWindow : public Panel
 	{
 	public:
-		typedef FrameWindow Self;
+		typedef FrameWindow self_t;
 		FrameWindow(System& sys, const std::string& name = std::string());
 		virtual ~FrameWindow();
 
 		static const char* GetType() { return "FrameWindow"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		virtual void rise();
 		

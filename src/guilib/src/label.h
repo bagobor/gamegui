@@ -7,15 +7,15 @@ namespace gui
 	class Font;
 	typedef std::shared_ptr<Font> FontPtr;
 
-	class  Label :	public base_window
+	class  Label :	public WindowBase
 	{
 	public:
-		typedef Label Self;
+		typedef Label self_t;
 		Label(System& sys, const std::string& name = std::string());
 		virtual ~Label();
 
 		static const char* GetType() { return "Label"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		void setFont(const std::string& font);
 		const std::string&	getFontName() const;

@@ -17,7 +17,7 @@ WindowFactory::~WindowFactory(void)
 {
 }
 
-void WindowFactory::RegisterCreator(const std::string& type, CreatorPtr creator)
+void WindowFactory::registerCreator(const std::string& type, CreatorPtr creator)
 {
 	m_system.logEvent(log::system, std::string("Factory: adding ") + type);
 	m_creators[type] = creator;
@@ -49,7 +49,7 @@ window_ptr WindowFactory::Create(const std::string& type, const std::string& nam
 	}
 }
 
-WindowFactory::TypesList WindowFactory::GetTypesList()
+WindowFactory::TypesList WindowFactory::getTypesList()
 {
 	WindowFactory::TypesList types_list;
 

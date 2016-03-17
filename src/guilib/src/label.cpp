@@ -10,7 +10,7 @@
 namespace gui
 {
 	Label::Label(System& sys, const std::string& name) :
-		base_window(sys, name),
+		WindowBase(sys, name),
 		m_centred(true),
 		m_format(LeftAligned),
 		m_spacing(1.f)
@@ -94,7 +94,7 @@ namespace gui
 
 	void Label::init(xml::node& node)
 	{
-		base_window::init(node);
+		WindowBase::init(node);
 
 		xml::node setting = node("Font");
 		if(!setting.empty())

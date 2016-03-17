@@ -11,7 +11,7 @@
 namespace gui
 {
 	ImageBox::ImageBox(System& sys, const std::string& name) :
-		base_window(sys, name),
+		WindowBase(sys, name),
 		m_img(0),
 		m_vformat(ImageOps::Stretch),
 		m_hformat(ImageOps::Stretch)
@@ -69,7 +69,7 @@ namespace gui
 
 	void ImageBox::init(xml::node& node)
 	{
-		base_window::init(node);
+		WindowBase::init(node);
 
 		xml::node setting = node("Imageset");
 		if(!setting.empty())

@@ -8,8 +8,8 @@ namespace gui
 {
 
 class System;
-class base_window;
-typedef std::shared_ptr<base_window> window_ptr;
+class WindowBase;
+typedef std::shared_ptr<WindowBase> window_ptr;
 
 struct base_creator
 {
@@ -27,7 +27,7 @@ struct base_creator
 template<class T>
 struct Creator : public base_creator
 {
-	Creator(System& sys) : base_creator(sys, T::GetType()) {}
+	explicit Creator(System& sys) : base_creator(sys, T::GetType()) {}
 	virtual window_ptr Create(const std::string& name)
 	{
 		return window_ptr(new T(m_system, name));
@@ -48,20 +48,20 @@ public:
 	typedef CreatorsMap::const_iterator CreatorsConstIt;
 	typedef std::list<std::string> TypesList;
 
-	WindowFactory(System& sys);
+	explicit WindowFactory(System& sys);
 	virtual ~WindowFactory();
 
-	void RegisterCreator(const std::string& type, CreatorPtr creator);
+	void registerCreator(const std::string& type, CreatorPtr creator);
 
 	template<typename T>
-	void RegisterCreator()
+	void registerCreator()
 	{
-		RegisterCreator(T::GetType(), CreatorPtr(new Creator<T>(m_system)));
+		registerCreator(T::GetType(), CreatorPtr(new Creator<T>(m_system)));
 	}
 
 	window_ptr Create(const std::string& type, const std::string& name);
 	
-	TypesList GetTypesList();
+	TypesList getTypesList();
 	
 protected:
 	CreatorsMap m_creators;

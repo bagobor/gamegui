@@ -1,159 +1,159 @@
 <?xml version="1.0" ?>
-<Imageset Name="RevoltLook" Imagefile="RevoltLook.tga" NativeHorzRes="1024" NativeVertRes="768" AutoScaled="false">
+<Imageset id="RevoltLook" file="RevoltLook.tga" NativeHorzRes="1024" NativeVertRes="768" AutoScaled="false">
 	
-	<Image Name="Background" XPos="30" YPos="3" Width="2" Height="2" />
+	<Image id="Background" x="30" y="3" width="2" height="2" />
 	
-	<Image Name="FrameLeft" XPos="2" YPos="7" Width="5" Height="2" />
-	<Image Name="FrameRight" XPos="9" YPos="7" Width="5" Height="2" />
-	<Image Name="FrameTop" XPos="7" YPos="2" Width="2" Height="5" />
-	<Image Name="FrameBottom" XPos="7" YPos="9" Width="2" Height="5" />
-	<Image Name="FrameTopLeft" XPos="2" YPos="2" Width="5" Height="5" />
-	<Image Name="FrameTopRight" XPos="9" YPos="2" Width="5" Height="5" />
-	<Image Name="FrameBottomLeft" XPos="2" YPos="9" Width="5" Height="5" />
-	<Image Name="FrameBottomRight" XPos="9" YPos="9" Width="5" Height="5" />
+	<Image id="FrameLeft" x="2" y="7" width="5" height="2" />
+	<Image id="FrameRight" x="9" y="7" width="5" height="2" />
+	<Image id="FrameTop" x="7" y="2" width="2" height="5" />
+	<Image id="FrameBottom" x="7" y="9" width="2" height="5" />
+	<Image id="FrameTopLeft" x="2" y="2" width="5" height="5" />
+	<Image id="FrameTopRight" x="9" y="2" width="5" height="5" />
+	<Image id="FrameBottomLeft" x="2" y="9" width="5" height="5" />
+	<Image id="FrameBottomRight" x="9" y="9" width="5" height="5" />
 	
-	<Image Name="TitlebarLeft" XPos="16" YPos="7" Width="5" Height="2" />
-	<Image Name="TitlebarRight" XPos="23" YPos="7" Width="5" Height="2" />
-	<Image Name="TitlebarTop" XPos="21" YPos="2" Width="2" Height="5" />
-	<Image Name="TitlebarBottom" XPos="21" YPos="9" Width="2" Height="5" />
-	<Image Name="TitlebarTopLeft" XPos="16" YPos="2" Width="5" Height="5" />
-	<Image Name="TitlebarTopRight" XPos="23" YPos="2" Width="5" Height="5" />
-	<Image Name="TitlebarBottomLeft" XPos="16" YPos="9" Width="5" Height="5" />
-	<Image Name="TitlebarBottomRight" XPos="23" YPos="9" Width="5" Height="5" />
+	<Image id="TitlebarLeft" x="16" y="7" width="5" height="2" />
+	<Image id="TitlebarRight" x="23" y="7" width="5" height="2" />
+	<Image id="TitlebarTop" x="21" y="2" width="2" height="5" />
+	<Image id="TitlebarBottom" x="21" y="9" width="2" height="5" />
+	<Image id="TitlebarTopLeft" x="16" y="2" width="5" height="5" />
+	<Image id="TitlebarTopRight" x="23" y="2" width="5" height="5" />
+	<Image id="TitlebarBottomLeft" x="16" y="9" width="5" height="5" />
+	<Image id="TitlebarBottomRight" x="23" y="9" width="5" height="5" />
 
-	<Image Name="VScrollUpButtonLeft" XPos="34" YPos="7" Width="5" Height="2" />
-	<Image Name="VScrollUpButtonRight" XPos="41" YPos="7" Width="5" Height="2" />
-	<Image Name="VScrollUpButtonTop" XPos="39" YPos="2" Width="2" Height="5" />
-	<Image Name="VScrollUpButtonBottom" XPos="39" YPos="9" Width="2" Height="5" />
-	<Image Name="VScrollUpButtonTopLeft" XPos="34" YPos="2" Width="5" Height="5" />
-	<Image Name="VScrollUpButtonTopRight" XPos="41" YPos="2" Width="5" Height="5" />
-	<Image Name="VScrollUpButtonBottomLeft" XPos="34" YPos="9" Width="5" Height="5" />
-	<Image Name="VScrollUpButtonBottomRight" XPos="41" YPos="9" Width="5" Height="5" />
+	<Image id="VScrollUpButtonLeft" x="34" y="7" width="5" height="2" />
+	<Image id="VScrollUpButtonRight" x="41" y="7" width="5" height="2" />
+	<Image id="VScrollUpButtonTop" x="39" y="2" width="2" height="5" />
+	<Image id="VScrollUpButtonBottom" x="39" y="9" width="2" height="5" />
+	<Image id="VScrollUpButtonTopLeft" x="34" y="2" width="5" height="5" />
+	<Image id="VScrollUpButtonTopRight" x="41" y="2" width="5" height="5" />
+	<Image id="VScrollUpButtonBottomLeft" x="34" y="9" width="5" height="5" />
+	<Image id="VScrollUpButtonBottomRight" x="41" y="9" width="5" height="5" />
 
-	<Image Name="VScrollDownButtonLeft" XPos="34" YPos="29" Width="5" Height="2" />
-	<Image Name="VScrollDownButtonRight" XPos="41" YPos="29" Width="5" Height="2" />
-	<Image Name="VScrollDownButtonTop" XPos="39" YPos="24" Width="2" Height="5" />
-	<Image Name="VScrollDownButtonBottom" XPos="39" YPos="31" Width="2" Height="5" />
-	<Image Name="VScrollDownButtonTopLeft" XPos="34" YPos="24" Width="5" Height="5" />
-	<Image Name="VScrollDownButtonTopRight" XPos="41" YPos="24" Width="5" Height="5" />
-	<Image Name="VScrollDownButtonBottomLeft" XPos="34" YPos="31" Width="5" Height="5" />
-	<Image Name="VScrollDownButtonBottomRight" XPos="41" YPos="31" Width="5" Height="5" />	
+	<Image id="VScrollDownButtonLeft" x="34" y="29" width="5" height="2" />
+	<Image id="VScrollDownButtonRight" x="41" y="29" width="5" height="2" />
+	<Image id="VScrollDownButtonTop" x="39" y="24" width="2" height="5" />
+	<Image id="VScrollDownButtonBottom" x="39" y="31" width="2" height="5" />
+	<Image id="VScrollDownButtonTopLeft" x="34" y="24" width="5" height="5" />
+	<Image id="VScrollDownButtonTopRight" x="41" y="24" width="5" height="5" />
+	<Image id="VScrollDownButtonBottomLeft" x="34" y="31" width="5" height="5" />
+	<Image id="VScrollDownButtonBottomRight" x="41" y="31" width="5" height="5" />	
 
-	<Image Name="VScrollLeft" XPos="34" YPos="16" Width="3" Height="2" />
-	<Image Name="VScrollRight" XPos="43" YPos="16" Width="3" Height="2" />
+	<Image id="VScrollLeft" x="34" y="16" width="3" height="2" />
+	<Image id="VScrollRight" x="43" y="16" width="3" height="2" />
 
-	<Image Name="EditBoxCarat" XPos="29" YPos="118" Width="3" Height="8" />
+	<Image id="EditBoxCarat" x="29" y="118" width="3" height="8" />
 	
-	<Image Name="MouseArrow" XPos="2" YPos="90" Width="10" Height="19" XOffset="0" YOffset="0" />
-	<Image Name="MouseMoveCursor" XPos="14" YPos="90" Width="22" Height="22" XOffset="-10" YOffset="-10" />
-	<Image Name="MouseNoSoCursor" XPos="38" YPos="89" Width="11" Height="19" XOffset="-4" YOffset="-9" />
-	<Image Name="MouseEsWeCursor" XPos="2" YPos="116" Width="19" Height="8" XOffset="-9" YOffset="-4" />
-	<Image Name="MouseNeSwCursor" XPos="51" YPos="90" Width="15" Height="15" XOffset="-7" YOffset="-6" />
-	<Image Name="MouseNwSeCursor" XPos="68" YPos="90" Width="15" Height="15" XOffset="-6" YOffset="-7" />
-	<Image Name="MouseTextBar" XPos="73" YPos="107" Width="11" Height="20" XOffset="-5" YOffset="-10" />
+	<Image id="MouseArrow" x="2" y="90" width="10" height="19" XOffset="0" YOffset="0" />
+	<Image id="MouseMoveCursor" x="14" y="90" width="22" height="22" XOffset="-10" YOffset="-10" />
+	<Image id="MouseNoSoCursor" x="38" y="89" width="11" height="19" XOffset="-4" YOffset="-9" />
+	<Image id="MouseEsWeCursor" x="2" y="116" width="19" height="8" XOffset="-9" YOffset="-4" />
+	<Image id="MouseNeSwCursor" x="51" y="90" width="15" height="15" XOffset="-7" YOffset="-6" />
+	<Image id="MouseNwSeCursor" x="68" y="90" width="15" height="15" XOffset="-6" YOffset="-7" />
+	<Image id="MouseTextBar" x="73" y="107" width="11" height="20" XOffset="-5" YOffset="-10" />
 
 
 
-	<Image Name="EditFrameLeft" XPos="26" YPos="4" Width="1" Height="2" />
-	<Image Name="EditFrameRight" XPos="86" YPos="9" Width="4" Height="2" />
-	<Image Name="EditFrameTop" XPos="81" YPos="2" Width="2" Height="4" />
-	<Image Name="EditFrameBottom" XPos="81" YPos="14" Width="2" Height="4" />
-	<Image Name="EditFrameTopLeft" XPos="74" YPos="2" Width="3" Height="3" />
-	<Image Name="EditFrameTopRight" XPos="87" YPos="2" Width="3" Height="3" />
-	<Image Name="EditFrameBottomLeft" XPos="74" YPos="15" Width="3" Height="3" />
-	<Image Name="EditFrameBottomRight" XPos="87" YPos="15" Width="3" Height="3" />
+	<Image id="EditFrameLeft" x="26" y="4" width="1" height="2" />
+	<Image id="EditFrameRight" x="86" y="9" width="4" height="2" />
+	<Image id="EditFrameTop" x="81" y="2" width="2" height="4" />
+	<Image id="EditFrameBottom" x="81" y="14" width="2" height="4" />
+	<Image id="EditFrameTopLeft" x="74" y="2" width="3" height="3" />
+	<Image id="EditFrameTopRight" x="87" y="2" width="3" height="3" />
+	<Image id="EditFrameBottomLeft" x="74" y="15" width="3" height="3" />
+	<Image id="EditFrameBottomRight" x="87" y="15" width="3" height="3" />
 	
-	<Image Name="StaticFrameLeft" XPos="92" YPos="9" Width="2" Height="2" />
-	<Image Name="StaticFrameRight" XPos="106" YPos="9" Width="2" Height="2" />
-	<Image Name="StaticFrameTop" XPos="99" YPos="2" Width="2" Height="2" />
-	<Image Name="StaticFrameBottom" XPos="99" YPos="16" Width="2" Height="2" />
-	<Image Name="StaticFrameTopLeft" XPos="92" YPos="2" Width="3" Height="3" />
-	<Image Name="StaticFrameTopRight" XPos="105" YPos="2" Width="3" Height="3" />
-	<Image Name="StaticFrameBottomLeft" XPos="92" YPos="15" Width="3" Height="3" />
-	<Image Name="StaticFrameBottomRight" XPos="105" YPos="15" Width="3" Height="3" />
-	<Image Name="CloseButton" XPos="2" YPos="20" Width="13" Height="13" />
-	<Image Name="CloseButtonHover" XPos="2" YPos="35" Width="13" Height="13" />
-	<Image Name="CloseButtonPushed" XPos="2" YPos="50" Width="13" Height="13" />
+	<Image id="StaticFrameLeft" x="92" y="9" width="2" height="2" />
+	<Image id="StaticFrameRight" x="106" y="9" width="2" height="2" />
+	<Image id="StaticFrameTop" x="99" y="2" width="2" height="2" />
+	<Image id="StaticFrameBottom" x="99" y="16" width="2" height="2" />
+	<Image id="StaticFrameTopLeft" x="92" y="2" width="3" height="3" />
+	<Image id="StaticFrameTopRight" x="105" y="2" width="3" height="3" />
+	<Image id="StaticFrameBottomLeft" x="92" y="15" width="3" height="3" />
+	<Image id="StaticFrameBottomRight" x="105" y="15" width="3" height="3" />
+	<Image id="CloseButton" x="2" y="20" width="13" height="13" />
+	<Image id="CloseButtonHover" x="2" y="35" width="13" height="13" />
+	<Image id="CloseButtonPushed" x="2" y="50" width="13" height="13" />
 		
-	<Image Name="CheckboxNormal" XPos="17" YPos="37" Width="10" Height="10" />
-	<Image Name="CheckboxHover" XPos="17" YPos="49" Width="10" Height="10" />
-	<Image Name="CheckboxMark" XPos="17" YPos="61" Width="10" Height="10" />
-	<Image Name="RadioButton" XPos="29" YPos="37" Width="10" Height="10" />
-	<Image Name="RadioButtonHover" XPos="29" YPos="49" Width="10" Height="10" />
-	<Image Name="RadioButtonMark" XPos="29" YPos="61" Width="10" Height="10" />
-	<Image Name="SliderThumbNormal" XPos="47" YPos="20" Width="7" Height="10" />
-	<Image Name="SliderThumbHover" XPos="47" YPos="32" Width="7" Height="10" />
-	<Image Name="SliderTrackLeft" XPos="56" YPos="20" Width="3" Height="4" />
-	<Image Name="SlidertrackMiddle" XPos="63" YPos="20" Width="2" Height="4" />
-	<Image Name="SliderTrackRight" XPos="69" YPos="20" Width="3" Height="4" />
-	<Image Name="SliderTick" XPos="56" YPos="26" Width="1" Height="4" />
-	<Image Name="HeaderMainBrush" XPos="53" YPos="45" Width="2" Height="2" />
-	<Image Name="HeaderBottomEdge" XPos="53" YPos="50" Width="2" Height="4" />
-	<Image Name="HeaderSplitter" XPos="47" YPos="44" Width="3" Height="15" />
-	<Image Name="VertScrollbarGrip" XPos="41" YPos="68" Width="5" Height="8" />
-	<Image Name="HorzScrollbarGrip" XPos="41" YPos="61" Width="8" Height="5" />
-	<Image Name="LargeLeftArrow" XPos="2" YPos="65" Width="5" Height="9" />
-	<Image Name="LargeRightArrow" XPos="9" YPos="65" Width="5" Height="9" />
-	<Image Name="LargeUpArrow" XPos="2" YPos="76" Width="9" Height="5" />
-	<Image Name="LargeDownArrow" XPos="2" YPos="83" Width="9" Height="5" />
-	<Image Name="SmallLeftArrow" XPos="17" YPos="73" Width="5" Height="5" />
-	<Image Name="SmallRightArrow" XPos="24" YPos="73" Width="5" Height="5" />
-	<Image Name="SmallUpArrow" XPos="17" YPos="80" Width="5" Height="5" />
-	<Image Name="SmallDownArrow" XPos="24" YPos="80" Width="5" Height="5" />
+	<Image id="CheckboxNormal" x="17" y="37" width="10" height="10" />
+	<Image id="CheckboxHover" x="17" y="49" width="10" height="10" />
+	<Image id="CheckboxMark" x="17" y="61" width="10" height="10" />
+	<Image id="RadioButton" x="29" y="37" width="10" height="10" />
+	<Image id="RadioButtonHover" x="29" y="49" width="10" height="10" />
+	<Image id="RadioButtonMark" x="29" y="61" width="10" height="10" />
+	<Image id="SliderThumbNormal" x="47" y="20" width="7" height="10" />
+	<Image id="SliderThumbHover" x="47" y="32" width="7" height="10" />
+	<Image id="SliderTrackLeft" x="56" y="20" width="3" height="4" />
+	<Image id="SlidertrackMiddle" x="63" y="20" width="2" height="4" />
+	<Image id="SliderTrackRight" x="69" y="20" width="3" height="4" />
+	<Image id="SliderTick" x="56" y="26" width="1" height="4" />
+	<Image id="HeaderMainBrush" x="53" y="45" width="2" height="2" />
+	<Image id="HeaderBottomEdge" x="53" y="50" width="2" height="4" />
+	<Image id="HeaderSplitter" x="47" y="44" width="3" height="15" />
+	<Image id="VertScrollbarGrip" x="41" y="68" width="5" height="8" />
+	<Image id="HorzScrollbarGrip" x="41" y="61" width="8" height="5" />
+	<Image id="LargeLeftArrow" x="2" y="65" width="5" height="9" />
+	<Image id="LargeRightArrow" x="9" y="65" width="5" height="9" />
+	<Image id="LargeUpArrow" x="2" y="76" width="9" height="5" />
+	<Image id="LargeDownArrow" x="2" y="83" width="9" height="5" />
+	<Image id="SmallLeftArrow" x="17" y="73" width="5" height="5" />
+	<Image id="SmallRightArrow" x="24" y="73" width="5" height="5" />
+	<Image id="SmallUpArrow" x="17" y="80" width="5" height="5" />
+	<Image id="SmallDownArrow" x="24" y="80" width="5" height="5" />
 	
-	<Image Name="TabControlButtonPaneFiller" XPos="81" YPos="34" Width="2" Height="2" />
-	<Image Name="TabPaneLeft" XPos="92" YPos="9" Width="2" Height="2" />
-	<Image Name="TabPaneRight" XPos="106" YPos="9" Width="2" Height="2" />
-	<Image Name="TabPaneLower" XPos="99" YPos="16" Width="2" Height="2" />
-	<Image Name="TabPaneLowerLeft" XPos="92" YPos="15" Width="3" Height="3" />
-	<Image Name="TabPaneLowerRight" XPos="105" YPos="15" Width="3" Height="3" />
-	<Image Name="TabPaneMiddle" XPos="9" YPos="9" Width="2" Height="2" />
-	<Image Name="TabButtonLeftNormal" XPos="74" YPos="27" Width="2" Height="2" />
-	<Image Name="TabButtonRightNormal" XPos="88" YPos="27" Width="2" Height="2" />
-	<Image Name="TabButtonUpperNormal" XPos="81" YPos="20" Width="2" Height="2" />
-	<Image Name="TabButtonLowerNormal" XPos="81" YPos="34" Width="2" Height="2" />
-	<Image Name="TabButtonUpperLeftNormal" XPos="74" YPos="20" Width="3" Height="3" />
-	<Image Name="TabButtonUpperRightNormal" XPos="87" YPos="20" Width="3" Height="3" />
-	<Image Name="TabButtonLowerLeftNormal" XPos="74" YPos="33" Width="3" Height="3" />
-	<Image Name="TabButtonLowerRightNormal" XPos="87" YPos="33" Width="3" Height="3" />
-	<Image Name="TabButtonMiddleNormal" XPos="9" YPos="9" Width="2" Height="2" />
+	<Image id="TabControlButtonPaneFiller" x="81" y="34" width="2" height="2" />
+	<Image id="TabPaneLeft" x="92" y="9" width="2" height="2" />
+	<Image id="TabPaneRight" x="106" y="9" width="2" height="2" />
+	<Image id="TabPaneLower" x="99" y="16" width="2" height="2" />
+	<Image id="TabPaneLowerLeft" x="92" y="15" width="3" height="3" />
+	<Image id="TabPaneLowerRight" x="105" y="15" width="3" height="3" />
+	<Image id="TabPaneMiddle" x="9" y="9" width="2" height="2" />
+	<Image id="TabButtonLeftNormal" x="74" y="27" width="2" height="2" />
+	<Image id="TabButtonRightNormal" x="88" y="27" width="2" height="2" />
+	<Image id="TabButtonUpperNormal" x="81" y="20" width="2" height="2" />
+	<Image id="TabButtonLowerNormal" x="81" y="34" width="2" height="2" />
+	<Image id="TabButtonUpperLeftNormal" x="74" y="20" width="3" height="3" />
+	<Image id="TabButtonUpperRightNormal" x="87" y="20" width="3" height="3" />
+	<Image id="TabButtonLowerLeftNormal" x="74" y="33" width="3" height="3" />
+	<Image id="TabButtonLowerRightNormal" x="87" y="33" width="3" height="3" />
+	<Image id="TabButtonMiddleNormal" x="9" y="9" width="2" height="2" />
 
-	<Image Name="TabButtonLeftSelected" XPos="92" YPos="27" Width="2" Height="2" />
-	<Image Name="TabButtonRightSelected" XPos="106" YPos="27" Width="2" Height="2" />
-	<Image Name="TabButtonUpperSelected" XPos="99" YPos="20" Width="2" Height="2" />
-	<Image Name="TabButtonUpperLeftSelected" XPos="92" YPos="20" Width="3" Height="3" />
-	<Image Name="TabButtonUpperRightSelected" XPos="105" YPos="20" Width="3" Height="3" />
-	<Image Name="TabButtonMiddleSelected" XPos="9" YPos="9" Width="2" Height="2" />
+	<Image id="TabButtonLeftSelected" x="92" y="27" width="2" height="2" />
+	<Image id="TabButtonRightSelected" x="106" y="27" width="2" height="2" />
+	<Image id="TabButtonUpperSelected" x="99" y="20" width="2" height="2" />
+	<Image id="TabButtonUpperLeftSelected" x="92" y="20" width="3" height="3" />
+	<Image id="TabButtonUpperRightSelected" x="105" y="20" width="3" height="3" />
+	<Image id="TabButtonMiddleSelected" x="9" y="9" width="2" height="2" />
 
-	<Image Name="TooltipTopLeft" XPos="74" YPos="38" Width="3" Height="3" />
-	<Image Name="TooltipTopRight" XPos="87" YPos="38" Width="4" Height="3" />
-	<Image Name="TooltipBottomLeft" XPos="74" YPos="51" Width="3" Height="4" />
-	<Image Name="TooltipBottomRight" XPos="87" YPos="51" Width="4" Height="4" />
-	<Image Name="TooltipLeftEdge" XPos="74" YPos="45" Width="3" Height="2" />
-	<Image Name="TooltipRightEdge" XPos="87" YPos="45" Width="4" Height="2" />
-	<Image Name="TooltipTopEdge" XPos="81" YPos="38" Width="2" Height="3" />
-	<Image Name="TooltipBottomEdge" XPos="81" YPos="51" Width="2" Height="4" />
-	<Image Name="TooltipMiddle" XPos="81" YPos="45" Width="2" Height="2" />
+	<Image id="TooltipTopLeft" x="74" y="38" width="3" height="3" />
+	<Image id="TooltipTopRight" x="87" y="38" width="4" height="3" />
+	<Image id="TooltipBottomLeft" x="74" y="51" width="3" height="4" />
+	<Image id="TooltipBottomRight" x="87" y="51" width="4" height="4" />
+	<Image id="TooltipLeftEdge" x="74" y="45" width="3" height="2" />
+	<Image id="TooltipRightEdge" x="87" y="45" width="4" height="2" />
+	<Image id="TooltipTopEdge" x="81" y="38" width="2" height="3" />
+	<Image id="TooltipBottomEdge" x="81" y="51" width="2" height="4" />
+	<Image id="TooltipMiddle" x="81" y="45" width="2" height="2" />
 
-	<Image Name="MenuTopLeft" XPos="61" YPos="57" Width="2" Height="2" />
-	<Image Name="MenuTopRight" XPos="70" YPos="57" Width="2" Height="2" />
-	<Image Name="MenuBottomLeft" XPos="61" YPos="66" Width="2" Height="2" />
-	<Image Name="MenuBottomRight" XPos="70" YPos="66" Width="2" Height="2" />
-	<Image Name="MenuLeft" XPos="61" YPos="62" Width="2" Height="1" />
-	<Image Name="MenuRight" XPos="70" YPos="62" Width="2" Height="1" />
-	<Image Name="MenuTop" XPos="66" YPos="57" Width="1" Height="2" />
-	<Image Name="MenuBottom" XPos="66" YPos="66" Width="1" Height="2" />
+	<Image id="MenuTopLeft" x="61" y="57" width="2" height="2" />
+	<Image id="MenuTopRight" x="70" y="57" width="2" height="2" />
+	<Image id="MenuBottomLeft" x="61" y="66" width="2" height="2" />
+	<Image id="MenuBottomRight" x="70" y="66" width="2" height="2" />
+	<Image id="MenuLeft" x="61" y="62" width="2" height="1" />
+	<Image id="MenuRight" x="70" y="62" width="2" height="1" />
+	<Image id="MenuTop" x="66" y="57" width="1" height="2" />
+	<Image id="MenuBottom" x="66" y="66" width="1" height="2" />
 	
-	<Image Name="PopupMenuFrameTopLeft" XPos="74" YPos="57" Width="3" Height="3" />
-	<Image Name="PopupMenuFrameTopRight" XPos="87" YPos="57" Width="3" Height="3" />
-	<Image Name="PopupMenuFrameBottomLeft" XPos="74" YPos="70" Width="3" Height="3" />
-	<Image Name="PopupMenuFrameBottomRight" XPos="87" YPos="70" Width="3" Height="3" />
-	<Image Name="PopupMenuFrameLeft" XPos="74" YPos="64" Width="3" Height="2" />
-	<Image Name="PopupMenuFrameRight" XPos="87" YPos="64" Width="3" Height="2" />
-	<Image Name="PopupMenuFrameTop" XPos="81" YPos="57" Width="2" Height="3" />
-	<Image Name="PopupMenuFrameBottom" XPos="81" YPos="70" Width="2" Height="3" />
-	<Image Name="PopupMenuArrowRight" XPos="61" YPos="75" Width="5" Height="9" />
-	<Image Name="PopupMenuArrowLeft" XPos="68" YPos="75" Width="5" Height="9" />
+	<Image id="PopupMenuFrameTopLeft" x="74" y="57" width="3" height="3" />
+	<Image id="PopupMenuFrameTopRight" x="87" y="57" width="3" height="3" />
+	<Image id="PopupMenuFrameBottomLeft" x="74" y="70" width="3" height="3" />
+	<Image id="PopupMenuFrameBottomRight" x="87" y="70" width="3" height="3" />
+	<Image id="PopupMenuFrameLeft" x="74" y="64" width="3" height="2" />
+	<Image id="PopupMenuFrameRight" x="87" y="64" width="3" height="2" />
+	<Image id="PopupMenuFrameTop" x="81" y="57" width="2" height="3" />
+	<Image id="PopupMenuFrameBottom" x="81" y="70" width="2" height="3" />
+	<Image id="PopupMenuArrowRight" x="61" y="75" width="5" height="9" />
+	<Image id="PopupMenuArrowLeft" x="68" y="75" width="5" height="9" />
 	
 
 </Imageset>

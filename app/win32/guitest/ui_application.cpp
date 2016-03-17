@@ -252,7 +252,7 @@ void ApplicationGUI::onChar(int character, int action) {
 void ApplicationGUI::load(const std::string& xml)
 {
 	if(!m_system) return;
-	gui::base_window* wnd = m_system->loadXml(xml);
+	gui::WindowBase* wnd = m_system->loadXml(xml);
 }
 
 const std::string& ApplicationGUI::getActionName(efsw::Action action)

@@ -6,8 +6,8 @@
 
 namespace gui
 {
-	class base_window;
-	typedef std::shared_ptr<base_window> window_ptr;
+	class WindowBase;
+	typedef std::shared_ptr<WindowBase> window_ptr;
 	class RenderHelper;
 	class DragContainer;
 	class Tooltip;
@@ -133,28 +133,28 @@ namespace gui
 		
 		void logEvent(log::level level, const std::string& message);
 
-		base_window* find(const std::string& name);
+		WindowBase* find(const std::string& name);
 		
 		void render();
 
 		void init();
 
 		void tick(float delta);
-		void subscribeTick(base_window* wnd);
-		void unsubscribeTick(base_window* wnd);
+		void subscribeTick(WindowBase* wnd);
+		void unsubscribeTick(WindowBase* wnd);
 		void setTickClear() { m_tickClear = true; }
 
 		void draw();
 
-		base_window&	getRootWindow() const { return *(m_rootWindow.get()); }
+		WindowBase&	getRootWindow() const { return *(m_rootWindow.get()); }
 		window_ptr		getRootPtr();
 
-		base_window*	getWindowWithFocus() const { return m_focusWindow; }
-		base_window*	getCaptureWindow() const { return m_captureWindow; }
-		bool			queryInputFocus(base_window* wnd);
-		void			queryCaptureInput(base_window* wnd);
+		WindowBase*	getWindowWithFocus() const { return m_focusWindow; }
+		WindowBase*	getCaptureWindow() const { return m_captureWindow; }
+		bool			queryInputFocus(WindowBase* wnd);
+		void			queryCaptureInput(WindowBase* wnd);
 
-		void			EnterExclusiveInputMode(base_window* wnd);
+		void			EnterExclusiveInputMode(WindowBase* wnd);
 		void			LeaveExclusiveInputMode();
 
 		Tooltip*		getTooltip() const;
@@ -163,11 +163,11 @@ namespace gui
 		float			getTooltipDelay() const		{ return m_ttdelay; }
 		float			getTooltipLifetime() const	{ return m_ttlifetime; }
 
-		void			showTooltip(base_window* wnd);
-		void			hideTooltip(base_window* wnd);
+		void			showTooltip(WindowBase* wnd);
+		void			hideTooltip(WindowBase* wnd);
 
 		DragContainer*	getDragContainer() const;
-		bool			startDrag(base_window* wnd, point offset);
+		bool			startDrag(WindowBase* wnd, point offset);
 		bool			stopDrag(void);
 		void			freezeDrag() { m_dragfreeze = true; }
 		void			unfreezeDrag() { m_dragfreeze = false; }
@@ -182,12 +182,12 @@ namespace gui
 		void setAutoScale(bool status);
 
 		void			executeScript(const std::string& filename);	
-		void			executeScript(const std::string& filename, base_window* wnd);
+		void			executeScript(const std::string& filename, WindowBase* wnd);
 		
-		base_window*		createWindow(base_window* parent, const std::string& name, const std::string& type_or_path);
-		base_window*		loadXml(base_window& parent, const std::string& filename);
-		base_window*		loadXml(const std::string& filename);
-		base_window*		getTargetWindow(const point& pt) const;
+		WindowBase*		createWindow(WindowBase* parent, const std::string& name, const std::string& type_or_path);
+		WindowBase*		loadXml(WindowBase& parent, const std::string& filename);
+		WindowBase*		loadXml(const std::string& filename);
+		WindowBase*		getTargetWindow(const point& pt) const;
 
 		ScriptSystem&	getScriptSystem() { return m_scriptSys; }
 
@@ -225,12 +225,12 @@ namespace gui
 		bool m_autoScale;
 
 		Cursor		m_cursor;
-		base_window*	m_exclusiveInputWindow;
+		WindowBase*	m_exclusiveInputWindow;
 
 		window_ptr		m_rootWindow;
-		base_window*	m_focusWindow;
-		base_window*	m_captureWindow;
-		base_window*	m_containsMouse;
+		WindowBase*	m_focusWindow;
+		WindowBase*	m_captureWindow;
+		WindowBase*	m_containsMouse;
 		window_ptr		m_dragContainer;
 		window_ptr		m_tooltipWindow;
 		window_ptr		m_menuWindow;
@@ -247,14 +247,14 @@ namespace gui
 		bool	m_dragfired;
 		point	m_dragOffset;
 		float	m_dragThreshold;
-		base_window*	m_dragWindow;
+		WindowBase*	m_dragWindow;
 
 		size_t			m_sytemkeys;
 
 		log&	m_logger;
 
-		std::vector<base_window*>	m_tickedWnd;
-		std::vector<base_window*>	m_subscribeTickWnd;
+		std::vector<WindowBase*>	m_tickedWnd;
+		std::vector<WindowBase*>	m_subscribeTickWnd;
 		bool						m_inTick;
 		bool						m_tickClear;
 	};

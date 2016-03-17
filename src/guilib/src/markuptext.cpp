@@ -31,10 +31,8 @@ namespace gui
 		std::for_each(children.begin(), children.end(), TextLinealigner<Text>(lineheight));
 		std::for_each(images.begin(), images.end(), TextLinealigner<Img>(lineheight));
 	}
-
-
-
-	void MarkupBase::TextLine::addChunk(PText chunk, float spacing)
+	
+	void MarkupBase::TextLine::addChunk(TextPtr chunk, float spacing)
 	{
 		if(chunk && chunk->len)
 		{
@@ -124,8 +122,8 @@ namespace gui
 		float xpos = 0.f;
 		size_t wordcount = 0;
 		PTextLine currentLine;
-		PText textChunk;
-		PImg imgChunk;
+		TextPtr textChunk;
+		ImagePtr imgChunk;
 		PTooltipArea tooltipChunk;
 		PLinkArea urlChunk;
 		float linespacing = m_textSpacing;
@@ -387,7 +385,7 @@ namespace gui
 			else
 				clear();
 		}
-		return base_window::onSized(false);
+		return WindowBase::onSized(false);
 	}
 
 
@@ -402,8 +400,8 @@ namespace gui
 			size_t offset = line->start;
 			Rect rl(line->area);
 
-			std::vector<PText>::const_iterator c = line->children.begin();
-			std::vector<PText>::const_iterator stop = line->children.end();
+			std::vector<TextPtr>::const_iterator c = line->children.begin();
+			std::vector<TextPtr>::const_iterator stop = line->children.end();
 			while(c != stop)
 			{
 				const Text* chunk = (*c).get();
@@ -424,8 +422,8 @@ namespace gui
 		}
 		Renderer& r = m_system.getRenderer();
 
-		std::vector<PImg>::const_iterator cimg = m_images.begin();
-		std::vector<PImg>::const_iterator cimgend = m_images.end();
+		std::vector<ImagePtr>::const_iterator cimg = m_images.begin();
+		std::vector<ImagePtr>::const_iterator cimgend = m_images.end();
 		while(cimg != cimgend)
 		{
 			const Img* img = (*cimg).get();
@@ -594,11 +592,11 @@ namespace gui
 	bool MarkupText::isHitChunk(T* p, point& pt)
 	{
 		if(!p) return false;
-		std::vector<PImg>::iterator img = std::find_if(p->maskedimg.begin(), p->maskedimg.end(), hittester<Img>(pt));
+		std::vector<ImagePtr>::iterator img = std::find_if(p->maskedimg.begin(), p->maskedimg.end(), hittester<Img>(pt));
 		if(img != p->maskedimg.end())
 			return true;
 
-		std::vector<PText>::iterator text = std::find_if(p->masked.begin(), p->masked.end(), hittester<Text>(pt));
+		std::vector<TextPtr>::iterator text = std::find_if(p->masked.begin(), p->masked.end(), hittester<Text>(pt));
 		if(text != p->masked.end())
 			return true;
 			

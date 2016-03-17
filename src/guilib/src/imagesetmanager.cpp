@@ -19,8 +19,10 @@ namespace gui
 	{
 	}
 
-	void Image::GetRenderInfo(RenderImageInfo& info, size_t subimage) const
+	RenderImageInfo Image::getRenderInfo(size_t subimage) const
 	{
+		//TODO: return reference to const data
+		RenderImageInfo info = { 0 };
 		if(m_parent && subimage < m_data.size())
 		{
 			const SubImage& sb = m_data[subimage];
@@ -30,6 +32,7 @@ namespace gui
 			info.crop = sb.m_crop.getPosition();
 			info.isAdditiveBlend = m_isAdditiveBlend;
 		}
+		return info;
 	}
 
 	Imageset::Imageset(System& sys, const std::string& name, xml::node* imgset)
@@ -92,8 +95,8 @@ namespace gui
 				std::string nodename(texnode.name());
 				if(nodename == "Texture")
 				{
-					std::string texname = texnode["Name"].value();
-					std::string filename = texnode["Filename"].value();
+					std::string texname = texnode["id"].value();
+					std::string filename = texnode["file"].value();
 					if(!texname.size())
 						texname = filename;
 					TextureOrdinals::iterator it = textureOrdinals.find(texname);
@@ -122,9 +125,9 @@ namespace gui
 				std::string nodename(imgnode.name());
 				if(nodename == "Image")
 				{
-					std::string imgname = imgnode["Name"].value();
-					float width = imgnode["Width"].as_float();
-					float height = imgnode["Height"].as_float();
+					std::string imgname = imgnode["id"].value();
+					float width = imgnode["width"].as_float();
+					float height = imgnode["height"].as_float();
 					bool isAdditiveBlend = imgnode["additive"].as_bool();
 
 					Image::SubImages subImages;
@@ -151,8 +154,8 @@ namespace gui
 						sub.m_src.m_right = rectnode["SrcRight"].as_float();
 						sub.m_src.m_bottom = rectnode["SrcBottom"].as_float();
 
-						sub.m_offset.x = rectnode["YPos"].as_float();
-						sub.m_offset.y = rectnode["XPos"].as_float();
+						sub.m_offset.x = rectnode["x"].as_float();
+						sub.m_offset.y = rectnode["y"].as_float();
 
 						if (!rectnode["CropLeft"].empty())
 						{
@@ -214,7 +217,7 @@ namespace gui
 	{
 		if(imgset)
 		{
-			std::string name = (*imgset)["Name"].value();
+			std::string name = (*imgset)["id"].value();
 			return Produce(sys, name, imgset);
 		}
 		return ImagesetPtr();

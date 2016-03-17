@@ -19,17 +19,14 @@ namespace gui
 
 	struct SubImage
 	{
-		SubImage() : m_ordinal(-1), m_offset(0, 0) {}
 		size_t m_ordinal; // ordinal to texture in atlas
 		Rect m_src; // area in atlas
 		Rect m_crop; // for a cropped images, offset, and original size
 		point m_offset; // offset in result image
 	};
 
-	//struct RenderImageInfo;
 	struct RenderImageInfo
 	{
-		RenderImageInfo() : texture(nullptr), isAdditiveBlend(false) {}
 		Texture* texture;
 		Rect pixel_rect;
 		point offset;
@@ -57,7 +54,7 @@ namespace gui
 		/// @brief - render info for an image
 		/// @param info - output
 		/// @param subimage - in range [0, GetCount())
-		void GetRenderInfo(RenderImageInfo& info, size_t subimage) const;
+		RenderImageInfo getRenderInfo(size_t subimage) const;
 		
 		const std::string& name() const;
 

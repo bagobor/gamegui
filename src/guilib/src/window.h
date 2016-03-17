@@ -35,22 +35,21 @@ namespace gui
 		struct SizedEvent;
 	}
 
-	class  base_window :
-		public TreeNode<base_window>,
-		//public RefCounted,
-		public ScriptObject<base_window>,
+	class WindowBase :
+		public TreeNode<WindowBase>,
+		public ScriptObject<WindowBase>,
 		public events::sender
 	{
 	public:
-		typedef base_window Self;
-		base_window(System& sys, const std::string& name = std::string());
-		virtual ~base_window();
+		typedef WindowBase self_t;
+		WindowBase(System& sys, const std::string& name = std::string());
+		virtual ~WindowBase();
 
 		std::string const& getName() const;
 		void setName(const std::string& name);		
 
-		static const char* GetType() { return "base_window"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		static const char* GetType() { return "WindowBase"; }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		void suspendLayout() { m_suspended = true; onSuspendLayout(); }
 		void resumeLayout() { m_suspended = false; onResumeLayout(); }
@@ -85,8 +84,8 @@ namespace gui
 		void setUserData(size_t ptr) { m_userData = ptr; }
 		size_t getUserData() const { return m_userData; }
 
-		void moveToFront(base_window* child);
-		void bringToBack(base_window* child);
+		void moveToFront(WindowBase* child);
+		void bringToBack(WindowBase* child);
 		void moveToFront();
 		void bringToBack();
 		virtual void rise();
@@ -98,9 +97,9 @@ namespace gui
 		bool getDisableRise() const { return m_disableRise; }
 
 		virtual bool isCanHaveChildren(void) const { return true; }
-		base_window* findChildWindow(const std::string& name);
-		base_window const* getParent() const { return m_parent; }
-		void addChildWindow(base_window* wnd);
+		WindowBase* findChildWindow(const std::string& name);
+		WindowBase const* getParent() const { return m_parent; }
+		void addChildWindow(WindowBase* wnd);
 
 		void setInputFocus(bool query);
 		void resetInputFocus() { m_focus = false; }
@@ -143,20 +142,20 @@ namespace gui
 		virtual bool onSuspendLayout();
 		virtual bool onResumeLayout();
 		virtual bool onFocusGained();
-		virtual bool onFocusLost(base_window* newFocus);
+		virtual bool onFocusLost(WindowBase* newFocus);
 
 		// loading from XML
 		virtual void init(xml::node& node);
 		virtual void parseEventHandlers(xml::node& node);
 
-		base_window* nextSibling();
-		base_window* prevSibling();
+		WindowBase* nextSibling();
+		WindowBase* prevSibling();
 
 		point transformToWndCoord(const point& global) const; // translate to parent coords!
 		point transformToRootCoord(const point& local);
 
-		void subscribeNamedEvent(std::string name, base_window* sender, luabind::object script_callback);
-		void unsubscribeNamedEvent(std::string name, base_window* sender);
+		void subscribeNamedEvent(std::string name, WindowBase* sender, luabind::object script_callback);
+		void unsubscribeNamedEvent(std::string name, WindowBase* sender);
 		void sendNamedEvent(std::string name);
 		void onNamedEvent(events::NamedEvent& e);
 
@@ -173,7 +172,7 @@ namespace gui
 		std::string getEventScript(const std::string& ev);
 		virtual bool onGameEvent(const std::string& ev);
 
-		bool isChildrenOf(const base_window* wnd);
+		bool isChildrenOf(const WindowBase* wnd);
 		
 		void setAfterRenderCallback(AfterRenderCallbackFunc func)
 		{
@@ -181,13 +180,13 @@ namespace gui
 		}
 
 	protected:
-		void ExecuteScript(const std::string& env, const std::string& script);
-		base_window& operator=(const base_window&) { return *this; }
+		void executeScript(const std::string& env, const std::string& script);
+		WindowBase& operator=(const WindowBase&) { return *this; }
 
-		void Align();
-		void Stick();
+		void align();
+		void stick();
 
-		void CallAfterRenderCallback(const Rect& dest, const Rect& clip);
+		void callAfterRenderCallback(const Rect& dest, const Rect& clip);
 
 	protected:
 		bool			m_suspended;
@@ -222,8 +221,7 @@ namespace gui
 		System&			m_system;
 		AfterRenderCallbackFunc m_afterRenderCallback;
 
-		typedef std::pair<std::string, base_window*> NamedEventEntry;
-		//typedef std::unordered_map<NamedEventEntry, std::string> NamedEventsMap;
+		typedef std::pair<std::string, WindowBase*> NamedEventEntry;
 		typedef std::map<NamedEventEntry, luabind::object> NamedEventsMap;
 		NamedEventsMap m_scriptevents;
 		
@@ -233,11 +231,11 @@ namespace gui
 		std::string m_strName;
 	};
 
-	typedef std::shared_ptr<base_window> window_ptr;
+	typedef std::shared_ptr<WindowBase> window_ptr;
 
 	template <typename T> struct window_caster
 	{
-		static T* apply (base_window* w)
+		static T* apply (WindowBase* w)
 		{
 			return dynamic_cast <T*> (w);
 		}

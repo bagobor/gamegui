@@ -3,15 +3,15 @@
 
 namespace gui
 {
-	class  Tooltip : public base_window
+	class  Tooltip : public WindowBase
 	{
 	public:
-		typedef Tooltip Self;
+		typedef Tooltip self_t;
 		Tooltip(System& sys, const std::string& name = std::string());
 		virtual ~Tooltip(void);
 
 		static const char* GetType() { return "Tooltip"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		virtual void rise();
 

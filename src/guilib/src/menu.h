@@ -8,24 +8,24 @@ namespace gui
 
 	struct  MenuItem
 	{
+		MenuItem() : icon(0) {}
+		MenuItem(const MenuItem& item) : text(item.text), icon(item.icon), col(item.col), selcol(item.selcol) {}
+
 		std::string text;
 		const Image* icon;
 		Color col;
 		Color selcol;
-
-		MenuItem() : icon(0) {}
-		MenuItem(const MenuItem& item) : text(item.text), icon(item.icon), col(item.col), selcol(item.selcol) {}	
 	};
 
 	class  Menu : public Panel
 	{
 	public:
-		typedef Menu Self;
+		typedef Menu self_t;
 		Menu(System& sys, const std::string& name = std::string());
 		virtual ~Menu(void);
 
 		static const char* GetType() { return "Menu"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		virtual void rise();
 		void setFont(const std::string& font);
@@ -54,7 +54,6 @@ namespace gui
 		virtual bool onMouseLeave(void);
 
 	protected:
-
 		FontPtr m_font;
 		const Image* m_selImg;
 		size_t m_selected;
@@ -70,16 +69,5 @@ namespace gui
 		float	m_minWidth;
 		float	m_margin;
 		float	m_actualWidth;
-
-		struct itemfinder
-		{
-			std::string txt;
-			itemfinder(std::string t) : txt(t) {}
-			
-			bool operator()(const MenuItem& item)
-			{
-				return (item.text == txt);
-			}
-		};
 	};
 }

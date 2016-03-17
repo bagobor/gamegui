@@ -17,8 +17,8 @@ namespace gui
 	typedef std::shared_ptr<Font> FontPtr;
 
 	class System;
-	class base_window;
-	typedef std::shared_ptr<base_window> window_ptr;
+	class WindowBase;
+	typedef std::shared_ptr<WindowBase> window_ptr;
 
 	class WindowFactory;
 

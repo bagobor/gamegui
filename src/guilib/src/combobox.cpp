@@ -24,7 +24,7 @@ namespace gui
 			ListBox* lb = static_cast<ListBox*>(m_list.get());
 			if(lb)
 			{
-				lb->AddItem(name);
+				lb->addItem(name);
 			}
 		}
 	}
@@ -79,7 +79,7 @@ namespace gui
 			ListBox* lb = static_cast<ListBox*>(m_list.get());
 			if(lb)
 			{
-				Label* st = lb->GetSelectedItem();
+				Label* st = lb->getSelectedItem();
 				setText(st ? st->getText() : empty_string);
 			}
 			else
@@ -97,12 +97,21 @@ namespace gui
 		return Editbox::onMouseButton(btn, state);
 	}
 
-	bool Combobox::onFocusLost(base_window* newFocus)
+	bool Combobox::onFocusLost(WindowBase* newFocus)
 	{
 		if ((!newFocus) || ((newFocus != m_btn.get()) && (newFocus != m_list.get())))
 			hideList();
 
 		return Editbox::onFocusLost(newFocus);
+	}
+
+	void Combobox::hideList()
+	{
+		if (m_list && m_list->getVisible())
+		{
+			addChildWindow(m_list.get());
+			m_list->setVisible(false);
+		}
 	}
 
 }

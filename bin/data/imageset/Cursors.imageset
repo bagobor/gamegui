@@ -1,35 +1,35 @@
 <?xml version="1.0" ?>
-<Imageset Name="Cursors">
+<Imageset id="Cursors">
   <Textures>
-    <Texture Name="0" Filename="skin.png" />
+    <Texture id="0" file="skin.png" />
   </Textures>
   <Images>
-    <Image Name="CursorNormal" Width="11" Height="18" >
-      <Rect Texture="0" SrcLeft="109" SrcTop="6" SrcRight="120" SrcBottom="24" XPos="0" YPos="0" />
+    <Image id="CursorNormal" width="11" height="18" >
+      <Rect Texture="0" SrcLeft="109" SrcTop="6" SrcRight="120" SrcBottom="24" x="0" y="0" />
     </Image>
-    <Image Name="CursorNormalOver" Width="11" Height="18" >
-      <Rect Texture="0" SrcLeft="109" SrcTop="6" SrcRight="120" SrcBottom="24" XPos="0" YPos="0" />
+    <Image id="CursorNormalOver" width="11" height="18" >
+      <Rect Texture="0" SrcLeft="109" SrcTop="6" SrcRight="120" SrcBottom="24" x="0" y="0" />
     </Image>
-    <Image Name="CursorAction" Width="32" Height="32" >
-      <Rect Texture="0" SrcLeft="64" SrcTop="64" SrcRight="96" SrcBottom="96" XPos="0" YPos="0" />
+    <Image id="CursorAction" width="32" height="32" >
+      <Rect Texture="0" SrcLeft="64" SrcTop="64" SrcRight="96" SrcBottom="96" x="0" y="0" />
     </Image>
-    <Image Name="CursorResizerHoriz" Width="32" Height="32" >
-      <Rect Texture="0" SrcLeft="0" SrcTop="128" SrcRight="32" SrcBottom="160" XPos="0" YPos="0" />
+    <Image id="CursorResizerHoriz" width="32" height="32" >
+      <Rect Texture="0" SrcLeft="0" SrcTop="128" SrcRight="32" SrcBottom="160" x="0" y="0" />
     </Image>
-    <Image Name="CursorResizerVert" Width="32" Height="32" >
-      <Rect Texture="0" SrcLeft="32" SrcTop="128" SrcRight="64" SrcBottom="160" XPos="0" YPos="0" />
+    <Image id="CursorResizerVert" width="32" height="32" >
+      <Rect Texture="0" SrcLeft="32" SrcTop="128" SrcRight="64" SrcBottom="160" x="0" y="0" />
     </Image>
-    <Image Name="CursorResizerDownUp" Width="32" Height="32" >
-      <Rect Texture="0" SrcLeft="96" SrcTop="128" SrcRight="128" SrcBottom="160" XPos="0" YPos="0" />
+    <Image id="CursorResizerDownUp" width="32" height="32" >
+      <Rect Texture="0" SrcLeft="96" SrcTop="128" SrcRight="128" SrcBottom="160" x="0" y="0" />
     </Image>
-    <Image Name="CursorResizerUpDown" Width="32" Height="32" >
-      <Rect Texture="0" SrcLeft="64" SrcTop="128" SrcRight="96" SrcBottom="160" XPos="0" YPos="0" />
+    <Image id="CursorResizerUpDown" width="32" height="32" >
+      <Rect Texture="0" SrcLeft="64" SrcTop="128" SrcRight="96" SrcBottom="160" x="0" y="0" />
     </Image>
-    <Image Name="CursorTyper" Width="8" Height="32" >
-      <Rect Texture="0" SrcLeft="101" SrcTop="101" SrcRight="109" SrcBottom="133" XPos="0" YPos="0" />
+    <Image id="CursorTyper" width="8" height="32" >
+      <Rect Texture="0" SrcLeft="101" SrcTop="101" SrcRight="109" SrcBottom="133" x="0" y="0" />
     </Image>
-    <Image Name="CursorDrag" Width="32" Height="32" >
-      <Rect Texture="0" SrcLeft="64" SrcTop="32" SrcRight="96" SrcBottom="64" XPos="0" YPos="0" />
+    <Image id="CursorDrag" width="32" height="32" >
+      <Rect Texture="0" SrcLeft="64" SrcTop="32" SrcRight="96" SrcBottom="64" x="0" y="0" />
     </Image>
   </Images>
 </Imageset>

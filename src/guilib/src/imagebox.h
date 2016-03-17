@@ -9,15 +9,15 @@ namespace gui
 	class Imageset;
 	typedef std::shared_ptr<Imageset> ImagesetPtr;
 
-	class ImageBox : public base_window
+	class ImageBox : public WindowBase
 	{
 	public:
-		typedef ImageBox Self;
+		typedef ImageBox self_t;
 		ImageBox(System& sys, const std::string& name = std::string());
 		virtual ~ImageBox();
 		
 		static const char* GetType() { return "ImageBox"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		void setImageset(const std::string& set);
 		const std::string getImageset() const;

@@ -11,6 +11,21 @@
 
 namespace gui
 {
+	namespace
+	{
+		struct itemfinder
+		{
+			std::string txt;
+			explicit itemfinder(const std::string& t) : txt(t) {}
+
+			bool operator()(const MenuItem& item)
+			{
+				return (item.text == txt);
+			}
+		};
+
+	}
+
 Menu::Menu(System& sys, const std::string& name) :
 	Panel(sys, name),
 	m_fadein(0.f),
@@ -35,8 +50,8 @@ namespace
 {
 	struct seeker
 	{
-		const base_window* m_ptr;
-		seeker(const base_window* ptr) : m_ptr(ptr){}
+		const WindowBase* m_ptr;
+		seeker(const WindowBase* ptr) : m_ptr(ptr){}
 		bool operator()(window_ptr obj) 
 		{
 			return obj ? (obj.get() == m_ptr) : false;

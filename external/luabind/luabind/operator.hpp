@@ -71,9 +71,9 @@ namespace luabind { namespace detail {
 
 namespace luabind { namespace operators {
 
-	template<class Self, typename... Args>
+	template<class self_t, typename... Args>
 	struct call_operator
-		: detail::operator_ < call_operator< Self, Args... > >
+		: detail::operator_ < call_operator< self_t, Args... > >
 	{
 		call_operator(int) {}
 
@@ -82,7 +82,7 @@ namespace luabind { namespace operators {
 		{
 			static void execute(
 				lua_State* L
-				, typename detail::unwrap_parameter_type<T, Self>::type self
+				, typename detail::unwrap_parameter_type<T, self_t>::type self
 				, typename detail::unwrap_parameter_type<T, Args>::type... args
 				)
 			{

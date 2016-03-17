@@ -53,7 +53,6 @@
 	</Children>
     <Events>
         <On_Init>
-
 --            log:msg("On Init");
         </On_Init>
         <On_Load>

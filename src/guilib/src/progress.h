@@ -11,12 +11,12 @@ namespace gui
 	class Progress : public Label
 	{
 	public:
-		typedef Progress Self;
+		typedef Progress self_t;
 		Progress(System& sys, const std::string& name = std::string());
 		virtual ~Progress();
 
 		static const char* GetType() { return "Progress"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 
@@ -33,15 +33,15 @@ namespace gui
 		float m_progress;
 	};
 
-	class  ProgressBar : public Progress
+	class ProgressBar : public Progress
 	{
 	public:
-		typedef ProgressBar Self;
+		typedef ProgressBar self_t;
 		ProgressBar(System& sys, const std::string& name = std::string());
 		virtual ~ProgressBar();
 
 		static const char* GetType() { return "ProgressBar"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 
@@ -56,18 +56,17 @@ namespace gui
 		const Image*	m_backImg;
 
 		bool m_signed;
-
 	};
 
 	class  ImageBar : public Progress
 	{
 	public:
-		typedef ImageBar Self;
+		typedef ImageBar self_t;
 		ImageBar(System& sys, const std::string& name = std::string());
 		virtual ~ImageBar(void);
 
 		static const char* GetType() { return "ImageBar"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 

@@ -2,7 +2,7 @@
 
 namespace gui
 {
-	class base_window;
+	class WindowBase;
 	namespace events
 	{
 		struct ResizeEvent {};
@@ -13,11 +13,11 @@ namespace gui
 
 		struct NamedEvent
 		{
-			NamedEvent(const std::string& name, base_window* sender) 
+			NamedEvent(const std::string& name, WindowBase* sender) 
 				: m_name(name), m_sender(sender) {}
 
 			std::string m_name;
-			base_window* m_sender;
+			WindowBase* m_sender;
 		};
 	}
 }

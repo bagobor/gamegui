@@ -5,17 +5,17 @@
 
 namespace gui
 {
-	class  BaseList : public Panel
+	class BaseList : public Panel
 	{
 	public:
-		typedef BaseList Self;
+		typedef BaseList self_t;
 		BaseList(System& sys, const std::string& name = std::string());
 		virtual ~BaseList();
 
 		static const char* GetType() { return "BaseList"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
-		virtual void Clear();
+		virtual void clear();
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 		virtual void init(xml::node& node);
@@ -43,17 +43,17 @@ namespace gui
 	class Font;
 	typedef std::shared_ptr<Font> FontPtr;
 
-	class  ListBox : public BaseList
+	class ListBox : public BaseList
 	{
 	public:
-		typedef ListBox Self;
+		typedef ListBox self_t;
 		ListBox(System& sys, const std::string& name = std::string());
 		virtual ~ListBox(void);
 
 		static const char* GetType() { return "ListBox"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
-		void AddItem(const std::string& name);
+		void addItem(const std::string& name);
 
 		virtual bool onMouseMove(void);
 		virtual bool onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState state);
@@ -63,7 +63,7 @@ namespace gui
 		virtual void render(const Rect& finalRect, const Rect& finalClip);
 		virtual void init(xml::node& node);
 
-		Label* GetSelectedItem() const;
+		Label* getSelectedItem() const;
 
 	protected:
 		virtual void onChildRemove(window_ptr& node);
@@ -93,51 +93,38 @@ namespace gui
 			std::vector<window_ptr> children;
 			CategorizedList& parent;
 
-			void Rename(const std::string& n);
-			unsigned int Add(base_window* wnd);
-			void Remove(unsigned int idx);
-			base_window*	GetWndByIndex(unsigned int idx);
-			unsigned int GetChildrenCount() const;
-			void Collapse() { Fold(true); }
-			void Expand() { Fold(false); }
-			void Fold(bool status);
-			bool IsCollapsed() const { return collapsed; }
+			void rename(const std::string& n);
+			unsigned int add(WindowBase* wnd);
+			void remove(unsigned int idx);
+			WindowBase*	getWndByIndex(unsigned int idx);
+			unsigned int getChildrenCount() const;
+			void collapse() { fold(true); }
+			void expand() { fold(false); }
+			void fold(bool status);
+			bool isCollapsed() const { return collapsed; }
 
-			float CalcHeight();
+			float calcHeight();
 			void layoutChildren();
 
-			struct VisibleTask
-			{
-				bool visible;
-				VisibleTask(bool v) : visible(v) {}
-				void operator () (window_ptr w) { if(w) w->setVisible(visible); }
-			};
-			struct HeightCalcTask
-			{
-				float& height;
-				HeightCalcTask(float& h) : height(h) {}
-				void operator () (window_ptr w) { if(w) height += w->getArea().getHeight(); }
-				HeightCalcTask& operator=(const HeightCalcTask& rhs) {rhs;}
-			};
 		private:
 			Category& operator=(const Category& rhs) {rhs;}
 		};
+
 		typedef std::shared_ptr<Category> CategoryPtr;
 
-		typedef CategorizedList Self;
+		typedef CategorizedList self_t;
 		CategorizedList(System& sys, const std::string& name = std::string());
 		virtual ~CategorizedList(void);
 
 		static const char* GetType() { return "CategorizedList"; }
-		virtual const char* getType() const { return Self::GetType(); }
+		virtual const char* getType() const { return self_t::GetType(); }
 
-		unsigned int AddCategory(const std::string& name);
-		Category* GetCategoryByIndex(unsigned int idx);
-		//Category* GetCategoryByName(const std::string& name);
-		unsigned int GetCategoryCount() const;
-		void RemoveCategory(unsigned int idx);
+		unsigned int addCategory(const std::string& name);
+		Category* getCategoryByIndex(unsigned int idx);		
+		unsigned int getCategoryCount() const;
+		void removeCategory(unsigned int idx);
 		virtual void Clear();
-		FontPtr GetFont() const { return m_font; }
+		FontPtr getFont() const { return m_font; }
 
 		virtual bool onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState state);
 
@@ -160,5 +147,4 @@ namespace gui
 		typedef Categories::iterator CategoriesIter;
 		Categories m_categories;
 	};
-
 }

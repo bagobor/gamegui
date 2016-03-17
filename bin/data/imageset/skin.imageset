@@ -1,118 +1,118 @@
 <?xml version="1.0" ?>
-<Imageset Name="skin" >
+<Imageset id="skin" >
   <Textures>
-    <Texture Name="0" Filename="skin.png" />
+    <Texture id="0" file="skin.png" />
   </Textures>
   <Images>
-    <Image Name="Background" Width="30.0" Height="20.0" >
-      <Rect Texture="0" SrcLeft="52" SrcTop="27" SrcRight="82" SrcBottom="47" XPos="0" YPos="0" />
+    <Image id="Background" width="30.0" height="20.0" >
+      <Rect Texture="0" SrcLeft="52" SrcTop="27" SrcRight="82" SrcBottom="47" x="0" y="0" />
     </Image>
 
-    <Image Name="CheckboxChecked" Width="13.0" Height="13.0" >
-      <Rect Texture="0" SrcLeft="148" SrcTop="31" SrcRight="161" SrcBottom="44" XPos="0" YPos="0" />
+    <Image id="CheckboxChecked" width="13.0" height="13.0" >
+      <Rect Texture="0" SrcLeft="148" SrcTop="31" SrcRight="161" SrcBottom="44" x="0" y="0" />
     </Image>
 
-    <Image Name="CheckboxUnchecked" Width="13.0" Height="13.0">
-      <Rect Texture="0" SrcLeft="120" SrcTop="31" SrcRight="133" SrcBottom="44" XPos="0" YPos="0" />
+    <Image id="CheckboxUnchecked" width="13.0" height="13.0">
+      <Rect Texture="0" SrcLeft="120" SrcTop="31" SrcRight="133" SrcBottom="44" x="0" y="0" />
     </Image>
 
-    <Image Name="CheckboxCheckedHovered" Width="13.0" Height="13.0" >
-      <Rect Texture="0" SrcLeft="134" SrcTop="31" SrcRight="147" SrcBottom="44" XPos="0" YPos="0" />
+    <Image id="CheckboxCheckedHovered" width="13.0" height="13.0" >
+      <Rect Texture="0" SrcLeft="134" SrcTop="31" SrcRight="147" SrcBottom="44" x="0" y="0" />
     </Image>
 
-    <Image Name="CheckboxUncheckedHovered" Width="13.0" Height="13.0" >
-      <Rect Texture="0" SrcLeft="106" SrcTop="31" SrcRight="119" SrcBottom="44" XPos="0" YPos="0" />
+    <Image id="CheckboxUncheckedHovered" width="13.0" height="13.0" >
+      <Rect Texture="0" SrcLeft="106" SrcTop="31" SrcRight="119" SrcBottom="44" x="0" y="0" />
     </Image>        
 
-    <Image Name="CloseButton" Width="17.0" Height="17.0" >
-      <Rect Texture="0" SrcLeft="5" SrcTop="5" SrcRight="22" SrcBottom="23" XPos="0" YPos="0" />
+    <Image id="CloseButton" width="17.0" height="17.0" >
+      <Rect Texture="0" SrcLeft="5" SrcTop="5" SrcRight="22" SrcBottom="23" x="0" y="0" />
     </Image>
-    <Image Name="CloseButtonHover" Width="17.0" Height="17.0" additive="0">
-      <Rect Texture="0" SrcLeft="5" SrcTop="24" SrcRight="22" SrcBottom="43" XPos="0" YPos="0" />
+    <Image id="CloseButtonHover" width="17.0" height="17.0" additive="0">
+      <Rect Texture="0" SrcLeft="5" SrcTop="24" SrcRight="22" SrcBottom="43" x="0" y="0" />
     </Image>
-    <Image Name="CloseButtonPushed" Width="17.0" Height="17.0" >
-      <Rect Texture="0" SrcLeft="5" SrcTop="43" SrcRight="22" SrcBottom="62" XPos="0" YPos="0" />
-    </Image>
-
-    <Image Name="TitlebarLeft" Width="5.0" Height="20.0" >
-      <Rect Texture="0" SrcLeft="48" SrcTop="5" SrcRight="53" SrcBottom="25" XPos="0" YPos="0" />
-    </Image>
-    <Image Name="TitlebarRight" Width="4.0" Height="20.0" >
-      <Rect Texture="0" SrcLeft="82" SrcTop="5" SrcRight="86" SrcBottom="25" XPos="0" YPos="0" />
-    </Image>
-    <Image Name="TitlebarMiddle" Width="29.0" Height="20.0" >
-      <Rect Texture="0" SrcLeft="53" SrcTop="5" SrcRight="82" SrcBottom="25" XPos="0" YPos="0" />
+    <Image id="CloseButtonPushed" width="17.0" height="17.0" >
+      <Rect Texture="0" SrcLeft="5" SrcTop="43" SrcRight="22" SrcBottom="62" x="0" y="0" />
     </Image>
 
-    <Image Name="FrameLeft" Width="4.0" Height="20.0" >
-      <Rect Texture="0" SrcLeft="48" SrcTop="27" SrcRight="52" SrcBottom="47" XPos="0" YPos="0" />
+    <Image id="TitlebarLeft" width="5.0" height="20.0" >
+      <Rect Texture="0" SrcLeft="48" SrcTop="5" SrcRight="53" SrcBottom="25" x="0" y="0" />
     </Image>
-    <Image Name="FrameRight" Width="4.0" Height="20.0" >
-      <Rect Texture="0" SrcLeft="82" SrcTop="27" SrcRight="86" SrcBottom="47" XPos="0" YPos="0" />
+    <Image id="TitlebarRight" width="4.0" height="20.0" >
+      <Rect Texture="0" SrcLeft="82" SrcTop="5" SrcRight="86" SrcBottom="25" x="0" y="0" />
     </Image>
-    <Image Name="FrameTop" Width="30.0" Height="4.0" >
-      <Rect Texture="0" SrcLeft="52" SrcTop="26" SrcRight="82" SrcBottom="30" XPos="0" YPos="0" />
-    </Image>
-    <Image Name="FrameBottom" Width="30.0" Height="4.0" >
-      <Rect Texture="0" SrcLeft="52" SrcTop="48" SrcRight="82" SrcBottom="52" XPos="0" YPos="0" />
-    </Image>
-    <Image Name="FrameTopLeft" Width="4.0" Height="4.0" >
-      <Rect Texture="0" SrcLeft="48" SrcTop="26" SrcRight="52" SrcBottom="30" XPos="0" YPos="0" />
-    </Image>
-    <Image Name="FrameTopRight" Width="4.0" Height="4.0" >
-      <Rect Texture="0" SrcLeft="82" SrcTop="26" SrcRight="86" SrcBottom="30" XPos="0" YPos="0" />
-    </Image>
-    <Image Name="FrameBottomLeft" Width="4.0" Height="4.0" >
-      <Rect Texture="0" SrcLeft="48" SrcTop="48" SrcRight="52" SrcBottom="52" XPos="0" YPos="0" />
-    </Image>
-    <Image Name="FrameBottomRight" Width="4.0" Height="4.0" >
-      <Rect Texture="0" SrcLeft="82" SrcTop="48" SrcRight="86" SrcBottom="52" XPos="0" YPos="0" />
+    <Image id="TitlebarMiddle" width="29.0" height="20.0" >
+      <Rect Texture="0" SrcLeft="53" SrcTop="5" SrcRight="82" SrcBottom="25" x="0" y="0" />
     </Image>
 
-    <Image Name="ButtonLeftNormal" Width="5.0" Height="21.0" >
-      <Rect Texture="0" SrcLeft="24" SrcTop="51" SrcRight="29" SrcBottom="72" XPos="0" YPos="0" />
+    <Image id="FrameLeft" width="4.0" height="20.0" >
+      <Rect Texture="0" SrcLeft="48" SrcTop="27" SrcRight="52" SrcBottom="47" x="0" y="0" />
     </Image>
-    <Image Name="ButtonRightNormal" Width="5.0" Height="21.0" >
-      <Rect Texture="0" SrcLeft="40" SrcTop="51" SrcRight="45" SrcBottom="72" XPos="0" YPos="0" />
+    <Image id="FrameRight" width="4.0" height="20.0" >
+      <Rect Texture="0" SrcLeft="82" SrcTop="27" SrcRight="86" SrcBottom="47" x="0" y="0" />
     </Image>
-    <Image Name="ButtonMiddleNormal" Width="14.0" Height="21.0" >
-      <Rect Texture="0" SrcLeft="27" SrcTop="51" SrcRight="41" SrcBottom="72" XPos="0" YPos="0" />
+    <Image id="FrameTop" width="30.0" height="4.0" >
+      <Rect Texture="0" SrcLeft="52" SrcTop="26" SrcRight="82" SrcBottom="30" x="0" y="0" />
     </Image>
-
-    <Image Name="ButtonLeftHovered" Width="5.0" Height="21.0" >
-      <Rect Texture="0" SrcLeft="24" SrcTop="5" SrcRight="29" SrcBottom="26" XPos="0" YPos="0" />
+    <Image id="FrameBottom" width="30.0" height="4.0" >
+      <Rect Texture="0" SrcLeft="52" SrcTop="48" SrcRight="82" SrcBottom="52" x="0" y="0" />
     </Image>
-    <Image Name="ButtonRightHovered" Width="5.0" Height="21.0" >
-      <Rect Texture="0" SrcLeft="40" SrcTop="5" SrcRight="45" SrcBottom="26" XPos="0" YPos="0" />
+    <Image id="FrameTopLeft" width="4.0" height="4.0" >
+      <Rect Texture="0" SrcLeft="48" SrcTop="26" SrcRight="52" SrcBottom="30" x="0" y="0" />
     </Image>
-    <Image Name="ButtonMiddleHovered" Width="14.0" Height="21.0" >
-      <Rect Texture="0" SrcLeft="27" SrcTop="5" SrcRight="41" SrcBottom="26" XPos="0" YPos="0" />
+    <Image id="FrameTopRight" width="4.0" height="4.0" >
+      <Rect Texture="0" SrcLeft="82" SrcTop="26" SrcRight="86" SrcBottom="30" x="0" y="0" />
     </Image>
-
-    <Image Name="ButtonLeftPushed" Width="5.0" Height="21.0" >
-      <Rect Texture="0" SrcLeft="24" SrcTop="28" SrcRight="29" SrcBottom="49" XPos="0" YPos="0" />
+    <Image id="FrameBottomLeft" width="4.0" height="4.0" >
+      <Rect Texture="0" SrcLeft="48" SrcTop="48" SrcRight="52" SrcBottom="52" x="0" y="0" />
     </Image>
-    <Image Name="ButtonRightPushed" Width="5.0" Height="21.0" >
-      <Rect Texture="0" SrcLeft="40" SrcTop="28" SrcRight="45" SrcBottom="49" XPos="0" YPos="0" />
-    </Image>
-    <Image Name="ButtonMiddlePushed" Width="14.0" Height="21.0" >
-      <Rect Texture="0" SrcLeft="27" SrcTop="28" SrcRight="41" SrcBottom="49" XPos="0" YPos="0" />
+    <Image id="FrameBottomRight" width="4.0" height="4.0" >
+      <Rect Texture="0" SrcLeft="82" SrcTop="48" SrcRight="86" SrcBottom="52" x="0" y="0" />
     </Image>
 
-    <Image Name="EditFrameLeft" Width="5.0" Height="31.0" >
-      <Rect Texture="0" SrcLeft="48" SrcTop="56" SrcRight="53" SrcBottom="87" XPos="0" YPos="0" />
+    <Image id="ButtonLeftNormal" width="5.0" height="21.0" >
+      <Rect Texture="0" SrcLeft="24" SrcTop="51" SrcRight="29" SrcBottom="72" x="0" y="0" />
     </Image>
-    <Image Name="EditFrameRight" Width="5.0" Height="31.0" >
-      <Rect Texture="0" SrcLeft="72" SrcTop="56" SrcRight="77" SrcBottom="87" XPos="0" YPos="0" />
+    <Image id="ButtonRightNormal" width="5.0" height="21.0" >
+      <Rect Texture="0" SrcLeft="40" SrcTop="51" SrcRight="45" SrcBottom="72" x="0" y="0" />
     </Image>
-    <Image Name="EditFrameMiddle" Width="22.0" Height="31.0" >
-      <Rect Texture="0" SrcLeft="51" SrcTop="56" SrcRight="73" SrcBottom="87" XPos="0" YPos="0" />
+    <Image id="ButtonMiddleNormal" width="14.0" height="21.0" >
+      <Rect Texture="0" SrcLeft="27" SrcTop="51" SrcRight="41" SrcBottom="72" x="0" y="0" />
     </Image>
-    <Image Name="EditBoxCarat" Width="3.0" Height="16.0" >
-      <Rect Texture="0" SrcLeft="91" SrcTop="56" SrcRight="94" SrcBottom="72" XPos="0" YPos="0" />
+
+    <Image id="ButtonLeftHovered" width="5.0" height="21.0" >
+      <Rect Texture="0" SrcLeft="24" SrcTop="5" SrcRight="29" SrcBottom="26" x="0" y="0" />
     </Image>
-    <Image Name="TextSelectionBrush" Width="9.0" Height="16.0" >
-      <Rect Texture="0" SrcLeft="80" SrcTop="56" SrcRight="89" SrcBottom="72" XPos="0" YPos="0" />
+    <Image id="ButtonRightHovered" width="5.0" height="21.0" >
+      <Rect Texture="0" SrcLeft="40" SrcTop="5" SrcRight="45" SrcBottom="26" x="0" y="0" />
+    </Image>
+    <Image id="ButtonMiddleHovered" width="14.0" height="21.0" >
+      <Rect Texture="0" SrcLeft="27" SrcTop="5" SrcRight="41" SrcBottom="26" x="0" y="0" />
+    </Image>
+
+    <Image id="ButtonLeftPushed" width="5.0" height="21.0" >
+      <Rect Texture="0" SrcLeft="24" SrcTop="28" SrcRight="29" SrcBottom="49" x="0" y="0" />
+    </Image>
+    <Image id="ButtonRightPushed" width="5.0" height="21.0" >
+      <Rect Texture="0" SrcLeft="40" SrcTop="28" SrcRight="45" SrcBottom="49" x="0" y="0" />
+    </Image>
+    <Image id="ButtonMiddlePushed" width="14.0" height="21.0" >
+      <Rect Texture="0" SrcLeft="27" SrcTop="28" SrcRight="41" SrcBottom="49" x="0" y="0" />
+    </Image>
+
+    <Image id="EditFrameLeft" width="5.0" height="31.0" >
+      <Rect Texture="0" SrcLeft="48" SrcTop="56" SrcRight="53" SrcBottom="87" x="0" y="0" />
+    </Image>
+    <Image id="EditFrameRight" width="5.0" height="31.0" >
+      <Rect Texture="0" SrcLeft="72" SrcTop="56" SrcRight="77" SrcBottom="87" x="0" y="0" />
+    </Image>
+    <Image id="EditFrameMiddle" width="22.0" height="31.0" >
+      <Rect Texture="0" SrcLeft="51" SrcTop="56" SrcRight="73" SrcBottom="87" x="0" y="0" />
+    </Image>
+    <Image id="EditBoxCarat" width="3.0" height="16.0" >
+      <Rect Texture="0" SrcLeft="91" SrcTop="56" SrcRight="94" SrcBottom="72" x="0" y="0" />
+    </Image>
+    <Image id="TextSelectionBrush" width="9.0" height="16.0" >
+      <Rect Texture="0" SrcLeft="80" SrcTop="56" SrcRight="89" SrcBottom="72" x="0" y="0" />
     </Image>
   </Images>
 </Imageset>

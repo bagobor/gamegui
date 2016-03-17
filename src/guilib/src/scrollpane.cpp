@@ -9,7 +9,7 @@ namespace gui
 {
 
 ScrollPane::ScrollPane(System& sys, const std::string& name) 
-	: base_window(sys, name)
+	: WindowBase(sys, name)
 	, m_scroll(0)
 	, m_target(0)
 {
@@ -19,7 +19,7 @@ ScrollPane::~ScrollPane(void)
 {
 }
 
-void ScrollPane::setTarget(base_window* target)
+void ScrollPane::setTarget(WindowBase* target)
 {
 	m_target = target;
 	if(target && m_scroll)
@@ -67,12 +67,12 @@ bool ScrollPane::onLoad(void)
 		}
 	}
 
-	return base_window::onLoad();
+	return WindowBase::onLoad();
 }
 
 bool ScrollPane::onSized(bool update)
 {
-	base_window::onSized();
+	WindowBase::onSized();
 
 	if(m_scroll)
 	{
@@ -112,7 +112,7 @@ void ScrollPane::onTargetSized(const events::SizedEvent& e)
 
 void ScrollPane::init(xml::node& node)
 {
-	base_window::init(node);
+	WindowBase::init(node);
 	
 	//TODO: ???
 }
