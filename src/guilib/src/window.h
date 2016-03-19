@@ -45,9 +45,6 @@ namespace gui
 		WindowBase(System& sys, const std::string& name = std::string());
 		virtual ~WindowBase();
 
-		std::string const& getName() const;
-		void setName(const std::string& name);		
-
 		static const char* GetType() { return "WindowBase"; }
 		virtual const char* getType() const { return self_t::GetType(); }
 
@@ -96,7 +93,6 @@ namespace gui
 		void setDisableRise(bool disable) { m_disableRise = disable; }
 		bool getDisableRise() const { return m_disableRise; }
 
-		virtual bool isCanHaveChildren(void) const { return true; }
 		WindowBase* findChildWindow(const std::string& name);
 		WindowBase const* getParent() const { return m_parent; }
 		void addChildWindow(WindowBase* wnd);
@@ -147,9 +143,6 @@ namespace gui
 		// loading from XML
 		virtual void init(xml::node& node);
 		virtual void parseEventHandlers(xml::node& node);
-
-		WindowBase* nextSibling();
-		WindowBase* prevSibling();
 
 		point transformToWndCoord(const point& global) const; // translate to parent coords!
 		point transformToRootCoord(const point& local);
@@ -227,8 +220,6 @@ namespace gui
 		
 		typedef std::unordered_map<std::string, std::string> HandlerMap;
 		HandlerMap		m_handlers;
-
-		std::string m_strName;
 	};
 
 	typedef std::shared_ptr<WindowBase> window_ptr;

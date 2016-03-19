@@ -46,37 +46,23 @@ Menu::~Menu(void)
 	m_items.clear();
 }
 
-namespace
-{
-	struct seeker
-	{
-		const WindowBase* m_ptr;
-		seeker(const WindowBase* ptr) : m_ptr(ptr){}
-		bool operator()(window_ptr obj) 
-		{
-			return obj ? (obj.get() == m_ptr) : false;
-		}
-	};
-}
-
 void Menu::rise()
 {
-	if (getDisableRise()) return;
-	if(m_parent)
-	{
-		children_list& children = m_parent->getChildren();
-		child_iter it = std::find_if(children.begin(), children.end(), seeker(this));
-		if(it != children.end())
-		{
-			children.splice(children.end(), children, it);
-		}
-	}
+	if (getDisableRise() || !m_parent) return;
+	children_t& children = m_parent->getChildren();
+	auto temp = ptr();
+	child_iter it = std::find(children.begin(), children.end(), temp);
+	if (it == children.end()) return;	
+	children.erase(it);
+	children.push_back(temp);
 }
 
 void Menu::setFont(const std::string& font)
 {
-	if(font.empty())
+	if (font.empty()) {
+		m_font.reset();
 		return;
+	}
 
 	m_font = m_system.getWindowManager().loadFont(font);
 }

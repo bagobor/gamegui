@@ -29,17 +29,17 @@ namespace gui
 
 	void Tooltip::rise()
 	{
-		if (getDisableRise()) return;
+		if (getDisableRise() || !m_parent) return;
 
-		if(m_parent)
+		children_t& children = m_parent->getChildren();
+		if (children.size() < 2) return;
+		
+		for (child_iter it = children.begin(), end = children.end(); it != end; ++it)
 		{
-			children_list& children = m_parent->getChildren();
-			child_iter it = std::find_if(children.begin(), children.end(), seeker(this));
-			if(it != children.end())
-			{
-				children.splice(children.end(), children, it);
-			}
-		}
+			if (it->get() != this) continue;
+			std::swap(*(--children.end()), *it);
+			return;
+		}		
 	}
 
 	void Tooltip::reset(void)

@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include "align.h"
 
 namespace gui
@@ -35,5 +36,4 @@ namespace gui
 	std::string ColorToString(const Color& val);
 	Color HexStringToColor(const std::string& str);
 	std::string ColorToHexString(const Color& val);
-
 }

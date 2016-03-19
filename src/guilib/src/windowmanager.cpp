@@ -353,7 +353,7 @@ window_ptr WindowManager::createWindow(window_ptr parent, xml::node& n, WindowVe
 		loadWindowEvents(wnd, n);
 
 		xml::node children = n("Children");
-		if(wnd->isCanHaveChildren() && !children.empty())
+		if(wnd->canHaveChildren() && !children.empty())
 		{
 			xml::node child = children.first_child();
 			while(!child.empty())
@@ -460,7 +460,7 @@ void WindowManager::onLoaded(window_ptr wnd)
 	{
 		wnd->onLoad();
 		
-		WindowBase::children_list& children = wnd->getChildren();
+		WindowBase::children_t& children = wnd->getChildren();
 		WindowBase::child_iter i = children.begin();
 		WindowBase::child_iter end = children.end();
 		while(i != end)

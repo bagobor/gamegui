@@ -468,11 +468,11 @@ bool System::handleMouseDouble(EventArgs::MouseButtons btn)
 	return false;
 }
 
-WindowBase* getTabstopWindow(WindowBase::children_list& list)
+WindowBase* getTabstopWindow(WindowBase::children_t& children)
 {
 	WindowBase* ret = NULL;
-	WindowBase::child_riter i = list.rbegin();
-	WindowBase::child_riter end = list.rend();
+	WindowBase::child_riter i = children.rbegin();
+	WindowBase::child_riter end = children.rend();
 	while(i != end)
 	{
 		if(!(*i)->isTabStop())
@@ -547,25 +547,25 @@ bool System::proceedSystemKey(EventArgs::Keys key, EventArgs::ButtonState state)
 			{
 				if(m_sytemkeys & SHIFT)
 				{
-					WindowBase* sibling = m_focusWindow->prevSibling();
+					window_ptr sibling = m_focusWindow->prevSibling();
 					while(!sibling->isTabStop())
 					{
-						if(sibling == m_focusWindow)
+						if(sibling.get() == m_focusWindow)
 							break;
 						sibling = sibling->prevSibling();
 					}
-					queryInputFocus(sibling);
+					queryInputFocus(sibling.get());
 				}
 				else
 				{
-					WindowBase* sibling = m_focusWindow->nextSibling();
+					window_ptr sibling = m_focusWindow->nextSibling();
 					while(!sibling->isTabStop())
 					{
-						if(sibling == m_focusWindow)
+						if(sibling.get() == m_focusWindow)
 							break;
 						sibling = sibling->nextSibling();
 					}
-					queryInputFocus(sibling);
+					queryInputFocus(sibling.get());
 				}
 			}
 
@@ -655,7 +655,7 @@ void System::LeaveExclusiveInputMode()
 	m_exclusiveInputWindow = 0;
 }
 
-window_ptr GetTargetWindow(const point& pt, WindowBase::children_list& list)
+window_ptr GetTargetWindow(const point& pt, WindowBase::children_t& list)
 {
 	window_ptr ret;
 	WindowBase::child_riter i = list.rbegin();
@@ -663,14 +663,12 @@ window_ptr GetTargetWindow(const point& pt, WindowBase::children_list& list)
 	while(i != end)
 	{
 		window_ptr p = (*i);
-		if(p->hitTest(pt))
-		{
-			ret = GetTargetWindow(pt, p->getChildren());
-			if(!ret)
-				ret = p;
-			break;
-		}
 		++i;
+		if (!p->hitTest(pt)) continue;
+
+		ret = GetTargetWindow(pt, p->getChildren());
+		if(!ret) ret = p;
+		break;
 	}
 	return ret;
 }

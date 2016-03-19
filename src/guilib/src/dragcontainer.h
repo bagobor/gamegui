@@ -8,7 +8,6 @@ namespace gui
 	public:
 		typedef DragContainer self_t;
 		DragContainer(System& sys, const std::string& name = std::string());
-		virtual ~DragContainer(void);
 
 		static const char* GetType() { return "DragContainer"; }
 		virtual const char* getType() const { return self_t::GetType(); }
@@ -22,12 +21,10 @@ namespace gui
 
 		void reset(void);
 
-
 	protected:
 		WindowBase* m_dragSubject;
 		
 		WindowBase* m_dropTarget;
-		point		m_childOffset;
-		
+		point		m_childOffset;		
 	};
 }

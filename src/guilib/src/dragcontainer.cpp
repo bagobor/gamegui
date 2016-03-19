@@ -13,37 +13,19 @@ namespace gui
 		reset();
 	}
 
-	DragContainer::~DragContainer(void)
-	{
-	}
-
-	namespace
-	{
-		struct seeker
-		{
-			const WindowBase* m_ptr;
-			seeker(const WindowBase* ptr) : m_ptr(ptr){}
-			bool operator()(window_ptr obj) 
-			{
-				return obj ? (obj.get() == m_ptr) : false;
-			}
-		};
-	}
-
 	void DragContainer::rise()
 	{
-		if(m_parent)
-		{
-			children_list& children = m_parent->getChildren();
-			child_iter it = std::find_if(children.begin(), children.end(), seeker(this));
-			if(it != children.end())
-			{
-				children.splice(children.end(), children, it);
-			}
-		}
+		if (!m_parent) return;
+
+		children_t& children = m_parent->getChildren();
+		child_iter it = std::find(children.begin(), children.end(), ptr());
+		if (it == children.end()) return;
+
+		auto temp = *it;
+		children.erase(it);
+		children.push_back(temp);
 	}
-
-
+	
 	void DragContainer::update(WindowBase* target, const point& pt)
 	{
 		m_dropTarget = target;

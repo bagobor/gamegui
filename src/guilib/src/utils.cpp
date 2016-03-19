@@ -44,23 +44,20 @@ namespace gui
 
 	bool StringToBool(const std::string& str)
 	{
+		if (str.empty()) return false;
 		if (str.size() == 1) {
-			const char c = *str.begin();
-			if (c == '1') return true;
-			if (c == '0') return false;
+			return (str.front() == '1');
 		}
 
 		// length of "true" is 4
 		static const std::string true_str = "true";
-		if (str.size() == 4) {
-			for (size_t i = 0; i < true_str.length(); ++i)
-			{
-				if (tolower(str[i]) != true_str[i]) return false;
-			}
-			return true;
-		}
+		if (str.size() != true_str.size()) return false;
 
-		return false;
+		for (size_t i = 0; i < true_str.size(); ++i)
+		{
+			if (tolower(str[i]) != true_str[i]) return false;
+		}
+		return true;
 	}
 
 	const std::string& BoolToString(bool val)
@@ -91,7 +88,6 @@ namespace gui
 		float w = 0;
 		float h = 0;
 		sscanf(str.c_str(), "%f %f %f %f", &x, &y, &w, &h);
-
 		return Rect(point(x, y), Size(w, h));
 	}
 
@@ -102,7 +98,6 @@ namespace gui
 		float w = 0;
 		float h = 0;
 		sscanf(str.c_str(), "%f %f %f %f", &x, &y, &w, &h);
-
 		return Rect(x, y, w, h);
 	}
 
@@ -162,16 +157,15 @@ namespace gui
 	}
 
 	unsigned int StringToAlignment(const std::string& str)
-	{
-		unsigned int a = 0;
+	{		
 		if (str.empty()) return 0;
 
 		auto tokens = tokenize<char>(", |", str);
 
+		unsigned int a = 0;
 		for (auto token : tokens) {
 			a |= StringToAlign(token);
 		}
-
 		return a;
 	}
 
@@ -181,14 +175,14 @@ namespace gui
 
 		for(unsigned int i = 0; i < 8; i++)
 		{
-			unsigned int a = (1 << i) & val;
-			if(i > 0)
-				out += " | ";
-			out += AlignToString((Align)a);
+			Align a = static_cast<Align>((1 << i) & val);
+			if(i > 0) out += " | ";
+			out += AlignToString(a);
 		}
 
 		return out;
 	}
+
 	Color StringToColor(const std::string& str)
 	{
 		float r = 0.f;
@@ -204,7 +198,6 @@ namespace gui
 	{
 		char buff[128] = {0};
 		_snprintf(buff, sizeof (buff), "%f %f %f %f", val.getRed(), val.getGreen(), val.getBlue(), val.getAlpha());
-
 		return std::string(buff);
 	}
 
@@ -213,7 +206,6 @@ namespace gui
 		unsigned int val = (unsigned int)-1;
 		sscanf(str.c_str(), "%8x", &val);
 		val |= 0xFF000000; // ensure alpha is 1
-
 		return Color(val);
 	}
 
@@ -221,7 +213,6 @@ namespace gui
 	{
 		char buff[128] = {0};
 		_snprintf(buff, sizeof (buff), "%08x", val.getARGB());
-
 		return std::string(buff);
 	}
 }

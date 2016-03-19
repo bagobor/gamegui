@@ -4,7 +4,7 @@
 namespace gui
 {
 //!< 32 bit ARGB representation of a Color.
-typedef unsigned int argb_t;    
+typedef uint32_t argb_t;
 
 /*!
 \brief

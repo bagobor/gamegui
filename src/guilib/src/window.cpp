@@ -12,7 +12,6 @@ namespace gui
 {
 
 WindowBase::WindowBase(System& sys, const std::string& name) : 
-	m_strName(name),
 	m_system(sys),
 	m_visible(true),
 	m_enabled(true),
@@ -35,28 +34,85 @@ WindowBase::WindowBase(System& sys, const std::string& name) :
 	m_afterRenderCallback(nullptr),
 	m_suspended(false),
 	m_disableRise(false),
-	ScriptObject<WindowBase>(sys.getScriptSystem())
+	ScriptObject<WindowBase>(sys.getScriptSystem()),
+	TreeNode<WindowBase>(name)
 {
 	m_backColor = Color(1.f, 1.f, 1.f);
 	m_foreColor = Color(0.f, 0.f, 0.f);
 }
 
 
+struct topmost_ {
+	bool operator()(WindowBase::node_ptr obj)
+	{
+		return obj->getAlwaysOnTop();
+	}
+};
+struct ntopmost_ {
+	bool operator()(WindowBase::node_ptr obj)
+	{
+		return !obj->getAlwaysOnTop();
+	}
+};
+
+void WindowBase::bringToBack(WindowBase* child)
+{
+	if (m_children.size() <= 1 || !child || child->getAlwaysOnTop())
+		return;
+
+	child_iter it = std::find(m_children.begin(), m_children.end(), child->ptr());
+	if (it == m_children.end()) return;
+
+	auto temp = child->ptr();
+	m_children.erase(it);
+	m_children.push_front(temp);
+}
+
+void WindowBase::moveToFront(WindowBase* child)
+{
+	if (m_children.size() <= 1 || !child) return;
+
+	child_iter it = std::find(m_children.begin(), m_children.end(), child->ptr());
+	if (it == m_children.end()) return;
+
+	auto temp = child->ptr();
+	m_children.erase(it);
+
+	if (child->getAlwaysOnTop())
+	{
+		m_children.push_back(temp);
+	}
+	else
+	{
+		child_iter topmost = std::find_if(m_children.begin(), m_children.end(), topmost_());
+		m_children.insert(topmost, temp);
+	}
+}
+
+
+void WindowBase::rise()
+{
+	if (getDisableRise() || !m_parent) return;
+	m_parent->rise();
+}
+
+
+void WindowBase::moveToFront()
+{
+	if (m_parent)
+		m_parent->moveToFront(this);
+}
+
+void WindowBase::bringToBack()
+{
+	if (m_parent)
+		m_parent->bringToBack(this);
+}
+
 WindowBase::~WindowBase()
 {
 	m_system.getRenderer().clearCache(this);
 }
-
-std::string const& WindowBase::getName() const
-{
-	return m_strName;
-}
-
-void WindowBase::setName(const std::string& name)
-{
-	m_strName = name;
-}
-
 
 void WindowBase::setArea(const Rect& rc) 
 { 
@@ -67,24 +123,22 @@ void WindowBase::setArea(const Rect& rc)
 
 void WindowBase::setPosition(const point& pt) 
 {
-	if(pt != m_area.getPosition())
-	{
-		invalidate();
-		m_area.setPosition(pt);
-		onMoved();
-		send(events::MovedEvent());
-	}
+	if (pt == m_area.getPosition()) return;
+
+	invalidate();
+	m_area.setPosition(pt);
+	onMoved();
+	send(events::MovedEvent());
 }
 
 void WindowBase::setSize(const Size& sz) 
 {
-	if(sz != m_area.getSize())
-	{
-		invalidate();
-		m_area.setSize(sz);
-		onSized();
-		send(events::SizedEvent());
-	}
+	if (sz == m_area.getSize()) return;
+
+	invalidate();
+	m_area.setSize(sz);
+	onSized();
+	send(events::SizedEvent());
 }
 
 bool WindowBase::isCursorInside() const {
@@ -130,94 +184,6 @@ bool WindowBase::hitTest(const point& pt)
 	return false;
 }
 
-void WindowBase::rise()
-{
-	if (getDisableRise()) return;
-	
-	if(m_parent)
-	{
-		m_parent->rise();
-	}
-}
-
-namespace
-{
-	struct seeker
-	{
-		const WindowBase* m_ptr;
-		seeker(const WindowBase* ptr) : m_ptr(ptr){}
-		bool operator()(window_ptr obj) 
-		{
-			return obj ? (obj.get() == m_ptr) : false;
-		}
-	};
-}
-
-struct topmost_{
-	bool operator()(WindowBase::node_ptr obj)
-	{
-		return obj->getAlwaysOnTop();
-	}
-};
-struct ntopmost_{
-	bool operator()(WindowBase::node_ptr obj)
-	{
-		return !obj->getAlwaysOnTop();
-	}
-};
-
-void WindowBase::moveToFront(WindowBase* child)
-{
-	if(m_children.size() <= 1)
-		return;
-
-	child_iter it = std::find_if(m_children.begin(), m_children.end(), seeker(child));
-	if(it != m_children.end())
-	{
-		if(child->getAlwaysOnTop())
-		{
-			m_children.splice(m_children.end(), m_children, it);
-		}
-		else
-		{
-			child_iter topmost = std::find_if(m_children.begin(), m_children.end(), topmost_());
-			m_children.splice(topmost, m_children, it);
-		}
-	}
-}
-
-void WindowBase::bringToBack(WindowBase* child)
-{
-	if(m_children.size() <= 1)
-		return;
-
-	child_iter it = std::find_if(m_children.begin(), m_children.end(), seeker(child));
-	if(it != m_children.end())
-	{
-		if(child->getAlwaysOnTop())
-		{
-			child_iter topmost = std::find_if(m_children.begin(), m_children.end(), ntopmost_());
-			m_children.splice(topmost, m_children, it);
-		}
-		else
-		{
-			m_children.splice(m_children.begin(), m_children, it);
-		}
-	}
-}
-
-void WindowBase::moveToFront()
-{
-	if(m_parent)
-		m_parent->moveToFront(this);	
-}
-
-void WindowBase::bringToBack()
-{
-	if(m_parent)
-		m_parent->bringToBack(this);
-}
-
 WindowBase* WindowBase::findChildWindow(const std::string& name)
 {
 	window_ptr p = find(name);
@@ -248,14 +214,12 @@ void WindowBase::callHandler(EventArgs* arg)
 
 void WindowBase::executeScript(const std::string& env, const std::string& script)
 {
-	if(!m_system.getScriptSystem().ExecuteString(script, this, env))
-	{
-		std::string err = m_system.getScriptSystem().GetLastError();
-		m_system.logEvent(log::error, std::string("Unable to execute Lua handler '")+ env + std::string("' in object ") + getName());
-		m_system.logEvent(log::error, err);
-	}
-}
+	if (m_system.getScriptSystem().ExecuteString(script, this, env)) return;
 
+	std::string err = m_system.getScriptSystem().GetLastError();
+	m_system.logEvent(log::error, std::string("Unable to execute Lua handler '")+ env + std::string("' in object ") + getName());
+	m_system.logEvent(log::error, err);
+}
 
 bool WindowBase::onMouseEnter(void)
 {
@@ -777,51 +741,12 @@ point WindowBase::transformToRootCoord(const point& local)
 	return out;
 }
 
-WindowBase* WindowBase::nextSibling()
-{
-	if (!m_parent) return this;
-	
-	children_list& list = m_parent->getChildren();
-	if(list.size() <= 1)
-		return this;
-	child_iter it = std::find_if(list.begin(), list.end(), seeker(this));
-	if(it == list.end())
-	{
-		assert(false && "Link to parent is invalid!");
-	}
-	return (++it != list.end()) ? (*it).get() : (*list.begin()).get();
-}
-
-WindowBase* WindowBase::prevSibling()
-{
-	if (!m_parent) return this;
-	
-	children_list& list = m_parent->getChildren();
-	if(list.size() <= 1)
-		return this;
-	child_iter it = std::find_if(list.begin(), list.end(), seeker(this));
-	if(it == list.end())
-	{
-		assert(false && "Link to parent is invalid!");
-	}
-	if(it == list.begin())
-		return (*list.rbegin()).get();
-	--it;
-	return (*it).get();
-}
-
-//void WindowBase::thisset()
-//{
-//	if(m_system.getScriptSystem().LuaState())
-//		luabind::globals(m_system.getScriptSystem().LuaState())["this"] = this;
-//}
-
 void WindowBase::subscribeNamedEvent(std::string name, WindowBase* sender, luabind::object script_callback)
 {
 	//if (!script_callback) return;
 	//luabind::call_function<void>(std::ref(script_callback));
 	//	return; //nothing to do!
-//http://stackoverflow.com/questions/11529883/callback-to-lua-member-function/11529955#11529955
+	// http://stackoverflow.com/questions/11529883/callback-to-lua-member-function/11529955#11529955
 	if (name.empty()) return;
 
 	NamedEventEntry entry = std::make_pair(name, sender);		
