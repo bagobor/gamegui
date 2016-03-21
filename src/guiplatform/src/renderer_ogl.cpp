@@ -537,7 +537,9 @@ namespace gui
 		
 			m_shader->begin();
 			{
-				glm::vec2 viewport_size(1024, 768);
+
+				auto vp = getViewport();
+				glm::vec2 viewport_size = { vp.w,vp.h };
 				m_shader->set("v_viewportSize", viewport_size);
 				m_shader->set("Texture0", (TextureOGL*)texture);
 
@@ -589,6 +591,10 @@ namespace gui
 
 			float scaleX = scale.width;
 			float scaleY = scale.height;
+
+			auto vp = getViewport();
+			glm::vec2 viewport_size = { vp.w,vp.h };
+
 			//if(m_autoScale)
 			//{
 			//	Size& viewport = getViewportSize();
@@ -640,7 +646,7 @@ namespace gui
 				
 				m_mesh->update_vb(sizeof(QuadVertex)* 4 * numQ, buffmem, true);				
 
-				m_shader->set("v_viewportSize", glm::vec2(1024, 768));				
+				m_shader->set("v_viewportSize", viewport_size);
 
 				m_mesh->bind();
 				
