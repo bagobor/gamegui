@@ -5,16 +5,16 @@
 		<Visible>true</Visible>
 		<Formatting>Centred</Formatting>
 		<Title />		
-		<Caption Imageset="skin">
+		<Caption>
 			<Left Image="TitlebarLeft" />
 			<Right Image="TitlebarRight" />
 			<Background Image="TitlebarMiddle" />
 		</Caption>
-		<FrameImagery Imageset="skin">
+		<FrameImagery>
 			<Background Image="Background" />
-			<Top Image="FrameTop" />
-			<TopLeft Image="FrameTopLeft" />
-			<TopRight Image="FrameTopRight" />
+			<Top Image="" />
+			<TopLeft Image="" />
+			<TopRight Image="" />
 			<Left Image="FrameLeft" />
 			<Right Image="FrameRight" />
 			<BottomLeft Image="FrameBottomLeft" />

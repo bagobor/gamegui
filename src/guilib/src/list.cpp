@@ -255,7 +255,7 @@ namespace gui
 		xml::node frame = node("SelectImagery");
 		if(!frame.empty())
 		{
-			m_imgset = m_system.getWindowManager().loadImageset(frame["Imageset"].value());
+			m_imgset = m_system.getWindowManager().loadImageset(frame["imageset"].value());
 			if(m_imgset)
 			{
 				const Imageset& set = *m_imgset;
@@ -372,7 +372,7 @@ namespace gui
 		xml::node frame = node("Folding");
 		if(!frame.empty())
 		{
-			std::string setname = frame["Imageset"].value();
+			std::string setname = frame["imageset"].value();
 			m_imgset = m_system.getWindowManager().loadImageset(setname);
 			if(m_imgset)
 			{

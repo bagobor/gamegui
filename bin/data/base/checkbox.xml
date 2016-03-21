@@ -7,7 +7,7 @@
 		<Text></Text>
 		<TabStop>true</TabStop>
         <Size>100 12</Size>
-		<StateImagery Imageset="skin">
+		<StateImagery imageset="skin">
 			<Checked Image="CheckboxChecked" />
 			<Unchecked Image="CheckboxUnchecked" />
 			<CheckedHovered Image="CheckboxCheckedHovered" />

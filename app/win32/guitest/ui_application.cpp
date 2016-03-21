@@ -114,9 +114,7 @@ bool ApplicationGUI::isFinished()
 void ApplicationGUI::onWindowSize(int w, int h) {
 	BaseApplicationGLFW::onWindowSize(w, h);
 
-	gui::RenderDevice::ViewPort vp = {
-		0,0,w,h
-	};
+	gui::RenderDevice::ViewPort vp = {0, 0, w, h};
 
 	if (m_render_device) {
 		m_render_device->setViewport(vp);

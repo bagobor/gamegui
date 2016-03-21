@@ -128,7 +128,7 @@ namespace gui
 		xml::node state = node("StateImagery");
 		if(!state.empty())
 		{
-			std::string setname = state["Imageset"].value();
+			std::string setname = state["imageset"].value();
 			m_imgset = m_system.getWindowManager().loadImageset(setname);			
 			if(m_imgset)
 			{

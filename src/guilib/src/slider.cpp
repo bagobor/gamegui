@@ -340,7 +340,7 @@ namespace gui
 		xml::node frame = node("Frame");
 		if(!frame.empty())
 		{
-			std::string setname = frame["Imageset"].value();
+			std::string setname = frame["imageset"].value();
 			m_imgset = m_system.getWindowManager().loadImageset(setname);
 			if(m_imgset)
 			{

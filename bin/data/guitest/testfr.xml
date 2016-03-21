@@ -1,66 +1,7 @@
 <?xml version="1.0" ?>
     <FrameWindow name="TestWindow" file="base\framewindow.xml" >
       <Properties>
-        <Area>0 0 256 178</Area>
+        <Area>10 10 256 178</Area>
         <Title>Caption</Title>
       </Properties>
-      <Children>
-        <Panel name="TestSubWindow" file="base\panel.xml" >
-          <Properties>
-            <Area>10 20 236 184</Area>
-          </Properties>
-          <Children>
-            <Editbox name="TestSubEditWindow" file="base\editbox.xml" >
-              <Properties>
-                <Area>4 4 232 20</Area>
-                <MaxLength>1024</MaxLength>
-                <Text>This is a text</Text>
-              </Properties>
-            </Editbox>
-            <Editbox name="TestSubEdit2Window" file="base\editbox.xml" >
-              <Properties>
-                <Area>4 80 232 31</Area>
-                <MaxLength>1024</MaxLength>
-                <Text>Text2</Text>
-              </Properties>
-            </Editbox>
-            <Label name="TestSubStaticWindow" file="base\label.xml" >
-              <Properties>
-                <Area>4 28 232 20</Area>
-                <Text>Before click</Text>
-              </Properties>
-            </Label>
-            <Button name="TestSubButtonWindow" file="base\Button.xml" >
-              <Properties>
-                <Area>4 55 232 20</Area>
-                <Text>Click me</Text>
-              </Properties>
-              <Events>
-                <On_Clicked>--TestFrame.OnLoad(this);</On_Clicked>
-              </Events>
-            </Button>
-            <Checkbox name="checkTest" file="base\checkbox.xml">
-              <Properties>
-                <Area>4 115 232 12</Area>
-                <Text>Hello world2!</Text>
-              </Properties>
-            </Checkbox>
-          </Children>
-          <Events>
-            <On_MouseButton>--TestFrame.OnLoad(this);</On_MouseButton>
-          </Events>
-        </Panel>
-      </Children>
-      <Events>
-        <On_Load>
-          log:msg("On load test")
-          log:msg(this:getName())
-          --On_Load(this);
-          --local obj = TestFrame();--:OnLoad(self);
-          --TestFrame.OnLoad(this);
-          --On_Load(this);
-          log:msg("window name is " .. this.name);
-
-        </On_Load>
-      </Events>
     </FrameWindow>

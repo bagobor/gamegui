@@ -8,7 +8,7 @@
         <TabStop>true</TabStop>
         <Size>70 28</Size>
         <Backcolor>0.7 0.7 0.7 1</Backcolor>
-        <FrameImagery Imageset="skin">
+        <FrameImagery imageset="skin">
             <State Type="Normal">
                 <Background Image="ButtonMiddleNormal" />
                 <Left Image="ButtonLeftNormal" />

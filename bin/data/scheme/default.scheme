@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<Scheme Name="Well">
-	<DefaultImageset file="main_default.imageset" />
-	<DefaultFont file="Default.font" />	
+<Scheme Name="default-ui">
+	<DefaultImageset file="skin.imageset" />
+	<DefaultFont file="default.font" />	
 </Scheme>

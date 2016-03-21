@@ -8,7 +8,7 @@
 		<TabStop>true</TabStop>
 		<ReadOnly>true</ReadOnly>
 		<Text />
-		<FrameImagery Imageset="skin">
+		<FrameImagery imageset="skin">
 			<Left Image="EditboxLeft" />
 			<Right Image="EditboxRight" />
 			<Background Image="EditboxMiddle" />
@@ -24,7 +24,7 @@
 				<TabStop>true</TabStop>
 				<Align>right|bottom</Align>
 				<Stick>right|bottom</Stick>
-				<StateImagery Imageset="skin">
+				<StateImagery imageset="skin">
 					<State Type="Normal" Image="VScrollDownNormal" />
 					<State Type="Hovered" Image="VScrollDownHovered" />
 					<State Type="Pushed" Image="VScrollDownPushed" />

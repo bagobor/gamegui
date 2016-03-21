@@ -4,7 +4,7 @@
 		<Font>Default</Font>
 		<Visible>true</Visible>
 		<Text>Uninitialized key bind!</Text>
-		<FrameImagery Imageset="skin">
+		<FrameImagery imageset="skin">
 			<Left Image="EditboxLeft" />
 			<Right Image="EditboxRight" />
 			<Background Image="EditboxMiddle" />

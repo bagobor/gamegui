@@ -25,7 +25,7 @@ std::vector<std::basic_string<Ch> > tokenize(const std::basic_string<Ch>& delim,
 		size_t start = src.find_first_not_of(delim, end);
 		end = src.find_first_of(delim, start);
 
-		if (start = std::string::npos) continue;
+		if (start == std::string::npos) continue;
 
 		size_t end_pos = end == std::string::npos ? end : end - start;
 		out_tokens.push_back(src.substr(start, end_pos));

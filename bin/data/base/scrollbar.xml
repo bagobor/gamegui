@@ -6,7 +6,7 @@
 		<Horizontal>false</Horizontal>
 		<Size>19 48</Size>
 		<Step>0.1</Step>
-		<Frame Imageset="skin">
+		<Frame imageset="skin">
 			<Left Image="VScrollLeft" />
 			<Right Image="VScrollRight" />
 			<Background Image="VScrollFill" />
@@ -29,7 +29,7 @@
 				<TabStop>false</TabStop>
 				<Align>bottom | hcenter</Align>
 				<Stick>bottom | hcenter</Stick>
-				<StateImagery Imageset="skin">
+				<StateImagery imageset="skin">
 					<State Type="Normal" Image="VScrollDownNormal" />
 					<State Type="Hovered" Image="VScrollDownHovered" />
 					<State Type="Pushed" Image="VScrollDownPushed" />
@@ -44,7 +44,7 @@
 				<TabStop>false</TabStop>
 				<Align>top | hcenter</Align>
 				<Stick>top | hcenter</Stick>
-				<StateImagery Imageset="skin">
+				<StateImagery imageset="skin">
 					<State Type="Normal" Image="VScrollUpNormal" />
 					<State Type="Hovered" Image="VScrollUpHovered" />
 					<State Type="Pushed" Image="VScrollUpPushed" />

@@ -653,68 +653,63 @@ void WindowBase::callAfterRenderCallback(const Rect& dest, const Rect& clip)
 
 void WindowBase::draw(const point& offset, const Rect& clip)
 {
-	if(m_visible)
+	if (!m_visible || m_area.getWidth() < 1.f)
+		return;
+
+	Rect destrect(m_area);
+	destrect.offset(offset);
+	Rect cliprect(destrect);
+	cliprect = cliprect.getIntersection(clip);
+
+	//if (m_invalidated)
 	{
-		if(m_area.getWidth() < 1.f)
-			return;
-
-		Rect destrect(m_area);
-		destrect.offset(offset);
-		Rect cliprect(destrect);
-		cliprect = cliprect.getIntersection(clip);
-
-		//if (m_invalidated)
-		{
-			m_system.getRenderer().startCaptureForCache(this);
+		m_system.getRenderer().startCaptureForCache(this);
 
 
-			render(destrect, cliprect); // render self first
-			m_system.getRenderer().endCaptureForCache(this);		
-			m_invalidated = false;
-		}
-		//else 
-		//{
-		//	//if (!m_system.getRenderer().isExistInCache(this))
-		//	//{
-		//	//	m_system.getRenderer().startCaptureForCache(this);			
-		//	//	if(m_customDraw && !m_drawhandler.empty())
-		//	//	{
-		//	//		EventArgs a;
-		//	//		a.name = "On_Draw";
-		//	//		luabind::globals (m_system.getScriptSystem().LuaState())["eventArgs"] = &a;
-		//	//		ExecuteScript(a.name, m_drawhandler);
-		//	//		luabind::globals (m_system.getScriptSystem().LuaState())["eventArgs"] = 0;
-		//	//	}
+		render(destrect, cliprect); // render self first
+		m_system.getRenderer().endCaptureForCache(this);		
+		m_invalidated = false;
+	}
+	//else 
+	//{
+	//	//if (!m_system.getRenderer().isExistInCache(this))
+	//	//{
+	//	//	m_system.getRenderer().startCaptureForCache(this);			
+	//	//	if(m_customDraw && !m_drawhandler.empty())
+	//	//	{
+	//	//		EventArgs a;
+	//	//		a.name = "On_Draw";
+	//	//		luabind::globals (m_system.getScriptSystem().LuaState())["eventArgs"] = &a;
+	//	//		ExecuteScript(a.name, m_drawhandler);
+	//	//		luabind::globals (m_system.getScriptSystem().LuaState())["eventArgs"] = 0;
+	//	//	}
 
-		//	//	render(destrect, cliprect); // render self first
-		//	//	m_system.getRenderer().endCaptureForCache(this);
-		//	//}
-		//	//else 
-		//		m_system.getRenderer().drawFromCache(this);
-		//}
+	//	//	render(destrect, cliprect); // render self first
+	//	//	m_system.getRenderer().endCaptureForCache(this);
+	//	//}
+	//	//else 
+	//		m_system.getRenderer().drawFromCache(this);
+	//}
 
-		child_iter i = m_children.begin();
-		child_iter end = m_children.end();
-		while(i != end)
-		{
-			(*i)->draw(destrect.getPosition(), cliprect);
-			++i;
-		}
+	auto pos = destrect.getPosition();
+	for (auto& child : m_children)
+	{
+		child->draw(pos, cliprect);
+	}
 
-		if (m_customDraw && !m_drawhandler.empty())
-		{
-			EventArgs a;
-			a.name = "On_Draw";
+	if (m_customDraw && !m_drawhandler.empty())
+	{
+		EventArgs a;
+		a.name = "On_Draw";
 
-			luabind::object globals = luabind::globals(m_system.getScriptSystem().getLuaState());
+		luabind::object globals = luabind::globals(m_system.getScriptSystem().getLuaState());
 
-			globals["eventArgs"] = &a;
-			executeScript(a.name, m_drawhandler);
-			globals["eventArgs"] = 0;
-		}
+		globals["eventArgs"] = &a;
+		executeScript(a.name, m_drawhandler);
+		globals["eventArgs"] = 0;
+	}
 
-		callAfterRenderCallback(destrect,cliprect);
-	}	
+	callAfterRenderCallback(destrect,cliprect);
 }
 
 point WindowBase::transformToWndCoord(const point& global) const

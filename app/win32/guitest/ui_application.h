@@ -26,7 +26,7 @@ public:
 
 	virtual bool isFinished();
 
-	bool isInitialized() { return m_system != 0; }
+	bool isInitialized() const { return m_system != 0; }
 
 	bool handleMouseMove(int x, int y);
 	bool handleMouseWheel(int diff);
@@ -46,8 +46,6 @@ public:
 protected:
 	virtual void onWindowSize(int w, int h);
 
-	//void reinit();
-	//void resize_scene(unsigned int width, unsigned int height);	
 	void update();
 	void render();
 

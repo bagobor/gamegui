@@ -2,7 +2,7 @@
 <StaticImage name="DragIcon" file="Base\StaticImage.xml">
     <!-- icon to charge cursor when dragging something -->
     <Properties>
-        <Imageset>Items</Imageset>
+        <imageset>Items</imageset>
         <Image></Image>
         <Size>32 32</Size>
         <Visible>false</Visible>

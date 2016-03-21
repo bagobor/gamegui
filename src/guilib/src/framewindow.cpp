@@ -50,37 +50,37 @@ namespace gui
 
 	bool FrameWindow::onMouseMove(void)
 	{
-		if(m_tracking)
+		if (!m_tracking) return false;
+
+		point pt = transformToWndCoord(m_system.getCursor().getPosition());
+		point newpos = pt - m_offset;
+
+		Rect testarea(m_area);
+		testarea.setPosition(newpos);
+
+		if (m_clampToScreen && m_parent)
 		{
-			point pt = transformToWndCoord(m_system.getCursor().getPosition());
-			point newpos = pt - m_offset;
+			Size me = m_area.getSize();
+			Size max = m_parent->getSize();
+			if (testarea.m_left < 0.f)
+				testarea.m_left = 0.f;
+			if (testarea.m_top < 0.f)
+				testarea.m_top = 0.f;
+			if (testarea.m_right > max.width)
+				testarea.m_left = max.width - me.width;
+			if (testarea.m_bottom > max.height)
+				testarea.m_top = max.height - me.height;
 
-			Rect testarea(m_area);
-			testarea.setPosition(newpos);
-
-			if(m_clampToScreen && m_parent)
-			{
-				Size me = m_area.getSize();
-				Size max = m_parent->getSize();
-				if(testarea.m_left < 0.f)
-					testarea.m_left = 0.f;
-				if(testarea.m_top < 0.f)
-					testarea.m_top = 0.f;
-				if(testarea.m_right > max.width)
-					testarea.m_left = max.width - me.width;
-				if(testarea.m_bottom > max.height)
-					testarea.m_top = max.height - me.height;
-
-				testarea.setSize(me);
-			}
-			
-			setArea(testarea);
-
-			EventArgs a;
-			a.name = "On_Move";
-			callHandler(&a);
+			testarea.setSize(me);
 		}
-		return true;
+
+		setArea(testarea);
+
+		EventArgs a;
+		a.name = "On_Move";
+		callHandler(&a);
+
+		return false;
 	}
 
 	bool FrameWindow::onMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonState state)
@@ -220,7 +220,7 @@ namespace gui
 		xml::node frame = node("Caption");
 		if(!frame.empty())
 		{
-			std::string setname = frame["Imageset"].value();
+			std::string setname = frame["imageset"].value();
 			m_imgset = m_system.getWindowManager().loadImageset(setname);
 			if(m_imgset)
 			{

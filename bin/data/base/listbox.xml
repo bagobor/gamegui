@@ -4,7 +4,7 @@
 		<Font>Default</Font>
 		<Visible>true</Visible>
 		<HasFrame>true</HasFrame>
-		<FrameImagery Imageset="skin">
+		<FrameImagery imageset="skin">
 			<Background Image="WindowFill" />
 			<Top Image="WindowBorderTop" />
 			<TopLeft Image="WindowBorderTopLeft" />
@@ -15,7 +15,7 @@
 			<BottomRight Image="WindowBorderBottomRight" />
 			<Bottom Image="WindowBorderBottom" />
 		</FrameImagery>
-		<SelectImagery Imageset="skin" Image="TextSelectionBrush" />	
+		<SelectImagery imageset="skin" Image="TextSelectionBrush" />	
 	</Properties>
 	<Events />
 </ListBox>

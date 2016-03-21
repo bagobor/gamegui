@@ -4,25 +4,11 @@
 		<Visible>true</Visible>
 		<TabStop>false</TabStop>
 		<Horizontal>false</Horizontal>
-		<Text></Text>		
-		<FrameImagery Imageset="skin">
-			<State Type="Normal">
-				<Background Image="VScrollThumbFillNormal" />
-				<Left Image="VScrollThumbTopNormal" />
-				<Right Image="VScrollThumbBottomNormal" />
-			</State>
-			<State Type="Hovered">
-				<Background Image="VScrollThumbFillHovered" />
-				<Left Image="VScrollThumbTopHovered" />
-				<Right Image="VScrollThumbBottomHovered" />
-			</State>
-			<State Type="Pushed">
-				<Background Image="VScrollThumbFillPushed" />
-				<Left Image="VScrollThumbTopPushed" />
-				<Right Image="VScrollThumbBottomPushed" />
-			</State>
-		</FrameImagery>
+		<States imageset="skin">
+			<Normal Background="VScrollThumbFillNormal" Left="VScrollThumbTopNormal" Right="VScrollThumbBottomNormal"/>
+			<Hovered Background="VScrollThumbFillHovered" Left="VScrollThumbTopHovered" Right="VScrollThumbBottomHovered"/>
+			<Pushed Background="VScrollThumbFillPushed" Left="VScrollThumbTopPushed" Right="VScrollThumbBottomPushed"/>
+		</States>
 	</Properties>
-	<Children />
 	<Events />
 </ScrollThumb >

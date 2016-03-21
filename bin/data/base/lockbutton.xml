@@ -4,17 +4,16 @@
 		<Visible>true</Visible>
 		<TabStop>false</TabStop>
         <Size>13 11</Size>
-		<StateImagery Imageset="skin">
-			<State Type="Normal" Image="UnlockNormal" />
-			<State Type="Hovered" Image="UnlockHovered" />
-			<State Type="Pushed" Image="UnlockPushed" />
-		</StateImagery>
+		<States>
+			<Normal image="UnlockNormal"/>
+			<Hovered image="UnlockHovered"/>
+			<Pushed image="UnlockPushed"/>
+		</States>
 	</Properties>
-	<Children />
 	<Events>
         <On_Clicked>
             local fw = to_framewindow(this.parent)
             fw.movable = not fw.movable
         </On_Clicked>
     </Events>
-</ImageButton >
+</ImageButton>

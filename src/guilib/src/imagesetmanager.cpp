@@ -15,7 +15,7 @@ namespace gui
 		m_data.swap(data);
 	}
 
-	Image::Image() : m_parent(0)
+	Image::Image() : m_parent(NULL)
 	{
 	}
 
@@ -74,7 +74,7 @@ namespace gui
 			if(!texsnode)
 			{
 				sys.logEvent(log::warning, std::string("The imageset ")
-					+ name + " doesn't have any texture information. Imageset is unaffected");
+					+ name + " doesn't have any texture information. imageset is unaffected");
 				return false;
 			}
 
@@ -82,7 +82,7 @@ namespace gui
 			if(!imgsnode)
 			{
 				sys.logEvent(log::warning, std::string("The imageset ")
-					+ name + " doesn't have any image information. Imageset is unaffected");
+					+ name + " doesn't have any image information. imageset is unaffected");
 				return false;
 			}
 
@@ -137,8 +137,8 @@ namespace gui
 					{
 						if (std::string(rectnode.name()) != "Rect") continue;
 						
-						std::string texname = rectnode["Texture"].value();
-						TextureOrdinals::iterator it = textureOrdinals.find(texname);
+						std::string texname = rectnode["texture"].value();
+						TextureOrdinals::iterator it = texname.empty() ? textureOrdinals.begin() : textureOrdinals.find(texname);
 						if (it == textureOrdinals.end()) {
 							sys.logEvent(log::warning, std::string("The imageset ")
 								+ name + " can't find texture '" + texname + "' for the image '"
@@ -149,20 +149,20 @@ namespace gui
 						SubImage sub;
 						sub.m_ordinal = it->second;
 
-						sub.m_src.m_left = rectnode["SrcLeft"].as_float();
-						sub.m_src.m_top = rectnode["SrcTop"].as_float();
-						sub.m_src.m_right = rectnode["SrcRight"].as_float();
-						sub.m_src.m_bottom = rectnode["SrcBottom"].as_float();
+						sub.m_src.m_left = rectnode["left"].as_int();
+						sub.m_src.m_top = rectnode["top"].as_int();
+						sub.m_src.m_right = rectnode["right"].as_int();
+						sub.m_src.m_bottom = rectnode["bottom"].as_int();
 
-						sub.m_offset.x = rectnode["x"].as_float();
-						sub.m_offset.y = rectnode["y"].as_float();
+						sub.m_offset.x = rectnode["x"].as_int();
+						sub.m_offset.y = rectnode["y"].as_int();
 
 						if (!rectnode["CropLeft"].empty())
 						{
-							float cropx = rectnode["CropLeft"].as_float();
-							float cropy = rectnode["CropTop"].as_float();
-							float w = rectnode["OrigWidth"].as_float();
-							float h = rectnode["OrigHeight"].as_float();
+							float cropx = rectnode["CropLeft"].as_int();
+							float cropy = rectnode["CropTop"].as_int();
+							float w = rectnode["OrigWidth"].as_int();
+							float h = rectnode["OrigHeight"].as_int();
 							sub.m_crop = Rect(point(cropx, cropy), Size(w, h));
 						}
 						subImages.push_back(sub);
@@ -208,41 +208,37 @@ namespace gui
 		return 0;
 	}
 
-	ImagesetPtr ImagesetManager::MakeEmpty(System& sys, const std::string& name)
+	ImagesetPtr ImagesetManager::createEmpty(System& sys, const std::string& name)
 	{
-		return Produce(sys, name, 0);
+		return Produce(sys, name, xml::node());
 	}
 
-	ImagesetPtr ImagesetManager::Make(System& sys, xml::node* imgset)
+	ImagesetPtr ImagesetManager::create(System& sys, xml::node& imgset)
 	{
-		if(imgset)
-		{
-			std::string name = (*imgset)["id"].value();
-			return Produce(sys, name, imgset);
-		}
-		return ImagesetPtr();
+		std::string name = imgset["id"].value();
+		return Produce(sys, name, imgset);
 	}
 
-	ImagesetPtr ImagesetManager::Produce(System& sys, const std::string& name, xml::node* imgset)
+	ImagesetPtr ImagesetManager::Produce(System& sys, const std::string& name, xml::node& imgset)
 	{
 		ImagesetPtr retval;
-		if(name.size())
-		{
-			ImagesetRegistry::iterator it = m_registry.find(name);
-			if(it == m_registry.end())
-			{
-				retval.reset(new Imageset(sys, name, imgset));
-				ImagesetWeakPtr weak = retval;
-				m_registry.insert(std::make_pair(name, weak));
-				return retval;
-			}
+		if (name.empty()) return retval;
 
-			ImagesetWeakPtr& weak = it->second;
-			if(retval = weak.lock())
-				return retval;
-			retval.reset(new Imageset(sys, name, imgset));
-			weak = retval;
+		ImagesetRegistry::iterator it = m_registry.find(name);
+		if(it == m_registry.end())
+		{
+			retval.reset(new Imageset(sys, name, &imgset));
+			ImagesetWeakPtr weak = retval;
+			m_registry.insert(std::make_pair(name, weak));
+			return retval;
 		}
+
+		ImagesetWeakPtr& weak = it->second;
+		if(retval = weak.lock())
+			return retval;
+		retval.reset(new Imageset(sys, name, &imgset));
+		weak = retval;
+
 		return retval;
 	}
 

@@ -2,19 +2,17 @@
 <ImageButton name ="" file="" > 
 	<Properties>
 		<Visible>true</Visible>
-    <Text></Text>
 		<TabStop>false</TabStop> 
-    <Size>17 17</Size>
-    <Spacing>1.0</Spacing>
-    <Font>Default</Font>
-    <Formatting>Centred</Formatting>    
-		<StateImagery Imageset="skin">
-			<State Type="Normal" Image="CloseButtonHover" />
-			<State Type="Hovered" Image="CloseButton" />
-			<State Type="Pushed" Image="CloseButtonPushed" />
-		</StateImagery>
+    	<Size>17 17</Size>
+    	<Spacing>1.0</Spacing>
+    	<Font>Default</Font>
+    	<Formatting>Centred</Formatting>    
+		<States>
+			<Normal image="CloseButtonHover" />
+			<Hovered image="CloseButton" />
+			<Pushed image="CloseButtonPushed" />
+		</States>
 	</Properties>
-	<Children /> 
 	<Events>
         <On_Clicked>this.parent.visible = false</On_Clicked>
     </Events>

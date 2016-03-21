@@ -110,7 +110,7 @@ void FreeTypeFont::rasterize (utf32 start_codepoint, utf32 end_codepoint)
     CodepointMap::iterator e = m_cp_map.upper_bound (end_codepoint);
     while (true)
     {
-        // Create a new Imageset for glyphs
+        // Create a new imageset for glyphs
         unsigned int texsize = getTextureSize (s, e);
         // If all glyphs were already rendered, do nothing
         if (!texsize)

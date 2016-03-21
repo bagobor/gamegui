@@ -4,12 +4,10 @@
 		<Visible>true</Visible>
 		<TabStop>false</TabStop>
 		<Horizontal>true</Horizontal>
-		<StateImagery Imageset="skin">
-			<State Type="Normal" Image="VScrollThumbNormal" />
-			<State Type="Hovered" Image="VScrollThumbHovered" />
-			<State Type="Pushed" Image="VScrollThumbPushed" />
-		</StateImagery>
+		<States>
+			<Normal image="VScrollThumbNormal" />
+			<Hovered image="VScrollThumbHovered" />
+			<Pushed image="VScrollThumbPushed" />
+		</States>
 	</Properties>
-	<Children />
-	<Events />
 </Thumb >

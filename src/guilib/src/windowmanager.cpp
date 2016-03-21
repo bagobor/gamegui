@@ -74,9 +74,11 @@ void WindowManager::reset(bool complete)
 		m_defaultFont.reset();
 		m_imagesetRegistry.clear();
 		m_fontRegistry.clear();
+		m_imagesetsManager.reset();
 	}
 	m_docCache.clear();
 	m_loadedLuaFiles.clear();
+	
 
 	m_system.logEvent(log::system, "Loading system defaults");
 	loadScheme(m_scheme);
@@ -134,10 +136,8 @@ ImagesetPtr WindowManager::loadImageset(const std::string& name)
 ImagesetPtr WindowManager::createImageset(const std::string& filename)
 {
 	ImagesetPtr retval;
-	//std::string path =  m_system.getRenderer().getResourcePath() + "imageset\\";
-	//std::string path = "imageset\\";
 	
-	std::string file = "imageset\\" + filename;
+	std::string file = "imageset/" + filename;
 
 	XmlDocumentPtr pdoc = loadCachedXml(file);
 	if(!pdoc)
@@ -145,7 +145,7 @@ ImagesetPtr WindowManager::createImageset(const std::string& filename)
 	xml::node imgsetnode = pdoc->child("Imageset");
 	if(!imgsetnode.empty())
 	{
-		retval = m_imgseManager.Make(m_system, &imgsetnode);
+		retval = m_imagesetsManager.create(m_system, imgsetnode);
 	}
 	
 	return retval;
@@ -182,7 +182,7 @@ FontPtr WindowManager::createFont(const std::string& filename)
 	//std::string path = m_system.getRenderer().getResourcePath();
 	//path += "font\\";
 
-	std::string file = "font\\" + filename;
+	std::string file = "font/"+ filename;
 
 	XmlDocumentPtr pdoc = loadCachedXml(file);
 	if(!pdoc)

@@ -169,26 +169,27 @@ void Button::init(xml::node& node)
 {
 	Label::init(node);
 
-	xml::node frame = node("FrameImagery");
-	if(!frame.empty())
-	{
-		std::string setname = frame["Imageset"].value();
-		m_imgset = m_system.getWindowManager().loadImageset(setname);			
-		if(m_imgset)
-		{
-			const Imageset& set = *m_imgset;
-			xml::node statenode = frame.first_child();
-			while(!statenode.empty())
-			{
-				States st = getStateByString(statenode["Type"].value());
-				StateImagery &s = m_states[st];
-				s.backImg = set[statenode("Background")["Image"].value()];
-				s.leftImg = set[statenode("Left")["Image"].value()];
-				s.rightImg = set[statenode("Right")["Image"].value()];
+	xml::node frame = node("States");
+	if (frame.empty()) return;
 
-				statenode = statenode.next_sibling();
-			}
-		}
+	std::string setname = frame["imageset"].value();
+	m_imgset = m_system.getWindowManager().loadImageset(setname);			
+	if (!m_imgset) return;
+
+	const Imageset& set = *m_imgset;
+	xml::node statenode = frame.first_child();
+
+	while(!statenode.empty())
+	{
+		std::string stateName = statenode.name();
+		States st = getStateByString(stateName);
+
+		StateImagery &s = m_states[st];
+		s.backImg = set[statenode["Background"].value()];
+		s.leftImg = set[statenode["Left"].value()];
+		s.rightImg = set[statenode["Right"].value()];
+
+		statenode = statenode.next_sibling();
 	}
 }
 
@@ -233,23 +234,21 @@ void ImageButton::init(xml::node& node)
 {
 	Label::init(node);
 
-	xml::node frame = node("StateImagery");
-	if(!frame.empty())
-	{
-		std::string setname = frame["Imageset"].value();
-		m_imgset = m_system.getWindowManager().loadImageset(setname);
-		if(m_imgset)
-		{
-			const Imageset& set = *m_imgset;
-			xml::node statenode = frame.first_child();
-			while(!statenode.empty())
-			{
-				States st = getStateByString(statenode["Type"].value());
-				m_stateimg[st] = set[statenode["Image"].value()];
+	xml::node frame = node("States");
+	if (frame.empty()) return;
 
-				statenode = statenode.next_sibling();
-			}
-		}
+	std::string setname = frame["imageset"].value();
+	m_imgset = m_system.getWindowManager().loadImageset(setname);
+	if (!m_imgset) return;
+
+	const Imageset& set = *m_imgset;
+	xml::node statenode = frame.first_child();
+	while(!statenode.empty())
+	{
+		States st = getStateByString(statenode.name());
+		m_stateimg[st] = set[statenode["image"].value()];
+
+		statenode = statenode.next_sibling();
 	}
 }
 

@@ -6,7 +6,7 @@
 		<Visible>true</Visible>
 		<TabStop>true</TabStop>
 		<Text />
-		<FrameImagery Imageset="skin">
+		<FrameImagery imageset="skin">
 			<Left Image="EditFrameLeft" />
 			<Right Image="EditFrameRight" />
 			<Background Image="EditFrameMiddle" />

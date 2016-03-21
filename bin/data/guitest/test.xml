@@ -14,42 +14,6 @@
 				</Panel>
 			</Children>
 		</FrameWindow>
-		<FrameWindow name="TestWindow2" file="guitest\testfr.xml" >
-			<Properties>
-					<Pos>256 0</Pos>
-					<Movable>false</Movable>
-					<ClampToScreen>false</ClampToScreen>
-			</Properties>
-		</FrameWindow>
-		<FrameWindow name="TestWindow3" file="guitest\testfr.xml" >
-			<Properties>
-                <DisableRise>true</DisableRise>
-				<Pos>512 10</Pos>
-				<Movable>false</Movable>
-				<ClampToScreen>false</ClampToScreen>
-			</Properties>
-		</FrameWindow>
-		<FrameWindow name="TestWindow4" file="guitest\testfr.xml" >
-			<Properties>
-					<Pos>0 128</Pos>
-					<Movable>false</Movable>
-					<ClampToScreen>false</ClampToScreen>
-			</Properties>
-		</FrameWindow>
-		<FrameWindow name="TestWindow5" file="guitest\testfr.xml" >
-			<Properties>
-					<Pos>256 128</Pos>
-					<Movable>false</Movable>
-					<ClampToScreen>false</ClampToScreen>
-			</Properties>
-		</FrameWindow>
-		<FrameWindow name="TestWindow6" file="guitest\testfr.xml" >
-			<Properties>
-					<Pos>512 128</Pos><Size>256 154</Size>
-					<Movable>false</Movable>
-					<ClampToScreen>false</ClampToScreen>
-			</Properties>
-		</FrameWindow>
 	</Children>
     <Events>
         <On_Init>
@@ -82,11 +46,6 @@
         	log:msg("TEST_EVENT TEST_EVENTTEST_EVENT TEST_EVENT");
         </TEST_EVENT>
         <On_Tick>
-        	local tickargs = to_tickargs(eventArgs);
-        	log:msg("ONLY ONCE :/");
-            --this.script_value = 5;
-            log:msg("SCRIPT VALUE: " .. this.script_value .. '  Ticks: ' .. tickargs.delta);
-        	this:stopTick();
         </On_Tick>
         <On_Draw> <!-- debug render of windget name on mouse hover -->
             --log:msg("On Root Render");

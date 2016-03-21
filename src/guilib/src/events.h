@@ -188,10 +188,6 @@ namespace gui
 
 		struct sender: public listener, public details::base_sender
 		{
-			//template<typename Event>
-			//void send_event(const Event& event) {
-			//	base_send(event);
-			//}
 		};
 	}
 }//gui

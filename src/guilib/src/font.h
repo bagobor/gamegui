@@ -19,7 +19,7 @@ namespace gui
 		FontGlyph (float advance) : m_image (0), m_advance (advance), m_isLoaded(false), m_xoffset(0.f), m_yoffset(0.f), m_rect(0.f, 0.f, 0.f, 0.f) {}    
 
 		const Image* getImage () const { return m_image; }
-		//const Imageset* getImageset () const { return m_image->getImageset (); }
+		//const imageset* getImageset () const { return m_image->getImageset (); }
 
 		void SetSize(float w, float h) {m_width = w; m_height = h;}
 

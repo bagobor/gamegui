@@ -40,9 +40,5 @@ namespace gui
 
 		FT_Face m_fontFace;
 		data_ptr m_font_data;
-/*
-		FT_Byte* m_fontData;
-		FT_Long m_fontSize;
-*/
 	};
 }

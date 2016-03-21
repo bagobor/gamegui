@@ -4,7 +4,7 @@
 		<Font>Default</Font>
 		<Visible>true</Visible>
 		<Indent>16</Indent>
-		<Folding Imageset="skin">
+		<Folding imageset="skin">
 			<Folded Image="PlusNormal" />
 			<Unfolded Image="MinusNormal" />
 		</Folding>	

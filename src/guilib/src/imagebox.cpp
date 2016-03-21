@@ -71,7 +71,7 @@ namespace gui
 	{
 		WindowBase::init(node);
 
-		xml::node setting = node("Imageset");
+		xml::node setting = node("imageset");
 		if(!setting.empty())
 		{
 			setImageset(setting.first_child().value());

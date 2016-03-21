@@ -87,7 +87,7 @@ namespace gui
 		typedef std::vector<std::string> LuaFilesVector;
 		LuaFilesVector m_loadedLuaFiles;
 
-		ImagesetManager m_imgseManager;
+		ImagesetManager m_imagesetsManager;
 	};
 
 }

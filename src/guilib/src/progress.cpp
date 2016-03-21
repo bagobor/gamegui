@@ -138,7 +138,7 @@ void ProgressBar::init(xml::node& node)
 	xml::node frame = node("Bar");
 	if(!frame.empty())
 	{
-		std::string setname = frame["Imageset"].value();
+		std::string setname = frame["imageset"].value();
 		m_imgset = m_system.getWindowManager().loadImageset(setname);
 		if(m_imgset)
 		{
@@ -192,7 +192,7 @@ void ImageBar::init(xml::node& node)
 	xml::node frame = node("Bar");
 	if(!frame.empty())
 	{
-		std::string setname = frame["Imageset"].value();
+		std::string setname = frame["imageset"].value();
 		m_imgset = m_system.getWindowManager().loadImageset(setname);
 		if(m_imgset)
 		{

@@ -5,7 +5,7 @@
 		<Formatting>Centred</Formatting>
 		<Visible>true</Visible>
 		<Text></Text>
-		<Bar Imageset="skin">
+		<Bar imageset="skin">
 			<Foreground Image="HealthImageBar" />
 			<Background Image="GrayImageBar" />
 		</Bar>

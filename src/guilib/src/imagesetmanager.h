@@ -90,7 +90,7 @@ namespace gui
 	}
 
 	/// sample XML:
-	//<Imageset Name="CoolImageset!">
+	//<imageset Name="CoolImageset!">
 	//	<Textures>
 	//		<Texture Name="UberTex" Filename="test.tga"/>
 	//		<Texture Filename="test1.tga"/>
@@ -113,7 +113,7 @@ namespace gui
 		/// @param imgset - pointer to xml node named "imageset", optional
 		Imageset(System& sys, const std::string& name, xml::node* imgset = 0);
 
-		Imageset(const std::string& name);
+		explicit Imageset(const std::string& name);
 
 		/// @brief - New texture pushed back. No texture deletion support!
 		/// @param tex - texture ptr
@@ -185,15 +185,17 @@ namespace gui
 	class ImagesetManager
 	{
 	public:
-		/// @brief - Produce an empty imageset using name
+		/// @brief - create an empty imageset using name
 		/// @param name - must be unique, otherwise returned previous
 		/// @returns - ptr
-		ImagesetPtr MakeEmpty(System& sys, const std::string& name);
-		/// @brief - Produse an imageset using loaded xml
-		/// @param imgset - xml node named "imageset"
-		ImagesetPtr Make(System& sys, xml::node* imgset);
+		ImagesetPtr createEmpty(System& sys, const std::string& name);
+		/// @brief - create an imageset using loaded xml
+		/// @param imgsetNode - xml node named "imageset"
+		ImagesetPtr create(System& sys, xml::node& imgsetNode);
+
+		void reset() { m_registry.clear(); }
 	private:
-		ImagesetPtr Produce(System& sys, const std::string& name, xml::node* imgset);
+		ImagesetPtr Produce(System& sys, const std::string& name, xml::node& imgset);
 
 	private:
 		typedef std::unordered_map<std::string, ImagesetWeakPtr> ImagesetRegistry;

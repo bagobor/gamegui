@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <StaticImage name ="" file="" >
 	<Properties>
-		<Imageset />
+		<imageset />
 		<Image />
 		<Visible>true</Visible>
 		<VertFormatting>Stretch</VertFormatting>
