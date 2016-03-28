@@ -131,8 +131,8 @@ namespace gui
 			GL_CHECK(glGenTextures(1, &m_gl_handler));
 			GL_CHECK(glActiveTexture(GL_TEXTURE0));
 			GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_gl_handler));
-			GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-			GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+			GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
+			GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
 			GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 			GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 		}
@@ -146,7 +146,7 @@ namespace gui
 			GL_CHECK(glBindTexture(GL_TEXTURE_2D, m_gl_handler));
 		}
 
-		bool TextureOGL::init(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
+		bool TextureOGL::init(const void* data, size_t size, unsigned int width, unsigned int height, Texture::PixelFormat format) {
 
 			m_size.width = width;
 			m_size.height = height;
@@ -235,7 +235,7 @@ namespace gui
 			png_infop       info_ptr = 0;
 
 			png_byte* m_pData = nullptr;
-
+			size_t data_size = 0;
 			do
 			{
 				// png header len is 8 bytes
@@ -322,6 +322,7 @@ namespace gui
 				png_bytep* row_pointers = (png_bytep*)alloca(sizeof(png_bytep)* m_size.height);
 				png_uint_32 rowbytes = png_get_rowbytes(png_ptr, info_ptr);
 
+				data_size = rowbytes * m_size.height * sizeof(png_byte);
 				m_pData = new png_byte[rowbytes * m_size.height];
 				CC_BREAK_IF(!m_pData);
 
@@ -349,8 +350,7 @@ namespace gui
 				png_destroy_read_struct(&png_ptr, (info_ptr) ? &info_ptr : 0, 0);
 			}
 
-			//TODO: looks like code is wrong!
-			bRet = init(m_pData, m_size.width, m_size.height, Texture::PF_RGBA8888);
+			bRet = init(m_pData, data_size, m_size.width, m_size.height, Texture::PF_RGBA8888);
 
 			delete[] m_pData;
 			
@@ -397,8 +397,8 @@ namespace gui
 			return false;
 		}
 
-		void TextureOGL::update(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
-			init(data, width, height, format);
+		void TextureOGL::update(const void* data, size_t size, unsigned int width, unsigned int height, Texture::PixelFormat format) {
+			init(data, size, width, height, format);
 		}
 
 		struct QuadVertex
@@ -497,9 +497,9 @@ namespace gui
 			m_small_mesh->setShader(m_shader);
 		}
 
-		TexturePtr RenderDeviceGL::createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
+		TexturePtr RenderDeviceGL::createTexture(const void* data, size_t size, unsigned int width, unsigned int height, Texture::PixelFormat format) {
 			auto texture = std::make_shared<TextureOGL>(*this);
-			if (!texture->init(data, width, height, format)) {
+			if (!texture->init(data, size, width, height, format)) {
 				return TexturePtr();
 			}
 
@@ -530,7 +530,8 @@ namespace gui
 			//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			GL_CHECK(glBlendFunc(GL_SRC_ALPHA, (isAdditive ? GL_ONE : GL_ONE_MINUS_SRC_ALPHA)));
 			GL_CHECK(glEnable(GL_DEPTH_TEST));
-			GL_CHECK(glPolygonMode(GL_FRONT_AND_BACK, GL_FILL));
+			//GL_CHECK(glPolygonMode(GL_FRONT_AND_BACK, GL_FILL));
+			//GL_CHECK(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
 
 			//GLuint vao;
 			//glGenVertexArrays(1, &vao);			
@@ -580,7 +581,7 @@ namespace gui
 			m_shader->end();
 		}
 		
-		QuadVertex buffmem[10000];
+		QuadVertex buffmem[10000 * VERTEX_PER_QUAD];
 
 		void RenderDeviceGL::render(const Batches& _batches, const Quads& _quads, size_t num_batches, Size scale)
 		{

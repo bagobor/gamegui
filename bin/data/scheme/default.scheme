@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
 <Scheme Name="default-ui">
-	<DefaultImageset file="skin.imageset" />
+	<DefaultImageset file="skin" />
 	<DefaultFont file="default.font" />	
 </Scheme>

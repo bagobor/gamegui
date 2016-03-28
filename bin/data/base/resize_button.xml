@@ -5,8 +5,6 @@
 		<TabStop>false</TabStop> 
     	<Size>44 20</Size>
     	<Spacing>1</Spacing>
-    	<Font>Default</Font>
-    	<Formatting>Centred</Formatting>    
 		<States>
 			<Normal image="CloseButton" />
 			<Hovered image="CloseButtonHover" />
@@ -14,6 +12,9 @@
 		</States>
 	</Properties>
 	<Events>
-        <On_Clicked>this.parent.visible = false</On_Clicked>
+		<On_Clicked>ResizeButton.On_Clicked()</On_Clicked>
+        <On_Load>ResizeButton.On_Load()</On_Load>
+		<On_MouseMove>ResizeButton.On_MouseMove()</On_MouseMove>
+		<On_MouseButton>ResizeButton.On_MouseButton()</On_MouseButton>
     </Events>
 </ImageButton >

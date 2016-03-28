@@ -24,14 +24,14 @@
       <Rect left="106" top="31" right="119" bottom="44" />
     </Image>        
 
-    <Image id="CloseButton" width="17.0" height="17.0" >
-      <Rect left="5" top="5" right="22" bottom="23" />
+    <Image id="CloseButton" width="44" height="20">
+      <Rect left="125" top="121" right="169" bottom="141" />
     </Image>
-    <Image id="CloseButtonHover" width="17.0" height="17.0">
-      <Rect left="5" top="24" right="22" bottom="43" />
+    <Image id="CloseButtonHover" width="44" height="20">
+      <Rect left="90" top="96" right="134" bottom="116" />
     </Image>
-    <Image id="CloseButtonPushed" width="17.0" height="17.0" >
-      <Rect left="5" top="43" right="22" bottom="62" />
+    <Image id="CloseButtonPushed" width="44" height="20">
+      <Rect left="44" top="96" right="88" bottom="116" />
     </Image>
 
 
@@ -50,28 +50,32 @@
     <Image id="FrameLeft" width="8" height="3" >
       <Rect left="10" top="151" right="18" bottom="154" />
     </Image>
-    <Image id="FrameRight" width="8" height="3" >
-      <Rect left="82" top="27" right="86" bottom="47" />
-    </Image>
 
+    <Image id="FrameRight" width="8" height="3" >
+      <Rect left="169" top="151" right="177" bottom="154" />
+    </Image>
     <Image id="FrameTop" width="20" height="2" >
       <Rect left="20" top="120" right="41" bottom="121" />
     </Image>
 
-    <Image id="FrameBottom" width="30.0" height="4.0" >
-      <Rect left="52" top="48" right="82" bottom="52" />
-    </Image>
     <Image id="FrameTopLeft" width="4.0" height="4.0" >
       <Rect left="48" top="26" right="52" bottom="30" />
     </Image>
     <Image id="FrameTopRight" width="4.0" height="4.0" >
       <Rect left="82" top="26" right="86" bottom="30" />
     </Image>
-    <Image id="FrameBottomLeft" width="4.0" height="4.0" >
-      <Rect left="48" top="48" right="52" bottom="52" />
+
+    <Image id="FrameBottom" width="30" height="8" >
+      <Rect left="100" top="155" right="130" bottom="163" />
     </Image>
-    <Image id="FrameBottomRight" width="4.0" height="4.0" >
-      <Rect left="82" top="48" right="86" bottom="52" />
+
+    
+    <Image id="FrameBottomLeft" width="8" height="8" >
+      <Rect left="10" top="155" right="18" bottom="163" />
+      <!-- <Rect left="87" top="110" right="92" bottom="118" /> -->
+    </Image>
+    <Image id="FrameBottomRight" width="8" height="8" >
+      <Rect left="169" top="155" right="177" bottom="163" />
     </Image>
 
 

@@ -25,9 +25,9 @@ namespace gui
 			explicit TextureOGL(RenderDeviceGL& r);
 			~TextureOGL();
 			
-			void update(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format);
+			void update(const void* data, size_t size, unsigned int width, unsigned int height, Texture::PixelFormat format);
 
-			bool init(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format);
+			bool init(const void* data, size_t size, unsigned int width, unsigned int height, Texture::PixelFormat format);
 			bool init(const std::string& filename);
 
 			void bind(size_t slot);
@@ -44,7 +44,7 @@ namespace gui
 			RenderDeviceGL(filesystem_ptr fs, unsigned int max_quads);
 			~RenderDeviceGL();
 
-			TexturePtr createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format);
+			TexturePtr createTexture(const void* data, size_t size, unsigned int width, unsigned int height, Texture::PixelFormat format);
 			TexturePtr createTexture(const std::string& filename);
 
 			void renderImmediate(const QuadInfo& q, Texture* texture, bool isAdditive);

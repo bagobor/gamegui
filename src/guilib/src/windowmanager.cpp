@@ -101,7 +101,7 @@ void WindowManager::loadScheme(const std::string& scheme)
 	std::string file = schemenode("DefaultImageset")["file"].value();
 	if(!file.empty())
 	{
-		if (m_defaultImageset = createImageset(file))
+		if (m_defaultImageset = loadImageset(file))
 			m_imagesetRegistry[m_defaultImageset->GetName()] = m_defaultImageset;
 	}
 
@@ -241,8 +241,6 @@ window_ptr WindowManager::loadXml(const std::string& filename)
 
 void WindowManager::loadLeafWindow(window_ptr wnd, const std::string& xml)
 {
-	//std::string file = m_system.getRenderer().getResourcePath();
-	//file += xml;
 	std::string file = xml;
 	
 	XmlDocumentPtr pdoc = loadCachedXml(file);
@@ -372,14 +370,14 @@ window_ptr WindowManager::createWindow(window_ptr parent, xml::node& n, WindowVe
 void WindowManager::loadWindowProperties(window_ptr wnd, xml::node& n)
 {
 	xml::node properties = n("Properties");
-	if(!properties.empty())
-		wnd->init(properties);
+	if (properties.empty()) return;
+	wnd->init(properties);
 }
 void WindowManager::loadWindowEvents(window_ptr wnd, xml::node& n)
 {
 	xml::node events = n("Events");
-	if(!events.empty())
-		wnd->parseEventHandlers(events);
+	if (events.empty()) return;
+	wnd->parseEventHandlers(events);
 }
 
 XmlDocumentPtr WindowManager::loadCachedXml(const std::string& file)

@@ -440,17 +440,17 @@ TexturePtr	Renderer::createTexture(const std::string& filename) {
 	return m_texmanager.createTexture(filename); 
 }
 
-TexturePtr	Renderer::createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
-	return m_render_device.createTexture(data, width, height, format);
+TexturePtr	Renderer::createTexture(const void* data, size_t size, unsigned int width, unsigned int height, Texture::PixelFormat format) {
+	return m_render_device.createTexture(data, size, width, height, format);
 }
 
 TexturePtr	Renderer::createTexture(unsigned int width, unsigned int height, Texture::PixelFormat format) {
-	return createTexture(NULL, width, height, format);
+	return createTexture(NULL, 0, width, height, format);
 }
 
-TexturePtr	Renderer::updateTexture(TexturePtr p, const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) {
+TexturePtr	Renderer::updateTexture(TexturePtr p, const void* data, size_t size, unsigned int width, unsigned int height, Texture::PixelFormat format) {
 	if (p)
-		p->update(data, width, height, format);
+		p->update(data, size, width, height, format);
 	return p;
 }
 

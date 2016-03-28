@@ -27,7 +27,7 @@ BaseApplicationGLFW::BaseApplicationGLFW(size_t w, size_t h, const char* title)
 	glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-
+	
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	window = glfwCreateWindow(m_width, m_height, title, NULL, NULL);
@@ -36,9 +36,12 @@ BaseApplicationGLFW::BaseApplicationGLFW(size_t w, size_t h, const char* title)
 		exit(EXIT_FAILURE);
 	}
 	
+
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
 	glfwSetWindowUserPointer(window, this);
 
-	glfwSwapInterval(1);	
+	glfwSwapInterval(0);	
 	glfwMakeContextCurrent(window);
 
 	// Window resize callback function

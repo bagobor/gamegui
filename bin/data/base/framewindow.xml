@@ -26,17 +26,24 @@
         <ImageButton name="Close" file="base\closebutton.xml">
             <Properties>
             	<Stick>top | right</Stick>
-				<StickRect>0 2 2 0</StickRect>
+				<StickRect>0 1 1 0</StickRect>
                 <Align>top | right</Align>
             </Properties>
         </ImageButton>
-        <ImageButton name="Lock" file="base\lockbutton.xml">
+        <ImageButton name="Resize" file="base\resize_button.xml">
+            <Properties>
+            	<Stick>bottom | right</Stick>
+				<StickRect>0 1 1 0</StickRect>
+				<Size>8 8</Size>
+                <Align>top | right</Align>
+            </Properties>
+        </ImageButton>        
+<!--         <ImageButton name="Lock" file="base\lockbutton.xml">
             <Properties>
                 <Stick>top | left</Stick>
 				<StickRect>2 2 0 0</StickRect>
                 <Align>top | left</Align>
             </Properties>
-        </ImageButton>
+        </ImageButton> -->
     </Children>
-	<Events />
 </FrameWindow>

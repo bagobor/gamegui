@@ -175,13 +175,10 @@ void WindowBase::setInputFocus(bool query)
 
 bool WindowBase::hitTest(const point& pt)
 {
-	if(!m_visible)
+	if(!m_visible || m_ignoreInputEvents)
 		return false;
 
-	if(!m_ignoreInputEvents)
-		return m_area.isPointInRect(transformToWndCoord(pt));
-	
-	return false;
+	return m_area.isPointInRect(transformToWndCoord(pt));
 }
 
 WindowBase* WindowBase::findChildWindow(const std::string& name)
@@ -631,6 +628,12 @@ void WindowBase::parseEventHandlers(xml::node& node)
 	if (node.empty()) return;
 
 	xml::node handler = node.first_child();
+
+	if (handler.empty()) {
+		m_handlers.clear();
+		return;
+	}
+
 	while(!handler.empty())
 	{
 		addScriptEventHandler(handler.name(), handler.first_child().value());
@@ -664,7 +667,6 @@ void WindowBase::draw(const point& offset, const Rect& clip)
 	//if (m_invalidated)
 	{
 		m_system.getRenderer().startCaptureForCache(this);
-
 
 		render(destrect, cliprect); // render self first
 		m_system.getRenderer().endCaptureForCache(this);		

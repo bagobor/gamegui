@@ -1,17 +1,96 @@
 <?xml version="1.0" ?>
 <root>
  	<Children>
- 		<FrameWindow name="TestWindow" file="guitest\testfr.xml" >
+    <FrameWindow name="TestWindow" file="guitest\testfr.xml" >
+      <Children>
+        <Panel name="TestSubWindow">
+          <Children>
+            <Editbox name="TestSubEditWindow" >
+              <Properties>
+                <Password>true</Password>
+              </Properties>
+            </Editbox>
+          </Children>
+        </Panel>
+      </Children>
+    </FrameWindow>
+
+ 		<FrameWindow name="TestWindow2" file="guitest\testfr.xml" >
+      <Properties>
+        <Area>600 20 200 300</Area>
+      </Properties>
 			<Children>
-				<Panel name="TestSubWindow">
-					<Children>
-						<Editbox name="TestSubEditWindow" >
-							<Properties>
-								<Password>true</Password>
-							</Properties>
-						</Editbox>
-					</Children>
-				</Panel>
+        <ImageButton name="TestCursor">
+          <Properties>
+            <Pos>50 50</Pos>
+            <Visible>true</Visible>
+            <TabStop>false</TabStop> 
+            <Size>12 22</Size>
+            <Spacing>1</Spacing>
+            <States imageset="Cursors">
+              <Normal image="CursorNormal" />
+              <Hovered image="CloseButtonHover" />
+              <Pushed image="CloseButtonPushed" />
+            </States>              
+          </Properties>
+        </ImageButton>
+        <ImageButton name="TestCursor2">
+          <Properties>
+            <Pos>50 80</Pos>
+            <Visible>true</Visible>
+            <TabStop>false</TabStop> 
+            <Size>17 22</Size>
+            <Spacing>1</Spacing>
+            <States imageset="Cursors">
+              <Normal image="CursorAction" />
+              <Hovered image="CloseButtonHover" />
+              <Pushed image="CloseButtonPushed" />
+            </States>              
+          </Properties>
+        </ImageButton>
+        <ImageButton name="TestCursor3">
+          <Properties>
+            <Pos>50 110</Pos>
+            <Visible>true</Visible>
+            <TabStop>false</TabStop> 
+            <Size>23 22</Size>
+            <Spacing>1</Spacing>
+            <States imageset="Cursors">
+              <Normal image="CursorResizerHoriz" />
+              <Hovered image="CloseButtonHover" />
+              <Pushed image="CloseButtonPushed" />
+            </States>              
+          </Properties>
+        </ImageButton>
+        <ImageButton name="TestCursor4">
+          <Properties>
+            <Pos>50 140</Pos>
+            <Visible>true</Visible>
+            <TabStop>false</TabStop> 
+            <Size>11 23</Size>
+            <Spacing>1</Spacing>
+            <States imageset="Cursors">
+              <Normal image="CursorResizerVert" />
+              <Hovered image="CloseButtonHover" />
+              <Pushed image="CloseButtonPushed" />
+            </States>              
+          </Properties>
+        </ImageButton>
+        <ImageButton name="TestCursor5">
+          <Properties>
+            <Pos>50 170</Pos>
+            <Visible>true</Visible>
+            <TabStop>false</TabStop> 
+            <Size>18 23</Size>
+            <Spacing>1</Spacing>
+            <States imageset="Cursors">
+              <Normal image="CursorResizerUpDown" />
+              <Hovered image="CloseButtonHover" />
+              <Pushed image="CloseButtonPushed" />
+            </States>              
+          </Properties>
+        </ImageButton>
+
 			</Children>
 		</FrameWindow>
 	</Children>
@@ -21,7 +100,7 @@
         </On_Init>
         <On_Load>
            this.script_value = 52;
-           log:msg("SCRIPT VALUE: " .. this.type);
+           --log:msg("SCRIPT VALUE: " .. this.type);
            this:send("MAINWINDOW: loaded!");
 
            local function TEST()
@@ -33,13 +112,13 @@
            --this:subscribe('TEST_EVENT', this, TEST);
            this:subscribe('TEST_EVENT', nil, TEST);
 
-		   this:send("TEST_EVENT");
-		   this:startTick();
+		      this:send("TEST_EVENT");
+		      this:startTick();
 
-		   log:msg("name is " .. this.name);
-		   this.name = "NO PLACE FOR MEN!";
-		   log:msg("name is " .. this.name);
-		   this.disableRise = true;
+		      log:msg("name is " .. this.name);
+		      this.name = "NO PLACE FOR MEN!";
+		      log:msg("name is " .. this.name);
+		      this.disableRise = true;
         </On_Load>
 
         <TEST_EVENT>
@@ -54,7 +133,7 @@
 
             local cursor = gui.cursor;
             local pos = cursor.position;
-            cursor.visible = false;
+            cursor.visible = true;
 
             local window = gui:getTargetWindow(pos);
             local text = "?";

@@ -122,6 +122,7 @@ void FreeTypeFont::rasterize (utf32 start_codepoint, utf32 end_codepoint)
         m_glyphImages.push_back(is);
 
         // Create a memory buffer where we will render our glyphs
+		const size_t membuffer_size = texsize * texsize * sizeof(argb_t);
         argb_t *mem_buffer = new argb_t[texsize * texsize];
         memset (mem_buffer, 0, texsize * texsize * sizeof (argb_t));
 
@@ -244,7 +245,8 @@ void FreeTypeFont::rasterize (utf32 start_codepoint, utf32 end_codepoint)
         }
 
         // Copy our memory buffer into the texture and free it
-		m_render.updateTexture(is->GetTexture(ordinal), mem_buffer, texsize, texsize, Texture::PF_RGBA8888);
+		auto texture = is->GetTexture(ordinal);
+		m_render.updateTexture(texture, mem_buffer, membuffer_size, texsize, texsize, Texture::PF_RGBA8888);
         delete [] mem_buffer;
 
         if (finished)

@@ -9,9 +9,7 @@
         <IgnoreInputEvents>true</IgnoreInputEvents>
     </Properties>
     <Events>
-        <On_Load>
-            Drag.On_Load()
-        </On_Load>
+        <On_Load>Drag.On_Load()</On_Load>
     </Events>
     <Children>
         <StaticText name="BottomText" file="Base\StaticText.xml">

@@ -372,66 +372,49 @@ bool System::handleMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonSta
 	m_activateTooltip = false;
 	hideTooltip(m_containsMouse);
 
-	if(m_rootWindow)
+	if (!m_rootWindow) return false;
+
+	WindowBase* target = m_captureWindow ? m_captureWindow : m_containsMouse;
+		
+	if(!target)
+		target = m_rootWindow.get();
+		
+	if(m_focusWindow != target)
 	{
-		WindowBase* target = m_containsMouse;
-		if(m_captureWindow)
+		auto focusWnd = target->isTabStop() ? target : NULL;
+		queryInputFocus(focusWnd);
+	}
+
+	// Drag'n'Drop support
+	if(btn == EventArgs::Left && !m_dragfired)
+	{
+		if(target != m_rootWindow.get() && target != m_captureWindow)
 		{
-			target = m_captureWindow;
-		}
-		
-		if(!target)
-			target = m_rootWindow.get();
-		
-		{
-			if(m_focusWindow != target)
+			if(target->isDraggable() && state == EventArgs::Down)
 			{
-				if(target->isTabStop())
-					queryInputFocus(target);
-				else
-					queryInputFocus(0);
-			}
-
-			// Drag'n'Drop support
-			if(btn == EventArgs::Left)
-			{
-				if(!m_dragfired)
-				{
-					if(target != m_rootWindow.get() && target != m_captureWindow)
-					{
-						if(target->isDraggable())
-						{
-							if(state == EventArgs::Down)
-							{
-								m_dragfired = false;
-								m_dragOffset = m_cursor.getPosition();
-								m_dragWindow = target;
-								m_dragging = true;
-							}
-						}
-					}
-				}
-				if(state == EventArgs::Up && m_dragging)
-				{
-					if(!m_dragfired)
-					{
-						m_dragging = false;
-					}
-				}
-			}
-
-			target->rise();
-
-			if(target != m_menuWindow.get())
-				getMenu()->reset();
-
-			while(target)
-			{
-				if(target->onMouseButton(btn, state))
-					return true;
-				target = const_cast<WindowBase*>(target->getParent());
+				m_dragfired = false;
+				m_dragOffset = m_cursor.getPosition();
+				m_dragWindow = target;
+				m_dragging = true;
 			}
 		}
+
+		if(state == EventArgs::Up && m_dragging)
+		{
+			m_dragging = false;
+		}
+	}
+
+	target->rise();
+
+	if(target != m_menuWindow.get())
+		getMenu()->reset();
+
+	while(target)
+	{
+		if(target->onMouseButton(btn, state))
+			return true;
+		target = const_cast<WindowBase*>(target->getParent());
 	}
 	
 	return false;

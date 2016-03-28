@@ -50,7 +50,7 @@ namespace gui
 			DF_UNKNOWN
 		};
 		
-		virtual ~Texture() {}
+		virtual ~Texture() = default;
 
 		const Size& getSize() const { return m_size; }
 		virtual float getWidth(void) const { return m_size.width; }
@@ -59,10 +59,11 @@ namespace gui
 		RenderDevice&	getRenderer(void) const { return m_owner; }
 		PixelFormat getPixelFormat() const { return m_format; }
 
-		virtual void update(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) = 0;
+		virtual void update(const void* data, size_t size, unsigned int width, unsigned int height, PixelFormat format) = 0;
 		
 	protected:
-		Texture& operator=(const Texture&) { return *this; }
+		Texture& operator=(const Texture&) = delete;
+		Texture(const Texture&) = delete;
 
 		void setPixelFormat(PixelFormat fmt) { m_format = fmt; }	
 

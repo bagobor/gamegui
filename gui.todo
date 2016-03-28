@@ -1,0 +1,15 @@
+ 
+tasks:
+ ☐ docking
+ ☐ serelization
+ ☐ simplify XML imageset format (use node name as image name)
+ ☐ property list component
+ ☐ recheck rendering callback
+ ☐ script managemet from 'workshop' project
+ ☐ improove scripting
+ ☐ distant field for UI shapes? themes?
+
+
+issues: 
+ ☐ review uv rect code (and recheck cursor rendering)
+ ☐ correct calculation for frame window client rect

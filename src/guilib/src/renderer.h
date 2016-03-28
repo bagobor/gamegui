@@ -95,7 +95,7 @@ struct RenderDevice {
 
 	virtual ~RenderDevice() = 0 {};
 
-	virtual TexturePtr createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format) = 0;
+	virtual TexturePtr createTexture(const void* data, size_t size, unsigned int width, unsigned int height, Texture::PixelFormat format) = 0;
 	virtual TexturePtr createTexture(const std::string& filename) = 0;
 
 	virtual void renderImmediate(const QuadInfo& q, Texture* texture, bool isAdditive = false) = 0;
@@ -144,9 +144,9 @@ public:
 	bool			isQueueingEnabled(void) const { return m_isQueueing; }
 
 	TexturePtr	createTexture(const std::string& filename);
-	TexturePtr	createTexture(const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format);
+	TexturePtr	createTexture(const void* data, size_t size, unsigned int width, unsigned int height, Texture::PixelFormat format);
 	TexturePtr	createTexture(unsigned int width, unsigned int height, Texture::PixelFormat format);
-	TexturePtr	updateTexture(TexturePtr p, const void* data, unsigned int width, unsigned int height, Texture::PixelFormat format);
+	TexturePtr	updateTexture(TexturePtr p, const void* data, size_t size, unsigned int width, unsigned int height, Texture::PixelFormat format);
 
 	FontPtr	createFont(const std::string& name, const std::string& fontname, unsigned int size);	
 
