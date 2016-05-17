@@ -398,7 +398,6 @@ void Renderer::clearRenderList(void)
 void Renderer::beginBatching()
 {
 	m_needToAddCallback = false;
-	clearRenderList();
 }
 
 void Renderer::endBatching()

@@ -84,6 +84,33 @@ typedef std::vector<QuadInfo> Quads;
 typedef std::vector<BatchInfo> Batches;
 typedef std::shared_ptr<Texture> TexturePtr;
 
+struct FrameStats {
+	float deltatime;
+	uint32_t verts_submited;
+	uint32_t triangles_drawn;
+	uint32_t num_batches;
+	uint32_t num_textures;
+	uint32_t num_calls;
+	uint32_t frame_num;
+
+	FrameStats() : frame_num(0) {}
+	
+	std::string to_string() const {
+		//TODO: to be implemented
+		return std::string();
+	}
+
+	void frame_start() {
+		deltatime = 0;
+		verts_submited = 0;
+		triangles_drawn = 0;
+		num_batches = 0;
+		num_textures = 0;
+		num_calls = 0;
+		++frame_num;
+	}
+};
+
 struct RenderDevice {
 	struct ViewPort {
 		unsigned x, y, w, h;
@@ -105,7 +132,7 @@ struct RenderDevice {
 	virtual void setViewport(const ViewPort& vp) { viewport = vp; }
 
 protected:
-	ViewPort viewport;
+	ViewPort viewport;	
 };
 
 typedef std::shared_ptr<RenderDevice> RenderDevicePtr;
@@ -129,15 +156,22 @@ public:
 	void	immediateDraw(const Image& img, const Rect& dest_rect, float z, const Rect& clip_rect, const ColorRect& colors);
 	void	doRender();
 
+	virtual void frameBegin() {
+		clearRenderList();
+		m_stats.frame_start(); 
+		beginBatching();
+	}
+
+	virtual void frameEnd() {
+		endBatching();
+	}
+
 	virtual void startCaptureForCache(WindowBase* window);
 	virtual void endCaptureForCache(WindowBase* window);
 	void drawFromCache(WindowBase* window);
 	void clearCache(WindowBase* window = 0);
 	
 	virtual	void	clearRenderList();	
-	
-	virtual void	beginBatching();
-	virtual void	endBatching();	
 	bool			isExistInCache(WindowBase* window) const;
 	
 	virtual void	setQueueingEnabled(bool queueing)  { m_isQueueing = queueing; }
@@ -173,6 +207,9 @@ public:
 	const RenderDevice& renderDeivce() const { return m_render_device; }
 
 protected:
+	virtual void	beginBatching();
+	virtual void	endBatching();
+
 	inline void addQuad(const Rect& r, const Rect& tr, float z, const RenderImageInfo& img, const ColorRect& colours) {
 		vec2 p[4];
 		p[0].x	= p[2].x = r.m_left;
@@ -185,6 +222,11 @@ protected:
 
 	void addQuad(const vec2& p0, const vec2& p1, const vec2& p2, const vec2& p3, const Rect& tex_rect, float z, const RenderImageInfo& img, const ColorRect& colours);
 	void renderQuadDirect(const QuadInfo& q, Texture* texture, bool isAdditive = false) {
+		m_stats.num_batches++;
+		m_stats.num_textures++;
+		m_stats.num_calls++;
+		m_stats.triangles_drawn++;
+		m_stats.verts_submited++;
 		m_render_device.renderImmediate(q, texture, isAdditive);
 	}
 
@@ -195,6 +237,7 @@ protected:
 
 protected:
 	TextureCache m_texmanager; 
+	FrameStats m_stats;
 
 	Quads m_quads;
 	Batches m_batches;

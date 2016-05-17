@@ -748,9 +748,7 @@ void System::tick(float delta)
 
 void System::draw()
 {
-	m_render.clearRenderList();
-
-	m_render.beginBatching();
+	m_render.frameBegin();
 
 	getRootWindow().draw(
 		point(0.f, 0.f),
@@ -758,7 +756,7 @@ void System::draw()
 		m_render.getSize())
 		);
 
-	m_render.endBatching();
+	m_render.frameEnd();
 
 }
 void System::showTooltip(WindowBase* wnd)
