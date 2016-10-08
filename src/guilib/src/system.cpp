@@ -96,30 +96,15 @@ void System::reset(bool complete)
 	}
 
 	m_rootWindow = std::make_shared<WindowBase>(*this, "systemroot");
-	if(!m_rootWindow)
-		throw std::exception("Couldn't create root window!");
+	//if(!m_rootWindow)
+	//	throw std::exception("Couldn't create root window!");
 
-	auto drag = std::make_shared<DragContainer>(*this, "systemdrag");
-	m_dragContainer = drag;
-	if (!m_dragContainer)
-		throw std::exception("Couldn't create drag window!");
+	m_dragContainer = std::make_shared<DragContainer>(*this, "systemdrag");
+	m_tooltipWindow = std::make_shared<Tooltip>(*this, "systemtooltip");
 
-	drag->reset();
-
-	auto tooltip = std::make_shared<Tooltip>(*this, "systemtooltip");
-	m_tooltipWindow = tooltip;
-	if(!tooltip)
-		throw std::exception("Couldn't create tooltip window!");
-	
-	tooltip->reset();
-
-	auto menu = std::make_shared<Menu>(*this, "systemmenu");
-	m_menuWindow = menu;
-	if (!m_menuWindow)
-		throw std::exception("Couldn't create menu window!");
-	m_windowMgr->loadLeafWindow(m_menuWindow, "base/menu.xml");
-	
-	menu->reset();
+	m_menuWindow = std::make_shared<Menu>(*this, "systemmenu");;
+	m_windowMgr->loadLeafWindow(m_menuWindow, "base/menu.xml");	
+	m_menuWindow.reset();		
 
 	m_rootWindow->setArea(Rect(point(.0f, .0f), m_render.getSize())); // full window area
 	m_rootWindow->setVisible(true);
@@ -127,9 +112,6 @@ void System::reset(bool complete)
 	m_rootWindow->add(m_tooltipWindow);
 	m_rootWindow->add(m_menuWindow);
 	m_rootWindow->setAcceptDrop(true);
-
-
-
 	
 	logEvent(log::system, "Gui subsystem is ready");
 }
@@ -151,7 +133,7 @@ DragContainer* System::getDragContainer() const
 
 Menu* System::getMenu() const
 { 
-	return static_cast<Menu*>(m_menuWindow.get()); 
+	return m_menuWindow ? static_cast<Menu*>(m_menuWindow.get()) : NULL;
 }
 
 WindowBase* System::createWindow(WindowBase* parent, const std::string& name, const std::string& type)
@@ -407,7 +389,7 @@ bool System::handleMouseButton(EventArgs::MouseButtons btn, EventArgs::ButtonSta
 
 	target->rise();
 
-	if(target != m_menuWindow.get())
+	if(m_menuWindow && target != m_menuWindow.get())
 		getMenu()->reset();
 
 	while(target)

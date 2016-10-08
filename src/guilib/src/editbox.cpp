@@ -406,7 +406,7 @@ namespace gui
 				selrect.m_right = dest.m_left + stops;
 				
 				//HACK: little tuning
-				selrect.setHeight(clip.getHeight()-1);
+				selrect.setHeight(clip.getHeight()-3);
 				selrect.offset(point(0.f, 1));
 				
 				r.draw(*m_selectImg, selrect, 1.f, finalClip, m_backColor, ImageOps::Tile, ImageOps::Stretch);

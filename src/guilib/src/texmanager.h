@@ -9,7 +9,8 @@ namespace gui
 	typedef std::weak_ptr<Texture> TextureWeakPtr;
 	typedef std::shared_ptr<Texture> TexturePtr;
 
-	class  TextureCache
+	//TODO: use resource manager
+	class TextureCache
 	{
 		typedef std::unordered_map<std::string, TextureWeakPtr> Textures;
 		typedef Textures::iterator TexturesIter;

@@ -1,0 +1,130 @@
+<?xml version="1.0" ?>
+<root>
+ 	<Children>
+    <FrameWindow name="TestWindow" file="guitest\testfr.xml" >
+      <Children>
+        <Panel name="TestSubWindow">
+          <Children>
+            <Editbox name="TestSubEditWindow" >
+              <Properties>
+                <Password>true</Password>
+              </Properties>
+            </Editbox>
+          </Children>
+        </Panel>
+      </Children>
+    </FrameWindow>
+
+ 		<FrameWindow name="TestWindow2" file="guitest\testfr.xml" >
+      <Properties>
+        <Area>600 20 200 300</Area>
+      </Properties>
+			<Children>
+        <ImageButton name="TestCursor">
+          <Properties>
+            <Pos>50 50</Pos>
+            <Size>12 22</Size>
+            <States imageset="Cursors">
+              <Normal image="CursorNormal" />
+              <Hovered image="CursorNormal" />
+              <Pushed image="CursorNormal" />
+            </States>              
+          </Properties>
+        </ImageButton>
+        <ImageButton name="TestCursor2">
+          <Properties>
+            <Pos>50 80</Pos>
+            <Size>17 22</Size>
+            <States imageset="Cursors">
+              <Normal image="CursorAction" />
+              <Hovered image="CursorAction" />
+              <Pushed image="CursorAction" />
+            </States>              
+          </Properties>
+        </ImageButton>
+        <ImageButton name="TestCursor3">
+          <Properties>
+            <Pos>50 110</Pos>
+            <Size>23 22</Size>
+            <States imageset="Cursors">
+              <Normal image="CursorResizerHoriz" />
+              <Hovered image="CursorResizerHoriz" />
+              <Pushed image="CursorResizerHoriz" />
+            </States>              
+          </Properties>
+        </ImageButton>
+        <ImageButton name="TestCursor4">
+          <Properties>
+            <Pos>50 140</Pos>
+            <Size>11 23</Size>
+            <States imageset="Cursors">
+              <Normal image="CursorResizerVert" />
+              <Hovered image="CursorResizerVert" />
+              <Pushed image="CursorResizerVert" />
+            </States>              
+          </Properties>
+        </ImageButton>
+        <ImageButton name="TestCursor5">
+          <Properties>
+            <Pos>50 170</Pos>
+            <Size>18 23</Size>
+            <States imageset="Cursors">
+              <Normal image="CursorResizerUpDown" />
+              <Hovered image="CursorResizerUpDown" />
+              <Pushed image="CursorResizerUpDown" />
+            </States>              
+          </Properties>
+        </ImageButton>
+
+			</Children>
+		</FrameWindow>
+	</Children>
+    <Events>
+        <On_Init>
+--            log:msg("On Init");
+        </On_Init>
+        <On_Load>
+           this.script_value = 52;
+           --log:msg("SCRIPT VALUE: " .. this.type);
+           this:send("MAINWINDOW: loaded!");
+
+           local function TEST()
+           		log:msg("TEST_EVENT TEST_EVENTTEST_EVENT TEST_EVENT");
+           		log:msg(this.type);
+           end
+
+           --TODO: fix case when THIS pointer is different from THIS of base_window
+           --this:subscribe('TEST_EVENT', this, TEST);
+           this:subscribe('TEST_EVENT', nil, TEST);
+
+		      this:send("TEST_EVENT");
+		      this:startTick();
+
+		      this.disableRise = true;
+        </On_Load>
+
+        <TEST_EVENT>
+        	log:msg("TEST_EVENT TEST_EVENTTEST_EVENT TEST_EVENT");
+        </TEST_EVENT>
+        <On_Tick>
+        </On_Tick>
+        <On_Draw> <!-- debug render of windget name on mouse hover -->
+            --log:msg("On Root Render");
+            local mng = gui:getWindowManager();
+            local font = mng:getFont("");
+
+            local cursor = gui.cursor;
+            local pos = cursor.position;
+            cursor.visible = true;
+
+            local window = gui:getTargetWindow(pos);
+            local text = "?";
+
+            if window ~= nil then
+                text = window:getType() .. " :: " .. window:getName();
+            end
+
+            render:drawText(font, text, Rect(pos.x+20, pos.y, pos.x+600, pos.y+600), Rect(0, 0, 5000, 5000), Font.LeftAligned, Color(1,0,1,1));
+        </On_Draw>
+    </Events>
+</root>

@@ -34,6 +34,7 @@ namespace gui
 		TextFormatting getTextFormatting() const { return m_format; }
 
 		void setSpacing(float spacing);
+		//TODO: move it to font
 		float getSpacing() const { return m_spacing; }
 
 		virtual void render(const Rect& finalRect, const Rect& finalClip);

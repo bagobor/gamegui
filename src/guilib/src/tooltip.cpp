@@ -8,6 +8,7 @@ namespace gui
 		m_fadein(0.f),
 		m_fadeout(0.f)
 	{
+		reset();
 	}
 
 	Tooltip::~Tooltip(void)

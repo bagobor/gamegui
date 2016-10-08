@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
     <FrameWindow name="TestWindow" file="base\framewindow.xml" >
       <Properties>
-        <Area>10 10 256 178</Area>
+        <Area>10 10 512 378</Area>
         <Title>Caption</Title>
       </Properties>
     </FrameWindow>

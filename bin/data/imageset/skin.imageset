@@ -34,8 +34,15 @@
       <Rect left="44" top="96" right="88" bottom="116" />
     </Image>
 
-
-
+    <Image id="VScrollThumbNormal" width="23" height="23">
+      <Rect left="391" top="129" right="412" bottom="152" />
+    </Image>
+    <Image id="VScrollThumbHovered" width="23" height="23">
+      <Rect left="430" top="129" right="452" bottom="152" />
+    </Image>
+    <Image id="VScrollThumbPushed" width="23" height="23">
+      <Rect left="470" top="129" right="492" bottom="152" />
+    </Image>    
 
     <Image id="TitlebarLeft" width="7" height="31" >
       <Rect left="10" top="120" right="17" bottom="151" />
@@ -80,50 +87,54 @@
 
 
 
-    <Image id="ButtonLeftNormal" width="5.0" height="21.0" >
-      <Rect left="24" top="51" right="29" bottom="72" />
+
+
+
+    <Image id="ButtonLeftNormal" width="5" height="21" >
+      <Rect left="24" top="28" right="29" bottom="49" />
     </Image>
-    <Image id="ButtonRightNormal" width="5.0" height="21.0" >
-      <Rect left="40" top="51" right="45" bottom="72" />
+    <Image id="ButtonRightNormal" width="5" height="21" >
+      <Rect left="41" top="28" right="45" bottom="49" />
     </Image>
-    <Image id="ButtonMiddleNormal" width="14.0" height="21.0" >
-      <Rect left="27" top="51" right="41" bottom="72" />
+    <Image id="ButtonMiddleNormal" width="10" height="21" >
+      <Rect left="30" top="28" right="40" bottom="49" />
     </Image>
 
-    <Image id="ButtonLeftHovered" width="5.0" height="21.0" >
+    <Image id="ButtonLeftHovered" width="5" height="21" >
       <Rect left="24" top="5" right="29" bottom="26" />
     </Image>
-    <Image id="ButtonRightHovered" width="5.0" height="21.0" >
+    <Image id="ButtonRightHovered" width="5" height="21" >
       <Rect left="40" top="5" right="45" bottom="26" />
     </Image>
-    <Image id="ButtonMiddleHovered" width="14.0" height="21.0" >
+    <Image id="ButtonMiddleHovered" width="14" height="21" >
       <Rect left="27" top="5" right="41" bottom="26" />
     </Image>
 
-    <Image id="ButtonLeftPushed" width="5.0" height="21.0" >
+    <Image id="ButtonLeftPushed" width="5" height="21" >
       <Rect left="24" top="28" right="29" bottom="49" />
     </Image>
-    <Image id="ButtonRightPushed" width="5.0" height="21.0" >
+    <Image id="ButtonRightPushed" width="5" height="21" >
       <Rect left="40" top="28" right="45" bottom="49" />
     </Image>
     <Image id="ButtonMiddlePushed" width="14.0" height="21.0" >
       <Rect left="27" top="28" right="41" bottom="49" />
     </Image>
 
-    <Image id="EditFrameLeft" width="5.0" height="31.0" >
-      <Rect left="48" top="56" right="53" bottom="87" />
+    <Image id="EditFrameLeft" width="5" height="31" >
+      <Rect left="48" top="56" right="53" bottom="86" />
     </Image>
-    <Image id="EditFrameRight" width="5.0" height="31.0" >
-      <Rect left="72" top="56" right="77" bottom="87" />
+    <Image id="EditFrameRight" width="5" height="31" >
+      <Rect left="72" top="56" right="77" bottom="86" />
     </Image>
-    <Image id="EditFrameMiddle" width="22.0" height="31.0" >
-      <Rect left="51" top="56" right="73" bottom="87" />
+    <Image id="EditFrameMiddle" width="22" height="31" >
+      <Rect left="51" top="56" right="73" bottom="86" />
     </Image>
-    <Image id="EditBoxCarat" width="3.0" height="16.0" >
+    <Image id="EditBoxCarat" width="3" height="16" >
       <Rect left="91" top="56" right="94" bottom="72" />
     </Image>
-    <Image id="TextSelectionBrush" width="9.0" height="16.0" >
-      <Rect left="80" top="56" right="89" bottom="72" />
+    <Image id="TextSelectionBrush" width="9.0" height="11" >
+      <Rect left="80" top="56" right="89" bottom="71" />
     </Image>
+
   </Images>
 </Imageset>

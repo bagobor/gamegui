@@ -104,7 +104,11 @@ namespace gui
 			Size imgSize = state->size();
 			Rect dest(finalRect);
 			dest.setWidth(imgSize.width);
+			dest.setHeight(imgSize.height);
 			offset += imgSize.width;
+
+			dest.offset(point(0.f, (finalRect.getHeight() - imgSize.height) / 2));
+
 			r.draw(*state, dest, 1.f, finalClip, m_backColor, ImageOps::Stretch, ImageOps::Stretch);
 		}
 		

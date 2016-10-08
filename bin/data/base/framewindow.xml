@@ -38,12 +38,5 @@
                 <Align>top | right</Align>
             </Properties>
         </ImageButton>        
-<!--         <ImageButton name="Lock" file="base\lockbutton.xml">
-            <Properties>
-                <Stick>top | left</Stick>
-				<StickRect>2 2 0 0</StickRect>
-                <Align>top | left</Align>
-            </Properties>
-        </ImageButton> -->
     </Children>
 </FrameWindow>

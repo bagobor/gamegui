@@ -5,7 +5,7 @@
 		<ForeColor />
 		<Visible>true</Visible>
 		<Spacing>1.0</Spacing>
-		<Font>Default</Font>
+		<Font shadow="0">Default</Font>
 		<Formatting>Centred</Formatting>
 		<Text />
 	</Properties>

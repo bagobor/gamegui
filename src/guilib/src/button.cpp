@@ -269,20 +269,30 @@ bool Thumb::onMouseMove(void)
 	if(m_state == Pushed)
 	{
 		point pt = transformToWndCoord(m_system.getCursor().getPosition());
+
+		if (m_horiz) {
+			pt.y = 0;
+		}
+		else {
+			pt.x = 0;
+		}
+
 		point newpos = pt - m_offset;
 		Rect testarea(m_area);
-		testarea.setPosition(newpos);
 
 		Size me = m_area.getSize();
 
-		if(testarea.m_left < m_trackarea.m_left)
+		testarea.setPosition(newpos);
+
+		if (testarea.m_left < m_trackarea.m_left)
 			testarea.m_left = m_trackarea.m_left;
-		if(testarea.m_top < m_trackarea.m_top)
+		if (testarea.m_top < m_trackarea.m_top)
 			testarea.m_top = m_trackarea.m_top;
-		if(testarea.m_right > m_trackarea.m_right)
+		if (testarea.m_right > m_trackarea.m_right)
 			testarea.m_left = m_trackarea.m_right - me.width;
-		if(testarea.m_bottom > m_trackarea.m_bottom)
+		if (testarea.m_bottom > m_trackarea.m_bottom)
 			testarea.m_top = m_trackarea.m_bottom - me.height;
+
 
 		testarea.setSize(me);
 		invalidate();

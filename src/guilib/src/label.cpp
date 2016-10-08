@@ -57,7 +57,7 @@ namespace gui
 
 	void Label::render(const Rect& finalRect, const Rect& finalClip)
 	{
-		if(!m_font) return;
+		if(!m_font || m_text.empty()) return;
 
 		Rect rc(finalRect);
 		if(m_centred)

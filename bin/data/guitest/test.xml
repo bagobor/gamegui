@@ -2,130 +2,76 @@
 <root>
  	<Children>
     <FrameWindow name="TestWindow" file="guitest\testfr.xml" >
+      <Properties>
+        <Title>Test window</Title>
+      </Properties>
       <Children>
+        <Button name="TestButton" file="base\button.xml">
+          <Properties>
+              <Area>20 40 100 21</Area>
+              <Text>Click me</Text>
+          </Properties>
+        </Button>
+        <Checkbox name="TestCheckbox" file="base\checkbox.xml">
+          <Properties>
+              <Area>20 70 100 21</Area>
+              <Text>Click me</Text>
+          </Properties>
+        </Checkbox>
+        <Editbox name="TestEditbox" file="base\editbox.xml">
+          <Properties>
+              <Area>20 100 100 21</Area>
+              <Text>Edit me</Text>
+          </Properties>
+        </Editbox>  
+        <Label name="TestLabel1" file="base\label.xml">
+          <Properties>
+              <Area>20 120 100 21</Area>
+              <Text>Test label1</Text>
+              <Formatting>LeftAligned</Formatting>
+          </Properties>
+        </Label>                   
+        <Label name="TestLabel2" file="base\label.xml">
+          <Properties>
+              <Area>20 140 100 21</Area>
+              <Text>Test label2</Text>
+              <Formatting>Centred</Formatting>
+          </Properties>
+        </Label>
+        <Label name="TestLabel3" file="base\label.xml">
+          <Properties>
+              <Area>20 160 100 21</Area>
+              <Text>Test label3</Text>
+              <Formatting>RightAligned</Formatting>
+          </Properties>
+        </Label>
+        <Slider name="TestSlider" file="base\slider.xml">
+          <Properties>
+              <Area>20 180 100 24</Area>
+              <Text>Test label3</Text>
+              <Formatting>RightAligned</Formatting>
+          </Properties>
+        </Slider>    
+        <ImageButton name="TestImageButton" file="base\imagebutton.xml">
+          <Properties>
+              <Area>20 210 40 17</Area>
+          </Properties>
+        </ImageButton>    
+
         <Panel name="TestSubWindow">
           <Children>
-            <Editbox name="TestSubEditWindow" >
+<!--             <Editbox name="TestSubEditWindow" >
               <Properties>
                 <Password>true</Password>
               </Properties>
-            </Editbox>
+            </Editbox> -->
           </Children>
         </Panel>
       </Children>
     </FrameWindow>
 
- 		<FrameWindow name="TestWindow2" file="guitest\testfr.xml" >
-      <Properties>
-        <Area>600 20 200 300</Area>
-      </Properties>
-			<Children>
-        <ImageButton name="TestCursor">
-          <Properties>
-            <Pos>50 50</Pos>
-            <Visible>true</Visible>
-            <TabStop>false</TabStop> 
-            <Size>12 22</Size>
-            <Spacing>1</Spacing>
-            <States imageset="Cursors">
-              <Normal image="CursorNormal" />
-              <Hovered image="CloseButtonHover" />
-              <Pushed image="CloseButtonPushed" />
-            </States>              
-          </Properties>
-        </ImageButton>
-        <ImageButton name="TestCursor2">
-          <Properties>
-            <Pos>50 80</Pos>
-            <Visible>true</Visible>
-            <TabStop>false</TabStop> 
-            <Size>17 22</Size>
-            <Spacing>1</Spacing>
-            <States imageset="Cursors">
-              <Normal image="CursorAction" />
-              <Hovered image="CloseButtonHover" />
-              <Pushed image="CloseButtonPushed" />
-            </States>              
-          </Properties>
-        </ImageButton>
-        <ImageButton name="TestCursor3">
-          <Properties>
-            <Pos>50 110</Pos>
-            <Visible>true</Visible>
-            <TabStop>false</TabStop> 
-            <Size>23 22</Size>
-            <Spacing>1</Spacing>
-            <States imageset="Cursors">
-              <Normal image="CursorResizerHoriz" />
-              <Hovered image="CloseButtonHover" />
-              <Pushed image="CloseButtonPushed" />
-            </States>              
-          </Properties>
-        </ImageButton>
-        <ImageButton name="TestCursor4">
-          <Properties>
-            <Pos>50 140</Pos>
-            <Visible>true</Visible>
-            <TabStop>false</TabStop> 
-            <Size>11 23</Size>
-            <Spacing>1</Spacing>
-            <States imageset="Cursors">
-              <Normal image="CursorResizerVert" />
-              <Hovered image="CloseButtonHover" />
-              <Pushed image="CloseButtonPushed" />
-            </States>              
-          </Properties>
-        </ImageButton>
-        <ImageButton name="TestCursor5">
-          <Properties>
-            <Pos>50 170</Pos>
-            <Visible>true</Visible>
-            <TabStop>false</TabStop> 
-            <Size>18 23</Size>
-            <Spacing>1</Spacing>
-            <States imageset="Cursors">
-              <Normal image="CursorResizerUpDown" />
-              <Hovered image="CloseButtonHover" />
-              <Pushed image="CloseButtonPushed" />
-            </States>              
-          </Properties>
-        </ImageButton>
-
-			</Children>
-		</FrameWindow>
 	</Children>
     <Events>
-        <On_Init>
---            log:msg("On Init");
-        </On_Init>
-        <On_Load>
-           this.script_value = 52;
-           --log:msg("SCRIPT VALUE: " .. this.type);
-           this:send("MAINWINDOW: loaded!");
-
-           local function TEST()
-           		log:msg("TEST_EVENT TEST_EVENTTEST_EVENT TEST_EVENT");
-           		log:msg(this.type);
-           end
-
-           --TODO: fix case when THIS pointer is different from THIS of base_window
-           --this:subscribe('TEST_EVENT', this, TEST);
-           this:subscribe('TEST_EVENT', nil, TEST);
-
-		      this:send("TEST_EVENT");
-		      this:startTick();
-
-		      log:msg("name is " .. this.name);
-		      this.name = "NO PLACE FOR MEN!";
-		      log:msg("name is " .. this.name);
-		      this.disableRise = true;
-        </On_Load>
-
-        <TEST_EVENT>
-        	log:msg("TEST_EVENT TEST_EVENTTEST_EVENT TEST_EVENT");
-        </TEST_EVENT>
-        <On_Tick>
-        </On_Tick>
         <On_Draw> <!-- debug render of windget name on mouse hover -->
             --log:msg("On Root Render");
             local mng = gui:getWindowManager();
@@ -140,9 +86,12 @@
 
             if window ~= nil then
                 text = window:getType() .. " :: " .. window:getName();
+                --text = text .. "  F" .. );
+                local area = window:getArea()
+                text = text .. "  (" .. area.width .. ", " .. area.height .. ")";
             end
 
-            render:drawText(font, text, Rect(pos.x+20, pos.y, pos.x+600, pos.y+600), Rect(0, 0, 5000, 5000), Font.LeftAligned, Color(1,0,1,1));
+            render:drawText(font, text, Rect(pos.x+20, pos.y, pos.x+600, pos.y+600), Rect(0, 0, 5000, 5000), Font.LeftAligned, Color(0.1,0.5,0.4,1));
         </On_Draw>
     </Events>
 </root>
