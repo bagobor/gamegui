@@ -39,3 +39,7 @@ Release
 Release Library
 /build/win32/vs2013/*.opendb
 /external/glfw-3.1.1/CMake
+build/win/vs/.vs/gamegui/v15/Browse.VC.db
+*.opendb
+*.db-shm
+build/win/vs/.vs/gamegui/v15/Solution.VC.db
