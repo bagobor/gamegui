@@ -8,7 +8,7 @@ namespace efsw
 /// Unpacks events and passes them to a user defined callback.
 void CALLBACK WatchCallback(DWORD dwErrorCode, DWORD dwNumberOfBytesTransfered, LPOVERLAPPED lpOverlapped)
 {
-	TCHAR szFile[MAX_PATH];
+	wchar_t szFile[MAX_PATH+2];
 	PFILE_NOTIFY_INFORMATION pNotify;
 	WatcherStructWin32 * tWatch = (WatcherStructWin32*) lpOverlapped;
 	WatcherWin32 * pWatch = tWatch->Watch;
@@ -40,7 +40,8 @@ void CALLBACK WatchCallback(DWORD dwErrorCode, DWORD dwNumberOfBytesTransfered, 
 			}
 #			endif
 
-			std::string nfile( szFile );
+			std::wstring wfile(szFile);
+			std::string nfile( wfile.begin(), wfile.end() );
 
 			if ( FILE_ACTION_MODIFIED == pNotify->Action )
 			{
@@ -110,7 +111,7 @@ void DestroyWatch(WatcherStructWin32* pWatch)
 }
 
 /// Starts monitoring a directory.
-WatcherStructWin32* CreateWatch(LPCTSTR szDirectory, bool recursive, DWORD NotifyFilter)
+WatcherStructWin32* CreateWatch(const char* szDirectory, bool recursive, DWORD NotifyFilter)
 {
 	WatcherStructWin32 * tWatch;
 	size_t ptrsize = sizeof(*tWatch);
@@ -119,7 +120,7 @@ WatcherStructWin32* CreateWatch(LPCTSTR szDirectory, bool recursive, DWORD Notif
 	WatcherWin32 * pWatch = new WatcherWin32();
 	tWatch->Watch = pWatch;
 
-	pWatch->DirHandle = CreateFile(
+	pWatch->DirHandle = CreateFileA(
 							szDirectory,
 							GENERIC_READ,
 							FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
